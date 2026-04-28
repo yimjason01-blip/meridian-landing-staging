@@ -139,7 +139,64 @@
 <section class="scrolly-section">
   <div class="scrolly-wrap">
     <div class="scrolly-graphic-col">
-      <!--CHART-->
+      <svg class="scrolly-svg" data-state="0" viewBox="0 0 1100 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B8854D" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#D4A574"/>
+      <stop offset="100%" stop-color="#B8854D"/>
+    </linearGradient>
+    <filter id="goldGlow" x="-10%" y="-50%" width="120%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- y-axis title -->
+  <text class="axis-title" x="60" y="60">Quality of life</text>
+  <text class="axis-sub" x="60" y="84">What your body can do at every age</text>
+
+  <!-- grid -->
+  <line x1="80" y1="460" x2="1060" y2="460" stroke="rgba(20,17,13,0.22)" stroke-width="1.5"/>
+  <line x1="80" y1="120" x2="80" y2="460" stroke="rgba(20,17,13,0.22)" stroke-width="1.5"/>
+  <line x1="76" y1="160" x2="80" y2="160" stroke="rgba(20,17,13,0.3)" stroke-width="1.5"/>
+  <line x1="76" y1="300" x2="80" y2="300" stroke="rgba(20,17,13,0.3)" stroke-width="1.5"/>
+  <line x1="76" y1="460" x2="80" y2="460" stroke="rgba(20,17,13,0.3)" stroke-width="1.5"/>
+
+  <!-- highlight bands -->
+  <rect class="highlight-band band-early" x="80" y="120" width="280" height="340"/>
+  <rect class="highlight-band band-late" x="800" y="120" width="260" height="340"/>
+
+  <!-- baseline curve -->
+  <path class="baseline-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
+
+  <!-- bent curve -->
+  <path class="best-path" d="M 80 170 Q 380 145, 580 160 T 1040 200"/>
+
+  <!-- markers -->
+  <g class="highlight-marker marker-early">
+    <circle cx="220" cy="190" r="9" fill="#B8854D"/>
+    <circle cx="220" cy="190" r="20" fill="none" stroke="#B8854D" stroke-width="2" opacity="0.5"/>
+  </g>
+  <g class="highlight-marker marker-late">
+    <circle cx="930" cy="420" r="9" fill="rgba(20,17,13,0.78)"/>
+    <circle cx="930" cy="420" r="20" fill="none" stroke="rgba(20,17,13,0.6)" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- captions -->
+  <text class="step-caption caption-early" x="220" y="190" dy="-32" text-anchor="middle">Anything you want</text>
+  <text class="step-caption caption-late" x="930" y="420" dy="-32" text-anchor="middle" fill="rgba(20,17,13,0.72)">No longer negotiable</text>
+  <text class="step-caption caption-bend" x="580" y="160" dy="-22" text-anchor="middle">The curve bends</text>
+
+  <!-- endpoints -->
+  <circle cx="80" cy="170" r="7" fill="#B8854D"/>
+  <circle cx="1040" cy="440" r="7" fill="rgba(20,17,13,0.55)"/>
+
+  <!-- x-axis -->
+  <text class="axis-label" x="80" y="500">AGE 40</text>
+  <text class="axis-label" x="560" y="500" text-anchor="middle">AGE 60</text>
+  <text class="axis-label" x="1040" y="500" text-anchor="end">AGE 80</text>
+</svg>
     </div>
 
     <div class="scrolly-steps">
@@ -171,10 +228,7 @@
 </section>
 
 <script>
-fetch('_chart.svg.html').then(r => r.text()).then(html => {
-  document.querySelector('.scrolly-graphic-col').innerHTML = html;
-  initScrolly();
-});
+initScrolly();
 
 function initScrolly() {
   const svg = document.querySelector('.scrolly-svg');
