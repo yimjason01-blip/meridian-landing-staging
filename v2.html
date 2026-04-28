@@ -1518,9 +1518,9 @@ footer a:hover { color: var(--paper); }
         <line x1="76" y1="300" x2="80" y2="300" stroke="#5A5247" stroke-width="1.5"/>
         <line x1="76" y1="460" x2="80" y2="460" stroke="#5A5247" stroke-width="1.5"/>
 
-        <!-- highlight bands -->
-        <rect class="highlight-band band-early" x="80" y="120" width="280" height="340"/>
-        <rect class="highlight-band band-late" x="800" y="120" width="260" height="340"/>
+        <!-- highlight bands encode ability ranges on the y-axis, not fixed age windows -->
+        <rect class="highlight-band band-early" x="80" y="120" width="980" height="105"/>
+        <rect class="highlight-band band-late" x="80" y="360" width="980" height="100"/>
 
         <!-- baseline curve -->
         <path class="baseline-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
@@ -1539,7 +1539,7 @@ footer a:hover { color: var(--paper); }
         </g>
 
         <!-- captions -->
-        <text class="step-caption caption-early" x="220" y="190" dy="-32" text-anchor="middle">Anything you want</text>
+        <text class="step-caption caption-early" x="430" y="162" text-anchor="middle">Anything you want</text>
         <text class="step-caption caption-late" x="930" y="420" dy="-32" text-anchor="middle" fill="#3F3A32">No longer negotiable</text>
         <text class="step-caption caption-bend" x="580" y="160" dy="-22" text-anchor="middle">The curve bends</text>
 
