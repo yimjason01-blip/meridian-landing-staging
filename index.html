@@ -9,7 +9,7 @@
 <meta property="og:description" content="Some of your best days are still ahead of you." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0A0A0B;            /* cool ink — hero only (cold rain) */
@@ -535,6 +535,267 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   .scrolly-step h3.step-h { font-size: 26px; }
 }
 
+/* ============ SECTION 02 — Clinical Engine (Powertrain, 4 layers) ============ */
+section.engine-section {
+  padding: 0;
+  background: linear-gradient(180deg, #0a0807 0%, #14110d 50%, #0a0807 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: clip;
+  color: var(--paper);
+}
+.engine-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 96px);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: start;
+}
+.engine-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.engine-stack-wrap {
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 1 / 1.15;
+  position: relative;
+  perspective: 1500px;
+}
+.engine-stack-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateZ(-22deg);
+  transition: transform 1.6s var(--ease);
+}
+.engine-section[data-state="0"] .engine-stack-inner { transform: rotateX(60deg) rotateZ(-22deg) translateY(60px) scale(0.94); }
+.engine-section[data-state="1"] .engine-stack-inner { transform: rotateX(60deg) rotateZ(-22deg) translateY(0) scale(1); }
+.engine-section[data-state="2"] .engine-stack-inner { transform: rotateX(56deg) rotateZ(-22deg); }
+.engine-section[data-state="3"] .engine-stack-inner { transform: rotateX(52deg) rotateZ(-21deg); }
+.engine-section[data-state="4"] .engine-stack-inner { transform: rotateX(48deg) rotateZ(-20deg); }
+
+.engine-plane {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 440px; height: 280px;
+  margin-left: -220px; margin-top: -140px;
+  border: 1px solid rgba(212,165,116,0.35);
+  background: rgba(20,15,10,0.62);
+  backdrop-filter: blur(2px);
+  border-radius: 6px;
+  box-shadow: 0 30px 80px -20px rgba(212,165,116,0.18);
+  transition: transform 1.2s var(--ease), opacity 0.8s var(--ease), border-color 0.8s var(--ease);
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+}
+.engine-plane-1 { transform: translateZ(-270px); opacity: 0.55; }
+.engine-plane-2 { transform: translateZ(-90px); opacity: 0.5; }
+.engine-plane-3 { transform: translateZ(90px); opacity: 0.45; }
+.engine-plane-4 { transform: translateZ(270px); opacity: 0.4; }
+
+.engine-section[data-state="1"] .engine-plane-1 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(-270px) translateY(-22px); }
+.engine-section[data-state="1"] .engine-plane-2 { opacity: 0.22; }
+.engine-section[data-state="1"] .engine-plane-3 { opacity: 0.18; }
+.engine-section[data-state="1"] .engine-plane-4 { opacity: 0.15; }
+
+.engine-section[data-state="2"] .engine-plane-2 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(-90px) translateY(-22px); }
+.engine-section[data-state="2"] .engine-plane-1 { opacity: 0.4; }
+.engine-section[data-state="2"] .engine-plane-3 { opacity: 0.22; }
+.engine-section[data-state="2"] .engine-plane-4 { opacity: 0.18; }
+
+.engine-section[data-state="3"] .engine-plane-3 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(90px) translateY(-22px); }
+.engine-section[data-state="3"] .engine-plane-1 { opacity: 0.32; }
+.engine-section[data-state="3"] .engine-plane-2 { opacity: 0.4; }
+.engine-section[data-state="3"] .engine-plane-4 { opacity: 0.22; }
+
+.engine-section[data-state="4"] .engine-plane-4 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(270px) translateY(-22px); }
+.engine-section[data-state="4"] .engine-plane-1 { opacity: 0.28; }
+.engine-section[data-state="4"] .engine-plane-2 { opacity: 0.34; }
+.engine-section[data-state="4"] .engine-plane-3 { opacity: 0.42; }
+
+.engine-plane-label {
+  position: absolute;
+  left: 100%; top: 0; margin-left: 32px;
+  white-space: nowrap;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.5;
+  transition: opacity 0.6s var(--ease);
+}
+.engine-section[data-state="1"] .engine-plane-1 .engine-plane-label,
+.engine-section[data-state="2"] .engine-plane-2 .engine-plane-label,
+.engine-section[data-state="3"] .engine-plane-3 .engine-plane-label,
+.engine-section[data-state="4"] .engine-plane-4 .engine-plane-label { opacity: 1; }
+
+.engine-plane-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(246,244,238,0.5);
+  margin-bottom: 14px;
+}
+
+/* L1 Risk Models — domain tiles */
+.engine-domain-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; flex: 1; }
+.engine-domain-tile {
+  background: rgba(212,165,116,0.08);
+  border: 1px solid rgba(212,165,116,0.25);
+  border-radius: 4px;
+  padding: 8px 6px;
+  font-size: 10px; font-weight: 500;
+  color: rgba(246,244,238,0.62);
+  text-align: center;
+  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 88px;
+}
+.engine-domain-tile .name { letter-spacing: 0.06em; text-transform: uppercase; font-size: 9px; }
+.engine-domain-tile .score {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 22px; font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--gold-light);
+  margin-top: 4px;
+}
+.engine-domain-tile.alert { border-color: rgba(232,201,154,0.7); background: rgba(232,201,154,0.16); }
+.engine-domain-tile.alert .score { color: #F0D9A8; }
+
+/* L2 AI + MCP */
+.engine-ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; flex: 1; }
+.engine-model-node {
+  background: rgba(212,165,116,0.08);
+  border: 1px solid rgba(212,165,116,0.3);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.engine-model-node .mname { color: var(--gold-light); font-weight: 500; font-size: 11px; letter-spacing: 0.02em; }
+.engine-model-node .mrole { color: rgba(246,244,238,0.62); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+.engine-mcp-row { grid-column: span 2; display: flex; gap: 8px; margin-top: 2px; }
+.engine-mcp-chip {
+  flex: 1;
+  background: rgba(232,201,154,0.07);
+  border: 1px solid rgba(232,201,154,0.32);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  text-align: left;
+}
+.engine-mcp-chip .mcp-label { color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; font-size: 9px; margin-bottom: 3px; }
+.engine-mcp-chip .mcp-name { color: var(--paper); font-size: 11px; }
+
+/* L3 Ranked actions */
+.engine-attention-list { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.engine-attn-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 10px;
+  background: rgba(212,165,116,0.05);
+  border-left: 3px solid rgba(212,165,116,0.3);
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: rgba(246,244,238,0.62);
+}
+.engine-attn-row.top {
+  background: rgba(232,201,154,0.14);
+  border-left-color: var(--gold-light);
+  color: var(--paper);
+}
+.engine-attn-row .rank {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 17px; font-weight: 500;
+  color: var(--gold-light);
+  min-width: 24px;
+}
+.engine-attn-row .label { flex: 1; }
+.engine-attn-row .weight { font-size: 10px; letter-spacing: 0.1em; color: rgba(246,244,238,0.4); }
+
+/* L4 Top priority */
+.engine-action-card {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  text-align: center; padding: 6px;
+}
+.engine-action-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+.engine-action-headline {
+  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+  font-style: italic;
+  font-size: 22px; line-height: 1.3;
+  color: var(--paper);
+  margin-bottom: 14px;
+}
+.engine-action-meta { font-size: 11px; color: rgba(246,244,238,0.62); letter-spacing: 0.04em; }
+
+/* Engine narrative steps */
+.engine-steps { display: flex; flex-direction: column; }
+.engine-step {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 0;
+  opacity: 0.35;
+  transition: opacity 0.5s var(--ease);
+}
+.engine-step.is-active { opacity: 1; }
+.engine-step .step-num {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px; display: block;
+}
+.engine-step h2.step-h {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.022em;
+  font-size: clamp(36px, 4.6vw, 60px); line-height: 1.06;
+  margin: 0 0 28px; max-width: 18ch;
+  color: var(--paper);
+}
+.engine-step h3.step-h {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(26px, 3vw, 38px); line-height: 1.15;
+  margin: 0 0 22px; max-width: 18ch;
+  color: var(--paper);
+}
+.engine-step .step-h em {
+  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+  font-style: italic; font-weight: 500;
+  color: var(--gold-light);
+}
+.engine-step p {
+  font-size: 18px; line-height: 1.65;
+  color: rgba(246,244,238,0.62);
+  max-width: 42ch; margin: 0;
+}
+
+@media (max-width: 900px) {
+  .engine-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .engine-stage {
+    position: sticky; top: 0; height: 58vh;
+    border-bottom: 1px solid var(--line-dark);
+    z-index: 5;
+    background: linear-gradient(180deg, #0a0807, #14110d);
+    padding: 16px var(--gutter);
+  }
+  .engine-stack-wrap { aspect-ratio: 1 / 0.95; }
+  .engine-stack-inner { transform: rotateX(42deg) rotateZ(-15deg) !important; }
+  .engine-step { min-height: 70vh; padding: 40px var(--gutter); opacity: 1; }
+  .engine-step h2.step-h { font-size: 32px; }
+  .engine-step h3.step-h { font-size: 24px; }
+}
+
 /* ============ SYSTEM (board) ============ */
 .system-stat-grid {
   margin-top: 60px;
@@ -965,42 +1226,100 @@ footer a:hover { color: var(--paper); }
   </div>
 </section>
 
-<!-- ============ SECTION 02 — Meridian Clinical Engine ============ -->
-<section class="dark">
-  <div class="container">
-    <div class="fade-in" style="text-align: center; max-width: 1100px; margin: 0 auto;">
-      <span class="eyebrow" style="color: var(--gold);">02 — The Meridian AI Clinical Engine</span>
-      <h2 class="display h2" style="margin: 28px auto 0; color: var(--paper); max-width: 22ch;">All your data.<br/>A million studies.<br/><span style="color: var(--gold-light); font-style: italic; font-weight: 400;">One top priority.</span></h2>
+<!-- ============ SECTION 02 — Meridian Clinical Engine (Powertrain, 4 layers) ============ -->
+<section class="engine-section" id="engineSection" data-state="0">
+  <div class="engine-wrap">
+    <!-- LEFT: sticky 3D stack -->
+    <div class="engine-stage">
+      <div class="engine-stack-wrap">
+        <div class="engine-stack-inner">
+
+          <!-- L1 Risk Models -->
+          <div class="engine-plane engine-plane-1">
+            <div class="engine-plane-title">Risk Models · 5 domains</div>
+            <div class="engine-domain-grid">
+              <div class="engine-domain-tile"><div class="name">Cardio</div><div class="score">12<sup style="font-size:11px;">%</sup></div></div>
+              <div class="engine-domain-tile"><div class="name">Metab</div><div class="score">8<sup style="font-size:11px;">%</sup></div></div>
+              <div class="engine-domain-tile alert"><div class="name">Onco</div><div class="score">3.2x</div></div>
+              <div class="engine-domain-tile"><div class="name">Neuro</div><div class="score">6<sup style="font-size:11px;">%</sup></div></div>
+              <div class="engine-domain-tile"><div class="name">Renal</div><div class="score">2<sup style="font-size:11px;">%</sup></div></div>
+            </div>
+            <span class="engine-plane-label">L1 · Risk Models</span>
+          </div>
+
+          <!-- L2 AI + MCPs -->
+          <div class="engine-plane engine-plane-2">
+            <div class="engine-plane-title">AI Engine · structured board review</div>
+            <div class="engine-ai-grid">
+              <div class="engine-model-node"><div class="mname">claude-sonnet-4</div><div class="mrole">independent</div></div>
+              <div class="engine-model-node"><div class="mname">gpt-5.5</div><div class="mrole">independent</div></div>
+              <div class="engine-model-node"><div class="mname">gemini-2.5-pro</div><div class="mrole">cross-check</div></div>
+              <div class="engine-model-node"><div class="mname">grok-3</div><div class="mrole">consensus</div></div>
+              <div class="engine-mcp-row">
+                <div class="engine-mcp-chip"><div class="mcp-label">MCP</div><div class="mcp-name">BioMCP · knowledge graph</div></div>
+                <div class="engine-mcp-chip"><div class="mcp-label">MCP</div><div class="mcp-name">OpenEvidence · research index</div></div>
+              </div>
+            </div>
+            <span class="engine-plane-label">L2 · AI + MCPs</span>
+          </div>
+
+          <!-- L3 Ranked Actions -->
+          <div class="engine-plane engine-plane-3">
+            <div class="engine-plane-title">Attention · ranked actions</div>
+            <div class="engine-attention-list">
+              <div class="engine-attn-row top"><div class="rank">01</div><div class="label">Pancreatic surveillance — ATM variant</div><div class="weight">98</div></div>
+              <div class="engine-attn-row"><div class="rank">02</div><div class="label">Statin metabolism switch</div><div class="weight">61</div></div>
+              <div class="engine-attn-row"><div class="rank">03</div><div class="label">ApoB trending up — 6mo</div><div class="weight">44</div></div>
+              <div class="engine-attn-row"><div class="rank">04</div><div class="label">HRV recovery dropped</div><div class="weight">28</div></div>
+            </div>
+            <span class="engine-plane-label">L3 · Ranked Actions</span>
+          </div>
+
+          <!-- L4 One Top Priority -->
+          <div class="engine-plane engine-plane-4">
+            <div class="engine-plane-title">Action · this week</div>
+            <div class="engine-action-card">
+              <div class="engine-action-eyebrow">For Jason · April 28</div>
+              <div class="engine-action-headline">"Schedule pancreatic MRI surveillance, plus a 30-min call to discuss the statin switch."</div>
+              <div class="engine-action-meta">Voice message from Dr. K · evidence attached</div>
+            </div>
+            <span class="engine-plane-label">L4 · One Top Priority</span>
+          </div>
+
+        </div>
+      </div>
     </div>
 
-    <figure style="margin: 64px auto 0; max-width: 1100px;">
-      <img src="assets/chip.jpg" alt="The Meridian AI Clinical Engine" style="width: 100%; border-radius: 4px;" />
-    </figure>
-
-    <div class="section-grid two-col fade-in" style="margin-top: 72px;">
-      <div>
-        <p class="body-lg">Your genome, your blood, your wearables, your history — together that's roughly <strong style="color: var(--paper);">300,000 tokens</strong> of information. A physician's working memory holds about <strong style="color: var(--paper);">150</strong>.</p>
-        <p class="body-lg" style="margin-top: 1.2em;">The Engine convenes four frontier AI models in a structured medical-board review of your full picture — cross-referenced against the BioMCP medical-knowledge graph and the OpenEvidence research index — then hands the synthesis to a Meridian MD. The AI does what AI is good at: hold everything at once. Your physician does what physicians are good at: judgment, gut check, and a real conversation with someone who knows your name.</p>
+    <!-- RIGHT: scroll narrative -->
+    <div class="engine-steps">
+      <div class="engine-step" data-step="0">
+        <span class="step-num">02 — The Meridian AI Clinical Engine</span>
+        <h2 class="step-h">All your data. A million studies. <em>One top priority.</em></h2>
+        <p>Four layers of machinery. Classical medicine on top. Frontier AI in the middle. Ranked actions below. One thing to actually do at the bottom. Each layer does the part no person — or single model — can do alone, and hands the result to the next.</p>
       </div>
-      <div>
-        <div class="system-stat-grid">
-          <div class="system-stat">
-            <span class="system-stat-num"><span class="counter" data-target="300000" data-suffix="">0</span></span>
-            <span class="system-stat-label">tokens of data in your full picture</span>
-          </div>
-          <div class="system-stat">
-            <span class="system-stat-num"><span class="counter" data-target="150" data-suffix="">0</span></span>
-            <span class="system-stat-label">tokens a physician can hold in working memory</span>
-          </div>
-          <div class="system-stat">
-            <span class="system-stat-num"><span class="counter gold" data-target="4" data-suffix=" models">0</span></span>
-            <span class="system-stat-label">in structured debate over your interpretation</span>
-          </div>
-          <div class="system-stat">
-            <span class="system-stat-num"><span class="counter gold" data-target="1" data-suffix=" physician">0</span></span>
-            <span class="system-stat-label">who knows your name and conducts the symphony</span>
-          </div>
-        </div>
+
+      <div class="engine-step" data-step="1">
+        <span class="step-num">Layer 1 · Risk Models</span>
+        <h3 class="step-h">Five domains, <em>the way medicine actually works</em>.</h3>
+        <p>Cardiovascular. Metabolic. Oncologic. Neurologic. Renal. Each model takes your full data picture — genome, labs, wearables, history — and computes one number per domain: how is this trajectory bending, and how fast. This is the part of the engine your physician already speaks.</p>
+      </div>
+
+      <div class="engine-step" data-step="2">
+        <span class="step-num">Layer 2 · AI + Knowledge MCPs</span>
+        <h3 class="step-h">Four frontier models, <em>two medical knowledge graphs</em>.</h3>
+        <p>The risk signals get convened in a structured board review: claude-sonnet-4, gpt-5.5, gemini-2.5-pro, grok-3 — each working independently against the BioMCP medical-knowledge graph and the OpenEvidence research index. Where models concur, the finding strengthens. Where they disagree, the conflict gets surfaced — not buried. This is the part no chatbot wrapper can replicate.</p>
+      </div>
+
+      <div class="engine-step" data-step="3">
+        <span class="step-num">Layer 3 · Ranked Actions</span>
+        <h3 class="step-h">Ranked, <em>so you don't have to be</em>.</h3>
+        <p>The Attention Layer takes the board's synthesis and ranks every plausible action by what's actually changeable, today, with the highest leverage. Most prevention products give you a 40-page report. We give you the priority queue, weighted and ordered.</p>
+      </div>
+
+      <div class="engine-step" data-step="4">
+        <span class="step-num">Layer 4 · One Top Priority</span>
+        <h3 class="step-h">One thing to do <em>this week</em>.</h3>
+        <p>The Action Layer translates the top-ranked priority into a concrete plan, attaches the evidence, and hands it to your Meridian MD. They review, customize for your life, and send you a voice message — not a notification, not a chatbot summary. The next thing to do, in your physician's voice.</p>
       </div>
     </div>
   </div>
@@ -1253,6 +1572,22 @@ if (scrollySvg && scrollySteps.length) {
     });
   }, { threshold: 0.55, rootMargin: '-20% 0px -20% 0px' });
   scrollySteps.forEach(s => stepObs.observe(s));
+}
+
+// Scrollytelling: Engine 4-layer powertrain
+const engineSection = document.getElementById('engineSection');
+const engineSteps = document.querySelectorAll('.engine-step');
+if (engineSection && engineSteps.length) {
+  const engineObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        engineSteps.forEach(s => s.classList.remove('is-active'));
+        e.target.classList.add('is-active');
+        engineSection.setAttribute('data-state', e.target.dataset.step);
+      }
+    });
+  }, { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' });
+  engineSteps.forEach(s => engineObs.observe(s));
 }
 
 // Number counters
