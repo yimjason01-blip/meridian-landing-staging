@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trajectory prototypes — Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.wrap { max-width: 980px; margin: 100px auto; padding: 0 var(--gutter); }
+h1 { font-family: 'Inter Tight', sans-serif; font-weight: 500; font-size: 44px; letter-spacing: -0.02em; margin: 16px 0 12px; }
+.lead { color: var(--text-muted); font-size: 18px; max-width: 60ch; margin-bottom: 48px; }
+.option-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.option-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 28px 32px;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.option-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px -16px rgba(20,17,13,0.2); }
+.option-card .label { color: var(--gold-deep); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.option-card h2 { font-family: 'Inter Tight', sans-serif; font-size: 24px; font-weight: 500; margin: 6px 0 10px; }
+.option-card p { color: var(--text-muted); font-size: 16px; line-height: 1.55; margin: 0; }
+.option-card .meta { margin-top: 14px; font-size: 13px; color: var(--gold-deep); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">Section 01 — Trajectory</span>
+  <h1>Three formatting options</h1>
+  <p class="lead">Same chart state machine and content. Three different layout shells. Same SVG with thicker strokes (5–6px), larger captions (17px), legible axis labels (14px).</p>
+
+  <div class="option-grid">
+    <a href="A.html" class="option-card">
+      <span class="label">Option A</span>
+      <h2>Classic NYT-style scrollama</h2>
+      <p>Headline lives only in step 1. Sticky chart on the left, narrative scrolls on the right. On mobile the chart sticks to the top half of the viewport, text scrolls underneath. Lowest risk, most precedent.</p>
+      <div class="meta">Best when → you want the headline to disappear after the first beat.</div>
+    </a>
+    <a href="B.html" class="option-card">
+      <span class="label">Option B</span>
+      <h2>Anchored title, sticky chart</h2>
+      <p>Big headline anchored at the top of the section as a sticky band. Chart and 4 step cards below it. Headline never competes mid-frame because it's pinned to the top edge throughout the sequence.</p>
+      <div class="meta">Best when → you want the headline to stay in view as the through-line.</div>
+    </a>
+    <a href="C.html" class="option-card">
+      <span class="label">Option C</span>
+      <h2>Full-bleed staged (Apple/Stripe)</h2>
+      <p>Chart fills the viewport edge-to-edge as a sticky stage. Narrative cards float in/out from the bottom as you scroll. Most cinematic. Riskiest on mobile because the stage takes 50% of the viewport.</p>
+      <div class="meta">Best when → you want maximum cinematic feel and only one screen of focus at a time.</div>
+    </a>
+  </div>
+</div>
+</body>
+</html>

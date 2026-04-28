@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trajectory — Option B: Anchored title</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.section-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: linear-gradient(to bottom, var(--paper-warm) 75%, rgba(239,234,224,0));
+  padding: 100px var(--gutter) 28px;
+  border-bottom: 1px solid var(--line);
+}
+.section-header-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.section-header h1 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.026em;
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.05;
+  margin-top: 12px;
+  max-width: 26ch;
+}
+.section-header h1 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-deep);
+}
+
+.scrolly-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: start;
+}
+.scrolly-graphic-col {
+  position: sticky;
+  top: 200px;
+  height: calc(100vh - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scrolly-graphic-col svg { max-height: 75vh; }
+
+.scrolly-steps { display: flex; flex-direction: column; }
+.scrolly-step {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0.4;
+  transition: opacity 0.5s var(--ease);
+}
+.scrolly-step.is-active { opacity: 1; }
+.scrolly-step .step-num {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 18px;
+  display: block;
+}
+.scrolly-step h3 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.15;
+  margin: 0 0 22px;
+  max-width: 18ch;
+}
+.scrolly-step h3 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-deep);
+}
+.scrolly-step p {
+  font-size: clamp(17px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 42ch;
+}
+
+.intro {
+  padding: 60px var(--gutter) 0;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.intro p { font-size: 15px; color: var(--text-muted); max-width: 60ch; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .section-header { position: static; padding: 80px var(--gutter) 24px; }
+  .section-header h1 { font-size: 30px; }
+  .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .scrolly-graphic-col {
+    position: sticky;
+    top: 0;
+    height: 50vh;
+    background: var(--paper-warm);
+    z-index: 5;
+    border-bottom: 1px solid var(--line);
+    padding: 16px var(--gutter);
+  }
+  .scrolly-graphic-col svg { max-height: 100%; }
+  .scrolly-step {
+    min-height: 60vh;
+    padding: 40px var(--gutter);
+    opacity: 1;
+  }
+  .scrolly-step h3 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="proto-nav">
+  <span class="proto-label">Trajectory protos</span>
+  <a href="A.html">A · scrollama</a>
+  <a href="B.html" class="active">B · anchored title</a>
+  <a href="C.html">C · full-bleed</a>
+</nav>
+
+<div class="intro">
+  <span class="eyebrow">Option B — Anchored title, sticky chart</span>
+  <p style="margin-top:12px">Big headline pinned at the top of the section. Chart on the left, scroll narrative on the right. Headline never competes because it's anchored at the top edge, not floating mid-frame.</p>
+</div>
+
+<header class="section-header">
+  <div class="section-header-inner">
+    <span class="eyebrow">01 — Quality of life</span>
+    <h1>The story of your future is written on top of <em>this curve</em>.</h1>
+  </div>
+</header>
+
+<section class="scrolly-section">
+  <div class="scrolly-wrap">
+    <div class="scrolly-graphic-col">
+      <!--CHART-->
+    </div>
+
+    <div class="scrolly-steps">
+      <div class="scrolly-step" data-step="0">
+        <span class="step-num">The default trajectory</span>
+        <h3>This is the curve <em>most bodies</em> follow.</h3>
+        <p>The average American, plotted across the years that decide everything. By the time the slope is obvious from a snapshot, it's been obvious for years to anyone who was actually looking.</p>
+      </div>
+
+      <div class="scrolly-step" data-step="1">
+        <span class="step-num">Your 40s and 50s</span>
+        <h3>Right now, you can do <em>almost anything</em>.</h3>
+        <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. The body still says yes. This is the window where the curve is being set — quietly, in the background, by what you do and don't catch.</p>
+      </div>
+
+      <div class="scrolly-step" data-step="2">
+        <span class="step-num">Your late 70s and beyond</span>
+        <h3>By the end, the curve <em>has decided</em> for you.</h3>
+        <p>Stairs become a problem. The grandkids visit and you watch from the chair. The interventions that would have changed the slope had to happen 30 years earlier — but no one was running the model.</p>
+      </div>
+
+      <div class="scrolly-step" data-step="3">
+        <span class="step-num">What Meridian is for</span>
+        <h3>The curve is <em>bendable</em>. We're the ones bending it.</h3>
+        <p>Every domain — cardiovascular, metabolic, neurological, oncologic — has a slope. We measure all of them, continuously, and act on the ones bending wrong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+fetch('_chart.svg.html').then(r => r.text()).then(html => {
+  document.querySelector('.scrolly-graphic-col').innerHTML = html;
+  initScrolly();
+});
+function initScrolly() {
+  const svg = document.querySelector('.scrolly-svg');
+  const steps = document.querySelectorAll('.scrolly-step');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        steps.forEach(s => s.classList.remove('is-active'));
+        e.target.classList.add('is-active');
+        svg.setAttribute('data-state', e.target.dataset.step);
+      }
+    });
+  }, { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' });
+  steps.forEach(s => obs.observe(s));
+}
+</script>
+</body>
+</html>

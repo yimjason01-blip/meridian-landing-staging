@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trajectory — Option C: Full-bleed staged</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+.intro {
+  padding: 100px var(--gutter) 0;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.intro p { font-size: 15px; color: var(--text-muted); max-width: 60ch; line-height: 1.6; }
+
+.scrolly-section { position: relative; }
+.scrolly-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px var(--gutter);
+  background: var(--paper-warm);
+  z-index: 1;
+}
+.scrolly-stage svg {
+  max-height: 80vh;
+  max-width: 100%;
+  width: 100%;
+}
+
+.scrolly-narrative {
+  position: relative;
+  z-index: 2;
+  margin-top: -100vh;
+  pointer-events: none;
+}
+.scrolly-step {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 80px;
+  pointer-events: none;
+}
+.scrolly-step .step-card {
+  margin: 0 var(--gutter);
+  max-width: 580px;
+  background: rgba(239,234,224,0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 32px 36px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  box-shadow: 0 30px 80px -20px rgba(20,17,13,0.18);
+}
+.scrolly-step.is-active .step-card { opacity: 1; transform: translateY(0); }
+.scrolly-step .step-num {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 14px;
+  display: block;
+}
+.scrolly-step h2 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.08;
+  margin: 0 0 18px;
+}
+.scrolly-step h3 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+.scrolly-step h2 em, .scrolly-step h3 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-deep);
+}
+.scrolly-step p {
+  font-size: clamp(16px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .scrolly-stage { height: 50vh; padding: 24px var(--gutter); }
+  .scrolly-narrative { margin-top: 0; }
+  .scrolly-step { min-height: auto; padding: 32px 0; }
+  .scrolly-step .step-card { opacity: 1; transform: none; }
+  .scrolly-step h2 { font-size: 28px; }
+  .scrolly-step h3 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="proto-nav">
+  <span class="proto-label">Trajectory protos</span>
+  <a href="A.html">A · scrollama</a>
+  <a href="B.html">B · anchored title</a>
+  <a href="C.html" class="active">C · full-bleed</a>
+</nav>
+
+<div class="intro">
+  <span class="eyebrow">Option C — Full-bleed staged (Apple/Stripe-style)</span>
+  <p style="margin-top:12px">Chart fills the viewport edge-to-edge. Narrative cards float in/out from the bottom-left as you scroll. Most cinematic, most spacious — but watch the long sticky.</p>
+</div>
+
+<section class="scrolly-section">
+  <div class="scrolly-stage">
+    <!--CHART-->
+  </div>
+
+  <div class="scrolly-narrative">
+    <div class="scrolly-step" data-step="0">
+      <div class="step-card">
+        <span class="step-num">01 — Quality of life</span>
+        <h2>The story of your future is written on top of <em>this curve</em>.</h2>
+        <p>The average American. Plotted across the years that decide everything. By the time the slope is obvious from a snapshot, it's been obvious for years to anyone who was actually looking.</p>
+      </div>
+    </div>
+
+    <div class="scrolly-step" data-step="1">
+      <div class="step-card">
+        <span class="step-num">Your 40s and 50s</span>
+        <h3>Right now, you can do <em>almost anything</em>.</h3>
+        <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. This is the window where the curve is being set — quietly, in the background.</p>
+      </div>
+    </div>
+
+    <div class="scrolly-step" data-step="2">
+      <div class="step-card">
+        <span class="step-num">Your late 70s and beyond</span>
+        <h3>By the end, the curve <em>has decided</em> for you.</h3>
+        <p>Stairs become a problem. The grandkids visit and you watch from the chair. The interventions that would have changed the slope had to happen 30 years earlier — but no one was running the model.</p>
+      </div>
+    </div>
+
+    <div class="scrolly-step" data-step="3">
+      <div class="step-card">
+        <span class="step-num">What Meridian is for</span>
+        <h3>The curve is <em>bendable</em>. We're the ones bending it.</h3>
+        <p>Every domain — cardiovascular, metabolic, neurological, oncologic — has a slope. We measure all of them, continuously, and act on the ones bending wrong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 60vh; background: var(--paper-warm);"></div>
+
+<script>
+fetch('_chart.svg.html').then(r => r.text()).then(html => {
+  document.querySelector('.scrolly-stage').innerHTML = html;
+  initScrolly();
+});
+function initScrolly() {
+  const svg = document.querySelector('.scrolly-svg');
+  const steps = document.querySelectorAll('.scrolly-step');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        steps.forEach(s => s.classList.remove('is-active'));
+        e.target.classList.add('is-active');
+        svg.setAttribute('data-state', e.target.dataset.step);
+      }
+    });
+  }, { threshold: 0.4, rootMargin: '-25% 0px -25% 0px' });
+  steps.forEach(s => obs.observe(s));
+}
+</script>
+</body>
+</html>
