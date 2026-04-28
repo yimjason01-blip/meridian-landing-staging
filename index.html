@@ -1075,31 +1075,30 @@ footer a:hover { color: var(--paper); }
   display: flex;
   align-items: baseline;
   gap: clamp(12px, 1.4vw, 22px);
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
   font-size: clamp(64px, 7.2vw, 116px);
   line-height: 0.94;
   margin: 0 0 22px;
   letter-spacing: -0.04em;
 }
-.md-ai-headline .md-mark {
-  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
-  font-style: italic;
-  font-weight: 500;
+.md-ai-headline .md-mark,
+.md-ai-headline .ai-mark {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
   color: var(--ink);
 }
 .md-ai-headline .x-mark {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: inherit;
   font-weight: 300;
-  font-size: 0.5em;
+  font-size: 0.6em;
   color: var(--gold-deep);
   letter-spacing: 0;
   position: relative;
-  top: -0.06em;
-}
-.md-ai-headline .ai-mark {
-  font-family: 'JetBrains Mono', 'SF Mono', monospace;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--ink);
+  top: -0.05em;
 }
 .md-ai-sub {
   font-family: 'Inter Tight', sans-serif;
