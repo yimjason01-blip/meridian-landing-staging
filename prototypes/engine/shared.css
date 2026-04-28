@@ -1,0 +1,70 @@
+/* Engine prototype — shared tokens & nav */
+:root {
+  --ink: #0A0A0B;
+  --ink-2: #14140F;
+  --ink-3: #1A1612;
+  --paper: #F6F4EE;
+  --paper-warm: #EFEAE0;
+  --gold: #D4A574;
+  --gold-light: #E8C99A;
+  --gold-deep: #B8854D;
+  --gold-soft: rgba(212,165,116,0.18);
+  --line-dark: rgba(246,244,238,0.14);
+  --line: rgba(10,10,11,0.12);
+  --text-light: #F6F4EE;
+  --text-muted-dark: rgba(246,244,238,0.62);
+  --text-muted: #4A4A4D;
+  --max: 1320px;
+  --gutter: clamp(20px, 4vw, 64px);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-light);
+  background: var(--ink);
+}
+
+.proto-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 22px;
+  display: flex; gap: 18px; align-items: center;
+  background: rgba(10,10,11,0.78);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+  font-size: 13px;
+  font-weight: 500;
+}
+.proto-nav a { color: var(--text-muted-dark); text-decoration: none; padding: 4px 10px; border-radius: 4px; }
+.proto-nav a.active { color: var(--text-light); background: rgba(246,244,238,0.07); }
+.proto-nav .proto-label { color: var(--gold); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px; }
+
+.eyebrow {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+}
+.display {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.026em;
+  line-height: 1.04;
+}
+.serif-em {
+  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-light);
+}
+.intro-block {
+  padding: 100px var(--gutter) 24px;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.intro-block .lead {
+  font-size: 15px; color: var(--text-muted-dark); max-width: 60ch; line-height: 1.6; margin-top: 12px;
+}

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engine — B · The Powertrain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.section {
+  padding: 0;
+  background: linear-gradient(180deg, #0a0807 0%, #14110d 50%, #0a0807 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrolly-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 96px);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: start;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-wrap {
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1 / 1.1;
+  position: relative;
+  perspective: 1400px;
+}
+.stack-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-22deg);
+  transition: transform 1.6s var(--ease);
+}
+.section[data-state="0"] .stack-inner { transform: rotateX(58deg) rotateZ(-22deg) translateY(60px) scale(0.94); }
+.section[data-state="1"] .stack-inner { transform: rotateX(58deg) rotateZ(-22deg) translateY(0) scale(1); }
+.section[data-state="2"] .stack-inner { transform: rotateX(54deg) rotateZ(-22deg); }
+.section[data-state="3"] .stack-inner { transform: rotateX(48deg) rotateZ(-20deg); }
+
+/* Three planes — stacked in 3D */
+.plane {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 460px;
+  height: 320px;
+  margin-left: -230px;
+  margin-top: -160px;
+  border: 1px solid rgba(212,165,116,0.35);
+  background: rgba(20,15,10,0.55);
+  backdrop-filter: blur(2px);
+  border-radius: 6px;
+  box-shadow: 0 30px 80px -20px rgba(212,165,116,0.18);
+  transition: transform 1.2s var(--ease), opacity 0.8s var(--ease), border-color 0.8s var(--ease);
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+.plane-1 { transform: translateZ(-160px); }
+.plane-2 { transform: translateZ(0); opacity: 0.6; }
+.plane-3 { transform: translateZ(160px); opacity: 0.45; }
+
+.section[data-state="1"] .plane-1 { border-color: rgba(232,201,154,0.95); transform: translateZ(-160px) translateY(-20px); }
+.section[data-state="1"] .plane-2,
+.section[data-state="1"] .plane-3 { opacity: 0.25; }
+
+.section[data-state="2"] .plane-2 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(0) translateY(-20px); }
+.section[data-state="2"] .plane-1 { opacity: 0.5; }
+.section[data-state="2"] .plane-3 { opacity: 0.25; }
+
+.section[data-state="3"] .plane-3 { border-color: rgba(232,201,154,0.95); opacity: 1; transform: translateZ(160px) translateY(-20px); }
+.section[data-state="3"] .plane-1,
+.section[data-state="3"] .plane-2 { opacity: 0.4; }
+
+.plane-label {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 32px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.5;
+  transition: opacity 0.6s var(--ease);
+}
+.section[data-state="1"] .plane-1 .plane-label,
+.section[data-state="2"] .plane-2 .plane-label,
+.section[data-state="3"] .plane-3 .plane-label { opacity: 1; }
+
+/* Plane 1 — Risk Models: 5 domain tiles */
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  flex: 1;
+}
+.domain-tile {
+  background: rgba(212,165,116,0.08);
+  border: 1px solid rgba(212,165,116,0.25);
+  border-radius: 4px;
+  padding: 10px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted-dark);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+}
+.domain-tile .name { letter-spacing: 0.06em; text-transform: uppercase; font-size: 10px; }
+.domain-tile .score {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--gold-light);
+  margin-top: 6px;
+}
+.domain-tile.alert { border-color: rgba(232,201,154,0.7); background: rgba(232,201,154,0.16); }
+.domain-tile.alert .score { color: #F0D9A8; }
+.plane-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(246,244,238,0.5);
+  margin-bottom: 14px;
+}
+
+/* Plane 2 — Attention: ranked list */
+.attention-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.attn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(212,165,116,0.05);
+  border-left: 3px solid rgba(212,165,116,0.3);
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: var(--text-muted-dark);
+}
+.attn-row.top {
+  background: rgba(232,201,154,0.14);
+  border-left-color: var(--gold-light);
+  color: var(--text-light);
+}
+.attn-row .rank {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--gold-light);
+  min-width: 28px;
+}
+.attn-row .label { flex: 1; }
+.attn-row .weight {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(246,244,238,0.4);
+}
+
+/* Plane 3 — Action card */
+.action-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+}
+.action-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.action-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--text-light);
+  margin-bottom: 14px;
+}
+.action-meta {
+  font-size: 12px;
+  color: var(--text-muted-dark);
+}
+
+/* Steps */
+.steps { display: flex; flex-direction: column; }
+.step {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0.35;
+  transition: opacity 0.5s var(--ease);
+}
+.step.is-active { opacity: 1; }
+.step .step-num {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px; display: block;
+}
+.step h2 {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.022em;
+  font-size: clamp(36px, 4.6vw, 60px); line-height: 1.06;
+  margin: 0 0 28px; max-width: 18ch;
+}
+.step h3 {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(26px, 3vw, 38px); line-height: 1.15;
+  margin: 0 0 22px; max-width: 18ch;
+}
+.step h2 em, .step h3 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 500; color: var(--gold-light);
+}
+.step p { font-size: 18px; line-height: 1.65; color: var(--text-muted-dark); max-width: 42ch; }
+
+@media (max-width: 900px) {
+  .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .stage {
+    position: sticky; top: 0; height: 55vh;
+    border-bottom: 1px solid var(--line-dark);
+    z-index: 5;
+    background: linear-gradient(180deg, #0a0807, #14110d);
+    padding: 16px var(--gutter);
+  }
+  .stack-wrap { aspect-ratio: 1 / 0.9; }
+  .stack-inner { transform: rotateX(40deg) rotateZ(-15deg) !important; }
+  .step { min-height: 70vh; padding: 40px var(--gutter); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<nav class="proto-nav">
+  <span class="proto-label">Engine protos</span>
+  <a href="A.html">A · sensor</a>
+  <a href="B.html" class="active">B · powertrain</a>
+  <a href="C.html">C · boardroom</a>
+</nav>
+
+<div class="intro-block">
+  <span class="eyebrow">Option B — The Powertrain</span>
+  <p class="lead">An exploded-view machine. Three planes stack in 3D space — Risk Models, Attention Layer, Action Layer. Each scroll beat illuminates one plane and labels its function. Vibe: precision engineering, you can see the cogs. Closest analog: Rivian quad-motor explainer.</p>
+</div>
+
+<section class="section" id="engineSection" data-state="0">
+  <div class="scrolly-wrap">
+    <div class="stage">
+      <div class="stack-wrap">
+        <div class="stack-inner">
+          <!-- Plane 1: Risk Models -->
+          <div class="plane plane-1">
+            <div class="plane-title">Risk Models · 5 domains</div>
+            <div class="domain-grid">
+              <div class="domain-tile">
+                <div class="name">Cardio</div>
+                <div class="score">12<sup style="font-size:14px;">%</sup></div>
+              </div>
+              <div class="domain-tile">
+                <div class="name">Metab</div>
+                <div class="score">8<sup style="font-size:14px;">%</sup></div>
+              </div>
+              <div class="domain-tile alert">
+                <div class="name">Onco</div>
+                <div class="score">3.2x</div>
+              </div>
+              <div class="domain-tile">
+                <div class="name">Neuro</div>
+                <div class="score">6<sup style="font-size:14px;">%</sup></div>
+              </div>
+              <div class="domain-tile">
+                <div class="name">Renal</div>
+                <div class="score">2<sup style="font-size:14px;">%</sup></div>
+              </div>
+            </div>
+            <span class="plane-label">L1 · Risk Models</span>
+          </div>
+
+          <!-- Plane 2: Attention Layer -->
+          <div class="plane plane-2">
+            <div class="plane-title">Attention · ranked priorities</div>
+            <div class="attention-list">
+              <div class="attn-row top">
+                <div class="rank">01</div>
+                <div class="label">Pancreatic surveillance — ATM variant</div>
+                <div class="weight">98</div>
+              </div>
+              <div class="attn-row">
+                <div class="rank">02</div>
+                <div class="label">Statin metabolism flag</div>
+                <div class="weight">61</div>
+              </div>
+              <div class="attn-row">
+                <div class="rank">03</div>
+                <div class="label">ApoB trending up — 6mo</div>
+                <div class="weight">44</div>
+              </div>
+              <div class="attn-row">
+                <div class="rank">04</div>
+                <div class="label">HRV recovery dropped</div>
+                <div class="weight">28</div>
+              </div>
+            </div>
+            <span class="plane-label">L2 · Attention Layer</span>
+          </div>
+
+          <!-- Plane 3: Action -->
+          <div class="plane plane-3">
+            <div class="plane-title">Action · this week</div>
+            <div class="action-card">
+              <div class="action-eyebrow">For Jason · April 28</div>
+              <div class="action-headline">"Schedule pancreatic MRI surveillance, plus a 30-min call to discuss the statin switch."</div>
+              <div class="action-meta">Voice message from Dr. K · evidence attached</div>
+            </div>
+            <span class="plane-label">L3 · Action Layer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-step="0">
+        <span class="step-num">02 — The Meridian Clinical Engine</span>
+        <h2>All your data. A million studies. <em>One top priority.</em></h2>
+        <p>Three layers of machinery. Each one doing the part of medicine no human can do alone, then handing the result to the next layer. Like a powertrain — each component matters, the whole is what makes it move.</p>
+      </div>
+
+      <div class="step" data-step="1">
+        <span class="step-num">Layer 1 · Risk Models</span>
+        <h3>Five domain models, <em>running continuously</em>.</h3>
+        <p>Cardiovascular. Metabolic. Oncologic. Neurologic. Renal. Each model takes your full data picture — genome, labs, wearables, history — and computes one number: how is this trajectory bending, and how fast.</p>
+      </div>
+
+      <div class="step" data-step="2">
+        <span class="step-num">Layer 2 · Attention</span>
+        <h3>Ranked, <em>so you don't have to be</em>.</h3>
+        <p>The Attention Layer takes outputs from all five risk models and ranks them by what's actually changeable, today, with the highest-leverage intervention. Most prevention products give you a 40-page report. We give you the priority queue.</p>
+      </div>
+
+      <div class="step" data-step="3">
+        <span class="step-num">Layer 3 · Action</span>
+        <h3>One thing to do <em>this week</em>.</h3>
+        <p>The Action Layer translates the top priority into a concrete plan, attaches the evidence, and hands it to a Meridian MD. They review, customize for your life, and send you a voice message. Not a 40-page report. The next thing to do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const section = document.getElementById('engineSection');
+const steps = document.querySelectorAll('.step');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      steps.forEach(s => s.classList.remove('is-active'));
+      e.target.classList.add('is-active');
+      section.setAttribute('data-state', e.target.dataset.step);
+    }
+  });
+}, { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' });
+steps.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

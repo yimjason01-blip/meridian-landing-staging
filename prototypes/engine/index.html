@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engine prototypes — Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.wrap { max-width: 980px; margin: 100px auto; padding: 0 var(--gutter); }
+h1 { font-family: 'Inter Tight', sans-serif; font-weight: 500; font-size: 44px; letter-spacing: -0.02em; margin: 16px 0 12px; color: var(--text-light); }
+.lead { color: var(--text-muted-dark); font-size: 18px; max-width: 60ch; margin-bottom: 48px; }
+.option-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.option-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(20,17,13,0.6);
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;
+  padding: 28px 32px;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.option-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212,165,116,0.4);
+  box-shadow: 0 16px 40px -16px rgba(212,165,116,0.18);
+}
+.option-card .label { color: var(--gold); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.option-card h2 { font-family: 'Inter Tight', sans-serif; font-size: 26px; font-weight: 500; margin: 6px 0 12px; color: var(--text-light); }
+.option-card .principle { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold-light); font-size: 17px; margin-bottom: 12px; }
+.option-card p { color: var(--text-muted-dark); font-size: 15px; line-height: 1.6; margin: 0; }
+.option-card .meta { margin-top: 14px; font-size: 12px; color: var(--gold); font-weight: 500; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">Section 02 — Clinical Engine</span>
+  <h1>Three executions of the same idea</h1>
+  <p class="lead">Same headline. Same core claim — all your data, a million studies, one top priority. Three different metaphors for what makes the engine real and trustworthy.</p>
+
+  <div class="option-grid">
+    <a href="A.html" class="option-card">
+      <span class="label">Option A · The Sensor</span>
+      <h2>Streams flow into a chamber</h2>
+      <div class="principle">A precision instrument quietly reading your life.</div>
+      <p>Six data streams (genome, labs, wearables, sleep/HRV, history, imaging) flow downward into a glowing chamber. The chamber compresses 300,000 tokens into one prioritized signal that exits as a beam to the bottom card.</p>
+      <div class="meta">Reference → Apple Watch ECG explainer · "calm precision"</div>
+    </a>
+
+    <a href="B.html" class="option-card">
+      <span class="label">Option B · The Powertrain</span>
+      <h2>Three planes stacked in 3D</h2>
+      <div class="principle">Precision engineering — you can see the cogs.</div>
+      <p>Exploded-view machine. Three planes — Risk Models, Attention Layer, Action Layer — float in 3D space. Each scroll beat illuminates one plane and surfaces its function with a real artifact (5 domain tiles, ranked priority list, action card).</p>
+      <div class="meta">Reference → Rivian quad-motor · "engineered transparency"</div>
+    </a>
+
+    <a href="C.html" class="option-card">
+      <span class="label">Option C · The Boardroom</span>
+      <h2>Four models deliberating around a case</h2>
+      <div class="principle">Not a chatbot — a structured medical board.</div>
+      <p>A round table with a synthetic patient case in the center. Four frontier-model voices around the perimeter speak in turn — independent review, then deliberation, then consensus handed to a human MD. Most novel-mechanism feel.</p>
+      <div class="meta">Reference → Anthropic / OpenAI architecture posts · "transparent cognition"</div>
+    </a>
+  </div>
+</div>
+</body>
+</html>

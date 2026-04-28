@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engine — A · The Sensor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.section {
+  padding: 0;
+  background: radial-gradient(ellipse at 50% 35%, #1f1812 0%, #0d0a08 55%, #050403 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrolly-wrap {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: clamp(40px, 6vw, 96px);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: start;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stage-inner {
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 1 / 1.05;
+  position: relative;
+}
+
+/* The funnel SVG container */
+.sensor-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Streams (genome, labs, wearables) */
+.stream {
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0.18;
+  transition: opacity 1.2s var(--ease), stroke-width 1.2s var(--ease);
+}
+.section[data-state="0"] .stream { opacity: 0.18; }
+.section[data-state="1"] .stream { opacity: 0.55; }
+.section[data-state="2"] .stream { opacity: 0.85; stroke-width: 1.4; }
+.section[data-state="3"] .stream { opacity: 0.4; }
+
+/* Stream particles drift down */
+.particle {
+  fill: var(--gold-light);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+}
+.section[data-state="1"] .particle,
+.section[data-state="2"] .particle { opacity: 0.85; }
+.section[data-state="3"] .particle { opacity: 0.2; }
+
+/* The chamber (oval at bottom) */
+.chamber-glow {
+  fill: url(#chamberGrad);
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+}
+.section[data-state="2"] .chamber-glow,
+.section[data-state="3"] .chamber-glow { opacity: 1; }
+
+.chamber-ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 1s var(--ease);
+}
+.section[data-state="2"] .chamber-ring { opacity: 0.6; }
+.section[data-state="3"] .chamber-ring { opacity: 0.9; stroke-width: 2; }
+
+/* Output beam */
+.output-beam {
+  stroke: url(#beamGrad);
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  transition: stroke-dashoffset 1.6s var(--ease);
+}
+.section[data-state="3"] .output-beam { stroke-dashoffset: 0; }
+
+/* Output card */
+.output-card {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(20,15,10,0.85);
+  border: 1px solid rgba(212,165,116,0.35);
+  border-radius: 8px;
+  padding: 18px 24px;
+  min-width: 340px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 0.6s, transform 0.8s var(--ease) 0.6s;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 30px 80px -20px rgba(212,165,116,0.25);
+}
+.section[data-state="3"] .output-card {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.output-card .label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.output-card .priority {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--text-light);
+  line-height: 1.3;
+}
+
+/* Source labels next to streams */
+.stream-label {
+  fill: var(--text-muted-dark);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+}
+.section[data-state="1"] .stream-label,
+.section[data-state="2"] .stream-label { opacity: 1; }
+.section[data-state="3"] .stream-label { opacity: 0.45; }
+
+/* Token counter */
+.token-count {
+  fill: var(--gold-light);
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-anchor: middle;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
+.section[data-state="2"] .token-count { opacity: 1; }
+.section[data-state="3"] .token-count { opacity: 0; }
+
+/* Steps */
+.steps {
+  display: flex;
+  flex-direction: column;
+}
+.step {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0.35;
+  transition: opacity 0.5s var(--ease);
+}
+.step.is-active { opacity: 1; }
+.step .step-num {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: block;
+}
+.step h2 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.06;
+  margin: 0 0 28px;
+  max-width: 18ch;
+}
+.step h3 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.15;
+  margin: 0 0 22px;
+  max-width: 18ch;
+}
+.step h2 em, .step h3 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-light);
+}
+.step p {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-muted-dark);
+  max-width: 42ch;
+}
+
+@media (max-width: 900px) {
+  .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .stage {
+    position: sticky; top: 0; height: 55vh;
+    border-bottom: 1px solid var(--line-dark);
+    z-index: 5;
+    background: radial-gradient(ellipse at 50% 35%, #1f1812 0%, #0d0a08 55%, #050403 100%);
+    padding: 16px var(--gutter);
+  }
+  .step { min-height: 70vh; padding: 40px var(--gutter); opacity: 1; }
+  .step h2 { font-size: 32px; }
+  .step h3 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<nav class="proto-nav">
+  <span class="proto-label">Engine protos</span>
+  <a href="A.html" class="active">A · sensor</a>
+  <a href="B.html">B · powertrain</a>
+  <a href="C.html">C · boardroom</a>
+</nav>
+
+<div class="intro-block">
+  <span class="eyebrow">Option A — The Sensor</span>
+  <p class="lead">Streams of your data flow down into a chamber. The chamber compresses 300,000 tokens into one prioritized signal. Vibe: a precision instrument quietly reading your life. Closest analog: Apple Watch ECG explainer.</p>
+</div>
+
+<section class="section" id="engineSection" data-state="0">
+  <div class="scrolly-wrap">
+    <div class="stage">
+      <div class="stage-inner">
+        <svg class="sensor-svg" viewBox="0 0 720 760" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="streamGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E8C99A" stop-opacity="0"/>
+              <stop offset="40%" stop-color="#D4A574" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#B8854D" stop-opacity="1"/>
+            </linearGradient>
+            <radialGradient id="chamberGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E8C99A" stop-opacity="0.55"/>
+              <stop offset="50%" stop-color="#B8854D" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#B8854D" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E8C99A" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#D4A574" stop-opacity="0.4"/>
+            </linearGradient>
+            <filter id="streamGlow" x="-30%" y="-10%" width="160%" height="120%">
+              <feGaussianBlur stdDeviation="3"/>
+            </filter>
+          </defs>
+
+          <!-- Chamber glow (background layer) -->
+          <ellipse class="chamber-glow" cx="360" cy="500" rx="240" ry="100"/>
+
+          <!-- Six data streams entering from top -->
+          <!-- Genome (left-most) -->
+          <path class="stream" d="M 80 60 Q 100 250, 280 480" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="60" y="48">Genome</text>
+
+          <!-- Labs -->
+          <path class="stream" d="M 200 60 Q 220 250, 320 480" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="180" y="48">Labs</text>
+
+          <!-- Wearables -->
+          <path class="stream" d="M 360 60 Q 360 250, 360 480" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="320" y="48" text-anchor="start">Wearables</text>
+
+          <!-- HRV / sleep -->
+          <path class="stream" d="M 480 60 Q 480 260, 400 480" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="450" y="48">Sleep · HRV</text>
+
+          <!-- History -->
+          <path class="stream" d="M 600 60 Q 600 250, 440 480" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="555" y="48">History</text>
+
+          <!-- Imaging -->
+          <path class="stream" d="M 660 60 Q 640 270, 460 490" stroke="url(#streamGrad)" stroke-width="1"/>
+          <text class="stream-label" x="610" y="48">Imaging</text>
+
+          <!-- Particles drifting in streams -->
+          <circle class="particle" cx="120" cy="200" r="2.5"/>
+          <circle class="particle" cx="220" cy="180" r="2.5"/>
+          <circle class="particle" cx="360" cy="220" r="2.5"/>
+          <circle class="particle" cx="470" cy="250" r="2.5"/>
+          <circle class="particle" cx="590" cy="190" r="2.5"/>
+          <circle class="particle" cx="640" cy="240" r="2.5"/>
+
+          <!-- Chamber rings -->
+          <ellipse class="chamber-ring" cx="360" cy="500" rx="180" ry="78"/>
+          <ellipse class="chamber-ring" cx="360" cy="500" rx="120" ry="50"/>
+          <ellipse class="chamber-ring" cx="360" cy="500" rx="60" ry="24"/>
+
+          <!-- Token counter inside chamber (during state 2) -->
+          <text class="token-count" x="360" y="510">300,000 tokens</text>
+
+          <!-- Output beam exiting downward -->
+          <path class="output-beam" d="M 360 524 L 360 680"/>
+        </svg>
+        <div class="output-card">
+          <div class="label">Top priority for you</div>
+          <div class="priority">Pancreatic surveillance protocol — start this month.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-step="0">
+        <span class="step-num">02 — The Meridian Clinical Engine</span>
+        <h2>All your data. A million studies. <em>One top priority.</em></h2>
+        <p>Six streams enter the engine. Your genome. Your labs. Your wearables. Your history. Your imaging. Sleep and HRV. None of them mean anything alone.</p>
+      </div>
+
+      <div class="step" data-step="1">
+        <span class="step-num">The streams</span>
+        <h3>Six data sources, <em>one continuous picture</em>.</h3>
+        <p>Most clinics see one slice — last week's blood draw, yesterday's blood pressure. The Engine reads all of it, all the time. The streams stay live; the picture stays current.</p>
+      </div>
+
+      <div class="step" data-step="2">
+        <span class="step-num">The chamber</span>
+        <h3>300,000 tokens, <em>compressed to a question</em>.</h3>
+        <p>Inside the chamber, four frontier models conduct a structured medical-board review of your full picture, cross-referenced against the BioMCP medical-knowledge graph and the OpenEvidence research index. A physician's working memory holds about 150 tokens. The chamber holds everything.</p>
+      </div>
+
+      <div class="step" data-step="3">
+        <span class="step-num">The signal</span>
+        <h3>One thing that <em>actually matters</em> for you.</h3>
+        <p>The Engine doesn't generate a 40-page report. It hands a Meridian MD a single prioritized finding with the evidence behind it. Your physician makes the call, sends you a voice message, and tells you the one thing to do this week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const section = document.getElementById('engineSection');
+const steps = document.querySelectorAll('.step');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      steps.forEach(s => s.classList.remove('is-active'));
+      e.target.classList.add('is-active');
+      section.setAttribute('data-state', e.target.dataset.step);
+    }
+  });
+}, { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' });
+steps.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

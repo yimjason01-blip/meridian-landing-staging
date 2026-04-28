@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engine — C · The Boardroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.section {
+  padding: 0;
+  background: #050403;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(184,133,77,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.scrolly-wrap {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(40px, 6vw, 96px);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  align-items: start;
+  position: relative;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Boardroom: round table seen from above-ish */
+.board {
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 1 / 1.05;
+  position: relative;
+}
+
+.table {
+  position: absolute;
+  left: 50%; top: 56%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  aspect-ratio: 1.6 / 1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(184,133,77,0.12), rgba(20,17,13,0.9));
+  border: 1px solid rgba(212,165,116,0.25);
+  box-shadow: 0 0 80px rgba(212,165,116,0.12), inset 0 0 50px rgba(212,165,116,0.05);
+}
+
+/* Patient case card on the table */
+.case-card {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10,8,6,0.85);
+  border: 1px solid rgba(212,165,116,0.5);
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold-light);
+  width: 220px;
+  text-align: center;
+  letter-spacing: 0.04em;
+  z-index: 5;
+  box-shadow: 0 8px 32px rgba(212,165,116,0.2);
+}
+.case-card .case-eyebrow { font-size: 9px; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 6px; }
+.case-card .case-line { color: var(--text-muted-dark); margin: 2px 0; font-size: 10.5px; }
+
+/* The four model "voices" — positioned around table */
+.voice {
+  position: absolute;
+  width: 32%;
+  background: rgba(20,17,13,0.7);
+  border: 1px solid rgba(212,165,116,0.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-muted-dark);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.6s var(--ease), border-color 0.6s var(--ease), transform 0.6s var(--ease);
+  opacity: 0.4;
+}
+.voice .vname {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.voice .vname .vstatus { color: var(--text-muted-dark); }
+.voice .vmsg {
+  color: var(--text-light);
+  line-height: 1.5;
+  font-size: 13px;
+  min-height: 3.6em;
+}
+
+.voice-1 { left: 4%; top: 12%; }
+.voice-2 { right: 4%; top: 12%; }
+.voice-3 { left: 4%; bottom: 12%; }
+.voice-4 { right: 4%; bottom: 12%; }
+
+.section[data-state="1"] .voice { opacity: 0.95; border-color: rgba(212,165,116,0.5); }
+
+/* During state 2: a "consensus" highlight on one voice + connecting lines */
+.section[data-state="2"] .voice { opacity: 0.7; }
+.section[data-state="2"] .voice-1 { opacity: 1; border-color: var(--gold-light); transform: scale(1.04); }
+
+/* State 3 — converged output */
+.section[data-state="3"] .voice { opacity: 0.35; }
+.section[data-state="3"] .case-card { opacity: 0; }
+.section[data-state="3"] .table { opacity: 0.4; }
+
+/* Output card (state 3) */
+.consensus {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: linear-gradient(135deg, rgba(232,201,154,0.18), rgba(184,133,77,0.06));
+  border: 1px solid rgba(232,201,154,0.6);
+  border-radius: 8px;
+  padding: 28px 32px;
+  width: 70%;
+  max-width: 480px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 0.3s, transform 0.8s var(--ease) 0.3s;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 30px 80px -20px rgba(212,165,116,0.4);
+  z-index: 10;
+}
+.section[data-state="3"] .consensus { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.consensus .c-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.consensus .c-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--text-light);
+  margin-bottom: 14px;
+}
+.consensus .c-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Steps */
+.steps { display: flex; flex-direction: column; }
+.step {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0.35;
+  transition: opacity 0.5s var(--ease);
+}
+.step.is-active { opacity: 1; }
+.step .step-num {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px; display: block;
+}
+.step h2 {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.022em;
+  font-size: clamp(36px, 4.6vw, 60px); line-height: 1.06;
+  margin: 0 0 28px; max-width: 18ch;
+}
+.step h3 {
+  font-family: 'Inter Tight', sans-serif; font-weight: 500;
+  letter-spacing: -0.018em;
+  font-size: clamp(26px, 3vw, 38px); line-height: 1.15;
+  margin: 0 0 22px; max-width: 18ch;
+}
+.step h2 em, .step h3 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 500; color: var(--gold-light);
+}
+.step p { font-size: 18px; line-height: 1.65; color: var(--text-muted-dark); max-width: 42ch; }
+
+@media (max-width: 900px) {
+  .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .stage {
+    position: sticky; top: 0; height: 60vh;
+    border-bottom: 1px solid var(--line-dark);
+    z-index: 5;
+    background: #050403;
+    padding: 16px var(--gutter);
+  }
+  .voice { font-size: 11px; padding: 10px 12px; width: 38%; }
+  .voice .vmsg { font-size: 11px; }
+  .step { min-height: 70vh; padding: 40px var(--gutter); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<nav class="proto-nav">
+  <span class="proto-label">Engine protos</span>
+  <a href="A.html">A · sensor</a>
+  <a href="B.html">B · powertrain</a>
+  <a href="C.html" class="active">C · boardroom</a>
+</nav>
+
+<div class="intro-block">
+  <span class="eyebrow">Option C — The Boardroom</span>
+  <p class="lead">Four frontier models in literal deliberation. Voices update around a synthetic case on the table; one converges, hands its finding to a Meridian MD. Vibe: novel mechanism — this isn't a chatbot, it's a structured medical board. Closest analog: Anthropic / OpenAI architecture reveals.</p>
+</div>
+
+<section class="section" id="engineSection" data-state="0">
+  <div class="scrolly-wrap">
+    <div class="stage">
+      <div class="board">
+        <div class="table"></div>
+
+        <div class="case-card">
+          <div class="case-eyebrow">Case · Patient JY-04281</div>
+          <div class="case-line">ATM variant · pathogenic</div>
+          <div class="case-line">3.2× pancreatic risk</div>
+          <div class="case-line">Statin metabolism: altered</div>
+          <div class="case-line">ApoB ↑ 6mo · HRV ↓ 4wk</div>
+        </div>
+
+        <div class="voice voice-1">
+          <div class="vname">claude-sonnet-4 <span class="vstatus">deliberating</span></div>
+          <div class="vmsg">"ATM pathogenic + 3-fold pancreatic risk justifies surveillance MRI/MRCP. Statin switch warrants discussion."</div>
+        </div>
+        <div class="voice voice-2">
+          <div class="vname">gpt-5.5 <span class="vstatus">cross-checking</span></div>
+          <div class="vmsg">"Concur on pancreatic surveillance. Flag: ApoB trend independently warrants lipid re-titration."</div>
+        </div>
+        <div class="voice voice-3">
+          <div class="vname">gemini-2.5-pro <span class="vstatus">searching evidence</span></div>
+          <div class="vmsg">"BioMCP: 4 trials supporting MRI/MRCP at this risk level. NCCN 2025 guidelines align."</div>
+        </div>
+        <div class="voice voice-4">
+          <div class="vname">grok-3 <span class="vstatus">consensus</span></div>
+          <div class="vmsg">"All four models agree: MRI surveillance is the highest-leverage action this quarter."</div>
+        </div>
+
+        <div class="consensus">
+          <div class="c-eyebrow">Handed to Dr. K · for review</div>
+          <div class="c-headline">"Pancreatic MRI/MRCP surveillance — initiate this quarter. Statin switch on the agenda for next visit."</div>
+          <div class="c-meta">4/4 models · evidence attached</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-step="0">
+        <span class="step-num">02 — The Meridian Clinical Engine</span>
+        <h2>All your data. A million studies. <em>One top priority.</em></h2>
+        <p>Most "AI in healthcare" is one model giving one answer. The Engine convenes four frontier models in a structured medical-board review of your full picture — like a tumor board, but for everything that could shape your trajectory.</p>
+      </div>
+
+      <div class="step" data-step="1">
+        <span class="step-num">The board convenes</span>
+        <h3>Four frontier models, <em>each looking at your full picture</em>.</h3>
+        <p>Each model sees the same case — your genome, your labs, your wearables, your history. Each works the problem independently, cross-referenced against the BioMCP medical-knowledge graph and the OpenEvidence research index. Independence is the point — agreement after independent review is signal.</p>
+      </div>
+
+      <div class="step" data-step="2">
+        <span class="step-num">They deliberate</span>
+        <h3>They <em>disagree</em>, on purpose.</h3>
+        <p>Where models concur, the finding strengthens. Where they conflict, the conflict gets surfaced — not buried. A single model is a single point of view. Four in structured debate is closer to the way real medicine works on a hard case.</p>
+      </div>
+
+      <div class="step" data-step="3">
+        <span class="step-num">The handoff</span>
+        <h3>The output goes to a person <em>who knows your name</em>.</h3>
+        <p>The Engine never decides. It synthesizes — and hands a single prioritized finding, with the evidence and dissent attached, to your Meridian MD. They make the call. They send the voice message. The AI did what AI is good at. The human did what humans are good at.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const section = document.getElementById('engineSection');
+const steps = document.querySelectorAll('.step');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      steps.forEach(s => s.classList.remove('is-active'));
+      e.target.classList.add('is-active');
+      section.setAttribute('data-state', e.target.dataset.step);
+    }
+  });
+}, { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' });
+steps.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
