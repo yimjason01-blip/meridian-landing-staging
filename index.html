@@ -1150,6 +1150,100 @@ footer a:hover { color: var(--paper); }
 
 /* ============ COUNTERS ============ */
 .counter[data-target] { font-variant-numeric: tabular-nums; }
+
+/* ============ DELTA SECTION (04) ============ */
+.delta-band {
+  margin-top: clamp(56px, 8vw, 96px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(40px, 5vw, 72px);
+  max-width: 1180px;
+  margin-left: auto; margin-right: auto;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .delta-band {
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+  }
+}
+.delta-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.delta-num {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  font-size: clamp(96px, 14vw, 220px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  color: var(--paper);
+  display: inline-flex;
+  align-items: flex-start;
+}
+.delta-num .delta-pct {
+  font-size: 0.42em;
+  color: var(--gold-light);
+  margin-left: 6px;
+  margin-top: 0.18em;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.delta-num-label {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.55;
+  color: rgba(246,244,238,0.72);
+  max-width: 32ch;
+}
+
+.delta-drivers {
+  display: grid;
+  gap: 18px 24px;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 600px) {
+  .delta-drivers { grid-template-columns: 1fr; }
+}
+.delta-driver {
+  border-top: 1px solid rgba(246,244,238,0.14);
+  padding-top: 16px;
+}
+.delta-driver-pct {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.delta-driver-label {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+.delta-driver-note {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(246,244,238,0.6);
+}
+
+.delta-footnote {
+  grid-column: 1 / -1;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding-top: 18px;
+  border-top: 1px solid rgba(246,244,238,0.1);
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(246,244,238,0.45);
+  max-width: 84ch;
+  letter-spacing: 0.01em;
+}
 </style>
 </head>
 <body>
@@ -1419,19 +1513,45 @@ footer a:hover { color: var(--paper); }
   </div>
 </section>
 
-<!-- ============ FOUNDING EVIDENCE ============ -->
-<section class="deep">
+<!-- ============ SECTION 04 — The Delta ============ -->
+<section class="deep delta-section">
   <div class="container">
-    <div class="fade-in" style="max-width: 920px; margin: 0 auto;">
-      <span class="eyebrow" style="color: var(--gold);">04 — Why this exists</span>
-      <h2 class="display h2" style="margin-top: 28px; color: var(--paper);">I built this<br/>for myself first.</h2>
-      <div class="founder-quote">
-        <p class="serif-quote" style="max-width: 36ch; color: var(--paper);">Last year I took a clinical-grade genetic test out of curiosity.</p>
-        <p class="body-lg" style="margin-top: 32px;">It came back with a pathogenic variant in a gene called <em class="gold-em">ATM</em> — three-fold elevated pancreatic cancer risk, plus changes to how a common statin works in my body. My doctor had never tested for it.</p>
-        <p class="body-lg" style="margin-top: 1.2em;">We ran my full data through the Meridian system. <strong style="color: var(--paper);">Ten clinically significant findings.</strong> My doctor would have caught three or four. The rest would have stayed invisible.</p>
-        <p class="body-lg" style="margin-top: 1.6em; color: var(--paper); font-weight: 500; font-size: 22px;">That's why this exists.</p>
-        <p class="founder-signoff">— Jason Yim, founder</p>
+    <div class="fade-in" style="max-width: 1100px; margin: 0 auto;">
+      <span class="eyebrow" style="color: var(--gold);">04 — The delta</span>
+      <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 22ch;">The proof is in <span style="color: var(--gold-light); font-style: italic; font-weight: 400;">the reroute</span>.</h2>
+      <p class="lede" style="margin-top: 28px; color: rgba(246,244,238,0.78); max-width: 60ch;">More than half of new members leave their first Meridian review with a care plan their PCP wouldn't have given them. Same labs. Same body. Different decisions.</p>
+    </div>
+
+    <div class="delta-band fade-in">
+      <div class="delta-hero">
+        <div class="delta-num">~60<span class="delta-pct">%</span></div>
+        <div class="delta-num-label">of new members get a plan that materially differs from what their PCP would do.</div>
       </div>
+
+      <div class="delta-drivers">
+        <div class="delta-driver">
+          <div class="delta-driver-pct">~12%</div>
+          <div class="delta-driver-label">Actionable genetic finding</div>
+          <div class="delta-driver-note">Pathogenic variant in a gene that changes screening or meds for life. Almost never tested in standard care.</div>
+        </div>
+        <div class="delta-driver">
+          <div class="delta-driver-pct">~40%</div>
+          <div class="delta-driver-label">Pharmacogenomic flag</div>
+          <div class="delta-driver-note">Drug picked or dosed differently — statin metabolism, SSRI response, clopidogrel non-response.</div>
+        </div>
+        <div class="delta-driver">
+          <div class="delta-driver-pct">~35%</div>
+          <div class="delta-driver-label">CAC reclassification</div>
+          <div class="delta-driver-note">Coronary calcium reclassifies the statin decision in roughly one in three intermediate-risk patients.</div>
+        </div>
+        <div class="delta-driver">
+          <div class="delta-driver-pct">~20%</div>
+          <div class="delta-driver-label">Lp(a) elevated</div>
+          <div class="delta-driver-note">Lifetime CVD-risk reclassification + family screening. Rarely measured in standard panels.</div>
+        </div>
+      </div>
+
+      <p class="delta-footnote">Drivers overlap; the headline figure is the union, not the sum. Drawn from PREVENT (AHA 2023), CAC reclassification studies (MESA, CAC Consortium), and pharmacogenomics + clinical-grade genetic-panel actionable yield in adult preventive populations.</p>
     </div>
   </div>
 </section>
