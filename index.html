@@ -1310,16 +1310,21 @@ footer a:hover { color: var(--paper); }
 .exp-stat-num small { font-size: 16px; opacity: 0.6; }
 .exp-stat-lbl { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7a7268; font-weight: 500; margin-top: 6px; }
 
-.exp-logos { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+.exp-logos { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
 .exp-logo-cell {
   background: #fff; border: 1px solid rgba(20,17,13,0.08); border-radius: 14px;
   aspect-ratio: 1/1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px; padding: 10px;
+  align-items: center; justify-content: center; gap: 6px; padding: 10px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .exp-logo-cell:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(20,17,13,0.18); }
-.exp-logo-cell img { width: 28px; height: 28px; object-fit: contain; }
-.exp-logo-cell .wm { font-weight: 600; font-size: 11px; color: #1a1a1a; text-align: center; line-height: 1.1; }
+.exp-logo-cell img,
+.exp-logo-cell svg { width: 28px; height: 28px; object-fit: contain; color: #1a1a1a; }
+.exp-logo-cell .logo-wordmark {
+  font-weight: 700; font-size: 13px; letter-spacing: 0.04em;
+  color: #1a1a1a; line-height: 1; height: 28px; display: flex; align-items: center;
+}
+.exp-logo-cell .wm { font-weight: 500; font-size: 10px; color: #6a6258; text-align: center; line-height: 1.1; letter-spacing: 0.02em; }
 
 /* Pill row */
 .exp-tabs {
@@ -1376,10 +1381,12 @@ footer a:hover { color: var(--paper); }
   .exp-copy p { font-size: 15px; }
   .exp-stat-row { grid-template-columns: 1fr 1fr; gap: 14px; }
   .exp-stat-num { font-size: 26px; }
-  .exp-logos { gap: 6px; }
-  .exp-logo-cell { padding: 8px; border-radius: 10px; }
-  .exp-logo-cell img { width: 22px; height: 22px; }
-  .exp-logo-cell .wm { font-size: 9px; }
+  .exp-logos { gap: 6px; grid-template-columns: repeat(6,1fr); }
+  .exp-logo-cell { padding: 6px; border-radius: 10px; gap: 4px; }
+  .exp-logo-cell img,
+  .exp-logo-cell svg { width: 20px; height: 20px; }
+  .exp-logo-cell .logo-wordmark { font-size: 10px; height: 20px; letter-spacing: 0.08em; }
+  .exp-logo-cell .wm { font-size: 8px; }
   .exp-tabs { gap: 6px; margin-top: 24px; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
   .exp-tab { padding: 10px 14px; font-size: 12px; flex-shrink: 0; }
   .exp-tab .num { font-size: 14px; }
@@ -1681,10 +1688,11 @@ footer a:hover { color: var(--paper); }
           <div class="exp-integ-label">Connects with</div>
           <div class="exp-logos">
             <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/apple/1a1a1a" alt=""><div class="wm">Apple Watch</div></div>
-            <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/oura/1a1a1a" alt=""><div class="wm">Oura</div></div>
-            <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/whoop/1a1a1a" alt=""><div class="wm">Whoop</div></div>
+            <div class="exp-logo-cell"><span class="logo-wordmark" style="font-family:'Inter Tight',sans-serif;font-weight:600;letter-spacing:0.18em;">OURA</span><div class="wm">Ring</div></div>
+            <div class="exp-logo-cell"><span class="logo-wordmark" style="font-family:'Inter Tight',sans-serif;font-weight:800;letter-spacing:0.02em;font-style:italic;">WHOOP</span><div class="wm">Strap</div></div>
             <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/garmin/1a1a1a" alt=""><div class="wm">Garmin</div></div>
             <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/fitbit/1a1a1a" alt=""><div class="wm">Fitbit</div></div>
+            <div class="exp-logo-cell"><img src="https://cdn.simpleicons.org/eightsleep/1a1a1a" alt=""><div class="wm">Eight Sleep</div></div>
           </div>
         </div>
 
