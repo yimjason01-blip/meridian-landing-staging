@@ -314,14 +314,67 @@
   .loop-feedback strong{font-weight:500;color:#1a1a1a}
 
   @media (max-width:900px){
-    .card{grid-template-columns:1fr;padding:36px 24px;gap:36px;min-height:auto}
+    .wrap{padding:80px 18px 100px}
+    .h2{font-size:clamp(34px,8vw,52px)}
+    .lede{margin-bottom:48px;font-size:16px}
+    .stack{gap:18px}
+    .card{grid-template-columns:1fr;padding:32px 20px;gap:28px;min-height:auto;border-radius:18px}
     .card.flip .visual{order:1}
     .card.flip .copy{order:2}
-    .card-step{position:static;margin-bottom:8px}
-    .visual{min-height:auto}
-    .phone{max-width:240px}
-    .logos{grid-template-columns:repeat(3,1fr)}
+    .card-step{position:static;margin:0 0 4px;display:block}
+    .visual{min-height:auto;width:100%}
+    .copy h3{font-size:24px;line-height:1.2}
+    .copy p{font-size:15px}
     .copy .stat-row{grid-template-columns:1fr 1fr;gap:14px}
+    .copy .stat-num{font-size:28px}
+    .copy .stat-num small{font-size:14px}
+
+    /* Phone */
+    .phone{max-width:230px}
+
+    /* Wearable logos: 5 in one row at this width is too cramped, do 5 evenly */
+    .logos{grid-template-columns:repeat(5,1fr);gap:6px}
+    .logo-cell{padding:8px;border-radius:10px}
+    .logo-cell img{width:22px;height:22px}
+    .logo-cell .wm{font-size:9px;letter-spacing:0;line-height:1.1}
+
+    /* Saliva kit */
+    .kit-stage{height:260px}
+    .kit-box{width:78%;max-width:260px;height:170px}
+    .kit-tube{height:120px;width:28px}
+    .kit-arrow{display:none}
+    .kit-label{font-size:9px;bottom:18px;left:18px}
+
+    /* Map */
+    .map{height:300px}
+    .map-stat{padding:12px 14px;flex-direction:column;align-items:flex-start;gap:10px}
+    .map-stat > div{display:flex;align-items:baseline;gap:10px;width:100%;justify-content:flex-start}
+    .map-stat > div:nth-child(2){text-align:left}
+    .map-stat-num{font-size:22px}
+    .map-stat-lbl{font-size:9px}
+
+    /* Video card */
+    .video-card{max-width:100%}
+    .video-meta{padding:14px 16px}
+    .video-meta-name{font-size:13px}
+    .video-meta-time{font-size:12px}
+    .video-pip{width:60px;bottom:14px;right:14px}
+
+    /* Closure loop priority cards */
+    .priority-card{padding:14px 16px;gap:12px;grid-template-columns:auto 1fr auto}
+    .priority-rank{font-size:20px;width:22px}
+    .priority-body strong{font-size:13px}
+    .priority-body span{font-size:11px;line-height:1.4;display:block}
+    .priority-pill{font-size:9px;padding:3px 6px}
+    .loop-feedback{padding:12px 14px;font-size:11px;gap:10px}
+    .loop-feedback svg{width:20px;height:20px}
+  }
+  @media (max-width:380px){
+    .logos{grid-template-columns:repeat(5,1fr);gap:4px}
+    .logo-cell{padding:6px}
+    .logo-cell img{width:18px;height:18px}
+    .logo-cell .wm{font-size:8px}
+    .copy .stat-row{grid-template-columns:1fr;gap:10px}
   }
 </style>
 </head>
