@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience — E · Full 5-card diagram stack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Cormorant:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14110D;
+    --ink-2:#1A1612;
+    --paper:#F5EFE6;
+    --paper-2:#EDE5D5;
+    --paper-edge:rgba(20,17,13,.08);
+    --gold:#D4A574;
+    --gold-deep:#B8854D;
+    --muted:#7a7268;
+    --line:rgba(20,17,13,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter Tight',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1280px;margin:0 auto;padding:120px 32px 160px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:24px}
+  .h2{font-weight:300;font-size:clamp(40px,5.4vw,72px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px;max-width:18ch}
+  .h2 em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold)}
+  .lede{font-size:18px;line-height:1.55;color:rgba(245,239,230,.7);max-width:54ch;margin:0 0 80px}
+
+  /* Card grid */
+  .stack{display:flex;flex-direction:column;gap:28px}
+
+  .card{
+    background:linear-gradient(180deg,var(--paper) 0%, var(--paper-2) 100%);
+    color:var(--ink);
+    border-radius:24px;
+    padding:56px 64px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:64px;
+    align-items:center;
+    box-shadow:0 30px 80px -40px rgba(0,0,0,.6);
+    position:relative;
+    overflow:hidden;
+    min-height:520px;
+  }
+  .card.flip{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .card.flip .visual{order:2}
+  .card.flip .copy{order:1}
+
+  .card-step{
+    position:absolute;top:28px;right:36px;
+    font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:11px;color:var(--gold-deep);
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+
+  /* Copy column */
+  .copy h3{
+    font-family:'Inter Tight';font-weight:400;
+    font-size:clamp(26px,2.6vw,36px);line-height:1.15;
+    margin:0 0 14px;max-width:22ch;letter-spacing:-.01em;
+  }
+  .copy h3 em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold-deep)}
+  .copy p{font-size:16px;line-height:1.6;color:#5b544a;margin:0 0 28px;max-width:50ch}
+  .copy .integ-label{
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:#9a9082;font-weight:500;margin-bottom:14px;
+  }
+  .copy .stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:6px}
+  .copy .stat{
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .copy .stat-num{
+    font-family:Cormorant;font-style:italic;font-weight:500;
+    font-size:36px;color:var(--ink);line-height:1;
+  }
+  .copy .stat-num small{font-size:18px;opacity:.6}
+  .copy .stat-lbl{
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:#7a7268;font-weight:500;margin-top:6px;
+  }
+
+  /* Visual column shared */
+  .visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:380px}
+
+  /* Phone */
+  .phone{
+    width:100%;max-width:280px;
+    aspect-ratio:9/19.5;
+    background:#0b0b0d;
+    border-radius:38px;
+    padding:9px;
+    box-shadow:
+      0 0 0 1.5px rgba(20,17,13,.18),
+      0 30px 60px -20px rgba(20,17,13,.35),
+      0 60px 100px -40px rgba(20,17,13,.45);
+  }
+  .phone-screen{
+    width:100%;height:100%;
+    background:linear-gradient(180deg,#fafaf7 0%,#f1ece2 100%);
+    border-radius:30px;
+    padding:24px 20px;
+    display:flex;flex-direction:column;
+    gap:12px;overflow:hidden;position:relative;
+  }
+  .phone-status{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;font-weight:600;color:#1a1a1a;margin-bottom:2px;
+  }
+  .phone-status-icons{display:flex;gap:3px}
+  .phone-status-icons span{width:10px;height:10px;background:#1a1a1a;border-radius:2px;opacity:.7}
+
+  .ph-eyebrow{font-size:9px;color:#7a7268;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+  .ph-title{font-family:Cormorant;font-style:italic;font-weight:500;font-size:19px;color:#1a1a1a;line-height:1.2}
+  .ph-label{font-size:9px;color:#7a7268;letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:5px;margin-top:8px}
+  .ph-input{
+    background:#fff;border:1px solid rgba(20,17,13,.1);border-radius:8px;
+    padding:8px 10px;font-size:11px;color:#1a1a1a;
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+  }
+  .ph-row{display:flex;gap:5px}
+  .ph-chip{
+    flex:1;text-align:center;background:#fff;border:1px solid rgba(20,17,13,.1);
+    border-radius:6px;padding:6px 4px;font-size:10px;color:#1a1a1a;
+  }
+  .ph-chip.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .ph-progress{margin-top:auto;display:flex;gap:3px}
+  .ph-progress span{flex:1;height:3px;border-radius:2px;background:rgba(20,17,13,.1)}
+  .ph-progress span.done{background:var(--gold)}
+  .ph-cta{margin-top:12px;background:#1a1a1a;color:#fff;border-radius:10px;padding:10px;text-align:center;font-size:12px;font-weight:500}
+
+  /* Wearable logo grid */
+  .logos{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}
+  .logo-cell{
+    background:#fff;border:1px solid var(--paper-edge);border-radius:14px;
+    aspect-ratio:1/1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;padding:10px;
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .logo-cell:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(20,17,13,.18)}
+  .logo-cell img{width:32px;height:32px;object-fit:contain;filter:none}
+  .logo-cell .wm{font-weight:600;font-size:11px;letter-spacing:.01em;color:#1a1a1a;text-align:center}
+
+  /* Saliva kit visual */
+  .kit-stage{
+    position:relative;width:100%;height:380px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .kit-box{
+    width:280px;height:200px;
+    background:linear-gradient(135deg,#fff 0%, #f5efe6 100%);
+    border:1px solid var(--line);
+    border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(20,17,13,.25);
+    position:relative;
+    transform:rotate(-3deg);
+  }
+  .kit-box::before{
+    content:"";position:absolute;inset:14px;
+    border:1px dashed rgba(20,17,13,.18);border-radius:3px;
+  }
+  .kit-tube{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%) rotate(20deg);
+    width:32px;height:140px;
+    background:linear-gradient(180deg,#e8e4dc 0%,#f5efe6 60%,#a87b3d 60%,#a87b3d 100%);
+    border:1px solid rgba(20,17,13,.2);
+    border-radius:16px 16px 4px 4px;
+    box-shadow:0 8px 16px -6px rgba(20,17,13,.3);
+  }
+  .kit-tube::after{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:36px;height:18px;background:#1a1a1a;border-radius:18px 18px 0 0;
+  }
+  .kit-label{
+    position:absolute;bottom:30px;left:30px;
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:#7a7268;letter-spacing:.12em;text-transform:uppercase;
+  }
+  .kit-arrow{
+    position:absolute;left:60%;top:18%;
+    font-family:Cormorant;font-style:italic;font-size:14px;color:var(--gold-deep);
+    transform:rotate(-10deg);
+  }
+  .kit-arrow svg{display:block;margin-top:4px;width:80px;height:auto;color:var(--gold)}
+
+  /* Quest walk-in visual: map of dots */
+  .map{
+    position:relative;width:100%;height:380px;
+    background:radial-gradient(ellipse at center, rgba(212,165,116,.08) 0%, transparent 70%);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .map-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(to right,rgba(20,17,13,.04) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(20,17,13,.04) 1px,transparent 1px);
+    background-size:32px 32px;
+  }
+  .pin{
+    position:absolute;width:12px;height:12px;border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 4px rgba(212,165,116,.25), 0 4px 8px rgba(20,17,13,.2);
+  }
+  .pin.you{
+    width:16px;height:16px;background:#1a1a1a;
+    box-shadow:0 0 0 6px rgba(20,17,13,.12), 0 4px 12px rgba(20,17,13,.3);
+  }
+  .pin.you::after{
+    content:"YOU";position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;font-size:9px;color:#1a1a1a;
+    letter-spacing:.12em;
+  }
+  .map-stat{
+    position:absolute;bottom:24px;left:24px;right:24px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);
+    border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .map-stat-num{font-family:Cormorant;font-style:italic;font-weight:500;font-size:28px;color:#1a1a1a;line-height:1}
+  .map-stat-lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7a7268;font-weight:500}
+
+  /* Consult visual: video call card */
+  .video-card{
+    width:100%;max-width:380px;
+    background:#0b0b0d;border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(20,17,13,.35);
+  }
+  .video-main{
+    aspect-ratio:16/10;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(212,165,116,.18) 0%, transparent 50%),
+      linear-gradient(135deg,#2a2520 0%,#14110D 100%);
+    position:relative;
+    display:flex;align-items:flex-end;padding:18px;
+  }
+  .video-tag{
+    background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:6px;padding:6px 10px;
+    font-size:11px;color:#f5efe6;
+    display:flex;align-items:center;gap:6px;
+  }
+  .video-tag::before{content:"";width:6px;height:6px;background:#7ad17a;border-radius:50%;box-shadow:0 0 8px #7ad17a}
+  .video-pip{
+    position:absolute;bottom:18px;right:18px;
+    width:80px;aspect-ratio:9/12;
+    background:linear-gradient(135deg,#3a342b,#1a1612);
+    border:1.5px solid rgba(255,255,255,.1);
+    border-radius:8px;
+  }
+  .video-meta{
+    background:#fff;color:#1a1a1a;padding:18px 20px;
+    display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);
+  }
+  .video-meta-name{font-weight:500;font-size:14px}
+  .video-meta-name small{display:block;font-weight:400;color:#7a7268;font-size:11px;margin-top:2px;letter-spacing:.04em}
+  .video-meta-time{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold-deep);
+    text-align:right;
+  }
+  .video-meta-time small{display:block;color:#7a7268;font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+
+  /* Closure loop visual: ranked list with arrow loop */
+  .loop{
+    position:relative;width:100%;
+  }
+  .priority-card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin-bottom:10px;
+    display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+    transition:all .3s ease;
+  }
+  .priority-card.top{
+    border-color:var(--gold);
+    box-shadow:0 12px 24px -12px rgba(212,165,116,.5), 0 0 0 1px var(--gold);
+  }
+  .priority-card.dim{opacity:.5}
+  .priority-rank{
+    font-family:Cormorant;font-style:italic;font-weight:500;
+    font-size:24px;color:var(--gold-deep);line-height:1;width:28px;
+  }
+  .priority-body strong{font-weight:500;font-size:14px;color:#1a1a1a;display:block;margin-bottom:2px}
+  .priority-body span{font-size:12px;color:#7a7268}
+  .priority-pill{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    background:rgba(212,165,116,.12);color:var(--gold-deep);
+    padding:4px 8px;border-radius:4px;letter-spacing:.06em;
+  }
+  .priority-card.dim .priority-pill{background:rgba(20,17,13,.06);color:#7a7268}
+
+  .loop-feedback{
+    margin-top:18px;
+    display:flex;align-items:center;gap:14px;
+    padding:14px 18px;
+    background:rgba(212,165,116,.1);
+    border:1px dashed var(--gold);
+    border-radius:12px;
+    font-size:12px;color:var(--gold-deep);
+  }
+  .loop-feedback svg{width:24px;height:24px;flex-shrink:0;color:var(--gold-deep)}
+  .loop-feedback strong{font-weight:500;color:#1a1a1a}
+
+  @media (max-width:900px){
+    .card{grid-template-columns:1fr;padding:36px 24px;gap:36px;min-height:auto}
+    .card.flip .visual{order:1}
+    .card.flip .copy{order:2}
+    .card-step{position:static;margin-bottom:8px}
+    .visual{min-height:auto}
+    .phone{max-width:240px}
+    .logos{grid-template-columns:repeat(3,1fr)}
+    .copy .stat-row{grid-template-columns:1fr 1fr;gap:14px}
+  }
+</style>
+</head>
+<body>
+<section class="wrap">
+  <div class="eyebrow">The experience</div>
+  <h2 class="h2">Five moments. <em>Then a loop.</em></h2>
+  <p class="lede">Onboarding is not a forty-page intake form. Labs are not a waiting room. Your physician consult is not the end of the line — it's where the loop begins.</p>
+
+  <div class="stack">
+
+    <!-- 01 Onboarding -->
+    <article class="card">
+      <span class="card-step">Step 01 / Onboarding</span>
+      <div class="visual">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <div class="phone-status"><span>9:41</span><div class="phone-status-icons"><span></span><span></span><span></span></div></div>
+            <div class="ph-eyebrow">Step 3 of 5</div>
+            <div class="ph-title">Tell us about <em>you.</em></div>
+
+            <div class="ph-label">Date of birth</div>
+            <div class="ph-input">March 14, 1979 <span style="color:#7a7268">›</span></div>
+
+            <div class="ph-label">Sex assigned at birth</div>
+            <div class="ph-row">
+              <div class="ph-chip on">Male</div>
+              <div class="ph-chip">Female</div>
+              <div class="ph-chip">Intersex</div>
+            </div>
+
+            <div class="ph-label">Connect your wearable</div>
+            <div class="ph-input">
+              <span style="display:inline-flex;align-items:center;gap:8px"><span style="display:inline-block;width:10px;height:10px;background:#1a1a1a;border-radius:2px"></span>Apple Watch — connected</span>
+              <span style="color:var(--gold-deep)">✓</span>
+            </div>
+
+            <div class="ph-progress" style="margin-top:14px">
+              <span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span>
+            </div>
+            <div class="ph-cta">Continue</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy">
+        <h3>Onboarding takes <em>fifteen minutes.</em></h3>
+        <p>Demographics, family history, lifestyle, screening history — collected the way every other app on your phone does it. Then your wearable connects in two taps and starts streaming the signals your physician will actually use.</p>
+        <div class="integ-label">Connects with</div>
+        <div class="logos">
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/apple/1a1a1a" alt=""><div class="wm">Apple Watch</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/oura/1a1a1a" alt=""><div class="wm">Oura</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/whoop/1a1a1a" alt=""><div class="wm">Whoop</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/garmin/1a1a1a" alt=""><div class="wm">Garmin</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/fitbit/1a1a1a" alt=""><div class="wm">Fitbit</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 Saliva kit -->
+    <article class="card flip">
+      <span class="card-step">Step 02 / Genetics</span>
+      <div class="copy">
+        <h3>A small kit <em>arrives at your door.</em></h3>
+        <p>Spit in a tube. Drop it in the prepaid mailer. The 163-gene Invitae panel screens for the variants that actually change a care plan — moderate-penetrance cancer risks, cardiovascular variants, pharmacogenomic markers.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">163<small> genes</small></div><div class="stat-lbl">Invitae panel</div></div>
+          <div class="stat"><div class="stat-num">~3<small> wks</small></div><div class="stat-lbl">Results return</div></div>
+        </div>
+      </div>
+      <div class="visual">
+        <div class="kit-stage">
+          <div class="kit-box">
+            <div class="kit-tube"></div>
+            <div class="kit-label">Saliva collection · 2 ml</div>
+          </div>
+          <div class="kit-arrow">
+            ships to you
+            <svg viewBox="0 0 80 30" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 22 Q 30 0, 70 18 L 64 12 M 70 18 L 60 22"/></svg>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 Bloodwork walk-in -->
+    <article class="card">
+      <span class="card-step">Step 03 / Bloodwork</span>
+      <div class="visual">
+        <div class="map">
+          <div class="map-grid"></div>
+          <div class="pin you" style="top:46%;left:48%"></div>
+          <div class="pin" style="top:22%;left:18%"></div>
+          <div class="pin" style="top:30%;left:72%"></div>
+          <div class="pin" style="top:55%;left:15%"></div>
+          <div class="pin" style="top:62%;left:78%"></div>
+          <div class="pin" style="top:18%;left:55%"></div>
+          <div class="pin" style="top:78%;left:38%"></div>
+          <div class="pin" style="top:72%;left:62%"></div>
+          <div class="pin" style="top:38%;left:32%"></div>
+          <div class="pin" style="top:42%;left:88%"></div>
+          <div class="pin" style="top:82%;left:18%"></div>
+          <div class="map-stat">
+            <div>
+              <div class="map-stat-num">2,200+</div>
+              <div class="map-stat-lbl">Quest patient service centers</div>
+            </div>
+            <div style="text-align:right">
+              <div class="map-stat-num">~10<small style="font-size:14px"> min</small></div>
+              <div class="map-stat-lbl">Average draw time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copy">
+        <h3>Walk in. <em>Ten minutes.</em> Done.</h3>
+        <p>Your Meridian lab order is waiting at your nearest Quest patient service center. The Elite panel — a comprehensive metabolic, cardiovascular, and inflammatory marker workup — runs alongside an ApoB and Lp(a) draw most physicals miss.</p>
+        <div class="integ-label">The Elite panel includes</div>
+        <p style="font-size:13px;color:#7a7268;margin:0">CBC + CMP · ApoB · Lp(a) · hsCRP · HbA1c · TSH · Vitamin D · ferritin · homocysteine · uric acid · UACR</p>
+      </div>
+    </article>
+
+    <!-- 04 Physician consult -->
+    <article class="card flip">
+      <span class="card-step">Step 04 / Consult</span>
+      <div class="copy">
+        <h3>An hour with the doctor <em>who'll know you.</em></h3>
+        <p>By the time you sit down, your physician has already reviewed every result, every wearable signal, and the output of every Meridian risk model. The hour is spent on what to do — not on retelling your history.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">60<small> min</small></div><div class="stat-lbl">First consult</div></div>
+          <div class="stat"><div class="stat-num">5<small> domains</small></div><div class="stat-lbl">Risk picture run</div></div>
+        </div>
+      </div>
+      <div class="visual">
+        <div class="video-card" aria-hidden="true">
+          <div class="video-main">
+            <div class="video-tag">Live · 47:12</div>
+            <div class="video-pip"></div>
+          </div>
+          <div class="video-meta">
+            <div class="video-meta-name">Dr. Elena Park, MD<small>Internal Medicine · Meridian</small></div>
+            <div class="video-meta-time">Tue · 10:30 AM<small>From your couch</small></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 05 Closure loop -->
+    <article class="card">
+      <span class="card-step">Step 05 / Closure loop</span>
+      <div class="visual">
+        <div class="loop">
+          <div class="priority-card top">
+            <div class="priority-rank">01</div>
+            <div class="priority-body"><strong>Schedule CAC scan within 30 days</strong><span>Lp(a) elevated · ATM variant · drives CV picture</span></div>
+            <div class="priority-pill">TOP</div>
+          </div>
+          <div class="priority-card dim">
+            <div class="priority-rank">02</div>
+            <div class="priority-body"><strong>Begin Zone 2 cardio block</strong><span>VO₂max 52 → target 56 by Q3</span></div>
+            <div class="priority-pill">QUEUED</div>
+          </div>
+          <div class="priority-card dim">
+            <div class="priority-rank">03</div>
+            <div class="priority-body"><strong>Pancreatic surveillance at age 50</strong><span>ATM moderate-penetrance variant</span></div>
+            <div class="priority-pill">QUEUED</div>
+          </div>
+          <div class="loop-feedback">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+            <div><strong>CAC = 0 returns →</strong> Engine reruns. Top priority shifts to <strong>Zone 2 block.</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="copy">
+        <h3>The consult <em>isn't the finish line.</em></h3>
+        <p>You leave with one top priority — the single thing that moves your risk picture most. As you act, your wearable streams the result. New labs feed back in. The engine reruns. A new top priority surfaces. The loop is the product.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Top priority at a time</div></div>
+          <div class="stat"><div class="stat-num">90<small> days</small></div><div class="stat-lbl">Default rerun cadence</div></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+</body>
+</html>
