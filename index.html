@@ -1068,6 +1068,20 @@ footer a:hover { color: var(--paper); }
   border-radius: 36px;
   display: block;
 }
+.patient-phone { overflow: hidden; }
+.patient-phone .phone-doctor-video {
+  position: absolute;
+  left: 5%;
+  top: 15.02%;
+  width: 90%;
+  height: 30.35%;
+  object-fit: cover;
+  pointer-events: none;
+  border: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .patient-phone .phone-doctor-video { display: none; }
+}
 @media (min-width: 700px) {
   .phone-frame { width: 360px; }
 }
@@ -1619,8 +1633,11 @@ footer a:hover { color: var(--paper); }
   <div class="container">
     <div class="md-ai-grid fade-in">
       <div class="md-ai-phone-col">
-        <div class="phone-frame">
+        <div class="phone-frame patient-phone">
           <img src="assets/prototype-screen.jpg" alt="Meridian patient app showing a voice message from your physician" />
+          <video class="phone-doctor-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+            <source src="assets/video/doctor-speaking-overlay-540x394.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
