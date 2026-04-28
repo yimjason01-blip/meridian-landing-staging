@@ -111,12 +111,18 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom-color: rgba(246,244,238,0.08);
 }
 .nav-brand {
-  font-family: 'Inter Tight', sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  font-size: 19px;
-  color: #fff;
+  font-family: 'Inter', 'Inter Tight', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-size: 20px;
+  color: rgba(255,255,255,0.62);
   text-decoration: none;
+  line-height: 1.08;
+}
+.nav-brand .md-tag {
+  color: #fff;
+  font-weight: 510;
+  letter-spacing: -0.02em;
 }
 .nav-cta {
   font-size: 14px;
@@ -1152,7 +1158,7 @@ footer a:hover { color: var(--paper); }
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
-  <a href="#top" class="nav-brand">Meridian MD</a>
+  <a href="#top" class="nav-brand">Meridian <span class="md-tag">MD</span></a>
   <a href="#apply" class="nav-cta">Apply</a>
 </nav>
 
