@@ -600,23 +600,23 @@ footer a:hover { color: var(--paper); }
   <div class="scroll-cue">Scroll</div>
 </section>
 
-<!-- ============ SECTION 2 — Trajectory ============ -->
-<section class="dark">
+<!-- ============ SECTION 01 — Trajectory (warm) ============ -->
+<section class="warm">
   <div class="container">
     <div class="fear-block fade-in" style="text-align: center; max-width: 1100px;">
-      <span class="eyebrow" style="color: var(--gold);">01 — Quality of life</span>
-      <h2 class="display h2" style="margin: 28px auto 0; max-width: 22ch;">The story of your future<br/>is written on top of <span style="color: var(--gold-light); font-style: italic; font-weight: 400;">this curve</span>.</h2>
-      <p class="body-lg" style="margin: 32px auto 0; max-width: 60ch; text-align: center;">The curve bends in your 40s. By the time it's obvious from a snapshot, it's been obvious for years to anyone who was actually looking.</p>
+      <span class="eyebrow">01 — Quality of life</span>
+      <h2 class="display h2" style="margin: 28px auto 0; max-width: 22ch;">The story of your future<br/>is written on top of <span style="color: var(--gold-deep); font-style: italic; font-weight: 400;">this curve</span>.</h2>
+      <p class="body-lg" style="margin: 32px auto 0; max-width: 60ch; text-align: center; color: var(--text-muted);">The curve bends in your 40s. By the time it's obvious from a snapshot, it's been obvious for years to anyone who was actually looking.</p>
 
       <svg class="trajectory-svg" id="trajectorySvg" viewBox="0 0 1100 460" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-linecap="round">
         <defs>
           <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#D4A574" stop-opacity="0.7"/>
-            <stop offset="50%" stop-color="#E8C99A"/>
-            <stop offset="100%" stop-color="#D4A574"/>
+            <stop offset="0%" stop-color="#B8854D" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#D4A574"/>
+            <stop offset="100%" stop-color="#B8854D"/>
           </linearGradient>
           <filter id="goldGlow" x="-10%" y="-50%" width="120%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feGaussianBlur stdDeviation="4" result="blur"/>
             <feMerge>
               <feMergeNode in="blur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -625,60 +625,60 @@ footer a:hover { color: var(--paper); }
         </defs>
 
         <!-- y-axis label -->
-        <text x="40" y="80" fill="rgba(246,244,238,0.7)" font-family="Inter, sans-serif" font-size="13" font-weight="500" letter-spacing="0.04em">Quality of life</text>
-        <text x="40" y="100" fill="rgba(246,244,238,0.4)" font-family="Inter, sans-serif" font-size="11">What your body can do at every age</text>
+        <text x="40" y="80" fill="rgba(10,10,11,0.78)" font-family="Inter, sans-serif" font-size="13" font-weight="500" letter-spacing="0.04em">Quality of life</text>
+        <text x="40" y="100" fill="rgba(10,10,11,0.5)" font-family="Inter, sans-serif" font-size="11">What your body can do at every age</text>
 
         <!-- grid -->
-        <line x1="80" y1="400" x2="1060" y2="400" stroke="rgba(246,244,238,0.15)" stroke-width="1"/>
-        <line x1="80" y1="80" x2="80" y2="400" stroke="rgba(246,244,238,0.15)" stroke-width="1"/>
+        <line x1="80" y1="400" x2="1060" y2="400" stroke="rgba(10,10,11,0.18)" stroke-width="1"/>
+        <line x1="80" y1="80" x2="80" y2="400" stroke="rgba(10,10,11,0.18)" stroke-width="1"/>
 
         <!-- y-axis ticks -->
-        <line x1="76" y1="120" x2="80" y2="120" stroke="rgba(246,244,238,0.2)"/>
-        <line x1="76" y1="260" x2="80" y2="260" stroke="rgba(246,244,238,0.2)"/>
-        <line x1="76" y1="400" x2="80" y2="400" stroke="rgba(246,244,238,0.2)"/>
+        <line x1="76" y1="120" x2="80" y2="120" stroke="rgba(10,10,11,0.25)"/>
+        <line x1="76" y1="260" x2="80" y2="260" stroke="rgba(10,10,11,0.25)"/>
+        <line x1="76" y1="400" x2="80" y2="400" stroke="rgba(10,10,11,0.25)"/>
 
         <!-- declining trajectory: average American -->
-        <path class="path-decline" d="M 80 130 Q 380 150, 580 240 T 1040 390" stroke="rgba(246,244,238,0.32)" stroke-width="2" stroke-dasharray="3 9"/>
+        <path class="path-decline" d="M 80 130 Q 380 150, 580 240 T 1040 390" stroke="rgba(10,10,11,0.35)" stroke-width="2" stroke-dasharray="3 9"/>
 
         <!-- maintained trajectory: best possible -->
         <path class="path-best" d="M 80 130 Q 380 108, 580 120 T 1040 160" stroke="url(#goldGrad)" stroke-width="3.5" filter="url(#goldGlow)"/>
 
         <!-- endpoints -->
-        <circle class="endpoint" cx="80" cy="130" r="5" fill="#E8C99A"/>
-        <circle class="endpoint" cx="1040" cy="160" r="7" fill="#D4A574"/>
-        <circle class="endpoint" cx="1040" cy="390" r="5" fill="rgba(246,244,238,0.4)"/>
+        <circle class="endpoint" cx="80" cy="130" r="5" fill="#B8854D"/>
+        <circle class="endpoint" cx="1040" cy="160" r="7" fill="#B8854D"/>
+        <circle class="endpoint" cx="1040" cy="390" r="5" fill="rgba(10,10,11,0.45)"/>
 
         <!-- curve labels -->
-        <text class="label" x="1050" y="158" fill="#D4A574" font-family="Inter, sans-serif" font-size="13" font-weight="500" dy="-12">Best possible</text>
-        <text class="label" x="1050" y="390" fill="rgba(246,244,238,0.55)" font-family="Inter, sans-serif" font-size="12" dy="22">Average American</text>
+        <text class="label" x="1050" y="158" fill="#B8854D" font-family="Inter, sans-serif" font-size="13" font-weight="500" dy="-12">Best possible</text>
+        <text class="label" x="1050" y="390" fill="rgba(10,10,11,0.6)" font-family="Inter, sans-serif" font-size="12" dy="22">Average American</text>
 
         <!-- x-axis age markers -->
-        <text class="label" x="80" y="430" fill="rgba(246,244,238,0.5)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em">AGE 40</text>
-        <text class="label" x="560" y="430" fill="rgba(246,244,238,0.4)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em" text-anchor="middle">AGE 60</text>
-        <text class="label" x="1040" y="430" fill="rgba(246,244,238,0.5)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em" text-anchor="end">AGE 80</text>
+        <text class="label" x="80" y="430" fill="rgba(10,10,11,0.55)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em">AGE 40</text>
+        <text class="label" x="560" y="430" fill="rgba(10,10,11,0.45)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em" text-anchor="middle">AGE 60</text>
+        <text class="label" x="1040" y="430" fill="rgba(10,10,11,0.55)" font-family="Inter, sans-serif" font-size="11" letter-spacing="0.16em" text-anchor="end">AGE 80</text>
       </svg>
     </div>
   </div>
 </section>
 
-<!-- ============ PARALLAX IMAGE STRIP — vitality ============ -->
-<div class="image-strip" id="parallaxStrip">
-  <img src="assets/surfer.jpg" alt="" id="parallaxImg" />
-  <div class="image-strip-caption">"Both groups might be outliers. I know which side I want to be on."</div>
-</div>
-
-<!-- ============ THE SYSTEM ============ -->
+<!-- ============ SECTION 02 — Meridian Clinical Engine ============ -->
 <section class="dark">
   <div class="container">
-    <div class="section-grid two-col fade-in">
-      <div>
-        <span class="eyebrow" style="color: var(--gold);">02 — The system</span>
-        <h2 class="display h2" style="margin-top: 28px; color: var(--paper);">A medical team<br/>large enough<br/>for the data.</h2>
-      </div>
+    <div class="fade-in" style="text-align: center; max-width: 1100px; margin: 0 auto;">
+      <span class="eyebrow" style="color: var(--gold);">02 — The Meridian AI Clinical Engine</span>
+      <h2 class="display h2" style="margin: 28px auto 0; color: var(--paper); max-width: 22ch;">All your data.<br/>A million studies.<br/><span style="color: var(--gold-light); font-style: italic; font-weight: 400;">One top priority.</span></h2>
+    </div>
+
+    <figure style="margin: 64px auto 0; max-width: 1100px;">
+      <img src="assets/chip.jpg" alt="The Meridian AI Clinical Engine" style="width: 100%; border-radius: 4px;" />
+    </figure>
+
+    <div class="section-grid two-col fade-in" style="margin-top: 72px;">
       <div>
         <p class="body-lg">Your genome, your blood, your wearables, your history — together that's roughly <strong style="color: var(--paper);">300,000 tokens</strong> of information. A physician's working memory holds about <strong style="color: var(--paper);">150</strong>.</p>
-        <p class="body-lg" style="margin-top: 1.2em;">Meridian convenes four frontier AI models in a structured medical-board review of your full picture, then hands the synthesis to a Meridian MD. The AI does what AI is good at: hold everything at once. Your physician does what physicians are good at: judgment, gut check, and a real conversation with someone who knows your name.</p>
-
+        <p class="body-lg" style="margin-top: 1.2em;">The Engine convenes four frontier AI models in a structured medical-board review of your full picture — cross-referenced against the BioMCP medical-knowledge graph and the OpenEvidence research index — then hands the synthesis to a Meridian MD. The AI does what AI is good at: hold everything at once. Your physician does what physicians are good at: judgment, gut check, and a real conversation with someone who knows your name.</p>
+      </div>
+      <div>
         <div class="system-stat-grid">
           <div class="system-stat">
             <span class="system-stat-num"><span class="counter" data-target="300000" data-suffix="">0</span></span>
