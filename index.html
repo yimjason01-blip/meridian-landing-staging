@@ -450,11 +450,8 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   max-width: 18ch;
 }
 .scrolly-step .step-h em {
-  font-family: 'Inter Tight', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  color: var(--traj-gold-text);
-  letter-spacing: -0.02em;
+  font: inherit;
+  color: inherit;
 }
 .scrolly-step p {
   font-size: clamp(17px, 1.2vw, 19px);
@@ -788,9 +785,8 @@ section.engine-section {
   color: var(--paper);
 }
 .engine-step .step-h em {
-  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
-  font-style: italic; font-weight: 500;
-  color: var(--gold-light);
+  font: inherit;
+  color: inherit;
 }
 .engine-triad-headline span,
 .engine-triad-headline em {
@@ -1315,7 +1311,7 @@ footer a:hover { color: var(--paper); }
   font-size: clamp(26px, 2.6vw, 36px); line-height: 1.15;
   margin: 0 0 14px; max-width: 22ch; letter-spacing: -0.01em;
 }
-.exp-copy h3 em { font-family: 'Cormorant', serif; font-style: italic; font-weight: 500; color: var(--gold-deep); }
+.exp-copy h3 em { font: inherit; color: inherit; }
 .exp-copy p { font-size: 16px; line-height: 1.6; color: #5b544a; margin: 0 0 24px; max-width: 50ch; }
 .exp-integ-label {
   font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1500,22 +1496,22 @@ footer a:hover { color: var(--paper); }
     <!-- RIGHT: scroll steps -->
     <div class="scrolly-steps">
       <div class="scrolly-step" data-step="0">
-        <h2 class="step-h">The story of your future is written on top of <em>this curve</em>.</h2>
+        <h2 class="step-h">The story of your future is written on top of this curve.</h2>
         <p>The average American. Plotted across the years that decide everything. By the time the slope is obvious from a snapshot, it's been obvious for years to anyone who was actually looking.</p>
       </div>
 
       <div class="scrolly-step" data-step="1">
-        <h3 class="step-h">Right now, you can do <em>almost anything</em>.</h3>
+        <h3 class="step-h">Right now, you can do almost anything.</h3>
         <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. The body still says yes. This is the window where the curve is being set — quietly, in the background, by what you do and don't catch.</p>
       </div>
 
       <div class="scrolly-step" data-step="2">
-        <h3 class="step-h">Some day, you won't be able to do <em>very much</em>.</h3>
+        <h3 class="step-h">Some day, you won't be able to do very much.</h3>
         <p>Stairs become a problem. The grandkids visit and you watch from the chair. The interventions that would have changed the slope had to happen 30 years earlier — but no one was running the model.</p>
       </div>
 
       <div class="scrolly-step" data-step="3">
-        <h3 class="step-h">Together, we can <em>bend the curve</em>.</h3>
+        <h3 class="step-h">Together, we can bend the curve.</h3>
         <p>Every domain — cardiovascular, metabolic, neurological, oncologic — has a slope. We measure all of them, continuously, and act on the ones bending wrong. A continuous medical relationship that keeps this curve as flat as it can be, for as long as it can be.</p>
       </div>
     </div>
@@ -1589,27 +1585,27 @@ footer a:hover { color: var(--paper); }
     <!-- RIGHT: scroll narrative -->
     <div class="engine-steps">
       <div class="engine-step" data-step="0">
-        <h2 class="step-h engine-triad-headline"><span>All your data.</span><span>A million studies.</span><em>One top priority.</em></h2>
+        <h2 class="step-h engine-triad-headline"><span>All your data.</span><span>A million studies.</span><span>One top priority.</span></h2>
         <p>Four layers of machinery. Classical medicine on top. Frontier AI in the middle. Ranked actions below. One thing to actually do at the bottom. Each layer does the part no person — or single model — can do alone, and hands the result to the next.</p>
       </div>
 
       <div class="engine-step" data-step="1">
-        <h3 class="step-h">Five domains, <em>the way medicine actually works</em>.</h3>
+        <h3 class="step-h">Five of the top killers profiled.</h3>
         <p>Cardiovascular. Metabolic. Oncologic. Neurologic. Renal. Each model takes your full data picture — genome, labs, wearables, history — and computes one number per domain: how is this trajectory bending, and how fast. This is the part of the engine your physician already speaks.</p>
       </div>
 
       <div class="engine-step" data-step="2">
-        <h3 class="step-h">Four frontier models, <em>two medical knowledge graphs</em>.</h3>
+        <h3 class="step-h">Four frontier models, two medical knowledge graphs.</h3>
         <p>The risk signals get convened in a structured board review: claude-sonnet-4, gpt-5.5, gemini-2.5-pro, grok-3 — each working independently against the BioMCP medical-knowledge graph and the OpenEvidence research index. Where models concur, the finding strengthens. Where they disagree, the conflict gets surfaced — not buried. This is the part no chatbot wrapper can replicate.</p>
       </div>
 
       <div class="engine-step" data-step="3">
-        <h3 class="step-h">Ranked, <em>so you don't have to be</em>.</h3>
+        <h3 class="step-h">Ranked, so you don't have to be.</h3>
         <p>The Attention Layer takes the board's synthesis and ranks every plausible action by what's actually changeable, today, with the highest leverage. Most prevention products give you a 40-page report. We give you the priority queue, weighted and ordered.</p>
       </div>
 
       <div class="engine-step" data-step="4">
-        <h3 class="step-h">One thing to do <em>this week</em>.</h3>
+        <h3 class="step-h">One thing to do this week.</h3>
         <p>The Action Layer translates the top-ranked priority into a concrete plan, attaches the evidence, and hands it to your Meridian MD. They review, customize for your life, and send you a voice message — not a notification, not a chatbot summary. The next thing to do, in your physician's voice.</p>
       </div>
     </div>
@@ -1664,7 +1660,7 @@ footer a:hover { color: var(--paper); }
 <section class="exp-section" id="experience">
   <div class="container">
     <div class="fade-in" style="max-width: 1100px;">
-      <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 18ch;">Five moments. <span style="color: var(--gold-light); font-style: italic; font-weight: 400; font-family: 'Cormorant', serif;">Then a loop.</span></h2>
+      <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 18ch;">Five moments. Then a loop.</h2>
       <p class="lede" style="margin-top: 28px; color: rgba(246,244,238,0.78); max-width: 60ch;">Onboarding is not a forty-page intake form. Labs are not a waiting room. Your physician consult is not the end of the line — it's where the loop begins.</p>
     </div>
 
@@ -1682,7 +1678,7 @@ footer a:hover { color: var(--paper); }
       <div class="exp-copy">
         <!-- 01 Onboarding -->
         <div class="exp-pane is-active" data-i="0">
-          <h3>Onboarding takes <em>fifteen minutes.</em></h3>
+          <h3>Onboarding takes fifteen minutes.</h3>
           <p>Demographics, family history, lifestyle, screening history — collected the way every other app on your phone does it. Then your wearable connects in two taps and starts streaming the signals your physician will actually use.</p>
           <div class="exp-integ-label">Connects with</div>
           <div class="exp-logos">
@@ -1697,7 +1693,7 @@ footer a:hover { color: var(--paper); }
 
         <!-- 02 Genetics -->
         <div class="exp-pane" data-i="1">
-          <h3>A small kit <em>arrives at your door.</em></h3>
+          <h3>A small kit arrives at your door.</h3>
           <p>Spit in a tube. Drop it in the prepaid mailer. The 163-gene Invitae panel screens for the variants that actually change a care plan — moderate-penetrance cancer risks, cardiovascular variants, pharmacogenomic markers.</p>
           <div class="exp-stat-row">
             <div class="exp-stat"><div class="exp-stat-num">163<small> genes</small></div><div class="exp-stat-lbl">Invitae panel</div></div>
@@ -1707,7 +1703,7 @@ footer a:hover { color: var(--paper); }
 
         <!-- 03 Bloodwork -->
         <div class="exp-pane" data-i="2">
-          <h3>Walk in. <em>Ten minutes.</em> Done.</h3>
+          <h3>Walk in. Ten minutes. Done.</h3>
           <p>Your Meridian lab order is waiting at your nearest Quest patient service center. The Elite panel — a comprehensive metabolic, cardiovascular, and inflammatory marker workup — runs alongside an ApoB and Lp(a) draw most physicals miss.</p>
           <div class="exp-integ-label">The Elite panel includes</div>
           <p style="font-size: 13px; color: #7a7268; margin: 0;">CBC + CMP · ApoB · Lp(a) · hsCRP · HbA1c · TSH · Vitamin D · ferritin · homocysteine · uric acid · UACR</p>
@@ -1715,7 +1711,7 @@ footer a:hover { color: var(--paper); }
 
         <!-- 04 Consult -->
         <div class="exp-pane" data-i="3">
-          <h3>An hour with the doctor <em>who'll know you.</em></h3>
+          <h3>An hour with the doctor who'll know you.</h3>
           <p>By the time you sit down, your physician has already reviewed every result, every wearable signal, and the output of every Meridian risk model. The hour is spent on what to do — not on retelling your history.</p>
           <div class="exp-stat-row">
             <div class="exp-stat"><div class="exp-stat-num">60<small> min</small></div><div class="exp-stat-lbl">First consult</div></div>
@@ -1725,7 +1721,7 @@ footer a:hover { color: var(--paper); }
 
         <!-- 05 Closure loop -->
         <div class="exp-pane" data-i="4">
-          <h3>The consult <em>isn't the finish line.</em></h3>
+          <h3>The consult isn't the finish line.</h3>
           <p>You leave with one top priority — the single thing that moves your risk picture most. As you act, your wearable streams the result. New labs feed back in. The engine reruns. A new top priority surfaces. The loop is the product.</p>
           <div class="exp-stat-row">
             <div class="exp-stat"><div class="exp-stat-num">1</div><div class="exp-stat-lbl">Top priority at a time</div></div>
@@ -1800,7 +1796,7 @@ footer a:hover { color: var(--paper); }
 <section class="deep delta-section">
   <div class="container">
     <div class="fade-in" style="max-width: 1100px; margin: 0 auto;">
-      <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 22ch;">The proof is in <span style="color: var(--gold-light); font-style: italic; font-weight: 400;">the reroute</span>.</h2>
+      <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 22ch;">The proof is in the reroute.</h2>
       <p class="lede" style="margin-top: 28px; color: rgba(246,244,238,0.78); max-width: 60ch;">More than half of new members leave their first Meridian review with a care plan their PCP wouldn't have given them. Same labs. Same body. Different decisions.</p>
     </div>
 
