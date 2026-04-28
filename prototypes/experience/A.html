@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience — A · Apple-style storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Cormorant:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f5efe6;
+    --cream-deep:#ece4d6;
+    --ink:#1d1a16;
+    --ink-soft:#5b544a;
+    --gold:#a87b3d;
+    --line:rgba(29,26,22,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter Tight',system-ui,sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  .exp{
+    padding:120px 32px 160px;
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .exp-eyebrow{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:500;
+    margin-bottom:24px;
+  }
+  .exp-h{
+    font-family:'Inter Tight';
+    font-weight:300;
+    font-size:clamp(40px,5.4vw,72px);
+    line-height:1.05;
+    letter-spacing:-.02em;
+    margin:0 0 18px;
+    max-width:18ch;
+  }
+  .exp-h em{
+    font-family:Cormorant;
+    font-style:italic;
+    font-weight:500;
+    color:var(--gold);
+  }
+  .exp-lede{
+    font-size:18px;
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:54ch;
+    margin:0 0 64px;
+  }
+
+  /* Stage */
+  .stage{
+    position:relative;
+    border-radius:24px;
+    overflow:hidden;
+    aspect-ratio:16/9;
+    background:var(--cream-deep);
+    box-shadow:0 30px 80px -40px rgba(29,26,22,.25);
+  }
+  .stage-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .6s ease;
+  }
+  .stage-img.is-active{opacity:1}
+
+  .stage-caption{
+    position:absolute;
+    left:40px;
+    bottom:40px;
+    right:40px;
+    color:#fff;
+    text-shadow:0 2px 16px rgba(0,0,0,.4);
+    pointer-events:none;
+  }
+  .stage-step{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    opacity:.85;
+    margin-bottom:8px;
+  }
+  .stage-title{
+    font-family:'Inter Tight';
+    font-weight:400;
+    font-size:clamp(24px,3vw,38px);
+    line-height:1.1;
+    margin:0 0 8px;
+    max-width:24ch;
+  }
+  .stage-title em{font-family:Cormorant;font-style:italic;font-weight:500;}
+  .stage-body{
+    font-size:15px;
+    line-height:1.55;
+    max-width:48ch;
+    opacity:.92;
+  }
+
+  /* Tabs (Apple-style pill row) */
+  .tabs{
+    display:flex;
+    gap:10px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .tab{
+    appearance:none;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-soft);
+    padding:14px 18px;
+    border-radius:999px;
+    font:inherit;
+    font-size:14px;
+    font-weight:500;
+    letter-spacing:.01em;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:background .25s ease,color .25s ease,border-color .25s ease;
+  }
+  .tab .num{
+    font-family:Cormorant;
+    font-style:italic;
+    font-weight:500;
+    font-size:16px;
+    color:var(--gold);
+    opacity:.75;
+  }
+  .tab:hover{border-color:rgba(29,26,22,.25);color:var(--ink)}
+  .tab.is-active{
+    background:var(--ink);
+    color:#fff;
+    border-color:var(--ink);
+  }
+  .tab.is-active .num{color:#e8c98c;opacity:1}
+
+  /* Progress sliver */
+  .progress{
+    height:2px;
+    background:var(--line);
+    border-radius:2px;
+    margin-top:24px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:20%;
+    background:var(--gold);
+    transition:width .5s ease;
+  }
+
+  @media (max-width:720px){
+    .exp{padding:80px 20px 120px}
+    .stage-caption{left:20px;right:20px;bottom:24px}
+    .tabs{gap:8px}
+    .tab{padding:12px 14px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+<section class="exp">
+  <div class="exp-eyebrow">The experience</div>
+  <h2 class="exp-h">Healthcare that comes <em>to you.</em></h2>
+  <p class="exp-lede">No waiting rooms. No clipboards on cracked iPads. From welcome to plan, the experience is designed to feel like the rest of your good life — quiet, considered, and on your time.</p>
+
+  <div class="stage" id="stage">
+    <img class="stage-img is-active" data-i="0" src="../../assets/illustrations/exp-01-welcome.png" alt="">
+    <img class="stage-img" data-i="1" src="../../assets/illustrations/exp-02-labs.png" alt="">
+    <img class="stage-img" data-i="2" src="../../assets/illustrations/exp-03-consult.png" alt="">
+    <img class="stage-img" data-i="3" src="../../assets/illustrations/exp-04-work.png" alt="">
+    <img class="stage-img" data-i="4" src="../../assets/illustrations/exp-05-plan.png" alt="">
+
+    <div class="stage-caption">
+      <div class="stage-step" id="capStep">Step 01 · Welcome</div>
+      <h3 class="stage-title" id="capTitle">A <em>welcome kit</em> arrives at your door.</h3>
+      <p class="stage-body" id="capBody">Cream box, handwritten card, a few small touches. The first thing Meridian sends isn't a form — it's a hello.</p>
+    </div>
+  </div>
+
+  <div class="progress"><div class="progress-fill" id="progFill"></div></div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab is-active" data-i="0"><span class="num">01</span> Welcome</button>
+    <button class="tab" data-i="1"><span class="num">02</span> Labs at home</button>
+    <button class="tab" data-i="2"><span class="num">03</span> Meet your physician</button>
+    <button class="tab" data-i="3"><span class="num">04</span> The work behind the scenes</button>
+    <button class="tab" data-i="4"><span class="num">05</span> Your plan</button>
+  </div>
+</section>
+
+<script>
+  const captions = [
+    {step:"Step 01 · Welcome", title:"A <em>welcome kit</em> arrives at your door.", body:"Cream box, handwritten card, a few small touches. The first thing Meridian sends isn't a form — it's a hello."},
+    {step:"Step 02 · Labs at home", title:"Your labs are drawn at <em>your kitchen table.</em>", body:"A phlebotomist comes to you. Twenty quiet minutes, no fluorescent lights, no parking garage."},
+    {step:"Step 03 · Meet your physician", title:"A real conversation, <em>at your pace.</em>", body:"Sixty minutes with the doctor who'll know you. From your couch, your office, anywhere with wifi."},
+    {step:"Step 04 · Behind the scenes", title:"While you live your life, <em>your plan gets built.</em>", body:"Your physician and the Meridian engine review every result, every signal — and shape what's next."},
+    {step:"Step 05 · Your plan", title:"A clear plan. <em>Yours.</em>", body:"One booklet, one calendar, one set of next steps. No portals, no scavenger hunt. Just what to do."},
+  ];
+
+  const stage = document.getElementById('stage');
+  const tabs = document.querySelectorAll('.tab');
+  const imgs = document.querySelectorAll('.stage-img');
+  const capStep = document.getElementById('capStep');
+  const capTitle = document.getElementById('capTitle');
+  const capBody = document.getElementById('capBody');
+  const progFill = document.getElementById('progFill');
+
+  function go(i){
+    tabs.forEach(t=>t.classList.toggle('is-active', +t.dataset.i===i));
+    imgs.forEach(im=>im.classList.toggle('is-active', +im.dataset.i===i));
+    const c = captions[i];
+    capStep.textContent = c.step;
+    capTitle.innerHTML = c.title;
+    capBody.textContent = c.body;
+    progFill.style.width = ((i+1)/captions.length*100)+'%';
+  }
+  tabs.forEach(t=>t.addEventListener('click', ()=>go(+t.dataset.i)));
+
+  // auto-advance
+  let i = 0, timer = setInterval(()=>{
+    i = (i+1) % captions.length;
+    go(i);
+  }, 4500);
+  stage.addEventListener('click', ()=>{ clearInterval(timer); });
+  document.getElementById('tabs').addEventListener('click', ()=>{ clearInterval(timer); });
+</script>
+</body>
+</html>

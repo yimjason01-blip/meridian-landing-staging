@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience — C · Diorama / hover-reveal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Cormorant:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f3ece0;
+    --ink:#1d1a16;
+    --ink-soft:#5b544a;
+    --gold:#a87b3d;
+    --paper:#fdfaf3;
+    --line:rgba(29,26,22,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:'Inter Tight',system-ui,sans-serif}
+
+  .exp{padding:120px 32px 80px;max-width:1280px;margin:0 auto}
+  .exp-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:24px}
+  .exp-h{font-weight:300;font-size:clamp(40px,5.4vw,72px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px;max-width:18ch}
+  .exp-h em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold)}
+  .exp-lede{font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:54ch;margin:0 0 56px}
+
+  /* Diorama strip */
+  .strip{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 30px 80px -40px rgba(29,26,22,.28);
+  }
+  .scene{
+    position:relative;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    cursor:pointer;
+    isolation:isolate;
+  }
+  .scene img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.8,.2,1), filter .4s ease;
+    filter:saturate(.9) brightness(.96);
+  }
+  .scene::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.5));
+    transition:opacity .4s ease;
+    z-index:1;
+  }
+  .scene .badge{
+    position:absolute;top:16px;left:16px;
+    width:36px;height:36px;border-radius:50%;
+    background:var(--paper);color:var(--ink);
+    display:grid;place-items:center;
+    font-family:Cormorant;font-style:italic;font-weight:500;font-size:18px;
+    z-index:2;
+    box-shadow:0 6px 16px -4px rgba(0,0,0,.25);
+  }
+  .scene .label{
+    position:absolute;left:16px;right:16px;bottom:16px;
+    color:#fff;z-index:2;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    opacity:.95;
+  }
+  .scene:hover img,.scene.is-active img{transform:scale(1.06);filter:none}
+
+  .strip:hover .scene:not(:hover) img{filter:saturate(.7) brightness(.7)}
+
+  /* Reveal panel */
+  .reveal{
+    margin-top:32px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:36px 40px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:28px;
+    align-items:start;
+    box-shadow:0 20px 50px -30px rgba(29,26,22,.2);
+    min-height:200px;
+  }
+  .reveal-num{
+    font-family:Cormorant;font-style:italic;font-weight:500;
+    font-size:96px;line-height:.9;color:var(--gold);
+    opacity:.85;
+  }
+  .reveal-step{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:500;margin-bottom:10px;
+  }
+  .reveal-title{
+    font-family:'Inter Tight';font-weight:400;
+    font-size:clamp(24px,2.6vw,32px);line-height:1.2;
+    margin:0 0 10px;max-width:30ch;
+  }
+  .reveal-title em{font-family:Cormorant;font-style:italic;font-weight:500}
+  .reveal-body{font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:60ch;margin:0}
+
+  @media (max-width:900px){
+    .strip{grid-template-columns:repeat(2,1fr)}
+    .scene:nth-child(5){grid-column:span 2;aspect-ratio:8/5}
+    .reveal{grid-template-columns:1fr;padding:28px}
+    .reveal-num{font-size:72px}
+  }
+</style>
+</head>
+<body>
+<section class="exp">
+  <div class="exp-eyebrow">The experience</div>
+  <h2 class="exp-h">From <em>hello</em> to <em>your plan.</em></h2>
+  <p class="exp-lede">Five moments, one quiet arc. Hover any moment to see what happens — then notice what isn't there. No waiting rooms. No portals. No clipboards.</p>
+
+  <div class="strip" id="strip">
+    <div class="scene is-active" data-i="0">
+      <img src="../../assets/illustrations/exp-01-welcome.png" alt="">
+      <span class="badge">1</span>
+      <span class="label">Welcome</span>
+    </div>
+    <div class="scene" data-i="1">
+      <img src="../../assets/illustrations/exp-02-labs.png" alt="">
+      <span class="badge">2</span>
+      <span class="label">Labs at home</span>
+    </div>
+    <div class="scene" data-i="2">
+      <img src="../../assets/illustrations/exp-03-consult.png" alt="">
+      <span class="badge">3</span>
+      <span class="label">Your physician</span>
+    </div>
+    <div class="scene" data-i="3">
+      <img src="../../assets/illustrations/exp-04-work.png" alt="">
+      <span class="badge">4</span>
+      <span class="label">Behind the scenes</span>
+    </div>
+    <div class="scene" data-i="4">
+      <img src="../../assets/illustrations/exp-05-plan.png" alt="">
+      <span class="badge">5</span>
+      <span class="label">Your plan</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="reveal-num" id="rNum">01</div>
+    <div>
+      <div class="reveal-step" id="rStep">Welcome</div>
+      <h3 class="reveal-title" id="rTitle">A <em>welcome kit</em> arrives at your door.</h3>
+      <p class="reveal-body" id="rBody">Cream box, handwritten card, a few small touches. The first thing Meridian sends isn't a form — it's a hello.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const data = [
+    {n:"01",step:"Welcome",title:"A <em>welcome kit</em> arrives at your door.",body:"Cream box, handwritten card, a few small touches. The first thing Meridian sends isn't a form — it's a hello."},
+    {n:"02",step:"Labs at home",title:"Your labs are drawn at <em>your kitchen table.</em>",body:"A phlebotomist comes to you. Twenty quiet minutes — no fluorescent lights, no parking garage."},
+    {n:"03",step:"Your physician",title:"A real conversation, <em>at your pace.</em>",body:"Sixty minutes with the doctor who'll know you. From your couch, your office, anywhere with wifi."},
+    {n:"04",step:"Behind the scenes",title:"While you live your life, <em>your plan gets built.</em>",body:"Your physician and the Meridian engine review every result, every signal — and shape what's next."},
+    {n:"05",step:"Your plan",title:"A clear plan. <em>Yours.</em>",body:"One booklet, one calendar, one set of next steps. No portals, no scavenger hunt — just what to do."},
+  ];
+
+  const scenes = document.querySelectorAll('.scene');
+  const rNum = document.getElementById('rNum');
+  const rStep = document.getElementById('rStep');
+  const rTitle = document.getElementById('rTitle');
+  const rBody = document.getElementById('rBody');
+
+  function show(i){
+    scenes.forEach(s=>s.classList.toggle('is-active', +s.dataset.i===i));
+    const d = data[i];
+    rNum.textContent = d.n;
+    rStep.textContent = d.step;
+    rTitle.innerHTML = d.title;
+    rBody.textContent = d.body;
+  }
+  scenes.forEach(s=>{
+    s.addEventListener('mouseenter', ()=>show(+s.dataset.i));
+    s.addEventListener('click', ()=>show(+s.dataset.i));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience — B · Polaroid scrapbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Cormorant:ital,wght@1,400;1,500&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f3ece0;
+    --linen:#ebe2d2;
+    --ink:#1d1a16;
+    --ink-soft:#5b544a;
+    --gold:#a87b3d;
+    --paper:#fdfaf3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(168,123,61,.07), transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(168,123,61,.06), transparent 50%),
+      var(--cream);
+    color:var(--ink);
+    font-family:'Inter Tight',system-ui,sans-serif;
+  }
+
+  .exp{padding:120px 32px 160px;max-width:1280px;margin:0 auto}
+  .exp-eyebrow{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;margin-bottom:24px;
+  }
+  .exp-h{
+    font-weight:300;font-size:clamp(40px,5.4vw,72px);
+    line-height:1.05;letter-spacing:-.02em;margin:0 0 18px;max-width:18ch;
+  }
+  .exp-h em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold)}
+  .exp-lede{font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:54ch;margin:0 0 96px}
+
+  /* Scrapbook */
+  .scrap{
+    position:relative;
+    min-height:1400px;
+    margin:0 auto;
+  }
+  .pol{
+    position:absolute;
+    width:340px;
+    background:var(--paper);
+    padding:14px 14px 56px;
+    box-shadow:
+      0 1px 1px rgba(0,0,0,.05),
+      0 12px 30px -8px rgba(29,26,22,.18),
+      0 30px 60px -20px rgba(29,26,22,.22);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
+    transform-origin:50% 50%;
+    opacity:0;
+  }
+  .pol.in{opacity:1}
+  .pol:hover{
+    transform:rotate(0deg) scale(1.04) !important;
+    box-shadow:
+      0 2px 2px rgba(0,0,0,.06),
+      0 24px 50px -10px rgba(29,26,22,.28),
+      0 50px 100px -30px rgba(29,26,22,.3);
+    z-index:50;
+  }
+  .pol img{
+    display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
+    background:var(--linen);
+  }
+  .pol .cap{
+    margin-top:14px;
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    color:#3b352c;
+    line-height:1.2;
+    text-align:center;
+  }
+  .pol .num{
+    position:absolute;
+    top:-12px;left:-12px;
+    width:36px;height:36px;
+    border-radius:50%;
+    background:var(--gold);
+    color:#fff;
+    display:grid;place-items:center;
+    font-family:Cormorant;font-style:italic;font-weight:500;font-size:18px;
+    box-shadow:0 6px 16px -4px rgba(168,123,61,.6);
+  }
+
+  /* Layout — staggered, slightly rotated */
+  .pol-1{top:0;    left:2%;   transform:rotate(-4deg)}
+  .pol-2{top:120px;left:38%;  transform:rotate(3deg)}
+  .pol-3{top:380px;left:8%;   transform:rotate(2deg)}
+  .pol-4{top:560px;left:50%;  transform:rotate(-3deg)}
+  .pol-5{top:880px;left:22%;  transform:rotate(1.5deg)}
+
+  /* In-view cascade */
+  .pol.in.pol-1{transform:rotate(-4deg) translateY(0)}
+  .pol.in.pol-2{transform:rotate(3deg) translateY(0)}
+  .pol.in.pol-3{transform:rotate(2deg) translateY(0)}
+  .pol.in.pol-4{transform:rotate(-3deg) translateY(0)}
+  .pol.in.pol-5{transform:rotate(1.5deg) translateY(0)}
+  .pol{transform:translateY(40px)}
+
+  @media (max-width:900px){
+    .scrap{min-height:auto;display:flex;flex-direction:column;gap:48px;align-items:center}
+    .pol{position:relative;top:auto !important;left:auto !important;transform:rotate(-2deg) !important;width:min(360px,90vw)}
+    .pol:nth-child(even){transform:rotate(2deg) !important}
+  }
+</style>
+</head>
+<body>
+<section class="exp">
+  <div class="exp-eyebrow">The experience</div>
+  <h2 class="exp-h">Five moments. <em>Yours.</em></h2>
+  <p class="exp-lede">From the day your kit arrives to the day you start your plan, the Meridian experience is built around your home and your time. No waiting rooms. No portals. No paperwork on cracked iPads.</p>
+
+  <div class="scrap" id="scrap">
+    <figure class="pol pol-1">
+      <span class="num">1</span>
+      <img src="../../assets/illustrations/exp-01-welcome.png" alt="">
+      <figcaption class="cap">your welcome kit, on a Tuesday morning</figcaption>
+    </figure>
+    <figure class="pol pol-2">
+      <span class="num">2</span>
+      <img src="../../assets/illustrations/exp-02-labs.png" alt="">
+      <figcaption class="cap">labs at the kitchen table</figcaption>
+    </figure>
+    <figure class="pol pol-3">
+      <span class="num">3</span>
+      <img src="../../assets/illustrations/exp-03-consult.png" alt="">
+      <figcaption class="cap">an hour with your doctor, from your couch</figcaption>
+    </figure>
+    <figure class="pol pol-4">
+      <span class="num">4</span>
+      <img src="../../assets/illustrations/exp-04-work.png" alt="">
+      <figcaption class="cap">the work that happens while you live your life</figcaption>
+    </figure>
+    <figure class="pol pol-5">
+      <span class="num">5</span>
+      <img src="../../assets/illustrations/exp-05-plan.png" alt="">
+      <figcaption class="cap">your plan — clear, on paper, yours</figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'), [...document.querySelectorAll('.pol')].indexOf(e.target)*120);
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.pol').forEach(p=>io.observe(p));
+</script>
+</body>
+</html>
