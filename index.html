@@ -1032,27 +1032,17 @@ footer a:hover { color: var(--paper); }
   aspect-ratio: 390 / 844;
   margin: 0 auto;
   background: #14140F;
-  border-radius: 48px;
-  padding: 12px;
+  border-radius: 44px;
+  padding: 8px;
   box-shadow:
-    0 0 0 2px rgba(212,165,116,0.18),
-    0 50px 100px -40px rgba(10,10,11,0.6),
-    0 30px 60px -30px rgba(184,133,77,0.25);
-}
-.phone-frame::before {
-  content: '';
-  position: absolute;
-  top: 24px; left: 50%;
-  transform: translateX(-50%);
-  width: 110px; height: 30px;
-  background: #0A0A0B;
-  border-radius: 999px;
-  z-index: 2;
+    0 0 0 1px rgba(212,165,116,0.22),
+    0 60px 120px -40px rgba(10,10,11,0.55),
+    0 30px 60px -30px rgba(184,133,77,0.22);
 }
 .phone-frame img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: top;
+  object-position: top center;
   border-radius: 36px;
   display: block;
 }
@@ -1060,32 +1050,78 @@ footer a:hover { color: var(--paper); }
   .phone-frame { width: 360px; }
 }
 
-/* ============ PHYSICIAN SECTION ============ */
-.physician-grid {
+/* ============ MD × AI SECTION ============ */
+.md-ai-section {
+  position: relative;
+  padding: var(--section-y) 0;
+}
+.md-ai-headline {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 48px);
+  font-size: clamp(72px, 13vw, 200px);
+  line-height: 0.95;
+  margin: 24px 0 0;
+  letter-spacing: -0.04em;
+}
+.md-ai-headline .md-mark {
+  font-family: 'Cormorant Garamond', 'Source Serif 4', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+}
+.md-ai-headline .x-mark {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 300;
+  font-size: 0.55em;
+  color: var(--gold-deep);
+  letter-spacing: 0;
+  position: relative;
+  top: -0.08em;
+}
+.md-ai-headline .ai-mark {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.md-ai-sub {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.4;
+  color: var(--text-muted);
+  max-width: 38ch;
+  margin: 28px auto 0;
+  text-align: center;
+}
+.md-ai-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(48px, 7vw, 96px);
   align-items: center;
-  margin-top: 64px;
+  margin-top: clamp(64px, 8vw, 112px);
+  max-width: 1180px;
+  margin-left: auto; margin-right: auto;
 }
 @media (min-width: 900px) {
-  .physician-grid { grid-template-columns: 1fr 1fr; }
+  .md-ai-grid {
+    grid-template-columns: minmax(320px, 1fr) 1.15fr;
+  }
 }
-.physician-text .body-lg + .body-lg { margin-top: 1.2em; }
-.physician-attrs {
+.md-ai-phone-col { display: flex; justify-content: center; }
+.md-ai-text .body-lg + .body-lg { margin-top: 1.2em; }
+.md-ai-attrs {
   margin-top: 40px;
-  display: grid;
-  gap: 20px;
+  display: grid; gap: 20px;
   grid-template-columns: 1fr;
 }
 @media (min-width: 600px) {
-  .physician-attrs { grid-template-columns: 1fr 1fr; }
+  .md-ai-attrs { grid-template-columns: 1fr 1fr; }
 }
-.physician-attr {
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-.physician-attr h5 {
+.md-ai-attr { border-top: 1px solid var(--line); padding-top: 16px; }
+.md-ai-attr h5 {
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -1093,7 +1129,7 @@ footer a:hover { color: var(--paper); }
   margin-bottom: 6px;
   color: var(--ink);
 }
-.physician-attr p {
+.md-ai-attr p {
   font-size: 14px;
   color: var(--text-muted);
   line-height: 1.5;
@@ -1325,41 +1361,47 @@ footer a:hover { color: var(--paper); }
   </div>
 </section>
 
-<!-- ============ SECTION 03 — Your Meridian MD ============ -->
-<section class="warm glow seam-top-warm">
+<!-- ============ SECTION 03 — MD × AI ============ -->
+<section class="warm glow seam-top-warm md-ai-section" id="md">
   <div class="container">
-    <div class="fade-in" style="max-width: 1100px; margin: 0 auto;">
+    <div class="fade-in" style="text-align: center;">
       <span class="eyebrow">03 — Your Meridian MD</span>
-      <h2 class="display h2" style="margin-top: 28px; max-width: 18ch;">A real physician.<br/>Holding <span style="color: var(--gold-deep); font-style: italic; font-weight: 400;">your</span> picture.</h2>
+      <h2 class="md-ai-headline" aria-label="MD times AI">
+        <span class="md-mark">MD</span>
+        <span class="x-mark" aria-hidden="true">×</span>
+        <span class="ai-mark">AI</span>
+      </h2>
+      <p class="md-ai-sub">A real physician, holding <em style="font-style: italic; color: var(--gold-deep);">your</em> picture — multiplied by an Engine that holds everything at once.</p>
     </div>
 
-    <div class="physician-grid fade-in">
-      <div class="physician-text">
+    <div class="md-ai-grid fade-in">
+      <div class="md-ai-phone-col">
+        <div class="phone-frame">
+          <img src="assets/prototype-screen.jpg" alt="Meridian patient app showing a voice message from your physician" />
+        </div>
+      </div>
+
+      <div class="md-ai-text">
         <p class="body-lg">The Engine does the holding-everything-at-once part. Your Meridian MD does the part you can't automate — the judgment, the gut check, the call you actually want to take.</p>
         <p class="body-lg">When something matters, you'll get a voice message from your physician — not a notification, not a chatbot summary. They'll explain what they're seeing, why it matters for <em>you</em> specifically, and the one thing to do this week. If you have a question, message them. If you need a visit, book one. They already have your full picture.</p>
 
-        <div class="physician-attrs">
-          <div class="physician-attr">
+        <div class="md-ai-attrs">
+          <div class="md-ai-attr">
             <h5>Voice messages, not portals</h5>
             <p>Your physician records the explanation directly. Tone, nuance, and emphasis intact.</p>
           </div>
-          <div class="physician-attr">
+          <div class="md-ai-attr">
             <h5>Direct messaging, no front desk</h5>
             <p>Send a question and get an answer back from the same person, the same day.</p>
           </div>
-          <div class="physician-attr">
+          <div class="md-ai-attr">
             <h5>Your full picture, every time</h5>
             <p>No starting over, no recapping. Your genetics, labs, and history are in the room.</p>
           </div>
-          <div class="physician-attr">
+          <div class="md-ai-attr">
             <h5>Visits when you want one</h5>
             <p>Schedule a video visit any time. No referrals, no waiting on a panel.</p>
           </div>
-        </div>
-      </div>
-      <div>
-        <div class="phone-frame">
-          <img src="assets/prototype-screen.jpg" alt="Meridian patient app showing a voice message from your physician" />
         </div>
       </div>
     </div>
