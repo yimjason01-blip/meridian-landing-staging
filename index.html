@@ -12,14 +12,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #0A0A0B;
+  --ink: #0A0A0B;            /* cool ink — hero only (cold rain) */
+  --ink-warm: #14110D;       /* warm ink — engine, CTA */
   --ink-2: #14140F;
   --ink-3: #1A1612;
+  --umber-1: #1F1813;        /* warm dark, founder section top */
+  --umber-2: #2A1F18;        /* warm dark, founder section bottom */
   --paper: #F6F4EE;
-  --paper-warm: #EFEAE0;
+  --paper-warm: #EFEAE0;     /* trajectory, MD, compare */
+  --bone: #ECE5D6;           /* membership — slightly cooler/clinical */
   --gold: #D4A574;
   --gold-light: #E8C99A;
   --gold-deep: #B8854D;
+  --gold-soft: rgba(212,165,116,0.18);
   --line: rgba(10,10,11,0.12);
   --line-soft: rgba(10,10,11,0.06);
   --line-dark: rgba(246,244,238,0.14);
@@ -287,9 +292,42 @@ img, video { max-width: 100%; height: auto; display: block; }
 
 /* ============ SECTIONS ============ */
 section { padding: var(--section-y) 0; position: relative; }
-section.dark { background: var(--ink); color: var(--paper); }
-section.deep { background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%); color: var(--paper); }
+section.dark { background: var(--ink-warm); color: var(--paper); }
+section.dark.cool { background: var(--ink); }
+section.deep { background: linear-gradient(180deg, var(--umber-1) 0%, var(--umber-2) 100%); color: var(--paper); }
 section.warm { background: var(--paper-warm); }
+section.bone { background: var(--bone); }
+
+/* Soft gold radial wash for centerpiece warm sections */
+section.warm.glow::after,
+section.bone.glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 70% 50%, var(--gold-soft) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+section.warm.glow > *,
+section.bone.glow > * { position: relative; z-index: 1; }
+
+/* Seam bridges — feather dark↔warm transitions */
+section.seam-top-warm::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to bottom, var(--paper-warm), transparent);
+  pointer-events: none; z-index: 1;
+}
+section.seam-bottom-warm::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to top, var(--paper-warm), transparent);
+  pointer-events: none; z-index: 1;
+}
+section.seam-top-bone::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to bottom, var(--bone), transparent);
+  pointer-events: none; z-index: 1;
+}
+
 section.dark::before, section.deep::before {
   content: ''; position: absolute; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -675,7 +713,7 @@ footer a:hover { color: var(--paper); }
 </section>
 
 <!-- ============ SECTION 01 — Trajectory (warm) ============ -->
-<section class="warm">
+<section class="warm seam-top-warm">
   <div class="container">
     <div class="fear-block fade-in" style="text-align: center; max-width: 1100px;">
       <span class="eyebrow">01 — Quality of life</span>
@@ -777,7 +815,7 @@ footer a:hover { color: var(--paper); }
 </section>
 
 <!-- ============ SECTION 03 — Your Meridian MD ============ -->
-<section class="warm">
+<section class="warm glow seam-top-warm">
   <div class="container">
     <div class="fade-in" style="max-width: 1100px; margin: 0 auto;">
       <span class="eyebrow">03 — Your Meridian MD</span>
@@ -835,7 +873,7 @@ footer a:hover { color: var(--paper); }
 </section>
 
 <!-- ============ MEMBERSHIP ============ -->
-<section>
+<section class="bone seam-top-bone">
   <div class="container">
     <div class="fade-in">
       <span class="eyebrow">05 — Membership</span>
@@ -879,7 +917,7 @@ footer a:hover { color: var(--paper); }
 </section>
 
 <!-- ============ COMPARISON ============ -->
-<section class="warm">
+<section class="warm seam-bottom-warm">
   <div class="container">
     <div class="fade-in">
       <span class="eyebrow">06 — How we compare</span>
