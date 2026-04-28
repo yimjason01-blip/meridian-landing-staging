@@ -1525,8 +1525,8 @@ footer a:hover { color: var(--paper); }
         <!-- baseline curve -->
         <path class="baseline-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
 
-        <!-- bent curve -->
-        <path class="best-path" d="M 80 170 Q 380 145, 580 160 T 1040 200"/>
+        <!-- squared healthspan curve: high function is preserved longer, then morbidity compresses into a shorter late-life drop -->
+        <path class="best-path" d="M 80 170 C 220 158, 380 150, 560 154 C 710 158, 835 168, 910 205 C 970 250, 1015 325, 1040 382"/>
 
         <!-- markers -->
         <g class="highlight-marker marker-early">
