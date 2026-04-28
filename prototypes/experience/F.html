@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience — F · Isometric 5-card stack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Cormorant:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14110D;
+    --paper:#F5EFE6;
+    --paper-2:#EDE5D5;
+    --paper-edge:rgba(20,17,13,.08);
+    --gold:#D4A574;
+    --gold-deep:#B8854D;
+    --line:rgba(20,17,13,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:'Inter Tight',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:120px 32px 160px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:24px}
+  .h2{font-weight:300;font-size:clamp(40px,5.4vw,72px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px;max-width:18ch}
+  .h2 em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold)}
+  .lede{font-size:18px;line-height:1.55;color:rgba(245,239,230,.7);max-width:54ch;margin:0 0 80px}
+
+  .stack{display:flex;flex-direction:column;gap:28px}
+
+  .card{
+    background:linear-gradient(180deg,var(--paper) 0%, var(--paper-2) 100%);
+    color:var(--ink);
+    border-radius:24px;
+    padding:48px 56px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:48px;
+    align-items:center;
+    box-shadow:0 30px 80px -40px rgba(0,0,0,.6);
+    position:relative;
+    overflow:hidden;
+    min-height:480px;
+  }
+  .card.flip .visual{order:2}
+  .card.flip .copy{order:1}
+
+  .card-step{
+    position:absolute;top:28px;right:36px;
+    font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:11px;color:var(--gold-deep);
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+
+  .copy h3{
+    font-family:'Inter Tight';font-weight:400;
+    font-size:clamp(26px,2.6vw,36px);line-height:1.15;
+    margin:0 0 14px;max-width:22ch;letter-spacing:-.01em;
+  }
+  .copy h3 em{font-family:Cormorant;font-style:italic;font-weight:500;color:var(--gold-deep)}
+  .copy p{font-size:16px;line-height:1.6;color:#5b544a;margin:0 0 28px;max-width:50ch}
+  .copy .integ-label{
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:#9a9082;font-weight:500;margin-bottom:14px;
+  }
+  .copy .stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:6px}
+  .copy .stat{border-top:1px solid var(--line);padding-top:14px}
+  .copy .stat-num{font-family:Cormorant;font-style:italic;font-weight:500;font-size:36px;color:var(--ink);line-height:1}
+  .copy .stat-num small{font-size:18px;opacity:.6}
+  .copy .stat-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7a7268;font-weight:500;margin-top:6px}
+
+  .visual{position:relative;display:flex;align-items:center;justify-content:center}
+  .visual img{width:100%;height:auto;display:block;border-radius:16px;mix-blend-mode:multiply}
+
+  /* Wearable logos under step 01 copy */
+  .logos{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .logo-cell{
+    background:#fff;border:1px solid var(--paper-edge);border-radius:14px;
+    aspect-ratio:1/1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;padding:10px;
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .logo-cell:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(20,17,13,.18)}
+  .logo-cell img{width:28px;height:28px;object-fit:contain;border-radius:0;mix-blend-mode:normal}
+  .logo-cell .wm{font-weight:600;font-size:11px;color:#1a1a1a;text-align:center;line-height:1.1}
+
+  @media (max-width:900px){
+    .wrap{padding:80px 18px 100px}
+    .h2{font-size:clamp(34px,8vw,52px)}
+    .lede{margin-bottom:48px;font-size:16px}
+    .stack{gap:18px}
+    .card{grid-template-columns:1fr;padding:28px 20px;gap:24px;min-height:auto;border-radius:18px}
+    .card.flip .visual{order:1}
+    .card.flip .copy{order:2}
+    .card-step{position:static;margin:0 0 4px;display:block}
+    .copy h3{font-size:24px;line-height:1.2}
+    .copy p{font-size:15px}
+    .copy .stat-row{grid-template-columns:1fr 1fr;gap:14px}
+    .copy .stat-num{font-size:28px}
+    .copy .stat-num small{font-size:14px}
+    .logos{grid-template-columns:repeat(5,1fr);gap:6px}
+    .logo-cell{padding:8px;border-radius:10px}
+    .logo-cell img{width:22px;height:22px}
+    .logo-cell .wm{font-size:9px}
+  }
+</style>
+</head>
+<body>
+<section class="wrap">
+  <div class="eyebrow">The experience</div>
+  <h2 class="h2">Five moments. <em>Then a loop.</em></h2>
+  <p class="lede">Onboarding is not a forty-page intake form. Labs are not a waiting room. Your physician consult is not the end of the line — it's where the loop begins.</p>
+
+  <div class="stack">
+
+    <!-- 01 Onboarding -->
+    <article class="card">
+      <span class="card-step">Step 01 / Onboarding</span>
+      <div class="visual"><img src="../../assets/illustrations/exp-iso-01-onboarding.png" alt="Phone and Apple Watch syncing"></div>
+      <div class="copy">
+        <h3>Onboarding takes <em>fifteen minutes.</em></h3>
+        <p>Demographics, family history, lifestyle, screening history — collected the way every other app on your phone does it. Then your wearable connects in two taps and starts streaming the signals your physician will actually use.</p>
+        <div class="integ-label">Connects with</div>
+        <div class="logos">
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/apple/1a1a1a" alt=""><div class="wm">Apple Watch</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/oura/1a1a1a" alt=""><div class="wm">Oura</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/whoop/1a1a1a" alt=""><div class="wm">Whoop</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/garmin/1a1a1a" alt=""><div class="wm">Garmin</div></div>
+          <div class="logo-cell"><img src="https://cdn.simpleicons.org/fitbit/1a1a1a" alt=""><div class="wm">Fitbit</div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 Genetics -->
+    <article class="card flip">
+      <span class="card-step">Step 02 / Genetics</span>
+      <div class="copy">
+        <h3>A small kit <em>arrives at your door.</em></h3>
+        <p>Spit in a tube. Drop it in the prepaid mailer. The 163-gene Invitae panel screens for the variants that actually change a care plan — moderate-penetrance cancer risks, cardiovascular variants, pharmacogenomic markers.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">163<small> genes</small></div><div class="stat-lbl">Invitae panel</div></div>
+          <div class="stat"><div class="stat-num">~3<small> wks</small></div><div class="stat-lbl">Results return</div></div>
+        </div>
+      </div>
+      <div class="visual"><img src="../../assets/illustrations/exp-iso-02-genetics.png" alt="Saliva collection kit"></div>
+    </article>
+
+    <!-- 03 Bloodwork -->
+    <article class="card">
+      <span class="card-step">Step 03 / Bloodwork</span>
+      <div class="visual"><img src="../../assets/illustrations/exp-iso-03-bloodwork.png" alt="Walk-in lab"></div>
+      <div class="copy">
+        <h3>Walk in. <em>Ten minutes.</em> Done.</h3>
+        <p>Your Meridian lab order is waiting at your nearest Quest patient service center. The Elite panel — a comprehensive metabolic, cardiovascular, and inflammatory marker workup — runs alongside an ApoB and Lp(a) draw most physicals miss.</p>
+        <div class="integ-label">The Elite panel includes</div>
+        <p style="font-size:13px;color:#7a7268;margin:0">CBC + CMP · ApoB · Lp(a) · hsCRP · HbA1c · TSH · Vitamin D · ferritin · homocysteine · uric acid · UACR</p>
+      </div>
+    </article>
+
+    <!-- 04 Consult -->
+    <article class="card flip">
+      <span class="card-step">Step 04 / Consult</span>
+      <div class="copy">
+        <h3>An hour with the doctor <em>who'll know you.</em></h3>
+        <p>By the time you sit down, your physician has already reviewed every result, every wearable signal, and the output of every Meridian risk model. The hour is spent on what to do — not on retelling your history.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">60<small> min</small></div><div class="stat-lbl">First consult</div></div>
+          <div class="stat"><div class="stat-num">5<small> domains</small></div><div class="stat-lbl">Risk picture run</div></div>
+        </div>
+      </div>
+      <div class="visual"><img src="../../assets/illustrations/exp-iso-04-consult.png" alt="Video call with physician"></div>
+    </article>
+
+    <!-- 05 Closure loop -->
+    <article class="card">
+      <span class="card-step">Step 05 / Closure loop</span>
+      <div class="visual"><img src="../../assets/illustrations/exp-iso-05-loop.png" alt="Closure loop"></div>
+      <div class="copy">
+        <h3>The consult <em>isn't the finish line.</em></h3>
+        <p>You leave with one top priority — the single thing that moves your risk picture most. As you act, your wearable streams the result. New labs feed back in. The engine reruns. A new top priority surfaces. The loop is the product.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">1</div><div class="stat-lbl">Top priority at a time</div></div>
+          <div class="stat"><div class="stat-num">90<small> days</small></div><div class="stat-lbl">Default rerun cadence</div></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+</body>
+</html>
