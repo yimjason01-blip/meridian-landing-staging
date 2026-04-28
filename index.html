@@ -567,6 +567,80 @@ footer a:hover { color: var(--paper); }
 .fade-in-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.32s; }
 .fade-in-stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
 
+/* ============ PHONE FRAME ============ */
+.phone-frame {
+  position: relative;
+  width: 320px;
+  aspect-ratio: 390 / 844;
+  margin: 0 auto;
+  background: #14140F;
+  border-radius: 48px;
+  padding: 12px;
+  box-shadow:
+    0 0 0 2px rgba(212,165,116,0.18),
+    0 50px 100px -40px rgba(10,10,11,0.6),
+    0 30px 60px -30px rgba(184,133,77,0.25);
+}
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 24px; left: 50%;
+  transform: translateX(-50%);
+  width: 110px; height: 30px;
+  background: #0A0A0B;
+  border-radius: 999px;
+  z-index: 2;
+}
+.phone-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 36px;
+  display: block;
+}
+@media (min-width: 700px) {
+  .phone-frame { width: 360px; }
+}
+
+/* ============ PHYSICIAN SECTION ============ */
+.physician-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: center;
+  margin-top: 64px;
+}
+@media (min-width: 900px) {
+  .physician-grid { grid-template-columns: 1fr 1fr; }
+}
+.physician-text .body-lg + .body-lg { margin-top: 1.2em; }
+.physician-attrs {
+  margin-top: 40px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) {
+  .physician-attrs { grid-template-columns: 1fr 1fr; }
+}
+.physician-attr {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.physician-attr h5 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.physician-attr p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
 /* ============ COUNTERS ============ */
 .counter[data-target] { font-variant-numeric: tabular-nums; }
 </style>
@@ -702,11 +776,52 @@ footer a:hover { color: var(--paper); }
   </div>
 </section>
 
+<!-- ============ SECTION 03 — Your Meridian MD ============ -->
+<section class="warm">
+  <div class="container">
+    <div class="fade-in" style="max-width: 1100px; margin: 0 auto;">
+      <span class="eyebrow">03 — Your Meridian MD</span>
+      <h2 class="display h2" style="margin-top: 28px; max-width: 18ch;">A real physician.<br/>Holding <span style="color: var(--gold-deep); font-style: italic; font-weight: 400;">your</span> picture.</h2>
+    </div>
+
+    <div class="physician-grid fade-in">
+      <div class="physician-text">
+        <p class="body-lg">The Engine does the holding-everything-at-once part. Your Meridian MD does the part you can't automate — the judgment, the gut check, the call you actually want to take.</p>
+        <p class="body-lg">When something matters, you'll get a voice message from your physician — not a notification, not a chatbot summary. They'll explain what they're seeing, why it matters for <em>you</em> specifically, and the one thing to do this week. If you have a question, message them. If you need a visit, book one. They already have your full picture.</p>
+
+        <div class="physician-attrs">
+          <div class="physician-attr">
+            <h5>Voice messages, not portals</h5>
+            <p>Your physician records the explanation directly. Tone, nuance, and emphasis intact.</p>
+          </div>
+          <div class="physician-attr">
+            <h5>Direct messaging, no front desk</h5>
+            <p>Send a question and get an answer back from the same person, the same day.</p>
+          </div>
+          <div class="physician-attr">
+            <h5>Your full picture, every time</h5>
+            <p>No starting over, no recapping. Your genetics, labs, and history are in the room.</p>
+          </div>
+          <div class="physician-attr">
+            <h5>Visits when you want one</h5>
+            <p>Schedule a video visit any time. No referrals, no waiting on a panel.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="phone-frame">
+          <img src="assets/prototype-screen.jpg" alt="Meridian patient app showing a voice message from your physician" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOUNDING EVIDENCE ============ -->
 <section class="deep">
   <div class="container">
     <div class="fade-in" style="max-width: 920px; margin: 0 auto;">
-      <span class="eyebrow" style="color: var(--gold);">03 — Why this exists</span>
+      <span class="eyebrow" style="color: var(--gold);">04 — Why this exists</span>
       <h2 class="display h2" style="margin-top: 28px; color: var(--paper);">I built this<br/>for myself first.</h2>
       <div class="founder-quote">
         <p class="serif-quote" style="max-width: 36ch; color: var(--paper);">Last year I took a clinical-grade genetic test out of curiosity.</p>
@@ -723,7 +838,7 @@ footer a:hover { color: var(--paper); }
 <section>
   <div class="container">
     <div class="fade-in">
-      <span class="eyebrow">04 — Membership</span>
+      <span class="eyebrow">05 — Membership</span>
       <h2 class="display h2" style="margin-top: 28px;">What you actually get.</h2>
       <p class="lede" style="margin-top: 24px;">Not a one-time report. A continuous medical relationship.</p>
     </div>
@@ -767,7 +882,7 @@ footer a:hover { color: var(--paper); }
 <section class="warm">
   <div class="container">
     <div class="fade-in">
-      <span class="eyebrow">05 — How we compare</span>
+      <span class="eyebrow">06 — How we compare</span>
       <h2 class="display h2" style="margin-top: 28px; max-width: 18ch;">Not the same shape<br/>as anything else.</h2>
       <p class="lede" style="margin-top: 24px;">Most prevention products are either episodic and prestigious, or continuous and shallow. Meridian is continuous and serious.</p>
 
@@ -800,7 +915,7 @@ footer a:hover { color: var(--paper); }
 <section class="dark" id="apply">
   <div class="container">
     <div class="fade-in">
-      <span class="eyebrow" style="color: var(--gold);">06 — How to begin</span>
+      <span class="eyebrow" style="color: var(--gold);">07 — How to begin</span>
       <h2 class="display h2" style="margin-top: 28px; color: var(--paper); max-width: 16ch;">Two paths in.</h2>
 
       <div class="paths-grid">
