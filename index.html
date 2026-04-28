@@ -1055,14 +1055,29 @@ footer a:hover { color: var(--paper); }
   position: relative;
   padding: var(--section-y) 0;
 }
+.md-ai-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(48px, 6vw, 88px);
+  align-items: center;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+@media (min-width: 900px) {
+  .md-ai-grid {
+    grid-template-columns: minmax(360px, 0.85fr) 1fr;
+  }
+}
+.md-ai-phone-col { display: flex; justify-content: center; }
+.md-ai-content { max-width: 560px; }
+.md-ai-content .eyebrow { display: block; margin-bottom: 18px; }
 .md-ai-headline {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: clamp(20px, 3vw, 48px);
-  font-size: clamp(72px, 13vw, 200px);
-  line-height: 0.95;
-  margin: 24px 0 0;
+  gap: clamp(12px, 1.4vw, 22px);
+  font-size: clamp(64px, 7.2vw, 116px);
+  line-height: 0.94;
+  margin: 0 0 22px;
   letter-spacing: -0.04em;
 }
 .md-ai-headline .md-mark {
@@ -1074,65 +1089,55 @@ footer a:hover { color: var(--paper); }
 .md-ai-headline .x-mark {
   font-family: 'Inter Tight', sans-serif;
   font-weight: 300;
-  font-size: 0.55em;
+  font-size: 0.5em;
   color: var(--gold-deep);
   letter-spacing: 0;
   position: relative;
-  top: -0.08em;
+  top: -0.06em;
 }
 .md-ai-headline .ai-mark {
   font-family: 'JetBrains Mono', 'SF Mono', monospace;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--ink);
 }
 .md-ai-sub {
   font-family: 'Inter Tight', sans-serif;
   font-weight: 400;
-  font-size: clamp(20px, 1.8vw, 26px);
-  line-height: 1.4;
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.35;
   color: var(--text-muted);
   max-width: 38ch;
-  margin: 28px auto 0;
-  text-align: center;
+  margin: 0 0 32px;
 }
-.md-ai-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(48px, 7vw, 96px);
-  align-items: center;
-  margin-top: clamp(64px, 8vw, 112px);
-  max-width: 1180px;
-  margin-left: auto; margin-right: auto;
-}
-@media (min-width: 900px) {
-  .md-ai-grid {
-    grid-template-columns: minmax(320px, 1fr) 1.15fr;
-  }
-}
-.md-ai-phone-col { display: flex; justify-content: center; }
-.md-ai-text .body-lg + .body-lg { margin-top: 1.2em; }
+.md-ai-content .body-lg + .body-lg { margin-top: 1em; }
 .md-ai-attrs {
-  margin-top: 40px;
-  display: grid; gap: 20px;
-  grid-template-columns: 1fr;
+  margin-top: 36px;
+  display: grid; gap: 18px 28px;
+  grid-template-columns: 1fr 1fr;
 }
-@media (min-width: 600px) {
-  .md-ai-attrs { grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) {
+  .md-ai-attrs { grid-template-columns: 1fr; }
 }
-.md-ai-attr { border-top: 1px solid var(--line); padding-top: 16px; }
+.md-ai-attr { border-top: 1px solid var(--line); padding-top: 14px; }
 .md-ai-attr h5 {
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: -0.01em;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: var(--ink);
 }
 .md-ai-attr p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+/* Bigger phone in this section */
+.md-ai-phone-col .phone-frame { width: 380px; }
+@media (min-width: 1100px) {
+  .md-ai-phone-col .phone-frame { width: 420px; }
 }
 
 /* ============ COUNTERS ============ */
@@ -1364,16 +1369,6 @@ footer a:hover { color: var(--paper); }
 <!-- ============ SECTION 03 — MD × AI ============ -->
 <section class="warm glow seam-top-warm md-ai-section" id="md">
   <div class="container">
-    <div class="fade-in" style="text-align: center;">
-      <span class="eyebrow">03 — Your Meridian MD</span>
-      <h2 class="md-ai-headline" aria-label="MD times AI">
-        <span class="md-mark">MD</span>
-        <span class="x-mark" aria-hidden="true">×</span>
-        <span class="ai-mark">AI</span>
-      </h2>
-      <p class="md-ai-sub">A real physician, holding <em style="font-style: italic; color: var(--gold-deep);">your</em> picture — multiplied by an Engine that holds everything at once.</p>
-    </div>
-
     <div class="md-ai-grid fade-in">
       <div class="md-ai-phone-col">
         <div class="phone-frame">
@@ -1381,9 +1376,17 @@ footer a:hover { color: var(--paper); }
         </div>
       </div>
 
-      <div class="md-ai-text">
+      <div class="md-ai-content">
+        <span class="eyebrow">03 — Your Meridian MD</span>
+        <h2 class="md-ai-headline" aria-label="MD times AI">
+          <span class="md-mark">MD</span>
+          <span class="x-mark" aria-hidden="true">×</span>
+          <span class="ai-mark">AI</span>
+        </h2>
+        <p class="md-ai-sub">A real physician, holding <em style="font-style: italic; color: var(--gold-deep);">your</em> picture — multiplied by an Engine that holds everything at once.</p>
+
         <p class="body-lg">The Engine does the holding-everything-at-once part. Your Meridian MD does the part you can't automate — the judgment, the gut check, the call you actually want to take.</p>
-        <p class="body-lg">When something matters, you'll get a voice message from your physician — not a notification, not a chatbot summary. They'll explain what they're seeing, why it matters for <em>you</em> specifically, and the one thing to do this week. If you have a question, message them. If you need a visit, book one. They already have your full picture.</p>
+        <p class="body-lg">When something matters, you'll get a voice message from your physician — not a notification, not a chatbot summary. They'll explain what they're seeing, why it matters for <em>you</em> specifically, and the one thing to do this week.</p>
 
         <div class="md-ai-attrs">
           <div class="md-ai-attr">
