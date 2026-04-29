@@ -145,7 +145,8 @@ img, video { max-width: 100%; height: auto; display: block; }
   overflow: hidden;
   background: var(--ink);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: clamp(120px, 18vh, 200px);
 }
 .hero-media {
   position: absolute; inset: 0;
@@ -1496,8 +1497,7 @@ footer a:hover { color: var(--paper); }
   </div>
   <div class="hero-content">
     <div class="hero-content-inner">
-      <span class="hero-eyebrow">The Aleron Project</span>
-      <h1 class="display">Some of your best days are <span class="gold">still ahead</span>.</h1>
+      <h1 class="display">Your best days are <span class="gold">still ahead</span>.</h1>
       <p class="lede">The medical team you'd build for yourself if you knew where to look. Continuous, AI-augmented, physician-led prevention — for people whose decline is still negotiable.</p>
       <div class="hero-ctas">
         <a href="#apply" class="btn btn-primary">Apply <span class="arrow">→</span></a>
