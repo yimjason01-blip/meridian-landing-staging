@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — hand drawn phone, color options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe8da;
+  --ink: #18140f;
+  --muted: rgba(24,20,15,.62);
+  --gold: #9f6f3e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(circle at 22% 8%, rgba(255,255,255,.5), transparent 32%),
+    linear-gradient(135deg, #f4eedf 0%, #e8ddca 100%);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(24px, 4vw, 56px);
+}
+header {
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { margin: 0; max-width: 720px; font-size: clamp(36px, 4.6vw, 60px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+header p { margin: 0 0 6px; max-width: 360px; color: var(--muted); font-size: 16px; line-height: 1.42; }
+
+main { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 1.6vw, 26px); }
+.option {
+  border-radius: 28px;
+  padding: 26px 18px 22px;
+  background: rgba(255,255,255,.20);
+  border: 1px solid rgba(24,20,15,.10);
+  box-shadow: 0 18px 48px rgba(70,48,26,.10);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  place-items: center;
+  overflow: visible;
+}
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 16px 0 24px;
+}
+.caption { width: 100%; align-self: end; padding: 12px 4px 0; }
+.caption h2 { margin: 0 0 4px; font-size: 17px; letter-spacing: -.018em; font-weight: 600; }
+.caption p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+.swatch { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: middle; transform: translateY(-1px); }
+
+.phone-wrap {
+  position: relative;
+  width: 240px;
+  height: 519px;
+  filter: drop-shadow(0 26px 28px rgba(24,20,15,.14));
+}
+.phone-wrap .screen {
+  position: absolute;
+  z-index: 2;
+  inset: 9px;
+  border-radius: 26px;
+  background: #0a0a0d;
+  overflow: hidden;
+}
+.phone-wrap .screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.phone-wrap svg.frame {
+  position: absolute;
+  inset: -22px;
+  z-index: 4;
+  width: 284px;
+  height: 563px;
+  overflow: visible;
+  pointer-events: none;
+}
+@media (max-width: 1080px) {
+  main { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  header { display: block; }
+  header p { margin-top: 14px; }
+  main { grid-template-columns: 1fr; max-width: 360px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="kicker">Hand drawn phone · color options</div>
+    <h1>Lighter line. Four ink studies.</h1>
+  </div>
+  <p>Stroke weight reduced ~40%. Same drawing logic, four ink colors that live inside the cream/gold landing palette.</p>
+</header>
+
+<main id="grid"></main>
+
+<script type="module">
+import { getStroke } from 'https://cdn.jsdelivr.net/npm/perfect-freehand@1.2.3/dist/esm/index.mjs';
+
+const NS = 'http://www.w3.org/2000/svg';
+
+function getSvgPathFromStroke(points) {
+  if (!points.length) return '';
+  const d = points.reduce(
+    (acc, [x0, y0], i, arr) => {
+      const [x1, y1] = arr[(i + 1) % arr.length];
+      acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+      return acc;
+    },
+    ['M', points[0][0], points[0][1], 'Q']
+  );
+  d.push('Z');
+  return d.join(' ');
+}
+
+function simulatePath(polyline, opts = {}) {
+  const { samples = 6, basePressure = 0.7, startTaper = 0.10, endTaper = 0.10, jitter = 0.025, seed = 1 } = opts;
+  let s = seed;
+  const rand = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  const raw = [];
+  for (let i = 0; i < polyline.length - 1; i++) {
+    const [x1, y1] = polyline[i], [x2, y2] = polyline[i + 1];
+    for (let j = 0; j < samples; j++) {
+      const t = j / samples;
+      raw.push([x1 + (x2 - x1) * t, y1 + (y2 - y1) * t]);
+    }
+  }
+  raw.push(polyline[polyline.length - 1]);
+  const n = raw.length;
+  return raw.map(([x, y], i) => {
+    const t = i / (n - 1);
+    let p = basePressure;
+    if (t < startTaper) p *= (t / startTaper);
+    else if (t > 1 - endTaper) p *= ((1 - t) / endTaper);
+    p *= 1 + (rand() - 0.5) * 2 * jitter;
+    p = Math.max(0.05, Math.min(0.98, p));
+    return [x + (rand() - 0.5) * 0.5, y + (rand() - 0.5) * 0.5, p];
+  });
+}
+
+function drawStroke(svg, polyline, strokeOpts, simOpts) {
+  const points = simulatePath(polyline, simOpts);
+  const stroke = getStroke(points, {
+    size: strokeOpts.size,
+    thinning: strokeOpts.thinning ?? 0.55,
+    smoothing: strokeOpts.smoothing ?? 0.72,
+    streamline: strokeOpts.streamline ?? 0.6,
+    simulatePressure: false,
+    last: true,
+  });
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', getSvgPathFromStroke(stroke));
+  path.setAttribute('fill', strokeOpts.fill);
+  if (strokeOpts.opacity != null) path.setAttribute('fill-opacity', strokeOpts.opacity);
+  svg.appendChild(path);
+}
+
+function roundRectSides(x1, y1, x2, y2, r, arcSamples = 14) {
+  const sides = [[], [], [], []];
+  function arc(pts, cx, cy, a1, a2) {
+    for (let i = 0; i <= arcSamples; i++) {
+      const t = i / arcSamples;
+      const a = a1 + (a2 - a1) * t;
+      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    }
+  }
+  arc(sides[0], x1 + r, y1 + r, Math.PI * 1.25, Math.PI * 1.5);
+  sides[0].push([x2 - r, y1]);
+  arc(sides[0], x2 - r, y1 + r, Math.PI * 1.5, Math.PI * 1.75);
+  arc(sides[1], x2 - r, y1 + r, Math.PI * 1.75, Math.PI * 2);
+  sides[1].push([x2, y2 - r]);
+  arc(sides[1], x2 - r, y2 - r, 0, Math.PI / 4);
+  arc(sides[2], x2 - r, y2 - r, Math.PI / 4, Math.PI / 2);
+  sides[2].push([x1 + r, y2]);
+  arc(sides[2], x1 + r, y2 - r, Math.PI / 2, Math.PI * 0.75);
+  arc(sides[3], x1 + r, y2 - r, Math.PI * 0.75, Math.PI);
+  sides[3].push([x1, y1 + r]);
+  arc(sides[3], x1 + r, y1 + r, Math.PI, Math.PI * 1.25);
+  return sides;
+}
+
+function renderPhone(svg, ink, innerLine, islandLine, indicatorLine) {
+  // Frame coords match SVG 284x563. Phone body inset ~19 each side.
+  const X1 = 19, Y1 = 19, X2 = 265, Y2 = 544;
+  const R  = 38;
+
+  // PRIMARY OUTLINE — reduced from 4.4 -> 2.8 (~36% lighter)
+  const sides = roundRectSides(X1, Y1, X2, Y2, R);
+  sides.forEach((poly, i) => {
+    drawStroke(svg, poly, {
+      size: 2.8, thinning: 0.55, smoothing: 0.78, streamline: 0.65, fill: ink,
+    }, { samples: 5, basePressure: 0.7, startTaper: 0.12, endTaper: 0.12, jitter: 0.025, seed: 11 + i * 7 });
+  });
+
+  // INNER GLASS LINE
+  const inner = roundRectSides(X1 + 5, Y1 + 6, X2 - 5, Y2 - 6, R - 4);
+  inner.forEach((poly, i) => {
+    drawStroke(svg, poly, {
+      size: 1.1, thinning: 0.5, smoothing: 0.7, streamline: 0.5, fill: innerLine,
+    }, { samples: 4, basePressure: 0.6, startTaper: 0.14, endTaper: 0.14, jitter: 0.02, seed: 31 + i * 7 });
+  });
+
+  // DYNAMIC ISLAND
+  drawStroke(svg, [[120, 34], [164, 34], [171, 41], [164, 48], [120, 48], [113, 41], [120, 34]], {
+    size: 1.4, thinning: 0.55, smoothing: 0.7, streamline: 0.55, fill: islandLine,
+  }, { samples: 5, basePressure: 0.7, startTaper: 0.12, endTaper: 0.12, jitter: 0.02, seed: 47 });
+
+  // BUTTONS — reduced size: 3.4 -> 2.3
+  const btn = (x1, y1, x2, y2, seed, size = 2.3) => drawStroke(svg, [[x1, y1], [x2, y2]], {
+    size, thinning: 0.4, smoothing: 0.75, streamline: 0.6, fill: ink,
+  }, { samples: 6, basePressure: 0.72, startTaper: 0.18, endTaper: 0.18, jitter: 0.03, seed });
+  btn(17.5, 113, 17.5, 124, 51, 2.0);   // action
+  btn(17.5, 152, 17.5, 187, 53, 2.4);   // volume up
+  btn(17.5, 199, 17.5, 234, 55, 2.4);   // volume down
+  btn(266.5, 182, 266.5, 238, 57, 2.5); // power
+
+  // HOME INDICATOR
+  drawStroke(svg, [[107, 530], [171, 530]], {
+    size: 1.7, thinning: 0.5, smoothing: 0.7, streamline: 0.55, fill: indicatorLine,
+  }, { samples: 4, basePressure: 0.7, startTaper: 0.20, endTaper: 0.20, jitter: 0.02, seed: 95 });
+}
+
+const OPTIONS = [
+  {
+    id: 'a',
+    name: 'A · Espresso',
+    swatch: '#1f1812',
+    desc: 'Classic editorial ink. Maximum contrast. Default reading.',
+    ink: '#1f1812',
+    innerLine: 'rgba(255,255,255,0.18)',
+    islandLine: 'rgba(255,255,255,0.55)',
+    indicatorLine: 'rgba(255,255,255,0.6)',
+  },
+  {
+    id: 'b',
+    name: 'B · Walnut',
+    swatch: '#5a3a1c',
+    desc: 'Warm dark brown. Sits inside the paper palette without going pure black.',
+    ink: '#5a3a1c',
+    innerLine: 'rgba(255,255,255,0.18)',
+    islandLine: 'rgba(255,255,255,0.55)',
+    indicatorLine: 'rgba(255,255,255,0.6)',
+  },
+  {
+    id: 'c',
+    name: 'C · Antique Gold',
+    swatch: '#8a5e2c',
+    desc: 'Brand-aligned gold ink. Reads as drawn artifact, not an outline of a thing.',
+    ink: '#8a5e2c',
+    innerLine: 'rgba(255,255,255,0.18)',
+    islandLine: 'rgba(255,255,255,0.55)',
+    indicatorLine: 'rgba(255,255,255,0.6)',
+  },
+  {
+    id: 'd',
+    name: 'D · Forest Ink',
+    swatch: '#22382b',
+    desc: 'Deep botanical green. Editorial alternative; subtle but not dull.',
+    ink: '#22382b',
+    innerLine: 'rgba(255,255,255,0.18)',
+    islandLine: 'rgba(255,255,255,0.55)',
+    indicatorLine: 'rgba(255,255,255,0.6)',
+  },
+];
+
+const grid = document.getElementById('grid');
+for (const opt of OPTIONS) {
+  const card = document.createElement('section');
+  card.className = 'option';
+  card.innerHTML = `
+    <div class="stage">
+      <div class="phone-wrap">
+        <div class="screen">
+          <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app shown in a hand-drawn iPhone frame, ${opt.name}">
+        </div>
+        <svg class="frame" id="svg-${opt.id}" viewBox="0 0 284 563" width="284" height="563"></svg>
+      </div>
+    </div>
+    <div class="caption">
+      <h2><span class="swatch" style="background:${opt.swatch}"></span>${opt.name}</h2>
+      <p>${opt.desc}</p>
+    </div>
+  `;
+  grid.appendChild(card);
+  const svg = card.querySelector('svg');
+  renderPhone(svg, opt.ink, opt.innerLine, opt.islandLine, opt.indicatorLine);
+}
+</script>
+</body>
+</html>
