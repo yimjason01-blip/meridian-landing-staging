@@ -974,6 +974,8 @@ section.warm .member-cell { background: var(--paper-warm); }
   background: var(--paper-warm, #EFEAE0);
   position: relative;
   overflow: hidden;
+  padding-top: clamp(48px, 5.5vw, 80px);
+  padding-bottom: clamp(48px, 5.5vw, 80px);
 }
 .testimonial-section::before {
   content: '';
@@ -984,13 +986,26 @@ section.warm .member-cell { background: var(--paper-warm); }
   z-index: 0;
 }
 .testimonial-section .container { position: relative; z-index: 1; }
+
+.testimonial-carousel { position: relative; max-width: 980px; margin: 0 auto; }
+.testimonial-track { position: relative; min-height: 380px; }
 .testimonial-card {
+  position: absolute;
+  inset: 0;
   display: grid;
   grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
   gap: clamp(32px, 5vw, 64px);
   align-items: center;
-  max-width: 980px;
-  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  pointer-events: none;
+}
+.testimonial-card.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
 }
 .testimonial-portrait {
   width: 100%;
@@ -1022,9 +1037,45 @@ section.warm .member-cell { background: var(--paper-warm); }
   font-weight: 500;
 }
 .testimonial-attrib-name { color: #14110D; font-weight: 600; }
+
+.testimonial-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.testimonial-dots { display: flex; gap: 10px; }
+.testimonial-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(20,17,13,0.18);
+  border: none; padding: 0; cursor: pointer;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.testimonial-dot.is-active { background: var(--gold-deep, #8a5e2c); transform: scale(1.15); }
+.testimonial-dot:hover { background: rgba(20,17,13,0.4); }
+.testimonial-dot.is-active:hover { background: var(--gold-deep, #8a5e2c); }
+.testimonial-arrows { display: flex; gap: 8px; }
+.testimonial-arrow {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(20,17,13,0.18);
+  background: transparent;
+  color: #14110D;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.testimonial-arrow:hover { background: rgba(20,17,13,0.06); border-color: rgba(20,17,13,0.32); }
+.testimonial-arrow svg { width: 16px; height: 16px; }
+
 @media (max-width: 720px) {
   .testimonial-card { grid-template-columns: 1fr; gap: 28px; }
   .testimonial-portrait { max-width: 280px; margin: 0 auto; }
+  .testimonial-track { min-height: 600px; }
 }
 
 /* ============ PATHS ============ */
@@ -1870,16 +1921,68 @@ footer a:hover { color: var(--paper); }
 <!-- ============ TESTIMONIAL — between Experience and Delta ============ -->
 <section class="testimonial-section">
   <div class="container">
-    <div class="testimonial-card fade-in">
-      <div class="testimonial-portrait">
-        <img src="assets/photos/testimonial-portrait.jpg" alt="Aleron member">
+    <div class="testimonial-carousel fade-in" id="testimonialCarousel">
+      <div class="testimonial-track">
+
+        <div class="testimonial-card is-active" data-i="0">
+          <div class="testimonial-portrait">
+            <img src="assets/photos/testimonial-portrait.jpg" alt="Aleron member">
+          </div>
+          <div>
+            <p class="testimonial-quote">"Aleron caught my ApoB trend three years before my regular physical would have. That's the part I'm still thinking about."</p>
+            <div class="testimonial-attrib"><span class="testimonial-attrib-name">M.K.</span> &nbsp;·&nbsp; Member since 2025</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card" data-i="1">
+          <div class="testimonial-portrait">
+            <img src="assets/photos/testimonial-portrait-2.jpg" alt="Aleron member">
+          </div>
+          <div>
+            <p class="testimonial-quote">"I have a family history of breast cancer. Aleron flagged a risk pattern my last three physicians had missed — and built a screening cadence that actually fits my life."</p>
+            <div class="testimonial-attrib"><span class="testimonial-attrib-name">A.W.</span> &nbsp;·&nbsp; Member since 2025</div>
+          </div>
+        </div>
+
       </div>
-      <div>
-        <p class="testimonial-quote">"Aleron caught my ApoB trend three years before my regular physical would have. That's the part I'm still thinking about."</p>
-        <div class="testimonial-attrib"><span class="testimonial-attrib-name">M.K.</span> &nbsp;·&nbsp; Member since 2025</div>
+
+      <div class="testimonial-controls">
+        <div class="testimonial-dots" role="tablist" aria-label="Testimonials">
+          <button class="testimonial-dot is-active" data-i="0" aria-label="Testimonial 1"></button>
+          <button class="testimonial-dot" data-i="1" aria-label="Testimonial 2"></button>
+        </div>
+        <div class="testimonial-arrows">
+          <button class="testimonial-arrow" id="testimonialPrev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="testimonial-arrow" id="testimonialNext" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
       </div>
+
     </div>
   </div>
+  <script>
+  (function(){
+    const root = document.getElementById('testimonialCarousel');
+    if (!root) return;
+    const cards = root.querySelectorAll('.testimonial-card');
+    const dots = root.querySelectorAll('.testimonial-dot');
+    const prev = document.getElementById('testimonialPrev');
+    const next = document.getElementById('testimonialNext');
+    let active = 0;
+    const total = cards.length;
+    function go(i) {
+      active = (i + total) % total;
+      cards.forEach((c, idx) => c.classList.toggle('is-active', idx === active));
+      dots.forEach((d, idx) => d.classList.toggle('is-active', idx === active));
+    }
+    dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i, 10))));
+    prev.addEventListener('click', () => go(active - 1));
+    next.addEventListener('click', () => go(active + 1));
+  })();
+  </script>
 </section>
 
 <!-- ============ SECTION 05 — The Delta ============ -->
