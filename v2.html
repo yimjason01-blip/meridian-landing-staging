@@ -1353,6 +1353,19 @@ footer a:hover { color: var(--paper); }
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .exp-logo-cell:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(20,17,13,0.18); }
+.exp-logo-cell img,
+.exp-logo-cell svg {
+  max-width: 78%;
+  max-height: 28px;
+  object-fit: contain;
+  color: #1a1a1a;
+}
+.exp-logo-cell .icon-square {
+  width: 26px;
+  height: 26px;
+  max-width: 26px;
+  max-height: 26px;
+}
 .exp-logo-cell .logo-wm {
   font-family: 'Inter Tight', sans-serif;
   font-size: 14px;
@@ -1760,14 +1773,14 @@ footer a:hover { color: var(--paper); }
           <p>Demographics, family history, lifestyle, screening history — collected the way every other app on your phone does it. Then your wearable connects in two taps and starts streaming the signals your physician will actually use.</p>
           <div class="exp-integ-label">Connects with</div>
           <div class="exp-logos">
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:600;letter-spacing:-0.01em;">Apple Watch</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:600;letter-spacing:0.18em;">OURA</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:800;letter-spacing:0.02em;font-style:italic;">WHOOP</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:700;letter-spacing:0.04em;">GARMIN</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:600;letter-spacing:-0.01em;">Fitbit</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:600;letter-spacing:-0.01em;">Eight Sleep</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:700;letter-spacing:0.02em;">DEXCOM</span></div>
-            <div class="exp-logo-cell"><span class="logo-wm" style="font-weight:600;letter-spacing:-0.01em;">Withings</span></div>
+            <div class="exp-logo-cell"><img class="icon-square" src="https://cdn.simpleicons.org/apple/1a1a1a" alt="Apple Watch"></div>
+            <div class="exp-logo-cell"><img src="assets/logos/oura.svg" alt="Oura"></div>
+            <div class="exp-logo-cell"><img src="assets/logos/whoop.svg" alt="Whoop"></div>
+            <div class="exp-logo-cell"><img class="icon-square" src="https://cdn.simpleicons.org/garmin/1a1a1a" alt="Garmin"></div>
+            <div class="exp-logo-cell"><img class="icon-square" src="https://cdn.simpleicons.org/fitbit/1a1a1a" alt="Fitbit"></div>
+            <div class="exp-logo-cell"><img class="icon-square" src="https://cdn.simpleicons.org/eightsleep/1a1a1a" alt="Eight Sleep"></div>
+            <div class="exp-logo-cell"><img src="assets/logos/dexcom.svg" alt="Dexcom"></div>
+            <div class="exp-logo-cell"><img src="assets/logos/withings.svg" alt="Withings"></div>
           </div>
         </div>
 
