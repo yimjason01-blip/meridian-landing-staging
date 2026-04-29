@@ -1047,26 +1047,37 @@ footer a:hover { color: var(--paper); }
 .fade-in-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.32s; }
 .fade-in-stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
 
-/* ============ PHONE FRAME ============ */
+/* ============ PHONE FRAME — hand-drawn (Antique Gold) ============ */
 .phone-frame {
   position: relative;
   width: 320px;
   aspect-ratio: 390 / 844;
   margin: 0 auto;
-  background: #14140F;
-  border-radius: 44px;
-  padding: 8px;
-  box-shadow:
-    0 0 0 1px rgba(212,165,116,0.22),
-    0 60px 120px -40px rgba(10,10,11,0.55),
-    0 30px 60px -30px rgba(184,133,77,0.22);
+  background: transparent;
+  filter: drop-shadow(0 38px 36px rgba(24,20,15,.18));
+}
+.phone-frame .phone-screen {
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  border-radius: 36px;
+  background: #0a0a0d;
+  overflow: hidden;
 }
 .phone-frame img {
   width: 100%; height: 100%;
   object-fit: contain;
   object-position: center;
-  border-radius: 36px;
   display: block;
+}
+.phone-frame .phone-ink {
+  position: absolute;
+  inset: -28px;
+  z-index: 4;
+  width: calc(100% + 56px);
+  height: calc(100% + 56px);
+  overflow: visible;
+  pointer-events: none;
 }
 @media (min-width: 700px) {
   .phone-frame { width: 360px; }
@@ -1090,7 +1101,7 @@ footer a:hover { color: var(--paper); }
     grid-template-columns: minmax(360px, 0.85fr) 1fr;
   }
 }
-.md-ai-phone-col { display: flex; justify-content: center; }
+.md-ai-phone-col { display: flex; justify-content: center; overflow: visible; }
 .md-ai-content { max-width: 560px; }
 .md-ai-content .eyebrow { display: block; margin-bottom: 18px; }
 .md-ai-headline {
@@ -1620,7 +1631,9 @@ footer a:hover { color: var(--paper); }
     <div class="md-ai-grid fade-in">
       <div class="md-ai-phone-col">
         <div class="phone-frame">
-          <img src="assets/prototype-screen.jpg" alt="Meridian patient app showing a voice message from your physician" />
+          <div class="phone-screen">
+            <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app showing a voice message from your physician" />
+          </div>
         </div>
       </div>
 
@@ -2068,5 +2081,6 @@ const counterObs = new IntersectionObserver((entries) => {
 document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
 </script>
 
+<script type="module" src="assets/js/phone-frame-ink.js"></script>
 </body>
 </html>

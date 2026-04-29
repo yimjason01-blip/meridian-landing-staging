@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — hand drawn phone, refined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe8da;
+  --ink: #18140f;
+  --muted: rgba(24,20,15,.62);
+  --gold: #9f6f3e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(circle at 22% 8%, rgba(255,255,255,.5), transparent 32%),
+    linear-gradient(135deg, #f4eedf 0%, #e8ddca 100%);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(28px, 5vw, 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+header {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { margin: 0; max-width: 720px; font-size: clamp(40px, 5.4vw, 70px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+header p { margin: 0 0 6px; max-width: 360px; color: var(--muted); font-size: 16px; line-height: 1.42; }
+
+main { width: 100%; max-width: 1100px; display: grid; place-items: center; }
+.stage { position: relative; display: grid; place-items: center; padding: 50px 40px 90px; }
+
+.phone-wrap {
+  position: relative;
+  width: 360px;
+  height: 779px;
+  filter: drop-shadow(0 38px 36px rgba(24,20,15,.16));
+}
+
+.phone-wrap .screen {
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  border-radius: 38px;
+  background: #0a0a0d;
+  overflow: hidden;
+}
+.phone-wrap .screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.phone-wrap svg.frame {
+  position: absolute;
+  inset: -28px;
+  z-index: 4;
+  width: 416px;
+  height: 835px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.baseline {
+  position: absolute;
+  bottom: 24px;
+  width: 64%;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(24,20,15,.10);
+  z-index: 0;
+}
+
+@media (max-width: 720px) {
+  header { display: block; }
+  header p { margin-top: 14px; }
+  .phone-wrap { width: 280px; height: 606px; }
+  .phone-wrap svg.frame { width: 336px; height: 662px; }
+  .stage { padding: 30px 16px 60px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="kicker">Hand drawn phone · refined</div>
+    <h1>Editorial illustration. Not a kids sketch.</h1>
+  </div>
+  <p>Single confident contour. No double-strokes, no scratchy overshoot. Subtle inflection only — closer to a technical product illustration.</p>
+</header>
+
+<main>
+  <div class="stage">
+    <div class="baseline" aria-hidden="true"></div>
+    <div class="phone-wrap" id="phone">
+      <div class="screen">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app shown in a refined hand-drawn iPhone frame">
+      </div>
+      <svg class="frame" id="frameSvg" width="416" height="835"></svg>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+<script>
+(function () {
+  const svg = document.getElementById('frameSvg');
+  const rc = rough.svg(svg);
+
+  // Native pixel coords. Phone body inset 28 from each edge.
+  const X1 = 28, Y1 = 28, X2 = 388, Y2 = 807;
+  const R  = 56;
+
+  const ink       = '#181410';
+  const inkSubtle = 'rgba(24,20,15,0.30)';
+  const innerLine = 'rgba(255,255,255,0.16)';
+
+  function roundRectPath(x1, y1, x2, y2, r) {
+    return [
+      `M ${x1 + r} ${y1}`,
+      `L ${x2 - r} ${y1}`,
+      `Q ${x2} ${y1} ${x2} ${y1 + r}`,
+      `L ${x2} ${y2 - r}`,
+      `Q ${x2} ${y2} ${x2 - r} ${y2}`,
+      `L ${x1 + r} ${y2}`,
+      `Q ${x1} ${y2} ${x1} ${y2 - r}`,
+      `L ${x1} ${y1 + r}`,
+      `Q ${x1} ${y1} ${x1 + r} ${y1}`,
+      'Z',
+    ].join(' ');
+  }
+
+  // 1) PRIMARY OUTLINE — confident editorial line. Heavier weight, controlled
+  // inflection. disableMultiStroke removes the scratchy double pass.
+  svg.appendChild(rc.path(roundRectPath(X1, Y1, X2, Y2, R), {
+    stroke: ink,
+    strokeWidth: 2.2,
+    roughness: 1.0,
+    bowing: 1.2,
+    disableMultiStroke: true,
+    seed: 11,
+  }));
+
+  // 2) INNER GLASS LINE — barely there
+  svg.appendChild(rc.path(roundRectPath(X1 + 7, Y1 + 9, X2 - 7, Y2 - 9, R - 6), {
+    stroke: innerLine,
+    strokeWidth: 0.7,
+    roughness: 0.5,
+    bowing: 0.4,
+    disableMultiStroke: true,
+    seed: 31,
+  }));
+
+  // 3) DYNAMIC ISLAND
+  svg.appendChild(rc.path(roundRectPath(165, 50, 251, 70, 10), {
+    stroke: 'rgba(255,255,255,0.55)',
+    strokeWidth: 1.4,
+    roughness: 0.6,
+    bowing: 0.4,
+    disableMultiStroke: true,
+    seed: 47,
+  }));
+
+  // 4) HARDWARE BUTTONS — confident, visible. Solid rectangles with subtle inflection.
+  const btn = (x, y, w, h, seed) => svg.appendChild(rc.path(roundRectPath(x, y, x + w, y + h, 1.5), {
+    stroke: ink, strokeWidth: 1.8, fill: ink, fillStyle: 'solid',
+    roughness: 0.7, bowing: 0.3, disableMultiStroke: true, seed,
+  }));
+  // Left rail: action button + volume up + volume down (slightly outside the body line)
+  btn(24, 165, 4, 22, 51);   // action
+  btn(24, 225, 4, 56, 53);   // volume up
+  btn(24, 298, 4, 56, 55);   // volume down
+  // Right rail: power
+  btn(388, 268, 4, 92, 57);
+
+  // 5) HOME INDICATOR
+  svg.appendChild(rc.line(162, 788, 254, 788, {
+    stroke: 'rgba(255,255,255,0.55)', strokeWidth: 1.4, roughness: 0.3, disableMultiStroke: true, seed: 95,
+  }));
+})();
+</script>
+</body>
+</html>
