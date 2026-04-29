@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — hand drawn phone, dialed in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe8da;
+  --ink: #18140f;
+  --muted: rgba(24,20,15,.62);
+  --gold: #9f6f3e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(circle at 22% 8%, rgba(255,255,255,.5), transparent 32%),
+    linear-gradient(135deg, #f4eedf 0%, #e8ddca 100%);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(28px, 5vw, 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+header {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { margin: 0; max-width: 720px; font-size: clamp(40px, 5.4vw, 70px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+header p { margin: 0 0 6px; max-width: 360px; color: var(--muted); font-size: 16px; line-height: 1.42; }
+
+main {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 50px 40px 90px;
+}
+
+/* FIXED PIXEL DIMENSIONS so rough.js jitter renders at intended scale */
+.phone-wrap {
+  position: relative;
+  width: 360px;
+  height: 779px;       /* 360 * (844/390) */
+  filter: drop-shadow(0 38px 36px rgba(24,20,15,.18));
+}
+.phone-wrap.tilt { transform: rotate(-1deg); }
+
+/* Screen image, inset to sit just inside the drawn frame */
+.phone-wrap .screen {
+  position: absolute;
+  z-index: 2;
+  inset: 13px;
+  border-radius: 36px;
+  background: #0a0a0d;
+  overflow: hidden;
+}
+.phone-wrap .screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Native-size SVG — 1 unit = 1 px, no preserveAspectRatio scaling */
+.phone-wrap svg.frame {
+  position: absolute;
+  inset: -30px;
+  z-index: 4;
+  width: 420px;
+  height: 839px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.baseline {
+  position: absolute;
+  bottom: 24px;
+  width: 70%;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(24,20,15,.10);
+  transform: rotate(-1.4deg);
+  z-index: 0;
+}
+
+@media (max-width: 720px) {
+  header { display: block; }
+  header p { margin-top: 14px; }
+  .phone-wrap { width: 280px; height: 606px; }
+  .phone-wrap svg.frame { width: 340px; height: 666px; }
+  .stage { padding: 30px 16px 60px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="kicker">Hand drawn phone · dialed in</div>
+    <h1>Real ink, not a smooth rectangle.</h1>
+  </div>
+  <p>Native-pixel SVG so rough.js jitter actually renders. Outline broken into segments to preserve wobble. Committed buttons. Pressure variation along the rails.</p>
+</header>
+
+<main>
+  <div class="stage">
+    <div class="baseline" aria-hidden="true"></div>
+    <div class="phone-wrap tilt" id="phone">
+      <div class="screen">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app shown in a hand-drawn iPhone frame">
+      </div>
+      <svg class="frame" id="frameSvg" width="420" height="839"></svg>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js"></script>
+<script>
+(function () {
+  const svg = document.getElementById('frameSvg');
+  const rc = rough.svg(svg);
+
+  // Coordinate frame: SVG is 420x839 px (native).
+  // Phone body sits inset 30px from each edge -> body rect 30,30..390,809  (360 x 779).
+  const X1 = 30, Y1 = 30, X2 = 390, Y2 = 809;
+  const R  = 56;                     // corner radius — real iPhone-like
+
+  const ink      = '#181410';
+  const inkSoft  = 'rgba(24,20,15,0.42)';
+  const inkLight = 'rgba(24,20,15,0.22)';
+  const innerLine= 'rgba(255,255,255,0.18)';
+
+  // Build the rounded-rectangle outline as a single SVG path string,
+  // but keep it as cubic+line segments so rough.js can wobble each segment.
+  function roundRectPath(x1, y1, x2, y2, r) {
+    return [
+      `M ${x1 + r} ${y1}`,
+      `L ${x2 - r} ${y1}`,
+      `Q ${x2} ${y1} ${x2} ${y1 + r}`,
+      `L ${x2} ${y2 - r}`,
+      `Q ${x2} ${y2} ${x2 - r} ${y2}`,
+      `L ${x1 + r} ${y2}`,
+      `Q ${x1} ${y2} ${x1} ${y2 - r}`,
+      `L ${x1} ${y1 + r}`,
+      `Q ${x1} ${y1} ${x1 + r} ${y1}`,
+      'Z',
+    ].join(' ');
+  }
+
+  // 1) PRIMARY OUTLINE — strong roughness, generous bowing, full opacity ink
+  svg.appendChild(rc.path(roundRectPath(X1, Y1, X2, Y2, R), {
+    stroke: ink,
+    strokeWidth: 1.7,
+    roughness: 2.4,
+    bowing: 2.4,
+    seed: 11,
+    disableMultiStroke: false,
+  }));
+
+  // 2) GHOST DOUBLE — deliberately offset, lighter, "redrawn over" feel
+  svg.appendChild(rc.path(roundRectPath(X1 + 2, Y1 + 3, X2 - 1, Y2 - 1, R - 2), {
+    stroke: inkLight,
+    strokeWidth: 1.0,
+    roughness: 2.8,
+    bowing: 3.0,
+    seed: 23,
+  }));
+
+  // 3) INNER GLASS LINE
+  svg.appendChild(rc.path(roundRectPath(X1 + 9, Y1 + 11, X2 - 9, Y2 - 11, R - 8), {
+    stroke: innerLine,
+    strokeWidth: 0.85,
+    roughness: 1.6,
+    bowing: 1.0,
+    seed: 31,
+  }));
+
+  // 4) DYNAMIC ISLAND PILL — committed
+  svg.appendChild(rc.path(roundRectPath(165, 50, 255, 70, 10), {
+    stroke: 'rgba(255,255,255,0.40)',
+    strokeWidth: 1.2,
+    roughness: 1.6,
+    bowing: 1.0,
+    seed: 47,
+  }));
+
+  // 5) HARDWARE BUTTONS — bold, committed, slightly imperfect
+  // Left rail: action button (small) + volume up + volume down
+  const leftX = 28.5;
+  svg.appendChild(rc.line(leftX, 165, leftX, 187, { stroke: ink, strokeWidth: 2.4, roughness: 1.4, seed: 51 }));
+  svg.appendChild(rc.line(leftX, 230, leftX, 285, { stroke: ink, strokeWidth: 2.4, roughness: 1.4, seed: 53 }));
+  svg.appendChild(rc.line(leftX - 0.5, 305, leftX, 360, { stroke: ink, strokeWidth: 2.4, roughness: 1.5, seed: 55 }));
+  // Right rail: power
+  const rightX = 391.5;
+  svg.appendChild(rc.line(rightX, 270, rightX + 0.5, 360, { stroke: ink, strokeWidth: 2.5, roughness: 1.4, seed: 57 }));
+
+  // 6) CORNER OVERSHOOT — tiny intentional "ran past the corner" marks
+  function overshoot(x1, y1, x2, y2, seed) {
+    svg.appendChild(rc.line(x1, y1, x2, y2, { stroke: inkSoft, strokeWidth: 1.0, roughness: 1.8, seed }));
+  }
+  // top-left
+  overshoot(X1 + R - 5, Y1 - 4,  X1 + R + 8, Y1 - 5,  71);
+  overshoot(X1 - 4,     Y1 + R - 5, X1 - 5, Y1 + R + 8, 73);
+  // top-right
+  overshoot(X2 - R - 8, Y1 - 5,  X2 - R + 5, Y1 - 4,  75);
+  overshoot(X2 + 4,     Y1 + R - 5, X2 + 5, Y1 + R + 8, 77);
+  // bottom-left
+  overshoot(X1 + R - 5, Y2 + 4,  X1 + R + 8, Y2 + 5,  79);
+  overshoot(X1 - 5,     Y2 - R - 8, X1 - 4, Y2 - R + 5, 81);
+  // bottom-right
+  overshoot(X2 - R - 8, Y2 + 5,  X2 - R + 5, Y2 + 4,  83);
+  overshoot(X2 + 5,     Y2 - R - 8, X2 + 4, Y2 - R + 5, 85);
+
+  // 7) PRESSURE-VARIED EDGE MARKS — heavier ink at random spots along the rails
+  svg.appendChild(rc.line(X1 - 1, 470, X1 - 1, 540, { stroke: ink, strokeWidth: 1.6, roughness: 1.8, seed: 91 }));
+  svg.appendChild(rc.line(X2 + 1, 600, X2 + 1, 670, { stroke: ink, strokeWidth: 1.6, roughness: 1.8, seed: 93 }));
+
+  // 8) HOME INDICATOR — small horizontal line at the bottom of the screen
+  svg.appendChild(rc.line(160, 790, 260, 790, { stroke: 'rgba(255,255,255,0.5)', strokeWidth: 1.3, roughness: 0.8, seed: 95 }));
+
+  // 9) CONSTRUCTION GHOST — faint vertical centerline below the island
+  svg.appendChild(rc.line(210, 78, 210, 96, { stroke: inkLight, strokeWidth: 0.7, roughness: 0.5, seed: 97 }));
+})();
+</script>
+</body>
+</html>
