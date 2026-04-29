@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — hand drawn phone, editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe8da;
+  --ink: #18140f;
+  --muted: rgba(24,20,15,.62);
+  --gold: #9f6f3e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(circle at 22% 8%, rgba(255,255,255,.5), transparent 32%),
+    linear-gradient(135deg, #f4eedf 0%, #e8ddca 100%);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(28px, 5vw, 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+header {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { margin: 0; max-width: 720px; font-size: clamp(40px, 5.4vw, 70px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+header p { margin: 0 0 6px; max-width: 360px; color: var(--muted); font-size: 16px; line-height: 1.42; }
+
+main { width: 100%; max-width: 1100px; display: grid; place-items: center; }
+.stage { position: relative; display: grid; place-items: center; padding: 50px 40px 90px; }
+
+.phone-wrap {
+  position: relative;
+  width: 360px;
+  height: 779px;
+  filter: drop-shadow(0 38px 36px rgba(24,20,15,.16));
+}
+
+.phone-wrap .screen {
+  position: absolute;
+  z-index: 2;
+  inset: 14px;
+  border-radius: 38px;
+  background: #0a0a0d;
+  overflow: hidden;
+}
+.phone-wrap .screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.phone-wrap svg.frame {
+  position: absolute;
+  inset: -28px;
+  z-index: 4;
+  width: 416px;
+  height: 835px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.baseline {
+  position: absolute;
+  bottom: 24px;
+  width: 64%;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(24,20,15,.10);
+  z-index: 0;
+}
+
+@media (max-width: 720px) {
+  header { display: block; }
+  header p { margin-top: 14px; }
+  .phone-wrap { width: 280px; height: 606px; }
+  .phone-wrap svg.frame { width: 336px; height: 662px; }
+  .stage { padding: 30px 16px 60px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="kicker">Hand drawn phone · editorial</div>
+    <h1>Line that breathes.</h1>
+  </div>
+  <p>Drawn with perfect-freehand. Pressure simulation gives every contour a tapered start, weighted body, and lifted finish — the pen-and-ink character a uniform stroke can never reach.</p>
+</header>
+
+<main>
+  <div class="stage">
+    <div class="baseline" aria-hidden="true"></div>
+    <div class="phone-wrap" id="phone">
+      <div class="screen">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app shown in an editorial hand-drawn iPhone frame">
+      </div>
+      <svg class="frame" id="frameSvg" viewBox="0 0 416 835" width="416" height="835"></svg>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { getStroke } from 'https://cdn.jsdelivr.net/npm/perfect-freehand@1.2.3/dist/esm/index.mjs';
+
+const svg = document.getElementById('frameSvg');
+const NS = 'http://www.w3.org/2000/svg';
+
+// ---------- helpers ----------
+function getSvgPathFromStroke(points) {
+  if (!points.length) return '';
+  const d = points.reduce(
+    (acc, [x0, y0], i, arr) => {
+      const [x1, y1] = arr[(i + 1) % arr.length];
+      acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+      return acc;
+    },
+    ['M', points[0][0], points[0][1], 'Q']
+  );
+  d.push('Z');
+  return d.join(' ');
+}
+
+// Build a simulated drawing path: array of [x, y, pressure] points along a polyline.
+// We synthesize gentle pressure curves so the line tapers at start/end, holds weight
+// through middles, and has subtle micro-variations along the way.
+function simulatePath(polyline, opts = {}) {
+  const {
+    samples = 8,                 // points per segment
+    basePressure = 0.62,
+    startTaper = 0.18,
+    endTaper = 0.30,
+    jitter = 0.04,
+    seed = 1,
+  } = opts;
+
+  // simple seeded prng
+  let s = seed;
+  const rand = () => {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+
+  // First, generate raw points along the polyline
+  const raw = [];
+  for (let i = 0; i < polyline.length - 1; i++) {
+    const [x1, y1] = polyline[i];
+    const [x2, y2] = polyline[i + 1];
+    for (let j = 0; j < samples; j++) {
+      const t = j / samples;
+      raw.push([
+        x1 + (x2 - x1) * t,
+        y1 + (y2 - y1) * t,
+      ]);
+    }
+  }
+  raw.push(polyline[polyline.length - 1]);
+
+  // Now assign pressures
+  const n = raw.length;
+  return raw.map(([x, y], i) => {
+    const t = i / (n - 1);
+    let p = basePressure;
+    // taper starts/ends
+    if (t < startTaper) p *= (t / startTaper);
+    else if (t > 1 - endTaper) p *= ((1 - t) / endTaper);
+    // micro variation
+    p *= 1 + (rand() - 0.5) * 2 * jitter;
+    p = Math.max(0.05, Math.min(0.98, p));
+    // tiny positional jitter so the line isn't mathematically straight
+    return [x + (rand() - 0.5) * 0.6, y + (rand() - 0.5) * 0.6, p];
+  });
+}
+
+function drawStroke(polyline, strokeOpts = {}, simOpts = {}) {
+  const points = simulatePath(polyline, simOpts);
+  const stroke = getStroke(points, {
+    size: strokeOpts.size ?? 2.6,
+    thinning: strokeOpts.thinning ?? 0.55,
+    smoothing: strokeOpts.smoothing ?? 0.6,
+    streamline: strokeOpts.streamline ?? 0.55,
+    easing: strokeOpts.easing ?? ((t) => t),
+    simulatePressure: false,
+    last: true,
+  });
+  const d = getSvgPathFromStroke(stroke);
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('fill', strokeOpts.fill ?? '#181410');
+  if (strokeOpts.opacity != null) path.setAttribute('fill-opacity', strokeOpts.opacity);
+  svg.appendChild(path);
+  return path;
+}
+
+// Build a rounded-rectangle as FOUR SEPARATE polylines (one per side+corner).
+// This mirrors how an illustrator actually draws — pen-lift between strokes,
+// natural slight overlap at corners. Eliminates start/end blob from one closed loop.
+function roundRectSides(x1, y1, x2, y2, r, arcSamples = 14) {
+  const sides = [[], [], [], []];   // top, right, bottom, left
+  function arc(pts, cx, cy, a1, a2) {
+    for (let i = 0; i <= arcSamples; i++) {
+      const t = i / arcSamples;
+      const a = a1 + (a2 - a1) * t;
+      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    }
+  }
+  // top: from top-left corner mid -> top-right corner mid
+  arc(sides[0], x1 + r, y1 + r, Math.PI * 1.25, Math.PI * 1.5);  // partial TL (45° forward)
+  sides[0].push([x2 - r, y1]);
+  arc(sides[0], x2 - r, y1 + r, Math.PI * 1.5, Math.PI * 1.75);  // partial TR
+  // right
+  arc(sides[1], x2 - r, y1 + r, Math.PI * 1.75, Math.PI * 2);
+  sides[1].push([x2, y2 - r]);
+  arc(sides[1], x2 - r, y2 - r, 0, Math.PI / 4);
+  // bottom
+  arc(sides[2], x2 - r, y2 - r, Math.PI / 4, Math.PI / 2);
+  sides[2].push([x1 + r, y2]);
+  arc(sides[2], x1 + r, y2 - r, Math.PI / 2, Math.PI * 0.75);
+  // left
+  arc(sides[3], x1 + r, y2 - r, Math.PI * 0.75, Math.PI);
+  sides[3].push([x1, y1 + r]);
+  arc(sides[3], x1 + r, y1 + r, Math.PI, Math.PI * 1.25);
+  return sides;
+}
+
+// ---------- COMPOSE ----------
+// Frame coords: SVG is 416x835. Phone body inset 28 from each side.
+const X1 = 28, Y1 = 28, X2 = 388, Y2 = 807;
+const R  = 56;
+
+// 1) PRIMARY OUTLINE — four sides drawn separately (illustrator pen-lift between).
+// Each side has its own gentle taper at start/end so the corners are not blob-prone.
+const sides = roundRectSides(X1, Y1, X2, Y2, R);
+sides.forEach((poly, i) => {
+  drawStroke(poly, {
+    size: 4.4,
+    thinning: 0.6,
+    smoothing: 0.75,
+    streamline: 0.62,
+    fill: '#181410',
+  }, { samples: 5, basePressure: 0.78, startTaper: 0.10, endTaper: 0.10, jitter: 0.025, seed: 11 + i * 7 });
+});
+
+// 2) INNER GLASS LINE — also drawn as four sides
+const innerSides = roundRectSides(X1 + 7, Y1 + 9, X2 - 7, Y2 - 9, R - 6);
+innerSides.forEach((poly, i) => {
+  drawStroke(poly, {
+    size: 1.6,
+    thinning: 0.5,
+    smoothing: 0.7,
+    streamline: 0.5,
+    fill: 'rgba(255,255,255,0.18)',
+  }, { samples: 4, basePressure: 0.6, startTaper: 0.12, endTaper: 0.12, jitter: 0.02, seed: 31 + i * 7 });
+});
+
+// 3) DYNAMIC ISLAND — single closed pill is short enough that one stroke is fine
+drawStroke([[175, 50], [241, 50], [251, 60], [241, 70], [175, 70], [165, 60], [175, 50]], {
+  size: 2.0,
+  thinning: 0.55,
+  smoothing: 0.7,
+  streamline: 0.55,
+  fill: 'rgba(255,255,255,0.55)',
+}, { samples: 5, basePressure: 0.7, startTaper: 0.12, endTaper: 0.12, jitter: 0.02, seed: 47 });
+
+// 4) HARDWARE BUTTONS — restrained, committed. Sized to read as hardware not blobs.
+function drawButton(x1, y1, x2, y2, seed, size = 3.4) {
+  drawStroke([[x1, y1], [x2, y2]], {
+    size,
+    thinning: 0.4,
+    smoothing: 0.75,
+    streamline: 0.6,
+    fill: '#181410',
+  }, { samples: 6, basePressure: 0.72, startTaper: 0.18, endTaper: 0.18, jitter: 0.03, seed });
+}
+// Left rail: action button + volume up + volume down — sit just outside body line
+drawButton(26, 168, 26, 184, 51, 3.0);   // action (small)
+drawButton(26, 226, 26, 278, 53, 3.6);   // volume up
+drawButton(26, 296, 26, 348, 55, 3.6);   // volume down
+// Right rail: power
+drawButton(390, 270, 390, 354, 57, 3.8);
+
+// 5) HOME INDICATOR — tiny, on the screen
+drawStroke([[160, 786], [256, 786]], {
+  size: 2.6,
+  thinning: 0.5,
+  smoothing: 0.7,
+  streamline: 0.55,
+  fill: 'rgba(255,255,255,0.6)',
+}, { samples: 4, basePressure: 0.7, startTaper: 0.20, endTaper: 0.20, jitter: 0.02, seed: 95 });
+</script>
+</body>
+</html>
