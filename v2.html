@@ -687,59 +687,61 @@ section.engine-section {
 .engine-domain-tile.alert .score { color: #F0D9A8; }
 
 /* L1 Your Data — 3-stream stacked dashboard */
-.engine-data-grid { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.engine-data-grid { display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .engine-data-row {
   display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: 10px;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
   align-items: center;
-  padding: 6px 10px;
+  padding: 9px 12px;
   background: rgba(212,165,116,0.06);
   border: 1px solid rgba(212,165,116,0.22);
-  border-radius: 3px;
-  min-height: 40px;
+  border-radius: 4px;
+  min-height: 56px;
 }
-.engine-data-row .edr-meta { display: flex; align-items: baseline; gap: 6px; }
+.engine-data-row .edr-meta { display: flex; flex-direction: column; gap: 2px; }
 .engine-data-row .edr-name {
   font-family: 'Inter', sans-serif;
-  font-size: 11px; font-weight: 500;
-  color: var(--paper);
-  letter-spacing: -0.005em;
+  font-size: 12px; font-weight: 600;
+  color: #F0D9A8;
+  letter-spacing: -0.01em;
 }
 .engine-data-row .edr-sub {
   font-family: 'Inter', sans-serif;
   font-size: 9px; font-weight: 400;
-  color: rgba(246,244,238,0.5);
+  color: rgba(212,165,116,0.55);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  white-space: nowrap;
 }
-.engine-data-row .edr-viz { width: 100%; height: 26px; display: flex; align-items: center; }
+.engine-data-row .edr-viz { width: 100%; height: 38px; display: flex; align-items: center; }
 .engine-data-row .edr-viz svg { width: 100%; height: 100%; display: block; }
 .engine-data-row .edr-viz-lab {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
   height: auto;
-  align-items: center;
-  flex-wrap: wrap;
 }
 .edr-lab-cell {
-  display: inline-flex; align-items: baseline; gap: 5px;
-  font-family: 'Inter Tight', sans-serif;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 4px 2px;
+  background: rgba(212,165,116,0.06);
+  border: 1px solid rgba(212,165,116,0.18);
+  border-radius: 3px;
+  min-height: 36px;
 }
 .edr-lab-cell .lc-k {
   font-family: 'Inter', sans-serif;
-  font-size: 9px; font-weight: 500;
-  color: rgba(246,244,238,0.55);
-  letter-spacing: 0.06em;
+  font-size: 8px; font-weight: 500;
+  color: rgba(212,165,116,0.6);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .edr-lab-cell .lc-v {
-  font-size: 13px; font-weight: 500;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 14px; font-weight: 500;
   color: #F0D9A8;
+  margin-top: 1px;
 }
-/* hide sub-labels in genome SVG to declutter; keep markers only */
-.edr-viz-genome svg text { display: none; }
 
 /* L2 AI + MCP */
 .engine-ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; flex: 1; }
