@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — iPhone frame options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efebe1;
+  --paper-2: #e7dfcf;
+  --ink: #17140f;
+  --muted: rgba(23,20,15,.58);
+  --gold: #b8854d;
+  --deep: #08090a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: radial-gradient(ellipse 70% 60% at 50% 12%, rgba(184,133,77,.18), transparent 58%), linear-gradient(180deg, var(--paper), var(--paper-2)); color: var(--ink); font-family: 'Inter Tight', system-ui, sans-serif; }
+body { padding: clamp(28px, 5vw, 72px); }
+.header { max-width: 1180px; margin: 0 auto clamp(28px, 4vw, 56px); display: flex; justify-content: space-between; gap: 28px; align-items: end; }
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #8b653c; margin-bottom: 12px; }
+h1 { margin: 0; font-size: clamp(42px, 6vw, 82px); line-height: .9; letter-spacing: -.055em; font-weight: 500; max-width: 820px; }
+.header p { margin: 0 0 6px; max-width: 330px; color: var(--muted); font-size: 17px; line-height: 1.45; }
+.grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.4vw, 34px); align-items: stretch; }
+.option { position: relative; border: 1px solid rgba(23,20,15,.11); background: rgba(255,255,255,.26); border-radius: 28px; padding: 26px 20px 22px; min-height: 820px; overflow: visible; box-shadow: 0 30px 80px rgba(23,20,15,.08); }
+.option::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 42% at 50% 36%, rgba(255,255,255,.56), transparent 70%); pointer-events: none; }
+.option h2 { position: relative; margin: 0 0 6px; font-size: 22px; letter-spacing: -.025em; font-weight: 560; }
+.option p { position: relative; margin: 0 auto 22px; max-width: 28ch; color: var(--muted); line-height: 1.35; font-size: 14px; }
+.stage { position: relative; height: 670px; display: grid; place-items: center; }
+.phone { position: relative; width: 286px; aspect-ratio: 390 / 844; transform-style: preserve-3d; }
+.phone img { position: absolute; inset: var(--screen-inset, 10px); width: calc(100% - var(--screen-inset, 10px) * 2); height: calc(100% - var(--screen-inset, 10px) * 2); object-fit: contain; border-radius: var(--screen-radius, 34px); display: block; z-index: 3; background: #08090a; }
+.phone .island { position: absolute; z-index: 5; top: 17px; left: 50%; transform: translateX(-50%); width: 78px; height: 23px; border-radius: 99px; background: #020203; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 1px 2px rgba(255,255,255,.05); }
+.phone .btn { position: absolute; z-index: 1; width: 3px; border-radius: 2px; background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(0,0,0,.28)); }
+.phone .btn.left-1 { left: -3px; top: 112px; height: 44px; }
+.phone .btn.left-2 { left: -3px; top: 176px; height: 66px; }
+.phone .btn.right-1 { right: -3px; top: 156px; height: 84px; }
+
+/* A — titanium hardware */
+.titanium .phone { --screen-inset: 9px; --screen-radius: 35px; border-radius: 49px; background: linear-gradient(145deg, #fff8ea 0%, #c7bdae 16%, #312f2b 42%, #81776b 69%, #fffaf0 100%); padding: 9px; box-shadow: 0 62px 115px -40px rgba(23,20,15,.58), 0 18px 45px -20px rgba(184,133,77,.35), inset 0 0 0 1px rgba(255,255,255,.38); }
+.titanium .phone::before { content: ''; position: absolute; inset: 3px; border-radius: 46px; background: linear-gradient(145deg, #181716, #090909 46%, #24211d); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); }
+.titanium .phone::after { content: ''; position: absolute; inset: 1px auto auto 24px; width: 38%; height: 2px; border-radius: 4px; background: rgba(255,255,255,.55); filter: blur(.2px); }
+
+/* B — silver/ceramic outline */
+.silver .phone { --screen-inset: 12px; transform: translateY(-12px); --screen-radius: 32px; border-radius: 50px; background: linear-gradient(120deg, #fffaf0, #c8c5bd 28%, #f7f2e8 56%, #8d8b87 100%); padding: 12px; box-shadow: 0 45px 100px -38px rgba(23,20,15,.45), 0 0 0 1px rgba(255,255,255,.62), inset 0 0 14px rgba(255,255,255,.9); }
+.silver .phone::before { content: ''; position: absolute; inset: 5px; border-radius: 44px; background: #0b0b0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); }
+.silver .phone::after { content: ''; position: absolute; inset: 0; border-radius: 50px; background: linear-gradient(100deg, transparent 0 37%, rgba(255,255,255,.33) 40%, transparent 47%); mix-blend-mode: screen; pointer-events: none; }
+.silver .stage::after { content: ''; position: absolute; width: 250px; height: 34px; bottom: 42px; border-radius: 50%; background: rgba(23,20,15,.16); filter: blur(18px); }
+
+/* C — angled glass slab */
+.angled .phone { --screen-inset: 8px; --screen-radius: 34px; border-radius: 48px; transform: perspective(1100px) rotateY(-9deg) rotateX(3deg) rotateZ(-1.5deg); background: linear-gradient(100deg, #050505 0%, #24231f 34%, #c4a06e 39%, #111 44%, #050505 100%); padding: 8px; box-shadow: 42px 52px 105px -42px rgba(23,20,15,.58), 8px 9px 0 rgba(42,37,29,.28), inset 0 0 0 1px rgba(255,255,255,.18); }
+.angled .phone::before { content: ''; position: absolute; inset: 2px; border-radius: 46px; background: #0a0a0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.angled .phone::after { content: ''; position: absolute; inset: 9px 9px 9px auto; width: 18px; border-radius: 0 38px 38px 0; background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.02)); transform: translateX(14px); filter: blur(.2px); }
+.angled .island { transform: translateX(-50%) scale(.95); }
+.angled .stage { perspective: 1200px; }
+.angled .stage::after { content: ''; position: absolute; width: 270px; height: 58px; bottom: 36px; transform: rotate(-5deg); border-radius: 50%; background: rgba(23,20,15,.18); filter: blur(24px); }
+.badge { position: absolute; right: 18px; top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .12em; color: rgba(23,20,15,.46); text-transform: uppercase; border: 1px solid rgba(23,20,15,.10); border-radius: 999px; padding: 6px 8px; background: rgba(255,255,255,.22); }
+@media (max-width: 980px) { .grid { grid-template-columns: 1fr; } .option { min-height: 720px; } .stage { height: 590px; } .header { display: block; } .header p { margin-top: 18px; } }
+</style>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <div class="kicker">Phone-frame studies</div>
+      <h1>Three ways to make the app feel like a real device.</h1>
+    </div>
+    <p>Same Meridian patient screenshot. Different hardware treatment: titanium, light ceramic, and angled glass.</p>
+  </header>
+
+  <main class="grid">
+    <section class="option titanium">
+      <h2>A · Titanium Pro</h2>
+      <p>Most literal iPhone read: metal rail, dynamic island, side buttons, real-device depth without making the phone theatrical.</p>
+      <div class="stage">
+        <div class="phone">
+          <span class="btn left-1"></span><span class="btn left-2"></span><span class="btn right-1"></span><span class="island"></span>
+          <img src="assets/prototype-screen.jpg" alt="Meridian patient app in titanium iPhone frame">
+        </div>
+      </div>
+      <div class="badge">safest</div>
+    </section>
+
+    <section class="option silver">
+      <h2>B · Light Ceramic</h2>
+      <p>Brighter hardware silhouette so the phone separates from the black app UI. More Apple retail / healthcare premium.</p>
+      <div class="stage">
+        <div class="phone">
+          <span class="btn left-1"></span><span class="btn left-2"></span><span class="btn right-1"></span><span class="island"></span>
+          <img src="assets/prototype-screen.jpg" alt="Meridian patient app in light iPhone frame">
+        </div>
+      </div>
+      <div class="badge">clearest</div>
+    </section>
+
+    <section class="option angled">
+      <h2>C · Angled Glass</h2>
+      <p>More dimensional and cinematic. It reads less like a flat screenshot, but trades away some clinical restraint.</p>
+      <div class="stage">
+        <div class="phone">
+          <span class="btn left-1"></span><span class="btn left-2"></span><span class="btn right-1"></span><span class="island"></span>
+          <img src="assets/prototype-screen.jpg" alt="Meridian patient app in angled iPhone frame">
+        </div>
+      </div>
+      <div class="badge">most depth</div>
+    </section>
+  </main>
+</body>
+</html>
