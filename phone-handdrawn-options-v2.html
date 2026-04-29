@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — refined hand-drawn phone options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe8da;
+  --ink: #18140f;
+  --muted: rgba(24,20,15,.62);
+  --gold: #9f6f3e;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(255,255,255,.45), transparent 30%),
+    linear-gradient(135deg, #f4eedf 0%, #e8ddca 100%);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(26px, 5vw, 64px);
+}
+.header { max-width: 1260px; margin: 0 auto 32px; display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { margin: 0; max-width: 760px; font-size: clamp(39px, 5vw, 72px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+.header p { margin: 0 0 6px; max-width: 380px; color: var(--muted); font-size: 17px; line-height: 1.42; }
+.grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.2vw, 30px); align-items: stretch; }
+.option {
+  min-height: 745px;
+  border-radius: 34px;
+  padding: 22px 22px 24px;
+  background: rgba(255,255,255,.23);
+  border: 1px solid rgba(24,20,15,.11);
+  box-shadow: 0 24px 70px rgba(70,48,26,.12);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  place-items: center;
+  overflow: visible;
+}
+.stage { min-height: 640px; display: grid; place-items: center; width: 100%; position: relative; overflow: visible; }
+.caption { width: 100%; align-self: end; }
+.caption h2 { margin: 0 0 7px; font-size: 20px; letter-spacing: -.02em; font-weight: 600; }
+.caption p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.35; }
+.phone {
+  --screen-radius: 33px;
+  position: relative;
+  width: min(286px, 78vw);
+  aspect-ratio: 739 / 1280;
+  filter: drop-shadow(0 30px 34px rgba(24,20,15,.18));
+  overflow: visible;
+}
+.phone img {
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: cover;
+  border-radius: var(--screen-radius);
+  background: #07080a;
+  display: block;
+}
+.phone svg {
+  position: absolute;
+  z-index: 4;
+  inset: -18px;
+  width: calc(100% + 36px);
+  height: calc(100% + 36px);
+  overflow: visible;
+  pointer-events: none;
+}
+svg path, svg line, svg rect { vector-effect: non-scaling-stroke; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.option-a .phone { transform: rotate(-.55deg); }
+.option-a .outer-main { stroke: rgba(20,17,13,.78); stroke-width: 1.45; }
+.option-a .outer-ghost { stroke: rgba(20,17,13,.28); stroke-width: .85; }
+.option-a .detail { stroke: rgba(20,17,13,.42); stroke-width: 1.05; }
+.option-a .inner { stroke: rgba(255,255,255,.20); stroke-width: .85; }
+.option-b .phone { transform: rotate(.75deg); filter: drop-shadow(0 34px 40px rgba(24,20,15,.14)); }
+.option-b .outer-main { stroke: rgba(52,43,34,.58); stroke-width: 1.1; stroke-dasharray: 7 5; }
+.option-b .outer-ghost { stroke: rgba(52,43,34,.22); stroke-width: .75; }
+.option-b .detail { stroke: rgba(52,43,34,.36); stroke-width: .85; }
+.option-b .inner { stroke: rgba(255,255,255,.17); stroke-width: .75; }
+.option-c .phone { transform: rotate(-1.2deg); }
+.option-c .outer-main { stroke: rgba(16,14,12,.72); stroke-width: 1.25; }
+.option-c .outer-ghost { stroke: rgba(158,111,62,.38); stroke-width: .9; }
+.option-c .detail { stroke: rgba(16,14,12,.33); stroke-width: .95; }
+.option-c .inner { stroke: rgba(255,255,255,.16); stroke-width: .75; }
+.baseline {
+  position: absolute;
+  width: 260px;
+  height: 21px;
+  border-radius: 50%;
+  bottom: 53px;
+  border: 1px solid rgba(24,20,15,.10);
+  transform: rotate(-1deg);
+}
+@media (max-width: 1020px) {
+  .header { display: block; }
+  .header p { margin-top: 16px; }
+  .grid { grid-template-columns: 1fr; max-width: 460px; }
+  .option { min-height: 700px; }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div>
+    <div class="kicker">Hand-drawn phone options · refined</div>
+    <h1>Finer line. Brighter source. Less slop.</h1>
+  </div>
+  <p>Using the brighter screenshot you sent. These are frame treatments only; the app image is not faded or overlaid.</p>
+</header>
+
+<main class="grid">
+  <section class="option option-a">
+    <div class="stage">
+      <div class="baseline" aria-hidden="true"></div>
+      <div class="phone">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app in refined hand-drawn phone frame A">
+        <svg viewBox="0 0 739 1280" preserveAspectRatio="none" aria-hidden="true">
+          <path class="outer-ghost" d="M78 18 C38 20 22 48 22 90 L21 1187 C21 1230 49 1257 91 1259 L650 1258 C694 1259 718 1231 719 1187 L721 92 C722 49 693 20 649 20 L78 18" />
+          <path class="outer-main" d="M83 13 C42 16 28 43 28 87 L27 1188 C27 1227 51 1250 91 1252 L648 1251 C687 1252 713 1227 713 1187 L715 92 C716 52 689 26 648 24 L83 13" />
+          <path class="outer-ghost" d="M91 28 C53 28 40 52 39 91 L38 1179 C38 1214 61 1238 95 1239 L642 1238 C677 1238 700 1213 701 1178 L702 98 C703 62 678 39 642 38 L91 28" />
+          <path class="inner" d="M61 54 C48 57 43 69 43 89 L43 1190 C43 1213 56 1227 80 1227 L661 1227 C681 1227 695 1211 695 1189 L695 91 C695 70 681 56 661 56 L61 54" />
+          <path class="detail" d="M280 47 C301 43 438 44 459 48 C466 50 468 65 459 70 C438 75 302 75 280 70 C272 67 272 52 280 47" />
+          <line class="detail" x1="16" y1="205" x2="16" y2="272" />
+          <line class="detail" x1="15" y1="340" x2="15" y2="448" />
+          <line class="detail" x1="725" y1="318" x2="725" y2="444" />
+        </svg>
+      </div>
+    </div>
+    <div class="caption">
+      <h2>A · Fine contour</h2>
+      <p>Most controlled. Reads hand-drawn without looking careless.</p>
+    </div>
+  </section>
+
+  <section class="option option-b">
+    <div class="stage">
+      <div class="baseline" aria-hidden="true"></div>
+      <div class="phone">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app in refined hand-drawn phone frame B">
+        <svg viewBox="0 0 739 1280" preserveAspectRatio="none" aria-hidden="true">
+          <path class="outer-ghost" d="M82 24 C45 25 31 51 31 88 L31 1184 C31 1221 56 1245 93 1246 L645 1246 C681 1246 706 1222 707 1184 L708 95 C709 58 681 33 644 32 L82 24" />
+          <path class="outer-main" d="M86 19 C47 21 35 47 35 87 L35 1183 C35 1218 58 1241 94 1242 L644 1241 C678 1241 701 1218 702 1182 L703 96 C704 61 679 37 643 36 L86 19" />
+          <path class="inner" d="M66 59 C54 60 49 73 49 90 L49 1182 C49 1204 62 1217 83 1218 L656 1218 C676 1218 689 1203 689 1182 L690 95 C690 75 676 62 656 62 L66 59" />
+          <path class="detail" d="M292 52 C326 48 421 48 451 52" />
+          <path class="detail" d="M292 66 C323 70 421 70 452 66" />
+          <line class="detail" x1="25" y1="211" x2="25" y2="271" />
+          <line class="detail" x1="23" y1="345" x2="23" y2="440" />
+          <line class="detail" x1="714" y1="321" x2="714" y2="438" />
+        </svg>
+      </div>
+    </div>
+    <div class="caption">
+      <h2>B · Pencil rail</h2>
+      <p>Lightest touch. More editorial sketchbook, less device-render.</p>
+    </div>
+  </section>
+
+  <section class="option option-c">
+    <div class="stage">
+      <div class="baseline" aria-hidden="true"></div>
+      <div class="phone">
+        <img src="assets/prototype-screen-bright.jpg" alt="Meridian patient app in refined hand-drawn phone frame C">
+        <svg viewBox="0 0 739 1280" preserveAspectRatio="none" aria-hidden="true">
+          <path class="outer-ghost" d="M78 17 C37 21 24 47 24 89 L24 1186 C24 1226 51 1253 91 1255 L650 1254 C690 1255 715 1228 716 1186 L717 94 C718 52 691 24 648 23 L78 17" />
+          <path class="outer-main" d="M84 20 C44 20 31 47 31 88 L31 1186 C31 1222 55 1248 93 1249 L646 1249 C683 1249 709 1224 710 1185 L710 97 C711 58 684 31 645 30 L84 20" />
+          <path class="outer-main" d="M96 40 C60 41 48 62 48 96 L48 1175 C48 1208 67 1228 101 1229 L637 1228 C670 1228 690 1208 690 1174 L691 104 C692 70 670 50 636 49 L96 40" />
+          <path class="inner" d="M62 58 C51 59 45 72 45 91 L45 1189 C45 1210 59 1223 80 1224 L660 1224 C680 1224 694 1209 694 1188 L695 94 C695 73 681 60 660 60 L62 58" />
+          <path class="detail" d="M286 51 C309 47 430 48 456 52 C464 53 466 66 458 70 C432 74 309 75 285 70 C278 67 279 54 286 51" />
+          <path class="outer-ghost" d="M36 159 C34 192 34 224 36 252" />
+          <path class="outer-ghost" d="M704 530 C708 610 705 702 700 793" />
+          <line class="detail" x1="18" y1="207" x2="18" y2="274" />
+          <line class="detail" x1="18" y1="343" x2="18" y2="448" />
+          <line class="detail" x1="722" y1="318" x2="722" y2="444" />
+        </svg>
+      </div>
+    </div>
+    <div class="caption">
+      <h2>C · Editorial ink</h2>
+      <p>Slightly more character, with a warm ink duplicate line.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>
