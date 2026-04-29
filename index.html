@@ -231,6 +231,24 @@ img, video { max-width: 100%; height: auto; display: block; }
   animation: rise 1.1s var(--ease) 0.75s forwards;
   text-shadow: 0 1px 20px rgba(0,0,0,0.3);
 }
+.hero .lede-emph {
+  color: rgba(255,255,255,0.78);
+  font-size: clamp(14px, 1.05vw, 16px);
+  margin-top: -22px;
+  margin-bottom: 36px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(212,175,107,0.28);
+  animation-delay: 0.85s;
+  max-width: 46ch;
+}
+.hero .lede-emph em {
+  color: var(--gold-light);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', 'Cormorant', serif;
+  font-size: 1.18em;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
 .hero-ctas {
   display: flex; gap: 14px; flex-wrap: wrap;
   opacity: 0;
@@ -1546,6 +1564,7 @@ footer a:hover { color: var(--paper); }
     <div class="hero-content-inner">
       <h1 class="display">Your best days are <span class="gold">still ahead</span>.</h1>
       <p class="lede">The medical team you'd build for yourself if you knew where to look. Continuous, AI-augmented, physician-led prevention — for people whose decline is still negotiable.</p>
+      <p class="lede lede-emph"><em>You already know it's possible.</em> Our physicians leverage AI, your genetic, lab, and wearable data to give you a clear path to your future moments.</p>
       <div class="hero-ctas">
         <a href="#apply" class="btn btn-primary">Apply <span class="arrow">→</span></a>
         <a href="#demo" class="btn btn-ghost">See a demo <span class="arrow">→</span></a>
