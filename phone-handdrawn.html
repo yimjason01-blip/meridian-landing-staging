@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — hand drawn phone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #efe9dc;
+  --ink: #17140f;
+  --muted: rgba(23,20,15,.58);
+  --stroke: rgba(23,20,15,.72);
+  --stroke-soft: rgba(23,20,15,.30);
+  --gold: #b8854d;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: #efe9dc;
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  padding: clamp(28px, 5vw, 72px);
+}
+.header { max-width: 1060px; margin: 0 auto 34px; display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #8b653c; margin-bottom: 12px; }
+h1 { margin: 0; max-width: 700px; font-size: clamp(42px, 6vw, 78px); line-height: .9; letter-spacing: -.055em; font-weight: 500; }
+.header p { margin: 0 0 7px; max-width: 320px; color: var(--muted); font-size: 17px; line-height: 1.42; }
+.wrap { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(34px, 5vw, 76px); align-items: center; }
+.copy h2 { margin: 0 0 14px; font-size: clamp(32px, 4.5vw, 58px); line-height: .95; letter-spacing: -.045em; font-weight: 500; }
+.copy p { margin: 0; color: var(--muted); font-size: 19px; line-height: 1.45; max-width: 34ch; }
+.stage { min-height: 760px; display: grid; place-items: center; position: relative; }
+.hand-phone {
+  position: relative;
+  width: 330px;
+  aspect-ratio: 390 / 844;
+  transform: rotate(-1.25deg);
+  filter: drop-shadow(0 34px 32px rgba(23,20,15,.16));
+}
+.hand-phone img {
+  position: absolute;
+  z-index: 2;
+  inset: 18px;
+  width: calc(100% - 36px);
+  height: calc(100% - 36px);
+  object-fit: contain;
+  border-radius: 32px;
+  background: #08090a;
+  display: block;
+}
+.sketch-svg { position: absolute; inset: -22px; z-index: 4; width: calc(100% + 44px); height: calc(100% + 44px); pointer-events: none; overflow: visible; }
+.sketch-svg path,
+.sketch-svg rect,
+.sketch-svg line {
+  vector-effect: non-scaling-stroke;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.outer-a { stroke: var(--stroke); stroke-width: 2.7; }
+.outer-b { stroke: rgba(23,20,15,.42); stroke-width: 1.8; }
+.inner-a { stroke: rgba(239,233,220,.18); stroke-width: 1.4; }
+.button { stroke: rgba(23,20,15,.48); stroke-width: 2.2; }
+.island-line { stroke: rgba(239,233,220,.44); stroke-width: 2; }
+.baseline {
+  position: absolute;
+  z-index: 0;
+  width: 310px;
+  height: 34px;
+  bottom: 86px;
+  border-radius: 50%;
+  border: 2px solid rgba(23,20,15,.13);
+  transform: rotate(-2deg);
+}
+@media (max-width: 860px) {
+  .header { display: block; }
+  .header p { margin-top: 18px; }
+  .wrap { grid-template-columns: 1fr; }
+  .copy { order: 2; }
+  .stage { min-height: 700px; }
+  .hand-phone { width: 300px; }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div>
+    <div class="kicker">Hand drawn phone</div>
+    <h1>Sketch the device. Keep the product real.</h1>
+  </div>
+  <p>Only the phone frame is illustrated. The Meridian app screen stays sharp and literal.</p>
+</header>
+
+<main class="wrap">
+  <section class="copy">
+    <h2>Not a gadget ad. Not a black slab.</h2>
+    <p>A rough, human device outline gives the screenshot a designed editorial feel without adding noise around it. The hand-drawn line makes the phone read as an object; the app stays credible.</p>
+  </section>
+
+  <section class="stage" aria-label="Hand drawn phone frame preview">
+    <div class="baseline" aria-hidden="true"></div>
+    <div class="hand-phone">
+      <img src="assets/prototype-screen.jpg" alt="Meridian patient app shown inside a hand-drawn phone frame">
+      <svg class="sketch-svg" viewBox="0 0 390 844" aria-hidden="true" preserveAspectRatio="none">
+        <!-- slightly irregular double outline -->
+        <path class="outer-b" d="M49 20 C24 21 12 39 12 67 L12 776 C12 813 33 830 67 830 L323 829 C359 829 377 809 377 772 L378 69 C378 38 357 18 326 17 L54 19" />
+        <path class="outer-a" d="M55 16 C28 18 17 38 17 66 L16 775 C16 807 35 824 67 825 L321 825 C351 826 371 806 371 775 L373 70 C374 38 354 20 322 20 L55 16" />
+        <path class="outer-b" d="M58 25 C34 25 24 42 24 68 L24 770 C24 800 39 816 70 816 L316 817 C343 816 363 799 364 770 L364 73 C364 47 345 30 319 28 L58 25" />
+
+        <!-- screen edge + small imperfect island -->
+        <path class="inner-a" d="M60 38 C39 38 32 52 32 74 L32 762 C32 786 46 800 70 800 L319 800 C342 800 356 785 356 761 L357 78 C357 55 342 41 319 41 L60 38" />
+        <path class="island-line" d="M156 39 C166 35 223 35 235 40 C239 42 239 54 235 57 C222 62 167 61 155 57 C150 54 151 43 156 39" />
+
+        <!-- hand sketched hardware buttons -->
+        <line class="button" x1="10" y1="142" x2="10" y2="184" />
+        <line class="button" x1="9" y1="222" x2="9" y2="292" />
+        <line class="button" x1="382" y1="202" x2="382" y2="292" />
+
+        <!-- tiny stray pressure marks on the outline, not around the phone -->
+        <path class="outer-b" d="M37 108 C33 144 34 185 35 219" />
+        <path class="outer-b" d="M354 597 C357 646 356 700 352 748" />
+        <path class="outer-b" d="M92 833 C146 838 214 836 280 833" />
+      </svg>
+    </div>
+  </section>
+</main>
+</body>
+</html>
