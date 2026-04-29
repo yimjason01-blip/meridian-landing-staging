@@ -969,6 +969,64 @@ section.warm .member-cell { background: var(--paper-warm); }
   text-shadow: 0 2px 24px rgba(0,0,0,0.5);
 }
 
+/* ============ TESTIMONIAL ============ */
+.testimonial-section {
+  background: var(--paper-warm, #EFEAE0);
+  position: relative;
+  overflow: hidden;
+}
+.testimonial-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 22% 50%, rgba(212,165,116,0.16) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+.testimonial-section .container { position: relative; z-index: 1; }
+.testimonial-card {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.testimonial-portrait {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 30px 70px -32px rgba(20,17,13,0.4);
+}
+.testimonial-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.testimonial-quote {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.25;
+  color: #14110D;
+  letter-spacing: -0.01em;
+  margin: 0;
+  max-width: 28ch;
+}
+.testimonial-attrib {
+  margin-top: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep, #8a5e2c);
+  font-weight: 500;
+}
+.testimonial-attrib-name { color: #14110D; font-weight: 600; }
+@media (max-width: 720px) {
+  .testimonial-card { grid-template-columns: 1fr; gap: 28px; }
+  .testimonial-portrait { max-width: 280px; margin: 0 auto; }
+}
+
 /* ============ PATHS ============ */
 .paths-grid {
   display: grid;
@@ -1317,7 +1375,7 @@ footer a:hover { color: var(--paper); }
   pointer-events: none;
 }
 .exp-visual .exp-frame.is-active { opacity: 1; pointer-events: auto; }
-.exp-visual img { width: 100%; max-width: 520px; height: auto; display: block; border-radius: 16px; mix-blend-mode: multiply; }
+.exp-visual img { width: 100%; max-width: 560px; height: auto; display: block; border-radius: 16px; box-shadow: 0 24px 60px -28px rgba(20,17,13,0.35); }
 
 .exp-copy { position: relative; min-height: 460px; }
 .exp-pane {
@@ -1759,11 +1817,11 @@ footer a:hover { color: var(--paper); }
       <span class="exp-stage-step" id="expStageStep">Step 01 / Onboarding</span>
 
       <div class="exp-visual">
-        <div class="exp-frame is-active" data-i="0"><img src="assets/illustrations/exp-iso-01-onboarding.png" alt="Phone and Apple Watch syncing"></div>
-        <div class="exp-frame" data-i="1"><img src="assets/illustrations/exp-iso-02-genetics.png" alt="Saliva collection kit"></div>
-        <div class="exp-frame" data-i="2"><img src="assets/illustrations/exp-iso-03-bloodwork.png" alt="Walk-in lab"></div>
-        <div class="exp-frame" data-i="3"><img src="assets/illustrations/exp-iso-04-consult.png" alt="Video call with physician"></div>
-        <div class="exp-frame" data-i="4"><img src="assets/illustrations/exp-iso-05-loop.png" alt="Closure loop"></div>
+        <div class="exp-frame is-active" data-i="0"><img src="assets/photos/exp-01-onboarding.jpg" alt="Onboarding — phone and Apple Watch"></div>
+        <div class="exp-frame" data-i="1"><img src="assets/photos/exp-02-genetics.jpg" alt="Genetics kit on a kitchen counter"></div>
+        <div class="exp-frame" data-i="2"><img src="assets/photos/exp-03-bloodwork.jpg" alt="Member walking out of the lab"></div>
+        <div class="exp-frame" data-i="3"><img src="assets/photos/exp-04-consult.jpg" alt="Video consult with physician"></div>
+        <div class="exp-frame" data-i="4"><img src="assets/photos/exp-05-loop.jpg" alt="Reading the care plan in evening light"></div>
       </div>
 
       <div class="exp-copy">
@@ -1883,6 +1941,21 @@ footer a:hover { color: var(--paper); }
     stage.addEventListener('mouseenter', stopAuto);
   })();
   </script>
+</section>
+
+<!-- ============ TESTIMONIAL — between Experience and Delta ============ -->
+<section class="testimonial-section">
+  <div class="container">
+    <div class="testimonial-card fade-in">
+      <div class="testimonial-portrait">
+        <img src="assets/photos/testimonial-portrait.jpg" alt="Aleron member">
+      </div>
+      <div>
+        <p class="testimonial-quote">"Aleron caught my ApoB trend three years before my regular physical would have. That's the part I'm still thinking about."</p>
+        <div class="testimonial-attrib"><span class="testimonial-attrib-name">M.K.</span> &nbsp;·&nbsp; Member since 2025</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ SECTION 05 — The Delta (cream, anchor stat, methodology inline) ============ -->
