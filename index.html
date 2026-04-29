@@ -686,63 +686,6 @@ section.engine-section {
 .engine-domain-tile.alert { border-color: rgba(232,201,154,0.7); background: rgba(232,201,154,0.16); }
 .engine-domain-tile.alert .score { color: #F0D9A8; }
 
-/* L1 Your Data — 3-stream stacked dashboard */
-.engine-data-grid { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.engine-data-row {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 14px;
-  align-items: center;
-  padding: 9px 12px;
-  background: rgba(212,165,116,0.06);
-  border: 1px solid rgba(212,165,116,0.22);
-  border-radius: 4px;
-  min-height: 56px;
-}
-.engine-data-row .edr-meta { display: flex; flex-direction: column; gap: 2px; }
-.engine-data-row .edr-name {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px; font-weight: 600;
-  color: #F0D9A8;
-  letter-spacing: -0.01em;
-}
-.engine-data-row .edr-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px; font-weight: 400;
-  color: rgba(212,165,116,0.55);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.engine-data-row .edr-viz { width: 100%; height: 38px; display: flex; align-items: center; }
-.engine-data-row .edr-viz svg { width: 100%; height: 100%; display: block; }
-.engine-data-row .edr-viz-lab {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  height: auto;
-}
-.edr-lab-cell {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 4px 2px;
-  background: rgba(212,165,116,0.06);
-  border: 1px solid rgba(212,165,116,0.18);
-  border-radius: 3px;
-  min-height: 36px;
-}
-.edr-lab-cell .lc-k {
-  font-family: 'Inter', sans-serif;
-  font-size: 8px; font-weight: 500;
-  color: rgba(212,165,116,0.6);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.edr-lab-cell .lc-v {
-  font-family: 'Inter Tight', sans-serif;
-  font-size: 14px; font-weight: 500;
-  color: #F0D9A8;
-  margin-top: 1px;
-}
-
 /* L2 AI + MCP */
 .engine-ai-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; flex: 1; }
 .engine-model-node {
@@ -1706,74 +1649,7 @@ footer a:hover { color: var(--paper); }
       <div class="engine-stack-wrap">
         <div class="engine-stack-inner">
 
-          <!-- L1 Your Data · 3 streams (genome / wearable / lab) -->
-          <div class="engine-plane engine-plane-1">
-            <div class="engine-plane-title">Your Data · 3 streams</div>
-            <div class="engine-data-grid">
-              <!-- Genome -->
-              <div class="engine-data-row">
-                <div class="edr-meta">
-                  <div class="edr-name">Genome</div>
-                  <div class="edr-sub">23 variants of interest</div>
-                </div>
-                <div class="edr-viz edr-viz-genome">
-                  <svg viewBox="0 0 220 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="0" y1="16" x2="220" y2="16" stroke="rgba(212,165,116,0.35)" stroke-width="1"/>
-                    <g fill="#E8C99A">
-                      <circle cx="22"  cy="16" r="3"/>
-                      <circle cx="58"  cy="16" r="3"/>
-                      <circle cx="92"  cy="16" r="4"/>
-                      <circle cx="128" cy="16" r="3"/>
-                      <circle cx="164" cy="16" r="3"/>
-                      <circle cx="196" cy="16" r="3"/>
-                    </g>
-                    <g fill="rgba(212,165,116,0.55)" font-family="Inter, sans-serif" font-size="6.5" letter-spacing="0.5">
-                      <text x="22"  y="28" text-anchor="middle">APOE</text>
-                      <text x="58"  y="28" text-anchor="middle">BRCA1</text>
-                      <text x="92"  y="28" text-anchor="middle">LPA</text>
-                      <text x="128" y="28" text-anchor="middle">MTHFR</text>
-                      <text x="164" y="28" text-anchor="middle">ATM</text>
-                      <text x="196" y="28" text-anchor="middle">9p21</text>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <!-- Wearable -->
-              <div class="engine-data-row">
-                <div class="edr-meta">
-                  <div class="edr-name">Wearable</div>
-                  <div class="edr-sub">487 days · continuous</div>
-                </div>
-                <div class="edr-viz edr-viz-wearable">
-                  <svg viewBox="0 0 220 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0,18 Q10,10 20,16 T40,17 T60,12 T80,19 T100,14 T120,17 T140,11 T160,18 T180,13 T200,16 T220,15"
-                          stroke="#E8C99A" stroke-width="1" fill="none" opacity="0.95"/>
-                    <path d="M0,24 Q12,22 24,25 T48,23 T72,26 T96,22 T120,25 T144,23 T168,26 T192,23 T220,25"
-                          stroke="rgba(212,165,116,0.55)" stroke-width="0.8" fill="none"/>
-                    <path d="M0,8 Q15,6 30,9 T60,7 T90,9 T120,6 T150,9 T180,7 T220,8"
-                          stroke="rgba(212,165,116,0.4)" stroke-width="0.8" fill="none"/>
-                  </svg>
-                </div>
-              </div>
-              <!-- Lab -->
-              <div class="engine-data-row">
-                <div class="edr-meta">
-                  <div class="edr-name">Lab</div>
-                  <div class="edr-sub">Quest Elite + ApoB + Lp(a)</div>
-                </div>
-                <div class="edr-viz edr-viz-lab">
-                  <div class="edr-lab-cell"><span class="lc-k">ApoB</span><span class="lc-v">92</span></div>
-                  <div class="edr-lab-cell"><span class="lc-k">Lp(a)</span><span class="lc-v">38</span></div>
-                  <div class="edr-lab-cell"><span class="lc-k">HbA1c</span><span class="lc-v">5.4</span></div>
-                  <div class="edr-lab-cell"><span class="lc-k">hsCRP</span><span class="lc-v">0.8</span></div>
-                </div>
-              </div>
-            </div>
-            <span class="engine-plane-label">Your Data</span>
-          </div>
-
-          <!-- L1-legacy: Risk Models · 5 domains (re-home pending) -->
-          <!--
+          <!-- L1 Risk Models -->
           <div class="engine-plane engine-plane-1">
             <div class="engine-plane-title">Risk Models · 5 domains</div>
             <div class="engine-domain-grid">
@@ -1783,9 +1659,8 @@ footer a:hover { color: var(--paper); }
               <div class="engine-domain-tile"><div class="name">Neuro</div><div class="score">6<sup style="font-size:11px;">%</sup></div></div>
               <div class="engine-domain-tile"><div class="name">Renal</div><div class="score">2<sup style="font-size:11px;">%</sup></div></div>
             </div>
-            <span class="engine-plane-label">Risk Models</span>
+            <span class="engine-plane-label">L1 · Risk Models</span>
           </div>
-          -->
 
           <!-- L2 AI + MCPs -->
           <div class="engine-plane engine-plane-2">
