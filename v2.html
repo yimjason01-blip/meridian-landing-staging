@@ -421,8 +421,35 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   padding: 80px 0;
   opacity: 0.4;
   transition: opacity 0.5s var(--ease);
+  position: relative;
+  overflow: hidden;
 }
 .scrolly-step.is-active { opacity: 1; }
+.scrolly-step > h2,
+.scrolly-step > h3,
+.scrolly-step > p { position: relative; z-index: 1; }
+.memory-collage {
+  position: absolute;
+  inset: clamp(30px, 7vw, 84px) -34% clamp(38px, 7vw, 92px) 14%;
+  z-index: 0;
+  background-image:
+    linear-gradient(90deg, rgba(236,229,214,0.98) 0%, rgba(236,229,214,0.94) 30%, rgba(236,229,214,0.58) 56%, rgba(236,229,214,0.18) 100%),
+    linear-gradient(180deg, rgba(236,229,214,0.92), rgba(236,229,214,0.02) 26%, rgba(236,229,214,0.08) 74%, rgba(236,229,214,0.92)),
+    url('assets/photos/memory-collage.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 28px;
+  opacity: 0.94;
+  filter: saturate(0.92) contrast(0.96);
+  transform: rotate(-1.6deg);
+  pointer-events: none;
+}
+.memory-collage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 50% at 62% 50%, rgba(236,229,214,0.92), rgba(236,229,214,0.26) 58%, transparent 100%);
+}
 .scrolly-step .step-num {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -1744,6 +1771,7 @@ footer a:hover { color: var(--paper); }
       </div>
 
       <div class="scrolly-step" data-step="1">
+        <div class="memory-collage" aria-hidden="true"></div>
         <h3 class="step-h">Right now, you can do almost anything.</h3>
         <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. The body still says yes. This is the window where the curve is being set, quietly, in the background, by what you do and don't catch.</p>
       </div>
