@@ -410,8 +410,14 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
-.scrolly-graphic-col svg { max-height: 80vh; }
+.scrolly-graphic-col svg {
+  position: relative;
+  z-index: 1;
+  max-height: 80vh;
+}
+.scrolly-graphic-col[data-state="1"] .memory-collage { opacity: 0.5; }
 .scrolly-steps { display: flex; flex-direction: column; }
 .scrolly-step {
   min-height: 100vh;
@@ -430,25 +436,26 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 .scrolly-step > p { position: relative; z-index: 1; }
 .memory-collage {
   position: absolute;
-  inset: clamp(30px, 7vw, 84px) -34% clamp(38px, 7vw, 92px) 14%;
+  inset: 8% -6% 12% -4%;
   z-index: 0;
   background-image:
-    linear-gradient(90deg, rgba(236,229,214,0.98) 0%, rgba(236,229,214,0.94) 30%, rgba(236,229,214,0.58) 56%, rgba(236,229,214,0.18) 100%),
-    linear-gradient(180deg, rgba(236,229,214,0.92), rgba(236,229,214,0.02) 26%, rgba(236,229,214,0.08) 74%, rgba(236,229,214,0.92)),
+    linear-gradient(180deg, rgba(236,229,214,0.78), rgba(236,229,214,0.12) 34%, rgba(236,229,214,0.16) 70%, rgba(236,229,214,0.86)),
+    radial-gradient(ellipse 70% 65% at 50% 48%, rgba(236,229,214,0.08), rgba(236,229,214,0.58) 72%, rgba(236,229,214,0.9) 100%),
     url('assets/photos/memory-collage.jpg');
   background-size: cover;
   background-position: center;
-  border-radius: 28px;
-  opacity: 0.94;
-  filter: saturate(0.92) contrast(0.96);
-  transform: rotate(-1.6deg);
+  border-radius: 34px;
+  opacity: 0;
+  filter: saturate(0.88) contrast(0.92);
+  transform: rotate(-1.4deg);
   pointer-events: none;
+  transition: opacity 0.55s var(--ease);
 }
 .memory-collage::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 55% 50% at 62% 50%, rgba(236,229,214,0.92), rgba(236,229,214,0.26) 58%, transparent 100%);
+  background: rgba(236,229,214,0.3);
 }
 .scrolly-step .step-num {
   font-family: 'Inter', sans-serif;
@@ -1631,7 +1638,8 @@ footer a:hover { color: var(--paper); }
 <section class="bone scrolly-section" id="trajectory">
   <div class="scrolly-wrap">
     <!-- LEFT: sticky chart -->
-    <div class="scrolly-graphic-col">
+    <div class="scrolly-graphic-col" data-state="0">
+      <div class="memory-collage" aria-hidden="true"></div>
       <svg class="scrolly-svg" id="scrollySvg" data-state="0" viewBox="0 0 1100 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1695,7 +1703,6 @@ footer a:hover { color: var(--paper); }
       </div>
 
       <div class="scrolly-step" data-step="1">
-        <div class="memory-collage" aria-hidden="true"></div>
         <h3 class="step-h">Right now, you can do almost anything.</h3>
         <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. The body still says yes. This is the window where the curve is being set, quietly, in the background, by what you do and don't catch.</p>
       </div>
@@ -2222,6 +2229,7 @@ if (traj) {
 
 // Scrollytelling: drive SVG state from active step
 const scrollySvg = document.getElementById('scrollySvg');
+const scrollyGraphic = document.querySelector('.scrolly-graphic-col');
 const scrollySteps = document.querySelectorAll('.scrolly-step');
 if (scrollySvg && scrollySteps.length) {
   const stepObs = new IntersectionObserver((entries) => {
@@ -2230,6 +2238,7 @@ if (scrollySvg && scrollySteps.length) {
         scrollySteps.forEach(s => s.classList.remove('is-active'));
         e.target.classList.add('is-active');
         scrollySvg.setAttribute('data-state', e.target.dataset.step);
+        if (scrollyGraphic) scrollyGraphic.setAttribute('data-state', e.target.dataset.step);
       }
     });
   }, { threshold: 0.55, rootMargin: '-20% 0px -20% 0px' });
