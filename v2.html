@@ -522,11 +522,26 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   stroke-width: 6;
   fill: none;
   stroke-linecap: round;
+  stroke-linejoin: round;
   filter: url(#goldGlow);
   stroke-dasharray: 2200;
   stroke-dashoffset: 2200;
   opacity: 0;
   transition: stroke-dashoffset 2.2s var(--ease), opacity 0.6s var(--ease);
+}
+.scrolly-svg .state4-average-path {
+  stroke: #3F3A32;
+  stroke-width: 4.5;
+  stroke-dasharray: 10 10;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
+.scrolly-svg .state4-point {
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
 }
 .scrolly-svg .vitality-path {
   stroke: url(#vitalityFade);
@@ -602,7 +617,10 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 .scrolly-svg[data-state="2"] .hazard-fork { opacity: 1; }
 .scrolly-svg[data-state="2"] .baseline-path { stroke: #3F3A32; }
 .scrolly-svg[data-state="3"] .vitality-path { opacity: 1; }
-.scrolly-svg[data-state="4"] .baseline-path { opacity: 0.82; stroke: #3F3A32; stroke-width: 4.5; }
+.scrolly-svg[data-state="4"] .baseline-path,
+.scrolly-svg[data-state="4"] .baseline-endpoint { opacity: 0; }
+.scrolly-svg[data-state="4"] .state4-average-path,
+.scrolly-svg[data-state="4"] .state4-point { opacity: 1; }
 .scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; stroke-width: 7; }
 .scrolly-svg[data-state="4"] .trajectory-label { opacity: 1; }
 
@@ -1803,10 +1821,15 @@ footer a:hover { color: var(--paper); }
         <path class="baseline-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
         <path class="vitality-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
 
-        <!-- squared healthspan curve: high function is preserved longer, then morbidity compresses into a shorter late-life drop -->
-        <path class="best-path" d="M 80 170 C 220 158, 380 150, 560 154 C 710 158, 835 168, 910 205 C 970 250, 1015 325, 1040 382"/>
-        <text class="trajectory-label" x="936" y="358" text-anchor="middle" fill="#745000">Optimized trajectory</text>
-        <text class="trajectory-label" x="930" y="455" text-anchor="middle" fill="#4B453B">Average American</text>
+        <!-- state 4 comparison uses the same relationship as the three-slider tool: average starts lower, optimized stays above across the whole window -->
+        <path class="state4-average-path" d="M 80 277 C 200 282, 250 285, 320 288 C 420 292, 490 295, 560 298 C 680 306, 735 316, 800 324 C 900 339, 980 353, 1040 361"/>
+        <path class="best-path" d="M 80 181 C 200 188, 250 191, 320 195 C 430 201, 490 205, 560 209 C 680 217, 740 225, 800 233 C 910 248, 980 262, 1040 271"/>
+        <circle class="state4-point" cx="80" cy="277" r="6" fill="#3F3A32"/>
+        <circle class="state4-point" cx="1040" cy="361" r="6" fill="#3F3A32"/>
+        <circle class="state4-point" cx="80" cy="181" r="7" fill="#624400"/>
+        <circle class="state4-point" cx="1040" cy="271" r="7" fill="#745000"/>
+        <text class="trajectory-label" x="900" y="228" text-anchor="middle" fill="#745000">Optimized trajectory</text>
+        <text class="trajectory-label" x="925" y="386" text-anchor="middle" fill="#4B453B">Average American</text>
 
         <!-- markers -->
         <g class="highlight-marker marker-early">
@@ -1832,8 +1855,8 @@ footer a:hover { color: var(--paper); }
         </g>
 
         <!-- endpoints -->
-        <circle cx="80" cy="170" r="7" fill="#624400"/>
-        <circle cx="1040" cy="440" r="7" fill="#4B453B"/>
+        <circle class="baseline-endpoint" cx="80" cy="170" r="7" fill="#624400"/>
+        <circle class="baseline-endpoint" cx="1040" cy="440" r="7" fill="#4B453B"/>
 
         <!-- x-axis -->
         <text class="axis-label" x="80" y="500">AGE 40</text>
