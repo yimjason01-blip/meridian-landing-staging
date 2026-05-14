@@ -560,6 +560,12 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   font-size: 24px;
   fill: var(--traj-axis-muted);
 }
+.scrolly-svg[data-state="0"] .band-early,
+.scrolly-svg[data-state="0"] .marker-early,
+.scrolly-svg[data-state="0"] .caption-early,
+.scrolly-svg[data-state="0"] .band-late,
+.scrolly-svg[data-state="0"] .marker-late,
+.scrolly-svg[data-state="0"] .caption-late,
 .scrolly-svg[data-state="1"] .band-early,
 .scrolly-svg[data-state="1"] .marker-early,
 .scrolly-svg[data-state="1"] .caption-early { opacity: 1; }
@@ -1728,7 +1734,6 @@ footer a:hover { color: var(--paper); }
   <div class="scrolly-wrap">
     <!-- LEFT: sticky chart -->
     <div class="scrolly-graphic-col" data-state="0">
-      <div class="memory-collage" aria-hidden="true"></div>
       <svg class="scrolly-svg" id="scrollySvg" data-state="0" viewBox="0 0 1100 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1787,17 +1792,8 @@ footer a:hover { color: var(--paper); }
     <!-- RIGHT: scroll steps -->
     <div class="scrolly-steps">
       <div class="scrolly-step" data-step="0">
-        <h2 class="step-h">The story of your future is written on top of this curve.</h2>
-      </div>
-
-      <div class="scrolly-step" data-step="1">
-        <h3 class="step-h">Right now, you can do almost anything.</h3>
-        <p>Climb, ski, lift, stay up late, fly across time zones, recover by Tuesday. The body still says yes. This is the window where the curve is being set, quietly, in the background, by what you do and don't catch.</p>
-      </div>
-
-      <div class="scrolly-step" data-step="2">
-        <h3 class="step-h">Some day, you won't be able to do very much.</h3>
-        <p>Stairs become a problem. The grandkids visit and you watch from the chair. The interventions that would have changed the slope had to happen 30 years earlier. But no one was running the model.</p>
+        <h2 class="step-h">Your capability will naturally degrade.</h2>
+        <p>Every body follows a curve. In your 40s and 50s you can do almost anything. Decades later, the same body negotiates with stairs and grandkids from the chair. The slope between those two points is being written right now, quietly, by what you do and don't catch.</p>
       </div>
 
       <div class="scrolly-step" data-step="3">
