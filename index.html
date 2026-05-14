@@ -1337,6 +1337,252 @@ footer a:hover { color: var(--paper); }
   .exp-tab { padding: 10px 14px; font-size: 12px; flex-shrink: 0; }
   .exp-tab .num { font-size: 14px; }
 }
+
+
+/* ============ MOBILE-FIRST COMPOSITION PASS ============ */
+.mobile-trajectory { display: none; }
+.mobile-sticky-cta { display: none; }
+
+@media (max-width: 767px) {
+  :root { --section-y: 56px; }
+  body { font-size: 16px; padding-bottom: 76px; }
+  .container { padding: 0 20px; }
+  section { padding: 56px 0; }
+
+  .nav {
+    padding: 15px 20px;
+    background: rgba(10,10,11,0.64);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    border-bottom-color: rgba(246,244,238,0.08);
+  }
+  .nav-brand { font-size: 23px; }
+  .nav-link { display: none; }
+  .nav-cta { padding: 9px 15px; font-size: 13px; min-height: 44px; display: inline-flex; align-items: center; }
+
+  .mobile-sticky-cta {
+    position: fixed;
+    left: 12px; right: 12px; bottom: 12px;
+    z-index: 180;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 999px;
+    background: rgba(10,10,11,0.82);
+    border: 1px solid rgba(246,244,238,0.16);
+    backdrop-filter: blur(18px) saturate(130%);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    box-shadow: 0 18px 40px -20px rgba(0,0,0,0.7);
+  }
+  .mobile-sticky-cta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .mobile-sticky-cta .primary { background: var(--paper); color: var(--ink); padding: 0 18px; }
+  .mobile-sticky-cta .secondary { color: rgba(246,244,238,0.78); padding: 0 8px; font-size: 13px; }
+
+  .hero {
+    min-height: 92svh;
+    align-items: flex-end;
+    padding-top: 0;
+  }
+  .hero-media::after {
+    background:
+      linear-gradient(to bottom, rgba(10,10,11,0.22) 0%, rgba(10,10,11,0.28) 38%, rgba(10,10,11,0.86) 100%),
+      linear-gradient(to right, rgba(10,10,11,0.62), rgba(10,10,11,0.14));
+  }
+  .hero-media img { object-position: 66% center; }
+  .hero-content { padding: 132px 20px 86px; }
+  .hero h1 {
+    font-size: clamp(48px, 14vw, 62px);
+    max-width: 10.5ch;
+    margin-bottom: 22px;
+  }
+  .hero .lede {
+    font-size: 17px;
+    line-height: 1.48;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 24px;
+  }
+  .hero-ctas { flex-direction: column; gap: 10px; }
+  .hero-ctas .btn { width: 100%; justify-content: center; min-height: 52px; padding: 15px 20px; }
+  .scroll-cue { display: none; }
+
+  .md-ai-section { padding: 54px 0 50px; }
+  .md-ai-phone-col { display: none; }
+  .md-ai-grid { display: block; }
+  .md-ai-content { max-width: none; }
+  .md-ai-headline { font-size: 58px; margin-bottom: 16px; }
+  .md-ai-content .body-lg { font-size: 16px; line-height: 1.58; }
+  .md-ai-attrs {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .md-ai-attr {
+    border: 1px solid rgba(10,10,11,0.09);
+    border-radius: 14px;
+    padding: 14px;
+    background: rgba(246,244,238,0.42);
+  }
+  .md-ai-attr h5 { font-size: 14px; margin: 0; }
+  .md-ai-attr p { display: none; }
+
+  .scrolly-section { padding: 0; background: var(--bone); }
+  .scrolly-wrap { display: none; }
+  .mobile-trajectory {
+    display: block;
+    padding: 54px 20px 58px;
+  }
+  .mobile-trajectory-intro {
+    margin-bottom: 24px;
+  }
+  .mobile-trajectory-kicker {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+  .mobile-trajectory h2 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: clamp(34px, 10vw, 44px);
+    line-height: 1.04;
+    letter-spacing: -0.024em;
+    max-width: 11ch;
+    margin: 0 0 14px;
+  }
+  .mobile-trajectory-intro p,
+  .mobile-story-card p {
+    font-size: 16px;
+    line-height: 1.58;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .mobile-story-card {
+    background: rgba(246,244,238,0.62);
+    border: 1px solid rgba(10,10,11,0.08);
+    border-radius: 22px;
+    padding: 18px 18px 20px;
+    margin-top: 14px;
+    box-shadow: 0 18px 45px -32px rgba(10,10,11,0.25);
+  }
+  .mobile-story-card h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+    margin: 14px 0 9px;
+  }
+  .mobile-story-card .step {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+  }
+  .mobile-mini-curve { width: 100%; height: 142px; margin-top: 8px; display: block; }
+  .mobile-mini-axis { stroke: rgba(10,10,11,0.22); stroke-width: 1; }
+  .mobile-mini-base { fill: none; stroke: #3F3A32; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 5 8; }
+  .mobile-mini-gold { fill: none; stroke: #B8854D; stroke-width: 5; stroke-linecap: round; }
+  .mobile-mini-green { fill: none; stroke: url(#mobileGreenGold); stroke-width: 7; stroke-linecap: round; }
+  .mobile-mini-red { fill: none; stroke: #A33A2A; stroke-width: 4; stroke-linecap: round; }
+
+  .exp-section { padding: 54px 0 48px; }
+  .exp-section .h2 { font-size: clamp(36px, 10vw, 48px); }
+  .exp-section .lede { font-size: 16px; line-height: 1.55; }
+  .exp-stage {
+    margin-top: 28px;
+    padding: 18px;
+    display: block;
+    border-radius: 22px;
+    min-height: 0;
+  }
+  .exp-stage-step { position: static; display: block; margin-bottom: 12px; }
+  .exp-visual { min-height: 0; margin-bottom: 18px; }
+  .exp-visual .exp-frame { position: relative; inset: auto; display: none; opacity: 1; }
+  .exp-visual .exp-frame.is-active { display: block; }
+  .exp-visual img { width: 100%; max-width: none; height: 190px; object-fit: cover; border-radius: 16px; }
+  .exp-copy { min-height: 0; }
+  .exp-pane { position: relative; inset: auto; display: none; opacity: 1; transform: none; }
+  .exp-pane.is-active { display: block; }
+  .exp-copy h3 { font-size: 25px; line-height: 1.12; }
+  .exp-copy p { font-size: 15px; line-height: 1.55; margin-bottom: 16px; }
+  .exp-logos { grid-template-columns: repeat(4,1fr); }
+  .exp-logo-cell { min-height: 52px; }
+  .exp-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 18px -20px 0;
+    padding: 0 20px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .exp-tab { min-height: 44px; padding: 10px 15px; font-size: 13px; flex-shrink: 0; }
+  .exp-progress { margin-top: 10px; }
+
+  .fade-in,
+  .fade-in-stagger > * { opacity: 1 !important; transform: none !important; }
+
+  .testimonial-section { padding: 44px 0; }
+  .testimonial-track { min-height: 0; }
+  .testimonial-card { position: relative; inset: auto; display: none; grid-template-columns: 1fr; gap: 18px; opacity: 1; transform: none; }
+  .testimonial-card.is-active { display: grid; }
+  .testimonial-portrait { display: none; }
+  .testimonial-quote { font-size: 28px; line-height: 1.22; max-width: none; color: #14110D; }
+  .testimonial-controls { margin-top: 20px; }
+
+  .delta-section { padding: 54px 0; }
+  .delta-section .h2 { font-size: clamp(36px, 10vw, 48px); }
+  .delta-section .lede { font-size: 16px; line-height: 1.55; color: rgba(246,244,238,0.86) !important; }
+  .delta-band { margin-top: 30px; gap: 24px; }
+  .delta-num { font-size: 88px; }
+  .delta-num-label { font-size: 15px; max-width: 24ch; color: rgba(246,244,238,0.82); }
+  .delta-drivers { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .delta-driver {
+    border: 1px solid rgba(246,244,238,0.12);
+    border-radius: 16px;
+    padding: 14px;
+    background: rgba(246,244,238,0.04);
+  }
+  .delta-driver-pct { font-size: 26px; margin-bottom: 7px; }
+  .delta-driver-label { font-size: 14px; line-height: 1.15; margin-bottom: 0; color: rgba(246,244,238,0.9); }
+  .delta-driver-note { display: none; }
+  .delta-footnote { font-size: 12px; line-height: 1.5; color: rgba(246,244,238,0.68); margin-top: 8px; }
+
+  .member-grid { gap: 12px; margin-top: 28px; }
+  .member-cell { padding: 20px; border-radius: 18px; min-height: 0; }
+  .member-cell:nth-child(n+4) { display: none; }
+
+  #apply { padding: 56px 0 86px; }
+  #apply .h2 { font-size: clamp(38px, 11vw, 52px); }
+  .paths-grid { margin-top: 28px; gap: 16px; }
+  .path-card { padding: 24px; border-radius: 20px; }
+  .path-card h3 { font-size: 28px; line-height: 1.08; margin-bottom: 12px; }
+  .path-card p { font-size: 15px; line-height: 1.55; margin-bottom: 20px; color: rgba(246,244,238,0.82); }
+  .path-card .btn { width: 100%; justify-content: center; min-height: 50px; }
+  .path-card:first-child .btn-primary { background: var(--gold-light); color: var(--ink); }
+  .path-card:nth-child(2) .btn-ghost { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.34); color: var(--paper); }
+  .member-cell { background: #F6F4EE; border: 1px solid rgba(10,10,11,0.08); }
+  .member-cell p { color: #4A4A4D; }
+  .testimonial-attrib { color: #5F5B52; }
+  .testimonial-dot { width: 10px; height: 10px; }
+  footer { padding: 30px 0 96px; }
+}
+
 </style>
 </head>
 <body>
@@ -1351,6 +1597,12 @@ footer a:hover { color: var(--paper); }
     <a href="#apply" class="nav-cta">Apply</a>
   </div>
 </nav>
+
+<div class="mobile-sticky-cta" aria-label="Mobile apply actions">
+  <a class="primary" href="#apply">Apply for membership</a>
+  <a class="secondary" href="#demo">Demo</a>
+</div>
+
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
@@ -1534,8 +1786,60 @@ footer a:hover { color: var(--paper); }
         <h2 class="step-h">Let's Plot a New Trajectory.</h2>
         <p>The curve is not destiny. The work we do now is how more of life stays open: stronger years, better recovery, more trips, more climbs, more moments where your body still says yes. We are not just delaying decline. We are creating a future worth moving toward.</p>
       </div>
+
     </div>
   </div>
+
+    <div class="mobile-trajectory" aria-label="Mobile trajectory story">
+      <div class="mobile-trajectory-intro">
+        <div class="mobile-trajectory-kicker">Quality of life</div>
+        <h2>Your future has a shape.</h2>
+        <p>The curve is a simple way to see the relationship between capability, risk, and how life feels over time.</p>
+      </div>
+
+      <div class="mobile-story-card">
+        <div class="step">01 / Baseline</div>
+        <svg class="mobile-mini-curve" viewBox="0 0 340 142" aria-hidden="true">
+          <defs><linearGradient id="mobileGreenGold" x1="0" y1="0" x2="340" y2="0"><stop offset="0%" stop-color="#1FBF63"/><stop offset="64%" stop-color="#1FBF63"/><stop offset="100%" stop-color="#C99B4D"/></linearGradient></defs>
+          <line class="mobile-mini-axis" x1="22" y1="118" x2="322" y2="118"/><line class="mobile-mini-axis" x1="22" y1="22" x2="22" y2="118"/>
+          <path class="mobile-mini-base" d="M 22 35 C 105 42, 175 66, 322 112"/>
+        </svg>
+        <h3>Capability naturally declines.</h3>
+        <p>The point is not to pretend decline disappears. The point is to see the slope while there is still time to change it.</p>
+      </div>
+
+      <div class="mobile-story-card">
+        <div class="step">02 / Hazards</div>
+        <svg class="mobile-mini-curve" viewBox="0 0 340 142" aria-hidden="true">
+          <line class="mobile-mini-axis" x1="22" y1="118" x2="322" y2="118"/><line class="mobile-mini-axis" x1="22" y1="22" x2="22" y2="118"/>
+          <path class="mobile-mini-base" d="M 22 35 C 105 42, 175 66, 322 112"/>
+          <path class="mobile-mini-red" d="M 148 62 L 148 88 C 196 100, 260 113, 322 122"/>
+        </svg>
+        <h3>Events can change the rest of the line.</h3>
+        <p>Cardiac events, cancer treatment, and strokes are not just moments. They can move the body onto a lower path.</p>
+      </div>
+
+      <div class="mobile-story-card">
+        <div class="step">03 / Vitality</div>
+        <svg class="mobile-mini-curve" viewBox="0 0 340 142" aria-hidden="true">
+          <line class="mobile-mini-axis" x1="22" y1="118" x2="322" y2="118"/><line class="mobile-mini-axis" x1="22" y1="22" x2="22" y2="118"/>
+          <path class="mobile-mini-green" d="M 22 35 C 105 42, 175 66, 322 112"/>
+        </svg>
+        <h3>How it feels matters too.</h3>
+        <p>Capacity is what you can do. Vitality is whether living inside that body still feels open, energetic, and worth saying yes to.</p>
+      </div>
+
+      <div class="mobile-story-card">
+        <div class="step">04 / New trajectory</div>
+        <svg class="mobile-mini-curve" viewBox="0 0 340 142" aria-hidden="true">
+          <line class="mobile-mini-axis" x1="22" y1="118" x2="322" y2="118"/><line class="mobile-mini-axis" x1="22" y1="22" x2="22" y2="118"/>
+          <path class="mobile-mini-base" d="M 22 35 C 105 42, 175 66, 322 112"/>
+          <path class="mobile-mini-green" d="M 22 24 C 92 25, 170 35, 322 72"/>
+        </svg>
+        <h3>Let's plot a new trajectory.</h3>
+        <p>The work now is how more of life stays open: stronger years, better recovery, more trips, more climbs, and more moments where your body still says yes.</p>
+      </div>
+    </div>
 </section>
 
 <!-- ============ SECTION 04 — Experience ============ -->
