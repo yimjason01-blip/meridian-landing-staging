@@ -1358,7 +1358,7 @@ footer a:hover { color: var(--paper); }
   }
   .nav-brand { font-size: 23px; }
   .nav-link { display: none; }
-  .nav-cta { padding: 9px 15px; font-size: 13px; min-height: 44px; display: inline-flex; align-items: center; }
+  .nav-cta { display: none; }
 
   .mobile-sticky-cta {
     position: fixed;
@@ -1375,6 +1375,15 @@ footer a:hover { color: var(--paper); }
     backdrop-filter: blur(18px) saturate(130%);
     -webkit-backdrop-filter: blur(18px) saturate(130%);
     box-shadow: 0 18px 40px -20px rgba(0,0,0,0.7);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(120%);
+    transition: opacity 180ms var(--ease), transform 220ms var(--ease);
+  }
+  body.mobile-sticky-visible .mobile-sticky-cta {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
   .mobile-sticky-cta a {
     display: inline-flex;
@@ -2198,13 +2207,20 @@ footer a:hover { color: var(--paper); }
 <script>
 // Nav scroll state
 const nav = document.getElementById('nav');
+const hero = document.querySelector('.hero');
 let lastY = 0;
-window.addEventListener('scroll', () => {
+function updateMobileStickyCta() {
   const y = window.scrollY;
   if (y > 60) nav.classList.add('scrolled');
   else nav.classList.remove('scrolled');
+
+  const heroExit = hero ? hero.offsetTop + hero.offsetHeight - 24 : window.innerHeight;
+  document.body.classList.toggle('mobile-sticky-visible', y > heroExit);
   lastY = y;
-}, { passive: true });
+}
+window.addEventListener('scroll', updateMobileStickyCta, { passive: true });
+window.addEventListener('resize', updateMobileStickyCta);
+updateMobileStickyCta();
 
 // Parallax on hero + image strip
 const heroMedia = document.getElementById('heroMedia');
