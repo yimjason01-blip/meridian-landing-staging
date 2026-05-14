@@ -566,6 +566,22 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 .scrolly-svg[data-state="1"] .band-late,
 .scrolly-svg[data-state="1"] .marker-late,
 .scrolly-svg[data-state="1"] .caption-late { opacity: 1; }
+.scrolly-svg .hazard-fork { opacity: 0; transition: opacity 0.6s var(--ease); }
+.scrolly-svg .hazard-path {
+  fill: none;
+  stroke: #A33A2A;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.scrolly-svg .hazard-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  fill: var(--traj-axis);
+  letter-spacing: 0.02em;
+}
+.scrolly-svg[data-state="2"] .hazard-fork { opacity: 1; }
 .scrolly-svg[data-state="2"] .band-early,
 .scrolly-svg[data-state="2"] .marker-early,
 .scrolly-svg[data-state="2"] .caption-early,
@@ -1702,6 +1718,17 @@ footer a:hover { color: var(--paper); }
         <text class="step-caption caption-early" x="570" y="172.5" text-anchor="middle" dominant-baseline="middle">Do Anything You Want</text>
         <text class="step-caption caption-late" x="570" y="410" text-anchor="middle" dominant-baseline="middle" fill="#3F3A32">A Lot of Limitations</text>
 
+        <!-- HAZARD FORK (state 2): event branch forks off baseline at age 65 -->
+        <g class="hazard-fork">
+          <path class="hazard-path" d="M 580 290 Q 640 305, 680 325 C 700 360, 720 380, 760 372 C 810 365, 870 395, 1040 478"/>
+          <g class="hazard-marker">
+            <circle cx="680" cy="325" r="9" fill="#A33A2A"/>
+            <circle cx="680" cy="325" r="20" fill="none" stroke="#A33A2A" stroke-width="2" opacity="0.5"/>
+          </g>
+          <text class="hazard-label hazard-label-clean" x="940" y="408" text-anchor="end" dominant-baseline="middle">no event</text>
+          <text class="hazard-label hazard-label-event" x="780" y="380" text-anchor="start" dominant-baseline="middle" fill="#A33A2A">cardiac event</text>
+        </g>
+
         <!-- endpoints -->
         <circle cx="80" cy="170" r="7" fill="#624400"/>
         <circle cx="1040" cy="440" r="7" fill="#4B453B"/>
@@ -1722,6 +1749,11 @@ footer a:hover { color: var(--paper); }
       <div class="scrolly-step" data-step="1">
         <h2 class="step-h">Your capability will naturally degrade.</h2>
         <p>Every body follows a curve. In your 40s and 50s you can do almost anything. Decades later, the same body negotiates with stairs and grandkids from the chair. The slope between those two points is being written right now, quietly, by what you do and don't catch.</p>
+      </div>
+
+      <div class="scrolly-step" data-step="2">
+        <h2 class="step-h">There are hazards along the way.</h2>
+        <p>The curve is not just a slow fade. Cardiac events, cancers, strokes can fork the line. One future is the one where the event never happens. The other is the one where it does, and the body that comes out the other side moves on a permanently lower trajectory. Same person. Two different rest-of-lives.</p>
       </div>
 
       <div class="scrolly-step" data-step="3">
