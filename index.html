@@ -570,6 +570,14 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   font-size: 24px;
   fill: var(--traj-axis-muted);
 }
+.scrolly-svg .trajectory-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
 .scrolly-svg[data-state="1"] .band-early,
 .scrolly-svg[data-state="1"] .marker-early,
 .scrolly-svg[data-state="1"] .caption-early,
@@ -594,9 +602,9 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 .scrolly-svg[data-state="2"] .hazard-fork { opacity: 1; }
 .scrolly-svg[data-state="2"] .baseline-path { stroke: #3F3A32; }
 .scrolly-svg[data-state="3"] .vitality-path { opacity: 1; }
-.scrolly-svg[data-state="4"] .baseline-path { opacity: 0.4; }
-.scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; }
-.scrolly-svg[data-state="4"] .caption-bend { opacity: 1; }
+.scrolly-svg[data-state="4"] .baseline-path { opacity: 0.82; stroke: #3F3A32; stroke-width: 4.5; }
+.scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; stroke-width: 7; }
+.scrolly-svg[data-state="4"] .trajectory-label { opacity: 1; }
 
 @media (max-width: 900px) {
   .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
@@ -1721,6 +1729,8 @@ footer a:hover { color: var(--paper); }
 
         <!-- squared healthspan curve: high function is preserved longer, then morbidity compresses into a shorter late-life drop -->
         <path class="best-path" d="M 80 170 C 220 158, 380 150, 560 154 C 710 158, 835 168, 910 205 C 970 250, 1015 325, 1040 382"/>
+        <text class="trajectory-label" x="936" y="358" text-anchor="middle" fill="#745000">Optimized trajectory</text>
+        <text class="trajectory-label" x="930" y="455" text-anchor="middle" fill="#4B453B">Average American</text>
 
         <!-- markers -->
         <g class="highlight-marker marker-early">
@@ -1778,8 +1788,8 @@ footer a:hover { color: var(--paper); }
       </div>
 
       <div class="scrolly-step" data-step="4">
-        <h3 class="step-h">Together, we can bend the curve.</h3>
-        <p>Every domain has a slope: cardiovascular, metabolic, neurological, oncologic. We measure all of them, continuously, and act on the ones bending wrong. A continuous medical relationship that keeps this curve as flat as it can be, for as long as it can be.</p>
+        <h3 class="step-h">Your trajectory is still changeable.</h3>
+        <p>The curve is not destiny. Conditioning, metabolic health, sleep, recovery, risk reduction, and early detection can move the entire trajectory. The goal is not to erase decline. It is to preserve more capability for longer, delay the hazards that shorten the runway, and compress the hardest part into a smaller window later in life.</p>
       </div>
     </div>
   </div>
