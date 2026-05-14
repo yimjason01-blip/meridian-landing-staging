@@ -528,6 +528,15 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   opacity: 0;
   transition: stroke-dashoffset 2.2s var(--ease), opacity 0.6s var(--ease);
 }
+.scrolly-svg .vitality-path {
+  stroke: url(#vitalityFade);
+  stroke-width: 8;
+  stroke-dasharray: 6 14;
+  fill: none;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
 .scrolly-svg .highlight-band {
   fill: rgba(98, 68, 0, 0.13);
   opacity: 0;
@@ -583,9 +592,10 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 }
 .scrolly-svg[data-state="2"] .hazard-fork { opacity: 1; }
 .scrolly-svg[data-state="2"] .baseline-path { stroke: #3F3A32; }
-.scrolly-svg[data-state="3"] .baseline-path { opacity: 0.4; }
-.scrolly-svg[data-state="3"] .best-path { opacity: 1; stroke-dashoffset: 0; }
-.scrolly-svg[data-state="3"] .caption-bend { opacity: 1; }
+.scrolly-svg[data-state="3"] .vitality-path { opacity: 1; }
+.scrolly-svg[data-state="4"] .baseline-path { opacity: 0.4; }
+.scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; }
+.scrolly-svg[data-state="4"] .caption-bend { opacity: 1; }
 
 @media (max-width: 900px) {
   .scrolly-wrap { grid-template-columns: 1fr; gap: 0; padding: 0; }
@@ -1755,6 +1765,12 @@ footer a:hover { color: var(--paper); }
             <feGaussianBlur stdDeviation="5" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
+          <linearGradient id="vitalityFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="440" y2="0">
+            <stop offset="0%" stop-color="#4ADE80" stop-opacity="0.98"/>
+            <stop offset="28%" stop-color="#86EFAC" stop-opacity="0.78"/>
+            <stop offset="62%" stop-color="#A7F3D0" stop-opacity="0.20"/>
+            <stop offset="100%" stop-color="#A7F3D0" stop-opacity="0"/>
+          </linearGradient>
         </defs>
 
         <!-- grid -->
@@ -1770,6 +1786,7 @@ footer a:hover { color: var(--paper); }
 
         <!-- baseline curve -->
         <path class="baseline-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
+        <path class="vitality-path" d="M 80 170 Q 380 195, 580 290 T 1040 440"/>
 
         <!-- squared healthspan curve: high function is preserved longer, then morbidity compresses into a shorter late-life drop -->
         <path class="best-path" d="M 80 170 C 220 158, 380 150, 560 154 C 710 158, 835 168, 910 205 C 970 250, 1015 325, 1040 382"/>
@@ -1825,6 +1842,11 @@ footer a:hover { color: var(--paper); }
       </div>
 
       <div class="scrolly-step" data-step="3">
+        <h2 class="step-h">How you feel matters.</h2>
+        <p>Capability is what you can do. Vitality is what it feels like to do it. The line can still be high while the color starts fading early, which is why energy, sleep, mood, recovery, and pain belong on the same curve.</p>
+      </div>
+
+      <div class="scrolly-step" data-step="4">
         <h3 class="step-h">Together, we can bend the curve.</h3>
         <p>Every domain has a slope: cardiovascular, metabolic, neurological, oncologic. We measure all of them, continuously, and act on the ones bending wrong. A continuous medical relationship that keeps this curve as flat as it can be, for as long as it can be.</p>
       </div>
