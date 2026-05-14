@@ -1788,16 +1788,17 @@ footer a:hover { color: var(--paper); }
         <text class="step-caption caption-early" x="570" y="172.5" text-anchor="middle" dominant-baseline="middle">Do Anything You Want</text>
         <text class="step-caption caption-late" x="570" y="410" text-anchor="middle" dominant-baseline="middle" fill="#3F3A32">A Lot of Limitations</text>
 
-        <!-- HAZARD FORK (state 2): event branch forks off baseline at age 65 -->
+        <!-- HAZARD FORK (state 2): event branch at age 65 -->
+        <!-- shape: acute vertical drop, then exponential asymptotic recovery toward a residual penalty, then continued slow decline parallel to baseline -->
         <g class="hazard-fork">
-          <!-- acute vertical drop at fork, exponential partial recovery, then permanent lower trajectory -->
-          <path class="hazard-path" d="M 700 335 L 700 420 C 720 405, 750 398, 790 400 C 870 405, 960 440, 1040 478"/>
+          <path class="hazard-path" d="M 700 335 L 700 420 C 712 408, 728 400, 760 396 C 820 392, 900 410, 1000 442"/>
           <g class="hazard-marker">
             <circle cx="700" cy="335" r="9" fill="#A33A2A"/>
             <circle cx="700" cy="335" r="20" fill="none" stroke="#A33A2A" stroke-width="2" opacity="0.5"/>
           </g>
-          <text class="hazard-label hazard-label-clean" x="1050" y="440" text-anchor="start" dominant-baseline="middle">no event</text>
-          <text class="hazard-label hazard-label-event" x="1050" y="478" text-anchor="start" dominant-baseline="middle" fill="#A33A2A">cardiac event</text>
+          <circle cx="1000" cy="442" r="7" fill="#A33A2A"/>
+          <text class="hazard-label hazard-label-clean" x="930" y="402" text-anchor="middle" dominant-baseline="middle">no event</text>
+          <text class="hazard-label hazard-label-event" x="850" y="378" text-anchor="middle" dominant-baseline="middle" fill="#A33A2A">cardiac event</text>
         </g>
 
         <!-- endpoints -->
