@@ -518,12 +518,12 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
   transition: stroke 0.6s var(--ease), stroke-width 0.6s var(--ease), opacity 0.6s var(--ease);
 }
 .scrolly-svg .best-path {
-  stroke: url(#goldGrad);
-  stroke-width: 6;
+  stroke: url(#optimizedVitalityFade);
+  stroke-width: 8;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: url(#goldGlow);
+  filter: url(#optimizedVitalityGlow);
   stroke-dasharray: 2200;
   stroke-dashoffset: 2200;
   opacity: 0;
@@ -604,7 +604,7 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 .scrolly-svg[data-state="2"] .baseline-path { stroke: #3F3A32; }
 .scrolly-svg[data-state="3"] .vitality-path { opacity: 1; }
 .scrolly-svg[data-state="4"] .baseline-path { opacity: 0.82; stroke: #3F3A32; stroke-width: 4.5; }
-.scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; stroke-width: 7; }
+.scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; stroke-width: 10; }
 .scrolly-svg[data-state="4"] .trajectory-label { opacity: 1; }
 
 @media (max-width: 900px) {
@@ -1711,6 +1711,17 @@ footer a:hover { color: var(--paper); }
             <feColorMatrix in="glow" type="matrix" values="0.25 0 0 0 0  0 1 0 0 0  0 0.25 0 0 0  0 0 0 0.85 0" result="greenGlow"/>
             <feMerge><feMergeNode in="greenGlow"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
+          <linearGradient id="optimizedVitalityFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="1040" y2="0">
+            <stop offset="0%" stop-color="#1FBF63" stop-opacity="1"/>
+            <stop offset="48%" stop-color="#1FBF63" stop-opacity="0.98"/>
+            <stop offset="76%" stop-color="#D2B85F" stop-opacity="0.78"/>
+            <stop offset="100%" stop-color="#C99B4D" stop-opacity="0.72"/>
+          </linearGradient>
+          <filter id="optimizedVitalityGlow" x="-14%" y="-80%" width="128%" height="260%">
+            <feGaussianBlur stdDeviation="7" result="glow"/>
+            <feColorMatrix in="glow" type="matrix" values="0.18 0 0 0 0  0 0.95 0 0 0  0 0.28 0 0 0  0 0 0 0.65 0" result="greenGlow"/>
+            <feMerge><feMergeNode in="greenGlow"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
         </defs>
 
         <!-- grid -->
@@ -1789,7 +1800,7 @@ footer a:hover { color: var(--paper); }
 
       <div class="scrolly-step" data-step="4">
         <h3 class="step-h">Together, We'll Plot a New Trajectory</h3>
-        <p>The curve is not destiny. Conditioning, metabolic health, sleep, recovery, risk reduction, and early detection can move the entire trajectory. The goal is not to erase decline. It is to preserve more capability for longer, delay the hazards that shorten the runway, and compress the hardest part into a smaller window later in life.</p>
+        <p>The curve is not destiny. The work we do now is how more of life stays open: stronger years, better recovery, more trips, more climbs, more moments where your body still says yes. We are not just delaying decline. We are creating a future worth moving toward.</p>
       </div>
     </div>
   </div>
