@@ -136,6 +136,16 @@ img, video { max-width: 100%; height: auto; display: block; }
   transition: all 0.2s var(--ease);
 }
 .nav-cta:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  margin-right: 18px;
+  transition: color 0.2s var(--ease);
+}
+.nav-link:hover { color: #fff; }
 
 /* ============ HERO ============ */
 .hero {
@@ -1644,7 +1654,10 @@ footer a:hover { color: var(--paper); }
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <a href="#top" class="nav-brand">Aleron <span class="md-tag">MD</span></a>
-  <a href="#apply" class="nav-cta">Apply</a>
+  <div style="display:flex;align-items:center;">
+    <a href="https://yimjason01-blip.github.io/qol-three-slider/aleron.html" class="nav-link">Capability</a>
+    <a href="#apply" class="nav-cta">Apply</a>
+  </div>
 </nav>
 
 <!-- ============ HERO ============ -->
