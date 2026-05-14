@@ -530,10 +530,11 @@ section.dark .fear-block .body-lg, section.deep .fear-block .body-lg { color: rg
 }
 .scrolly-svg .vitality-path {
   stroke: url(#vitalityFade);
-  stroke-width: 8;
-  stroke-dasharray: 6 14;
+  stroke-width: 16;
   fill: none;
   stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#vitalityGlow);
   opacity: 0;
   transition: opacity 0.6s var(--ease);
 }
@@ -1765,12 +1766,18 @@ footer a:hover { color: var(--paper); }
             <feGaussianBlur stdDeviation="5" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <linearGradient id="vitalityFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="440" y2="0">
-            <stop offset="0%" stop-color="#4ADE80" stop-opacity="0.98"/>
-            <stop offset="28%" stop-color="#86EFAC" stop-opacity="0.78"/>
-            <stop offset="62%" stop-color="#A7F3D0" stop-opacity="0.20"/>
-            <stop offset="100%" stop-color="#A7F3D0" stop-opacity="0"/>
+          <linearGradient id="vitalityFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="1040" y2="0">
+            <stop offset="0%" stop-color="#35F27A" stop-opacity="1"/>
+            <stop offset="18%" stop-color="#64F59C" stop-opacity="0.92"/>
+            <stop offset="42%" stop-color="#E7C86A" stop-opacity="0.68"/>
+            <stop offset="72%" stop-color="#C15A4A" stop-opacity="0.46"/>
+            <stop offset="100%" stop-color="#963D3D" stop-opacity="0.34"/>
           </linearGradient>
+          <filter id="vitalityGlow" x="-12%" y="-70%" width="124%" height="240%">
+            <feGaussianBlur stdDeviation="8" result="glow"/>
+            <feColorMatrix in="glow" type="matrix" values="0.25 0 0 0 0  0 1 0 0 0  0 0.25 0 0 0  0 0 0 0.85 0" result="greenGlow"/>
+            <feMerge><feMergeNode in="greenGlow"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
         </defs>
 
         <!-- grid -->
