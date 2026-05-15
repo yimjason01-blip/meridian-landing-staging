@@ -937,23 +937,109 @@ section.warm .member-cell { background: var(--paper-warm); }
 /* ============ FOOTER ============ */
 footer {
   background: var(--ink);
-  color: rgba(246,244,238,0.55);
-  padding: 80px var(--gutter) 48px;
+  color: rgba(246,244,238,0.66);
+  padding: 84px var(--gutter) 44px;
   font-size: 14px;
 }
 .footer-inner {
   max-width: var(--max);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(44px, 7vw, 96px);
+  align-items: start;
+}
+.footer-brand {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: -0.035em;
+}
+.footer-brand span { font-weight: 700; }
+.footer-promise {
+  margin-top: 18px;
+  max-width: 34ch;
+  color: rgba(246,244,238,0.76);
+  font-size: 17px;
+  line-height: 1.45;
+}
+.footer-meta {
+  margin-top: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.footer-chip {
+  border: 1px solid rgba(246,244,238,0.18);
+  color: rgba(246,244,238,0.7);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.footer-routes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.footer-route {
+  min-height: 176px;
+  border: 1px solid rgba(212,165,116,0.22);
+  border-radius: 22px;
+  padding: 22px;
+  background: #1E1A15;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.24s var(--ease), border-color 0.24s var(--ease), background 0.24s var(--ease);
+}
+.footer-route:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212,165,116,0.58);
+  background: #272018;
+}
+.footer-route-label {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.footer-route-title {
+  color: var(--paper);
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 21px;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.footer-route-note {
+  color: rgba(246,244,238,0.7);
+  line-height: 1.45;
+  margin-top: auto;
+}
+.footer-bottom {
+  max-width: var(--max);
+  margin: 54px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(246,244,238,0.12);
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 32px;
+  color: rgba(246,244,238,0.66);
+  font-size: 13px;
 }
-.footer-brand { font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 500; color: var(--paper); }
-footer a { color: rgba(246,244,238,0.55); text-decoration: none; transition: color 0.2s; }
-footer a:hover { color: var(--paper); }
-.footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+.footer-bottom a { color: rgba(246,244,238,0.72); text-decoration: none; transition: color 0.2s; }
+.footer-bottom a:hover { color: var(--paper); }
+@media (max-width: 900px) {
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-routes { grid-template-columns: 1fr; }
+  .footer-route { min-height: 0; }
+}
 
 /* ============ FADE-IN ============ */
 .fade-in {
@@ -2272,14 +2358,35 @@ footer a:hover { color: var(--paper); }
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-brand">Aleron</div>
-      <div style="margin-top: 8px; font-size: 13px;">© 2026 The Aleron Project</div>
+      <div class="footer-brand">Aleron <span>MD</span></div>
+      <p class="footer-promise">Physician-led preventive medicine for the years you still want to feel fully alive.</p>
+      <div class="footer-meta" aria-label="Aleron model">
+        <span class="footer-chip">MD led</span>
+        <span class="footer-chip">AI native</span>
+        <span class="footer-chip">CA + TX</span>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="https://the-meridian-project.com/">Vision</a>
-      <a href="mailto:apply@the-meridian-project.com">Apply</a>
-      <a href="mailto:partners@the-meridian-project.com">Partners</a>
-    </div>
+    <nav class="footer-routes" aria-label="Footer">
+      <a class="footer-route" href="mailto:apply@the-meridian-project.com?subject=Aleron%20Membership%20Application">
+        <span class="footer-route-label">Patients</span>
+        <span class="footer-route-title">Apply for membership</span>
+        <span class="footer-route-note">For people who want a physician and AI system watching the full picture.</span>
+      </a>
+      <a class="footer-route" href="mailto:partners@the-meridian-project.com?subject=Aleron%20Demo%20Request">
+        <span class="footer-route-label">Partners</span>
+        <span class="footer-route-title">Request a demo</span>
+        <span class="footer-route-note">For executive health, benefits, and clinical groups evaluating Aleron.</span>
+      </a>
+      <a class="footer-route" href="https://yimjason01-blip.github.io/qol-three-slider/aleron.html">
+        <span class="footer-route-label">Model</span>
+        <span class="footer-route-title">Explore Quality of Life</span>
+        <span class="footer-route-note">See how capacity, risk, and vitality shape the future curve.</span>
+      </a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Aleron MD. A Meridian Project company.</span>
+    <span><a href="mailto:apply@the-meridian-project.com">apply@the-meridian-project.com</a></span>
   </div>
 </footer>
 
