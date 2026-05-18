@@ -112,18 +112,29 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom-color: rgba(246,244,238,0.08);
 }
 .nav-brand {
-  font-family: 'Inter', 'Inter Tight', sans-serif;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  font-size: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  font-size: 28px;
   color: #fff;
   text-decoration: none;
-  line-height: 1.08;
+  line-height: 1;
 }
 .nav-brand .md-tag {
-  color: #fff;
-  font-weight: 510;
-  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  height: 0.8em;
+  padding-left: 15px;
+  border-left: 1px solid rgba(246,244,238,0.34);
+  color: var(--gold-light);
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 0.54em;
+  font-weight: 500;
+  letter-spacing: -0.06em;
 }
 .nav-cta {
   font-size: 14px;
@@ -1134,12 +1145,31 @@ footer {
 }
 .md-ai-attr { border-top: 1px solid var(--line); padding-top: 14px; }
 .md-ai-attr h5 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.01em;
   margin-bottom: 4px;
   color: var(--ink);
+}
+.md-ai-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: var(--gold-deep);
+}
+.md-ai-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .md-ai-attr p {
   font-size: 13px;
@@ -1412,7 +1442,8 @@ footer {
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     border-bottom-color: rgba(246,244,238,0.08);
   }
-  .nav-brand { font-size: 23px; }
+  .nav-brand { font-size: 24px; gap: 12px; }
+  .nav-brand .md-tag { padding-left: 12px; }
   .nav-link { display: none; }
   .nav-cta { display: none; }
 
@@ -1498,7 +1529,14 @@ footer {
     padding: 14px;
     background: rgba(246,244,238,0.42);
   }
-  .md-ai-attr h5 { font-size: 14px; margin: 0; }
+  .md-ai-attr h5 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 14px;
+    margin: 0;
+  }
+  .md-ai-icon { width: 24px; height: 24px; flex-basis: 24px; }
   .md-ai-attr p { display: none; }
 
   .scrolly-section { padding: 0; background: var(--bone); }
@@ -1886,19 +1924,60 @@ footer {
 
         <div class="md-ai-attrs">
           <div class="md-ai-attr">
-            <h5>Unlimited access</h5>
+            <h5>
+              <span class="md-ai-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <path d="M9 5c13 4 13 9 0 14 13 5 13 8 0 8" />
+                  <path d="M23 5c-13 4-13 9 0 14-13 5-13 8 0 8" />
+                  <path d="M12.5 8.8 19.5 11.2" />
+                  <path d="M13.5 15 18.5 17" />
+                  <path d="M19.5 22.2 12.5 24.8" />
+                </svg>
+              </span>
+              Genetic
+            </h5>
             <p>Your time is respected. Message your team when something changes, when a question comes up, or when a decision cannot wait for an annual visit.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>A complete picture</h5>
+            <h5>
+              <span class="md-ai-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <rect x="10" y="7" width="12" height="18" rx="4" />
+                  <path d="M13 4.5h6" />
+                  <path d="M13 27.5h6" />
+                  <path d="M13.5 14.5h5" />
+                  <path d="M13.5 18h3.5" />
+                </svg>
+              </span>
+              Wearable data
+            </h5>
             <p>Genetics, labs, wearable data, history, and how you actually feel are reviewed together, so decisions are based on the full context of your life.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>AI native</h5>
+            <h5>
+              <span class="md-ai-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <path d="M12 5h8" />
+                  <path d="M14 5v7.5L9.5 24a3 3 0 0 0 2.8 4h7.4a3 3 0 0 0 2.8-4L18 12.5V5" />
+                  <path d="M11.3 21h9.4" />
+                  <path d="M13.2 17h5.6" />
+                </svg>
+              </span>
+              Labs
+            </h5>
             <p>Your physicians use frontier AI to track patterns, surface evidence, compare risks, and stay ahead of what would otherwise be missed.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>Your team</h5>
+            <h5>
+              <span class="md-ai-icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32">
+                  <path d="M16 4.5 25 8v7.2c0 6.1-3.5 10.5-9 12.3-5.5-1.8-9-6.2-9-12.3V8l9-3.5Z" />
+                  <rect x="12" y="14.5" width="8" height="6.5" rx="1.4" />
+                  <path d="M14 14.5v-2a2 2 0 0 1 4 0v2" />
+                </svg>
+              </span>
+              Data security
+            </h5>
             <p>Aleron is a longevity partnership: physician judgment, AI leverage, and a care team helping you turn decisions into follow-through.</p>
           </div>
         </div>
@@ -2180,25 +2259,25 @@ footer {
 <section class="bone seam-top-bone">
   <div class="container">
     <div class="fade-in">
-      <h2 class="display h2" style="">What you actually get.</h2>
-      <p class="lede" style="margin-top: var(--space-headline-lede); ">Not a one-time report. A continuous medical relationship.</p>
+      <h2 class="display h2" style="">Why stay when nothing is wrong?</h2>
+      <p class="lede" style="margin-top: var(--space-headline-lede); ">Because strong health is a position to maintain, not a report to file away.</p>
     </div>
 
     <div class="member-grid fade-in-stagger">
       <div class="member-cell">
         <div class="num">01</div>
         <h4>Clinical-grade genetics</h4>
-        <p>167-gene panel screened for the variants that change medical management for life. The kind of test your doctor isn't ordering.</p>
+        <p>167-gene panel screened for variants that can change screening, medication, and family-risk decisions for life.</p>
       </div>
       <div class="member-cell">
         <div class="num">02</div>
         <h4>Comprehensive labs, twice yearly</h4>
-        <p>100-marker Quest Elite panel every six months. Trend lines, not snapshots. Proof that what you're doing is working.</p>
+        <p>100-marker Quest Elite panel every six months. Trend lines, not snapshots. Proof that the plan is still holding.</p>
       </div>
       <div class="member-cell">
         <div class="num">03</div>
-        <h4>Continuous monitoring</h4>
-        <p>Sleep, HRV, resting heart rate, training load, interpreted in the context of your genetics and labs, not as standalone numbers.</p>
+        <h4>Drift before symptoms</h4>
+        <p>Sleep, HRV, resting heart rate, training load, blood pressure, labs, and body composition reviewed as a changing baseline, not standalone numbers.</p>
       </div>
       <div class="member-cell">
         <div class="num">04</div>
@@ -2207,13 +2286,13 @@ footer {
       </div>
       <div class="member-cell">
         <div class="num">05</div>
-        <h4>A plan that updates</h4>
-        <p>Your action plan re-prioritizes as your data evolves and as the literature evolves. The next thing to do is always one screen away.</p>
+        <h4>What not to chase</h4>
+        <p>Clear thresholds for when to act, when to recheck, and when to leave a finding alone. Restraint is part of the care plan.</p>
       </div>
       <div class="member-cell">
         <div class="num">06</div>
-        <h4>Research, applied to you</h4>
-        <p>We monitor relevant clinical research and tell you when something matters for <em>your</em> profile, not for the average person.</p>
+        <h4>Evidence, applied to you</h4>
+        <p>Guidelines, trials, genetic interpretation, and screening standards change. We tell you when they change <em>your</em> plan.</p>
       </div>
     </div>
   </div>

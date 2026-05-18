@@ -1,0 +1,118 @@
+@import url("./tokens.css");
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--amd-font-sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--amd-text);
+  background: var(--amd-paper);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--amd-focus-ring);
+}
+
+.amd-container {
+  max-width: var(--amd-max);
+  margin: 0 auto;
+  padding: 0 var(--amd-gutter);
+}
+
+.amd-display {
+  font-family: var(--amd-font-display);
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  line-height: 1;
+}
+
+.amd-h1 {
+  font-size: clamp(56px, 9.5vw, 144px);
+}
+
+.amd-h2 {
+  font-size: clamp(42px, 6.8vw, 88px);
+}
+
+.amd-h3 {
+  font-size: clamp(28px, 3.5vw, 44px);
+}
+
+.amd-lede {
+  max-width: 56ch;
+  font-family: var(--amd-font-sans);
+  font-size: clamp(19px, 1.6vw, 22px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--amd-text-muted);
+}
+
+.amd-body-lg {
+  max-width: 60ch;
+  font-size: clamp(17px, 1.3vw, 19px);
+  line-height: 1.6;
+}
+
+.amd-eyebrow {
+  font-family: var(--amd-font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amd-gold-deep);
+}
+
+.amd-serif-quote {
+  font-family: var(--amd-font-serif);
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+.amd-section {
+  position: relative;
+  padding: var(--amd-section-y) 0;
+}
+
+.amd-section-dark {
+  color: var(--amd-paper);
+  background: var(--amd-ink-warm);
+}
+
+.amd-section-dark-cool {
+  color: var(--amd-paper);
+  background: var(--amd-ink);
+}
+
+.amd-section-warm {
+  background: var(--amd-paper-warm);
+}
+
+.amd-section-bone {
+  background: var(--amd-bone);
+}

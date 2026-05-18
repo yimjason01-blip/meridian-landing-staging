@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aleron MD Wordmark Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0b;
+    --warm-ink: #14110d;
+    --paper: #f6f4ee;
+    --warm-paper: #efeae0;
+    --bone: #ece5d6;
+    --gold: #d4a574;
+    --gold-deep: #b8854d;
+    --line: rgba(20, 17, 13, 0.16);
+    --muted: rgba(20, 17, 13, 0.62);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 72% 4%, rgba(212, 165, 116, 0.14), transparent 32%),
+      linear-gradient(180deg, var(--paper), var(--warm-paper));
+    font-family: "Inter", sans-serif;
+  }
+
+  .shell {
+    width: min(1180px, calc(100vw - 40px));
+    margin: 0 auto;
+    padding: 56px 0 72px;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: end;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 680px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: clamp(44px, 6vw, 86px);
+    font-weight: 500;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+  }
+
+  .brief {
+    max-width: 340px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 36px;
+    border: 1px solid var(--line);
+    background: var(--line);
+  }
+
+  .card {
+    min-height: 270px;
+    padding: clamp(24px, 3vw, 38px);
+    background: rgba(246, 244, 238, 0.86);
+  }
+
+  .card.dark {
+    color: var(--paper);
+    background:
+      linear-gradient(135deg, rgba(20, 17, 13, 0.94), rgba(10, 10, 11, 0.98)),
+      var(--ink);
+  }
+
+  .label {
+    margin: 0 0 34px;
+    color: var(--gold-deep);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .dark .label { color: var(--gold); }
+
+  .mark {
+    min-height: 104px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    color: currentColor;
+  }
+
+  .note {
+    max-width: 420px;
+    margin: 24px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .dark .note { color: rgba(246, 244, 238, 0.66); }
+
+  .mark-01 {
+    gap: 10px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: clamp(48px, 5.8vw, 78px);
+    font-weight: 400;
+    letter-spacing: -0.055em;
+  }
+
+  .mark-01 .md {
+    margin-left: 2px;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+  }
+
+  .mark-02 {
+    gap: 15px;
+    font-family: "Source Serif 4", serif;
+    font-size: clamp(50px, 6vw, 82px);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+  }
+
+  .mark-02 .md {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.52em;
+    letter-spacing: -0.04em;
+    color: var(--gold-deep);
+  }
+
+  .mark-03 {
+    gap: 16px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(58px, 6.8vw, 96px);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.06em;
+  }
+
+  .mark-03 .md {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 0.54em;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  .mark-04 {
+    gap: 14px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: clamp(46px, 5.6vw, 76px);
+    font-weight: 300;
+    letter-spacing: -0.04em;
+  }
+
+  .mark-04 .a {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .mark-04 .a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.14em;
+    width: 2px;
+    height: 0.72em;
+    background: var(--gold-deep);
+    transform: rotate(16deg);
+    transform-origin: center;
+  }
+
+  .mark-04 .md {
+    font-weight: 500;
+  }
+
+  .mark-05 {
+    gap: 18px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: clamp(50px, 5.9vw, 84px);
+    font-weight: 500;
+    letter-spacing: -0.06em;
+  }
+
+  .mark-05 .md {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    height: 0.78em;
+    padding-left: 18px;
+    border-left: 1px solid rgba(246, 244, 238, 0.34);
+    color: var(--gold);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.54em;
+    letter-spacing: -0.06em;
+  }
+
+  .mark-06 {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    font-family: "Inter Tight", sans-serif;
+  }
+
+  .mark-06 .name {
+    font-size: clamp(50px, 6vw, 82px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+  }
+
+  .mark-06 .md {
+    position: relative;
+    padding-top: 10px;
+    color: var(--gold-deep);
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(15px, 1.5vw, 19px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .mark-06 .md::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 74px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .mark-07 {
+    gap: 12px;
+    font-family: "Source Serif 4", serif;
+    font-size: clamp(52px, 6.2vw, 88px);
+    font-weight: 500;
+    letter-spacing: -0.065em;
+  }
+
+  .mark-07 .o {
+    color: var(--gold-deep);
+    font-style: italic;
+  }
+
+  .mark-07 .md {
+    font-family: "Inter Tight", sans-serif;
+    font-size: 0.56em;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+
+  .mark-08 {
+    gap: 12px;
+    font-family: "Inter Tight", sans-serif;
+    font-size: clamp(48px, 5.8vw, 80px);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+  }
+
+  .mark-08 .symbol {
+    width: 0.58em;
+    height: 0.58em;
+    color: var(--gold-deep);
+  }
+
+  .mark-08 svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .mark-08 .md {
+    font-weight: 500;
+  }
+
+  @media (max-width: 760px) {
+    header { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr; }
+    .card { min-height: 220px; }
+    .brief { max-width: 560px; }
+  }
+</style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <h1>Aleron MD wordmark directions.</h1>
+      <p class="brief">Exploratory lockups that keep the brand restrained, physician-led, premium, and warmer than a clinical software mark.</p>
+    </header>
+
+    <section class="grid" aria-label="Aleron MD wordmark concept options">
+      <article class="card">
+        <p class="label">Option 01</p>
+        <div class="mark mark-01" aria-label="Aleron MD option one">
+          <span>Aleron</span><span class="md">MD</span>
+        </div>
+        <p class="note">Closest to the current mark, but tuned tighter and calmer. Best if the goal is evolutionary rather than a visible rebrand.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 02</p>
+        <div class="mark mark-02" aria-label="Aleron MD option two">
+          <span>Aleron</span><span class="md">MD</span>
+        </div>
+        <p class="note">Editorial medicine. The serif gives more authority and the mono MD keeps the mark from becoming too lifestyle.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 03</p>
+        <div class="mark mark-03" aria-label="Aleron MD option three">
+          <span>Aleron</span><span class="md">MD</span>
+        </div>
+        <p class="note">More personal and high-touch. Good for private medicine, but it risks feeling too boutique if overused.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 04</p>
+        <div class="mark mark-04" aria-label="Aleron MD option four">
+          <span class="a">Aleron</span><span class="md">MD</span>
+        </div>
+        <p class="note">A quiet custom gesture in the A. It suggests lift and direction without becoming a literal icon.</p>
+      </article>
+
+      <article class="card dark">
+        <p class="label">Option 05</p>
+        <div class="mark mark-05" aria-label="Aleron MD option five">
+          <span>Aleron</span><span class="md">MD</span>
+        </div>
+        <p class="note">Best dark-nav candidate. It separates the clinical credential from the name while keeping the full mark compact.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 06</p>
+        <div class="mark mark-06" aria-label="Aleron MD option six">
+          <span class="name">Aleron</span>
+          <span class="md">MD</span>
+        </div>
+        <p class="note">Stacked editorial lockup for print, deck covers, and large marketing moments. Less ideal for tight nav bars.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 07</p>
+        <div class="mark mark-07" aria-label="Aleron MD option seven">
+          <span>Aler<span class="o">o</span>n</span><span class="md">MD</span>
+        </div>
+        <p class="note">Subtle warmth in the word itself. The gold o can become a recognizable detail if used with restraint.</p>
+      </article>
+
+      <article class="card">
+        <p class="label">Option 08</p>
+        <div class="mark mark-08" aria-label="Aleron MD option eight">
+          <span>Aleron</span>
+          <span class="symbol" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path d="M7 18c4-9 14-9 18 0" />
+              <path d="M10 18c3 5 9 5 12 0" />
+            </svg>
+          </span>
+          <span class="md">MD</span>
+        </div>
+        <p class="note">Name plus a tiny horizon mark. It points toward future capacity, but may be too symbolic for the main lockup.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

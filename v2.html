@@ -112,18 +112,29 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom-color: rgba(246,244,238,0.08);
 }
 .nav-brand {
-  font-family: 'Inter', 'Inter Tight', sans-serif;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  font-size: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  font-size: 28px;
   color: #fff;
   text-decoration: none;
-  line-height: 1.08;
+  line-height: 1;
 }
 .nav-brand .md-tag {
-  color: #fff;
-  font-weight: 510;
-  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  height: 0.8em;
+  padding-left: 15px;
+  border-left: 1px solid rgba(246,244,238,0.34);
+  color: var(--gold-light);
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 0.54em;
+  font-weight: 500;
+  letter-spacing: -0.06em;
 }
 .nav-cta {
   font-size: 14px;
@@ -1488,7 +1499,8 @@ footer {
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     border-bottom-color: rgba(246,244,238,0.08);
   }
-  .nav-brand { font-size: 23px; }
+  .nav-brand { font-size: 24px; gap: 12px; }
+  .nav-brand .md-tag { padding-left: 12px; }
   .nav-link { display: none; }
   .nav-cta { display: none; }
 
@@ -2258,25 +2270,25 @@ footer {
 <section class="bone seam-top-bone">
   <div class="container">
     <div class="fade-in">
-      <h2 class="display h2" style="">What you actually get.</h2>
-      <p class="lede" style="margin-top: var(--space-headline-lede); ">Not a one-time report. A continuous medical relationship.</p>
+      <h2 class="display h2" style="">Why stay when nothing is wrong?</h2>
+      <p class="lede" style="margin-top: var(--space-headline-lede); ">Because strong health is a position to maintain, not a report to file away.</p>
     </div>
 
     <div class="member-grid fade-in-stagger">
       <div class="member-cell">
         <div class="num">01</div>
         <h4>Clinical-grade genetics</h4>
-        <p>167-gene panel screened for the variants that change medical management for life. The kind of test your doctor isn't ordering.</p>
+        <p>167-gene panel screened for variants that can change screening, medication, and family-risk decisions for life.</p>
       </div>
       <div class="member-cell">
         <div class="num">02</div>
         <h4>Comprehensive labs, twice yearly</h4>
-        <p>100-marker Quest Elite panel every six months. Trend lines, not snapshots. Proof that what you're doing is working.</p>
+        <p>100-marker Quest Elite panel every six months. Trend lines, not snapshots. Proof that the plan is still holding.</p>
       </div>
       <div class="member-cell">
         <div class="num">03</div>
-        <h4>Continuous monitoring</h4>
-        <p>Sleep, HRV, resting heart rate, training load, interpreted in the context of your genetics and labs, not as standalone numbers.</p>
+        <h4>Drift before symptoms</h4>
+        <p>Sleep, HRV, resting heart rate, training load, blood pressure, labs, and body composition reviewed as a changing baseline, not standalone numbers.</p>
       </div>
       <div class="member-cell">
         <div class="num">04</div>
@@ -2285,13 +2297,13 @@ footer {
       </div>
       <div class="member-cell">
         <div class="num">05</div>
-        <h4>A plan that updates</h4>
-        <p>Your action plan re-prioritizes as your data evolves and as the literature evolves. The next thing to do is always one screen away.</p>
+        <h4>What not to chase</h4>
+        <p>Clear thresholds for when to act, when to recheck, and when to leave a finding alone. Restraint is part of the care plan.</p>
       </div>
       <div class="member-cell">
         <div class="num">06</div>
-        <h4>Research, applied to you</h4>
-        <p>We monitor relevant clinical research and tell you when something matters for <em>your</em> profile, not for the average person.</p>
+        <h4>Evidence, applied to you</h4>
+        <p>Guidelines, trials, genetic interpretation, and screening standards change. We tell you when they change <em>your</em> plan.</p>
       </div>
     </div>
   </div>

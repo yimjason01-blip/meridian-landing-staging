@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aleron MD Marketing Design System v1</title>
+<meta name="description" content="Aleron MD marketing design system baseline for public and member-facing surfaces." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./components.css" />
+<style>
+  body {
+    background: var(--amd-paper);
+  }
+
+  .board-shell {
+    min-height: 100vh;
+    color: var(--amd-text);
+    background:
+      linear-gradient(rgba(10, 10, 11, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 10, 11, 0.025) 1px, transparent 1px),
+      var(--amd-paper);
+    background-size: 32px 32px;
+  }
+
+  .board-nav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 16px var(--amd-gutter);
+    color: var(--amd-paper);
+    background: rgba(10, 10, 11, 0.9);
+    border-bottom: 1px solid var(--amd-line-dark);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+  }
+
+  .brand-lockup {
+    font-family: var(--amd-font-display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .board-tabs {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: rgba(246, 244, 238, 0.72);
+  }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .research-card {
+    min-height: 240px;
+    grid-column: span 2;
+    padding: 24px;
+    background: var(--amd-paper);
+  }
+
+  .research-card h3 {
+    margin: 0 0 12px;
+    font-family: var(--amd-font-display);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.024em;
+  }
+
+  .research-card p {
+    margin: 0;
+    color: var(--amd-text-muted);
+    line-height: 1.55;
+  }
+
+  .research-card a {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amd-gold-deep);
+    text-decoration: none;
+  }
+
+  .board-tabs a {
+    text-decoration: none;
+  }
+
+  .board-version {
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(246, 244, 238, 0.62);
+  }
+
+  .board-hero {
+    padding: clamp(72px, 9vw, 128px) var(--amd-gutter) clamp(48px, 7vw, 88px);
+    color: var(--amd-paper);
+    background:
+      linear-gradient(90deg, rgba(10, 10, 11, 0.92) 0%, rgba(10, 10, 11, 0.72) 46%, rgba(10, 10, 11, 0.28) 100%),
+      url("../assets/hero-rain.jpg") center right / cover no-repeat;
+  }
+
+  .board-hero-inner {
+    max-width: var(--amd-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.65fr);
+    gap: clamp(36px, 6vw, 88px);
+    align-items: end;
+  }
+
+  .system-label {
+    margin: 0 0 22px;
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amd-gold-light);
+  }
+
+  .board-title {
+    max-width: 11ch;
+    margin: 0;
+    font-family: var(--amd-font-display);
+    font-size: clamp(58px, 8vw, 124px);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+  }
+
+  .board-title em {
+    font-family: var(--amd-font-serif-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--amd-gold-light);
+  }
+
+  .board-summary {
+    padding: 28px;
+    border-left: 2px solid var(--amd-gold);
+    background: rgba(246, 244, 238, 0.07);
+  }
+
+  .board-summary p {
+    margin: 0;
+    color: rgba(246, 244, 238, 0.84);
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .board-section {
+    padding: clamp(56px, 7vw, 104px) var(--amd-gutter);
+  }
+
+  .board-section.dark {
+    color: var(--amd-paper);
+    background: var(--amd-ink-warm);
+  }
+
+  .board-section.warm {
+    background: var(--amd-paper-warm);
+  }
+
+  .board-inner {
+    max-width: var(--amd-max);
+    margin: 0 auto;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: end;
+    margin-bottom: 36px;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    font-family: var(--amd-font-display);
+    font-size: clamp(42px, 5.4vw, 78px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.034em;
+  }
+
+  .section-head p {
+    margin: 0;
+    color: var(--amd-text-muted);
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .dark .section-head p {
+    color: var(--amd-text-on-dark-muted);
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .spec-card {
+    min-height: 220px;
+    padding: 24px;
+    background: var(--amd-paper);
+  }
+
+  .spec-card.span-3 {
+    grid-column: span 3;
+  }
+
+  .spec-card.span-4 {
+    grid-column: span 4;
+  }
+
+  .spec-card.span-6 {
+    grid-column: span 6;
+  }
+
+  .spec-card.span-8 {
+    grid-column: span 8;
+  }
+
+  .spec-card.span-12 {
+    grid-column: span 12;
+  }
+
+  .spec-kicker {
+    margin: 0 0 16px;
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amd-gold-deep);
+  }
+
+  .spec-card h3 {
+    margin: 0 0 12px;
+    font-family: var(--amd-font-display);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .spec-card p {
+    margin: 0;
+    color: var(--amd-text-muted);
+    line-height: 1.55;
+  }
+
+  .swatch-card {
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .on-dark {
+    color: var(--amd-paper);
+  }
+
+  .type-spec {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 32px;
+    padding: 26px 0;
+    border-top: 1px solid var(--amd-line);
+  }
+
+  .type-spec:first-child {
+    border-top: 0;
+  }
+
+  .type-name {
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amd-gold-deep);
+  }
+
+  .display-sample {
+    font-family: var(--amd-font-display);
+    font-size: clamp(48px, 5.8vw, 86px);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.034em;
+  }
+
+  .lede-sample {
+    max-width: 62ch;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--amd-text-muted);
+  }
+
+  .quote-sample {
+    max-width: 58ch;
+    font-family: var(--amd-font-serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-style: italic;
+    line-height: 1.32;
+  }
+
+  .module-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .module {
+    min-height: 360px;
+    padding: 28px;
+    background: var(--amd-paper);
+  }
+
+  .module.dark {
+    color: var(--amd-paper);
+    background: var(--amd-ink);
+  }
+
+  .module.warm {
+    background: var(--amd-paper-warm);
+  }
+
+  .module h3 {
+    max-width: 9ch;
+    margin: 0 0 18px;
+    font-family: var(--amd-font-display);
+    font-size: 38px;
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .module p {
+    max-width: 36ch;
+    margin: 0;
+    color: var(--amd-text-muted);
+  }
+
+  .module.dark p {
+    color: var(--amd-text-on-dark-muted);
+  }
+
+  .button-spec {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-top: 28px;
+  }
+
+  .proof-module {
+    color: var(--amd-paper);
+    background:
+      radial-gradient(ellipse 70% 58% at 78% 30%, rgba(212, 165, 116, 0.18), transparent 62%),
+      linear-gradient(180deg, var(--amd-umber-top), var(--amd-umber-bottom));
+  }
+
+  .proof-spec {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.55fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: end;
+  }
+
+  .proof-spec h2 {
+    margin: 0;
+    font-family: var(--amd-font-display);
+    font-size: clamp(44px, 5.6vw, 86px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.034em;
+  }
+
+  .proof-spec p {
+    max-width: 62ch;
+    color: var(--amd-text-on-dark-muted);
+  }
+
+  .proof-stat {
+    padding: 30px;
+    border-left: 2px solid var(--amd-gold);
+    background: rgba(246, 244, 238, 0.06);
+  }
+
+  .proof-stat strong {
+    display: block;
+    font-family: var(--amd-font-serif-display);
+    font-size: clamp(76px, 7vw, 116px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--amd-gold-light);
+  }
+
+  .image-rule-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .image-example {
+    min-height: 520px;
+    background: url("../assets/photos/exp-04-consult.jpg") center / cover no-repeat;
+  }
+
+  .image-notes {
+    padding: 36px;
+    background: var(--amd-paper);
+  }
+
+  .image-notes ul,
+  .guardrail-list {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+
+  .image-notes li,
+  .guardrail-list li {
+    padding: 15px 0;
+    border-top: 1px solid var(--amd-line);
+    color: var(--amd-text-muted);
+  }
+
+  .drift-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .drift-card {
+    padding: 32px;
+    background: var(--amd-paper);
+  }
+
+  .drift-card.bad {
+    background: #f2f0ff;
+  }
+
+  .drift-card.good {
+    background: var(--amd-paper-warm);
+  }
+
+  .drift-label {
+    margin: 0 0 18px;
+    font-family: var(--amd-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .drift-card.bad .drift-label {
+    color: #4b3fc2;
+  }
+
+  .drift-card.good .drift-label {
+    color: var(--amd-gold-deep);
+  }
+
+  .fake-saas {
+    min-height: 220px;
+    padding: 24px;
+    color: #fff;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #4b3fc2, #12d7c4);
+  }
+
+  .fake-saas h3 {
+    margin: 0 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+  }
+
+  .fake-saas span {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .good-example {
+    min-height: 220px;
+    padding: 28px;
+    border-left: 2px solid var(--amd-gold);
+    background: var(--amd-paper);
+  }
+
+  .good-example h3 {
+    max-width: 11ch;
+    margin: 0 0 16px;
+    font-family: var(--amd-font-display);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.032em;
+  }
+
+  .good-example p {
+    max-width: 42ch;
+    color: var(--amd-text-muted);
+  }
+
+  .token-table {
+    display: grid;
+    gap: 1px;
+    border: 1px solid var(--amd-line);
+    background: var(--amd-line);
+  }
+
+  .token-row {
+    display: grid;
+    grid-template-columns: 240px 1fr 1fr;
+    gap: 24px;
+    padding: 18px 22px;
+    background: var(--amd-paper);
+    font-family: var(--amd-font-mono);
+    font-size: 12px;
+  }
+
+  .token-row span:nth-child(2),
+  .token-row span:nth-child(3) {
+    color: var(--amd-text-muted);
+  }
+
+  @media (max-width: 980px) {
+    .board-nav,
+    .board-hero-inner,
+    .section-head,
+    .proof-spec,
+    .image-rule-grid,
+    .drift-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .board-tabs {
+      display: none;
+    }
+
+    .spec-card.span-3,
+    .spec-card.span-4,
+    .spec-card.span-6,
+    .spec-card.span-8,
+    .research-card {
+      grid-column: span 12;
+    }
+
+    .module-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .type-spec,
+    .token-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="board-shell">
+    <header class="board-nav">
+      <div class="brand-lockup">Aleron MD</div>
+      <nav class="board-tabs" aria-label="Design system sections">
+        <a href="#principles">Principles</a>
+        <a href="#tokens">Tokens</a>
+        <a href="#type">Type</a>
+        <a href="#modules">Modules</a>
+        <a href="#drift">Drift checks</a>
+      </nav>
+      <div class="board-version">Marketing DS v1</div>
+    </header>
+
+    <main>
+      <section class="board-hero">
+        <div class="board-hero-inner">
+          <div>
+            <p class="system-label">Design system baseline</p>
+            <h1 class="board-title">Do not drift from <em>future capacity.</em></h1>
+          </div>
+          <aside class="board-summary">
+            <p>This is the working board for Aleron MD marketing. It defines what new explorations should reuse: visual temperature, typography, proof posture, modules, and the lines we do not cross.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="board-section warm" id="principles">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Brand rules before components.</h2>
+            <p>The goal is not to make another page. The goal is to give future pages a shared center of gravity.</p>
+          </div>
+          <div class="spec-grid">
+            <article class="spec-card span-4">
+              <p class="spec-kicker">Rule 01</p>
+              <h3>Human outcome first.</h3>
+              <p>Start with the life someone wants to keep available. Use data and product details only after the stakes are clear.</p>
+            </article>
+            <article class="spec-card span-4">
+              <p class="spec-kicker">Rule 02</p>
+              <h3>Physician led.</h3>
+              <p>AI is leverage for medical judgment. It should never become the hero or the accountable actor.</p>
+            </article>
+            <article class="spec-card span-4">
+              <p class="spec-kicker">Rule 03</p>
+              <h3>Warm proof.</h3>
+              <p>Evidence should be precise and understandable, with units and boundaries. No vague longevity fog.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>What stronger systems taught us.</h2>
+            <p>The useful pattern is not more decoration. It is decision logic, reusable foundations, content rules, and clear examples of what does not belong.</p>
+          </div>
+          <div class="research-grid">
+            <article class="research-card">
+              <p class="spec-kicker">Dropbox</p>
+              <h3>Identity as a toolkit.</h3>
+              <p>Brand guidance should give people enough structure to make new work that still feels native.</p>
+              <a href="https://www.dropboxbrand.com/">Reference</a>
+            </article>
+            <article class="research-card">
+              <p class="spec-kicker">Atlassian</p>
+              <h3>Foundations first.</h3>
+              <p>Tokens, spacing, grid, color, typography, iconography, and content guidance need a clear place in the system.</p>
+              <a href="https://atlassian.design/foundations/">Reference</a>
+            </article>
+            <article class="research-card">
+              <p class="spec-kicker">IBM</p>
+              <h3>Rules for restraint.</h3>
+              <p>Color systems need approved combinations, accessibility checks, and explicit examples of what to avoid.</p>
+              <a href="https://www.ibm.com/design/language/color/">Reference</a>
+            </article>
+            <article class="research-card">
+              <p class="spec-kicker">Mailchimp</p>
+              <h3>Voice is not tone.</h3>
+              <p>The voice should stay consistent while tone adapts to context. Aleron needs this for emotional hero copy versus clinical proof.</p>
+              <a href="https://styleguide.mailchimp.com/voice-and-tone/">Reference</a>
+            </article>
+            <article class="research-card">
+              <p class="spec-kicker">Apple</p>
+              <h3>Hierarchy and harmony.</h3>
+              <p>Premium systems define hierarchy, consistency, layout, color, motion, and accessibility as part of one experience.</p>
+              <a href="https://developer.apple.com/design/human-interface-guidelines">Reference</a>
+            </article>
+            <article class="research-card">
+              <p class="spec-kicker">Shopify Polaris</p>
+              <h3>Semantic tokens scale.</h3>
+              <p>Tokens should describe intent, not just hex values. Aleron needs roles like cinematic dark, editorial warmth, and clinical surface.</p>
+              <a href="https://polaris-react.shopify.com/design/colors/color-tokens">Reference</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section" id="tokens">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Core visual tokens.</h2>
+            <p>These are the brand rails. New work should extend from these before inventing new color, surface, or type behavior.</p>
+          </div>
+          <div class="spec-grid">
+            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-ink);">
+              <span>--amd-ink<br>#0A0A0B</span>
+              <span>Cool cinematic dark</span>
+            </div>
+            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-ink-warm);">
+              <span>--amd-ink-warm<br>#14110D</span>
+              <span>Warm premium dark</span>
+            </div>
+            <div class="spec-card span-3 swatch-card" style="background: var(--amd-paper);">
+              <span>--amd-paper<br>#F6F4EE</span>
+              <span>Default light surface</span>
+            </div>
+            <div class="spec-card span-3 swatch-card" style="background: var(--amd-paper-warm);">
+              <span>--amd-paper-warm<br>#EFEAE0</span>
+              <span>Editorial warmth</span>
+            </div>
+            <div class="spec-card span-3 swatch-card" style="background: var(--amd-bone);">
+              <span>--amd-bone<br>#ECE5D6</span>
+              <span>Clinical light surface</span>
+            </div>
+            <div class="spec-card span-3 swatch-card" style="background: var(--amd-gold);">
+              <span>--amd-gold<br>#D4A574</span>
+              <span>Signal and emphasis</span>
+            </div>
+            <div class="spec-card span-3 swatch-card" style="background: var(--amd-gold-light);">
+              <span>--amd-gold-light<br>#E8C99A</span>
+              <span>Human warmth</span>
+            </div>
+            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-gold-deep);">
+              <span>--amd-gold-deep<br>#B8854D</span>
+              <span>Labels and anchors</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section warm" id="type">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Typography specimens.</h2>
+            <p>Display type carries confidence. Body type carries trust. Serif emphasis is rare and reserved for warmth.</p>
+          </div>
+          <div class="spec-card span-12">
+            <div class="type-spec">
+              <div class="type-name">Display</div>
+              <div class="display-sample">Some of your best days are still ahead.</div>
+            </div>
+            <div class="type-spec">
+              <div class="type-name">Lede</div>
+              <div class="lede-sample">Your physician can only change what they can see. Aleron MD gives them the whole picture: genetics, labs, wearables, medical history, and the goals that make the work matter.</div>
+            </div>
+            <div class="type-spec">
+              <div class="type-name">Editorial</div>
+              <div class="quote-sample">The product is not more information. It is clearer judgment about what matters next.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section" id="modules">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Reusable marketing modules.</h2>
+            <p>These are specimens, not a finished site. They show how sections should behave when a new page needs proof, action, narrative, or contrast.</p>
+          </div>
+          <div class="module-strip">
+            <article class="module warm">
+              <p class="spec-kicker">Narrative band</p>
+              <h3>Life before interface.</h3>
+              <p>Use warm paper for story, journey, and experience sections. Keep the composition open.</p>
+            </article>
+            <article class="module">
+              <p class="spec-kicker">Action panel</p>
+              <h3>One next step.</h3>
+              <p>Aleron CTAs should feel selective and calm. Avoid aggressive conversion clusters.</p>
+              <div class="button-spec">
+                <a class="amd-button amd-button-primary" href="#">Apply</a>
+                <a class="amd-button" style="border-color: var(--amd-line); color: var(--amd-ink);" href="#">See the model</a>
+              </div>
+            </article>
+            <article class="module dark">
+              <p class="spec-kicker" style="color: var(--amd-gold-light);">Cinematic band</p>
+              <h3>Depth without dashboard chrome.</h3>
+              <p>Dark sections should feel like atmosphere and consequence, not enterprise software.</p>
+              <div class="button-spec">
+                <a class="amd-button amd-button-primary" href="#">Apply</a>
+                <a class="amd-button amd-button-ghost-dark" href="#">Demo</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section proof-module">
+        <div class="board-inner proof-spec">
+          <div>
+            <p class="system-label">Proof module</p>
+            <h2>Clinical evidence supports the reroute.</h2>
+            <p>Use evidence to explain why a different care plan emerges. Claims need units, source posture, and a clear note when drivers overlap.</p>
+          </div>
+          <aside class="proof-stat">
+            <strong>~60%</strong>
+            <p>Composite claims must explain that the drivers are overlapping, not additive.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="board-section warm">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Image treatment rules.</h2>
+            <p>Photography should feel specific, human, and lived-in. Product shots should clarify the care loop, not become generic app marketing.</p>
+          </div>
+          <div class="image-rule-grid">
+            <div class="image-example" role="img" aria-label="Aleron physician consult reference image"></div>
+            <div class="image-notes">
+              <p class="spec-kicker">Use imagery that</p>
+              <ul>
+                <li>Feels like an actual person, place, or care moment.</li>
+                <li>Supports future capacity, family, movement, recovery, or physician trust.</li>
+                <li>Has natural light, restrained contrast, and enough negative space for editorial layouts.</li>
+                <li>Avoids abstract AI brains, glowing networks, and generic wellness stock.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section" id="drift">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Drift checks.</h2>
+            <p>This is the useful part: a visual test for whether new concepts still belong to Aleron MD.</p>
+          </div>
+          <div class="drift-grid">
+            <article class="drift-card bad">
+              <p class="drift-label">Do not</p>
+              <div class="fake-saas">
+                <span>AI longevity platform</span>
+                <h3>Optimize your healthspan with real-time insights</h3>
+                <p>Neon gradients, pills, fake dashboards, and generic optimization language move the brand sideways.</p>
+              </div>
+            </article>
+            <article class="drift-card good">
+              <p class="drift-label">Do</p>
+              <div class="good-example">
+                <h3>Keep more of life available.</h3>
+                <p>Use quiet surfaces, human stakes, physician judgment, and proof that explains why the decision changes.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section warm">
+        <div class="board-inner">
+          <div class="section-head">
+            <h2>Implementation map.</h2>
+            <p>The files are intentionally small. They give new work a reusable baseline without pretending we have a full library yet.</p>
+          </div>
+          <div class="token-table">
+            <div class="token-row">
+              <strong>tokens.css</strong>
+              <span>Color, layout, type, motion, and effects</span>
+              <span>Use for all new marketing CSS</span>
+            </div>
+            <div class="token-row">
+              <strong>base.css</strong>
+              <span>Typography, containers, base sections</span>
+              <span>Use when a new static page begins</span>
+            </div>
+            <div class="token-row">
+              <strong>components.css</strong>
+              <span>Hero, nav, buttons, section primitives</span>
+              <span>Extract from here before inventing new pieces</span>
+            </div>
+            <div class="token-row">
+              <strong>MARKETING_DESIGN_SYSTEM.md</strong>
+              <span>Voice, visual principles, proof posture, image guidance</span>
+              <span>Read before new marketing explorations</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
