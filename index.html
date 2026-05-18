@@ -9,7 +9,7 @@
 <meta property="og:description" content="Some of your best days are still ahead of you." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0A0A0B;            /* cool ink — hero only (cold rain) */
@@ -112,29 +112,20 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom-color: rgba(246,244,238,0.08);
 }
 .nav-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  font-family: 'Inter Tight', 'Inter', sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.055em;
-  font-size: 28px;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  font-size: 31px;
   color: #fff;
   text-decoration: none;
   line-height: 1;
 }
 .nav-brand .md-tag {
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
-  height: 0.8em;
-  padding-left: 15px;
-  border-left: 1px solid rgba(246,244,238,0.34);
-  color: var(--gold-light);
-  font-family: 'JetBrains Mono', 'SF Mono', monospace;
-  font-size: 0.54em;
-  font-weight: 500;
-  letter-spacing: -0.06em;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: -0.055em;
 }
 .nav-cta {
   font-size: 14px;
@@ -961,13 +952,20 @@ footer {
   align-items: start;
 }
 .footer-brand {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: 'Source Serif 4', Georgia, serif;
   font-size: clamp(28px, 3vw, 42px);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--paper);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.045em;
+  line-height: 1;
 }
-.footer-brand span { font-weight: 700; }
+.footer-brand span {
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+}
 .footer-promise {
   margin-top: 16px;
   max-width: 36ch;
@@ -1442,8 +1440,7 @@ footer {
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     border-bottom-color: rgba(246,244,238,0.08);
   }
-  .nav-brand { font-size: 24px; gap: 12px; }
-  .nav-brand .md-tag { padding-left: 12px; }
+  .nav-brand { font-size: 26px; }
   .nav-link { display: none; }
   .nav-cta { display: none; }
 
