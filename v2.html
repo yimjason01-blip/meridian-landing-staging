@@ -4,12 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Aleron · Some of your best days are still ahead of you.</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
 <meta name="description" content="The medical team you'd build for yourself if you knew where to look. Continuous, AI-augmented, physician-led prevention." />
 <meta property="og:title" content="Aleron" />
 <meta property="og:description" content="Some of your best days are still ahead of you." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0A0A0B;            /* cool ink — hero only (cold rain) */
@@ -112,11 +117,11 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom-color: rgba(246,244,238,0.08);
 }
 .nav-brand {
-  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-family: 'Source Serif 4', Georgia, serif;
   font-weight: 400;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.04em;
   font-size: 31px;
-  color: #fff;
+  color: var(--paper);
   text-decoration: none;
   line-height: 1;
 }
@@ -124,8 +129,9 @@ img, video { max-width: 100%; height: auto; display: block; }
   color: inherit;
   font-family: 'Source Serif 4', Georgia, serif;
   font-size: 1em;
-  font-weight: 700;
-  letter-spacing: -0.045em;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.025em;
 }
 .nav-cta {
   font-size: 14px;
@@ -920,13 +926,13 @@ section.warm .member-cell { background: var(--paper-warm); }
   text-transform: uppercase;
 }
 .path-card h3 {
-  font-family: 'Inter Tight', sans-serif;
-  font-weight: 500;
-  font-size: clamp(30px, 3.4vw, 44px);
-  letter-spacing: -0.018em;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 48px);
+  letter-spacing: -0.035em;
   margin-bottom: 18px;
   color: var(--paper);
-  line-height: 1.05;
+  line-height: 1.02;
 }
 .path-card p {
   color: rgba(246,244,238,0.7);
@@ -953,18 +959,19 @@ footer {
 }
 .footer-brand {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(28px, 3vw, 42px);
+  font-size: clamp(30px, 3.2vw, 46px);
   font-weight: 400;
   color: var(--paper);
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 .footer-brand span {
   color: inherit;
-  font-family: inherit;
+  font-family: 'Source Serif 4', Georgia, serif;
   font-size: 1em;
-  font-weight: 700;
-  letter-spacing: -0.055em;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.025em;
 }
 .footer-promise {
   margin-top: 16px;
@@ -1134,8 +1141,8 @@ footer {
 }
 .md-ai-content .body-lg + .body-lg { margin-top: 1em; }
 .md-ai-attrs {
-  margin-top: 36px;
-  display: grid; gap: 18px 28px;
+  margin-top: 48px;
+  display: grid; gap: 28px 36px;
   grid-template-columns: 1fr 1fr;
 }
 @media (max-width: 600px) {
@@ -1982,25 +1989,24 @@ footer {
           <span class="ai-mark">AI</span>
         </h2>
 
-        <p class="body-lg">Your physician can only change what they can see. AI helps them hold the whole picture at once: genetics, labs, wearables, medical history, and the research most relevant to you.</p>
-        <p class="body-lg">The value is not more information. It is clearer medical judgment about what matters next, reviewed by a doctor who knows your goals and turned into a step you can actually do.</p>
+        <p class="body-lg">Genetics, labs, wearables, and history do not belong in separate silos. Aleron brings them into one physician-led view, with AI helping your doctor see what matters sooner. The result is a clearer next step.</p>
 
         <div class="md-ai-attrs">
           <div class="md-ai-attr">
-            <h5><span class="md-ai-icon md-ai-icon-genetic" aria-hidden="true"></span>Unlimited access</h5>
-            <p>Your time is respected. Message your team when something changes, when a question comes up, or when a decision cannot wait for an annual visit.</p>
+            <h5><span class="md-ai-icon md-ai-icon-genetic" aria-hidden="true"></span>Genetics</h5>
+            <p>A 163-gene panel screens for variants that can change care: cancer risk, cardiovascular risk, and how you metabolize common medications. Read once, used for life.</p>
           </div>
           <div class="md-ai-attr">
-            <h5><span class="md-ai-icon md-ai-icon-wearable" aria-hidden="true"></span>A complete picture</h5>
-            <p>Genetics, labs, wearable data, history, and how you actually feel are reviewed together, so decisions are based on the full context of your life.</p>
+            <h5><span class="md-ai-icon md-ai-icon-labs" aria-hidden="true"></span>Labs</h5>
+            <p>The Elite panel goes beyond a standard physical, with markers like ApoB, Lp(a), hsCRP, HbA1c, ferritin, homocysteine, and UACR. Your doctor sees the pattern, not just the result.</p>
           </div>
           <div class="md-ai-attr">
-            <h5><span class="md-ai-icon md-ai-icon-labs" aria-hidden="true"></span>AI native</h5>
-            <p>Your physicians use frontier AI to track patterns, surface evidence, compare risks, and stay ahead of what would otherwise be missed.</p>
+            <h5><span class="md-ai-icon md-ai-icon-wearable" aria-hidden="true"></span>Wearable data</h5>
+            <p>Sleep, recovery, heart rate, HRV, and activity stream in between visits. Your care plan can respond to how your body is actually trending.</p>
           </div>
           <div class="md-ai-attr">
-            <h5><span class="md-ai-icon md-ai-icon-security" aria-hidden="true"></span>Your team</h5>
-            <p>Aleron is a longevity partnership: physician judgment, AI leverage, and a care team helping you turn decisions into follow-through.</p>
+            <h5><span class="md-ai-icon md-ai-icon-security" aria-hidden="true"></span>Data privacy</h5>
+            <p>Your genetic, lab, and wearable data stay protected in a HIPAA-compliant system. Never sold, never shared with insurers, never used to train outside models.</p>
           </div>
         </div>
       </div>
