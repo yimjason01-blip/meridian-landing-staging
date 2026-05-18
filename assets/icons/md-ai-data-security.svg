@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Data security</title>
+  <g fill="none" stroke="#B8854D" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 6.5c7 7.5 15.5 10.4 25 10.7v14.3c0 14.2-8.8 23.7-25 29.5C15.8 55.2 7 45.7 7 31.5V17.2c9.5-.3 18-3.2 25-10.7Z" />
+    <rect x="20.5" y="32" width="23" height="15.5" rx="4" />
+    <path d="M25.5 32v-6.2a6.5 6.5 0 0 1 13 0V32" />
+    <path d="M32 39v4" />
+    <circle cx="32" cy="38" r="2.7" />
+  </g>
+</svg>

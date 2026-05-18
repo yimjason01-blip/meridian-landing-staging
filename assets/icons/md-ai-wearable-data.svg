@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Wearable data</title>
+  <g fill="none" stroke="#B8854D" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 5.5h18l1.7 15H21.3L23 5.5Z" />
+    <path d="M21.3 43.5h21.4L41 58.5H23l-1.7-15Z" />
+    <rect x="15" y="19.5" width="34" height="26" rx="9" />
+    <rect x="21.5" y="25.5" width="21" height="15" rx="4.5" />
+    <path d="M49 28.5h4.5v10H49" />
+    <path d="M24 33h6l2.5-7 5 15 2.5-8h6" />
+    <path d="M32 42.8h.1" />
+  </g>
+</svg>

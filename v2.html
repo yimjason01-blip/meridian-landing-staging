@@ -1143,6 +1143,9 @@ footer {
 }
 .md-ai-attr { border-top: 1px solid var(--line); padding-top: 14px; }
 .md-ai-attr h5 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
   font-size: 15px;
@@ -1150,6 +1153,19 @@ footer {
   margin-bottom: 4px;
   color: var(--ink);
 }
+.md-ai-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  background-image: url('assets/icons/ai-md-icon-grid.jpg');
+  background-size: 72px 72px;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+}
+.md-ai-icon-genetic { background-position: 0 0; }
+.md-ai-icon-wearable { background-position: -36px 0; }
+.md-ai-icon-labs { background-position: 0 -36px; }
+.md-ai-icon-security { background-position: -36px -36px; }
 .md-ai-attr p {
   font-size: 13px;
   color: var(--text-muted);
@@ -1971,19 +1987,19 @@ footer {
 
         <div class="md-ai-attrs">
           <div class="md-ai-attr">
-            <h5>Unlimited access</h5>
+            <h5><span class="md-ai-icon md-ai-icon-genetic" aria-hidden="true"></span>Unlimited access</h5>
             <p>Your time is respected. Message your team when something changes, when a question comes up, or when a decision cannot wait for an annual visit.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>A complete picture</h5>
+            <h5><span class="md-ai-icon md-ai-icon-wearable" aria-hidden="true"></span>A complete picture</h5>
             <p>Genetics, labs, wearable data, history, and how you actually feel are reviewed together, so decisions are based on the full context of your life.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>AI native</h5>
+            <h5><span class="md-ai-icon md-ai-icon-labs" aria-hidden="true"></span>AI native</h5>
             <p>Your physicians use frontier AI to track patterns, surface evidence, compare risks, and stay ahead of what would otherwise be missed.</p>
           </div>
           <div class="md-ai-attr">
-            <h5>Your team</h5>
+            <h5><span class="md-ai-icon md-ai-icon-security" aria-hidden="true"></span>Your team</h5>
             <p>Aleron is a longevity partnership: physician judgment, AI leverage, and a care team helping you turn decisions into follow-through.</p>
           </div>
         </div>
