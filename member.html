@@ -562,9 +562,8 @@
     padding: 0 10px 10px;
     transition: border-color 0.15s, background 0.15s;
   }
-  .board-lane.drop-over {
-    background: rgba(212,165,116,0.12);
-    border-color: rgba(111,74,32,0.48);
+  .board-lane.locked {
+    background: rgba(239,234,224,0.28);
   }
   .board-lane-head {
     background: var(--bg-surface);
@@ -595,16 +594,18 @@
     border-radius: 8px;
     margin-top: 10px;
     padding: 14px;
-    cursor: grab;
     transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
   }
-  .board-card:active {
-    cursor: grabbing;
+  .board-card.active-work {
+    border-color: var(--border);
   }
-  .board-card.dragging {
-    opacity: 0.58;
-    transform: scale(0.995);
-    border-color: var(--accent-hover);
+  .board-card.locked-card {
+    background: rgba(239,234,224,0.68);
+    border-color: rgba(10,10,11,0.08);
+    cursor: default;
+  }
+  .board-card.waiting {
+    background: rgba(251,248,241,0.72);
   }
   .board-card:focus-visible {
     outline: 2px solid var(--accent-hover);
@@ -617,10 +618,52 @@
     line-height: 1.35;
     margin-bottom: 5px;
   }
+  .board-card.locked-card .board-title {
+    align-items: flex-start;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .board-card.locked-card .board-title::after {
+    background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Crect%20x%3D%275%27%20y%3D%2710%27%20width%3D%2714%27%20height%3D%2710%27%20rx%3D%272%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27/%3E%3Cpath%20d%3D%27M8%2010V7a4%204%200%200%201%208%200v3%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    content: "";
+    flex: 0 0 14px;
+    height: 14px;
+    margin-top: 2px;
+    opacity: 0.7;
+    width: 14px;
+  }
   .board-detail {
     color: var(--text-muted);
     font-size: 12px;
     line-height: 1.45;
+  }
+  .board-card.locked-card .board-detail {
+    color: rgba(74,74,77,0.78);
+  }
+  .board-card-actions {
+    margin-top: 12px;
+  }
+  .board-done {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 32px;
+    padding: 6px 10px;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  .board-done:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text);
   }
 
   .act-hero {
@@ -2444,62 +2487,79 @@
       <p class="screen-subtitle">A simple board for what you own, what matters most, and what needs physician review before the plan changes.</p>
 
       <div class="plan-board" aria-label="Plan board">
-        <div class="board-lane">
+        <div class="board-lane locked" data-lane="upcoming">
           <div class="board-lane-head">
             <div class="board-lane-title">Things to do / upcoming</div>
             <div class="board-count">4</div>
           </div>
-          <div class="board-card">
+          <div class="board-card locked-card">
             <div class="board-title">Schedule baseline PSA and DRE</div>
             <div class="board-detail">One lab draw plus a brief in-office exam to reset your ATM-driven surveillance cadence.</div>
           </div>
-          <div class="board-card">
+          <div class="board-card locked-card">
             <div class="board-title">Start rosuvastatin 5 mg</div>
             <div class="board-detail">Take one tablet before bed. Tell the team about unusual muscle soreness or side effects.</div>
           </div>
-          <div class="board-card">
+          <div class="board-card locked-card">
             <div class="board-title">Pick a CAC scan time</div>
             <div class="board-detail">The office sends scheduling options. The scan helps decide how aggressive the lipid plan should be.</div>
           </div>
-          <div class="board-card">
+          <div class="board-card locked-card">
             <div class="board-title">Pancreatic surveillance reminder</div>
             <div class="board-detail">Documented now, first scan at age 50, then revisited annually.</div>
           </div>
+          <div class="board-card locked-card">
+            <div class="board-title">Genetic counseling visit</div>
+            <div class="board-detail">Review the ATM finding, family implications, and cascade testing options with the genetics team.</div>
+          </div>
+          <div class="board-card locked-card">
+            <div class="board-title">8-week lipid recheck</div>
+            <div class="board-detail">Repeat ApoB and lipid panel after the statin start so Dr. Thompson can confirm the response.</div>
+          </div>
         </div>
 
-        <div class="board-lane">
+        <div class="board-lane" data-lane="priority">
           <div class="board-lane-head">
             <div class="board-lane-title">Top priorities</div>
             <div class="board-count">3</div>
           </div>
-          <div class="board-card">
+          <div class="board-card active-work">
             <div class="board-title">PSA surveillance starts now</div>
             <div class="board-detail">ATM means the prostate screening cadence should already be active. This is the clearest immediate gap.</div>
+            <div class="board-card-actions">
+              <button class="board-done" type="button">Mark done</button>
+            </div>
           </div>
-          <div class="board-card">
+          <div class="board-card active-work">
             <div class="board-title">Lower modifiable risk around high Lp(a)</div>
             <div class="board-detail">Lp(a) will not move much with lifestyle, so the plan focuses on ApoB and LDL lowering.</div>
+            <div class="board-card-actions">
+              <button class="board-done" type="button">Mark done</button>
+            </div>
           </div>
-          <div class="board-card">
+          <div class="board-card active-work">
             <div class="board-title">Use CAC to guide intensity</div>
             <div class="board-detail">The result determines whether the current statin plan is enough or needs escalation.</div>
+            <div class="board-card-actions">
+              <button class="board-done" type="button">Mark done</button>
+            </div>
           </div>
         </div>
 
-        <div class="board-lane">
+        <div class="board-lane locked" data-lane="review">
           <div class="board-lane-head">
             <div class="board-lane-title">Physician review</div>
             <div class="board-count">3</div>
           </div>
-          <div class="board-card">
+          <div class="board-card waiting">
             <div class="board-title">Dr. Thompson reviews prostate baseline</div>
             <div class="board-detail">Normal results confirm annual cadence. Abnormal results trigger urology follow-up.</div>
           </div>
-          <div class="board-card">
+          <div class="board-card waiting">
             <div class="board-title">Decide whether to intensify cardiac prevention</div>
             <div class="board-detail">CAC anchors the next 5 years of cardiovascular decisions.</div>
           </div>
-          <div class="board-card">
+          <div class="board-card waiting">
             <div class="board-title">Statin tolerance review</div>
             <div class="board-detail">The team checks for side effects before dose escalation.</div>
           </div>
@@ -3010,7 +3070,7 @@
       <div class="avatar" aria-hidden="true">JY</div>
       <div>
         <b>Jim Yason</b>
-        <span>Member workspace</span>
+        <span>Patient Portal</span>
       </div>
     </div>
   </div>
@@ -3131,71 +3191,34 @@
     if (!board || board.dataset.ready === 'true') return;
     board.dataset.ready = 'true';
 
-    board.querySelectorAll('.board-lane').forEach((lane, laneIndex) => {
-      lane.dataset.laneIndex = laneIndex;
-      lane.addEventListener('dragover', e => {
-        e.preventDefault();
-        const card = board.querySelector('.board-card.dragging');
-        if (!card) return;
-        lane.classList.add('drop-over');
-        const nextCard = getBoardInsertTarget(lane, e.clientY);
-        if (nextCard) lane.insertBefore(card, nextCard);
-        else lane.appendChild(card);
-        setBoardCardLane(card, laneIndex);
-        updateBoardCounts();
-      });
-      lane.addEventListener('dragleave', e => {
-        if (!lane.contains(e.relatedTarget)) lane.classList.remove('drop-over');
-      });
-      lane.addEventListener('drop', e => {
-        e.preventDefault();
-        lane.classList.remove('drop-over');
-        updateBoardCounts();
-      });
-    });
-
     board.querySelectorAll('.board-card').forEach((card, index) => {
       card.id = card.id || `plan-board-card-${index}`;
-      card.tabIndex = 0;
-      card.draggable = true;
-      card.addEventListener('dragstart', e => {
-        card.dataset.startLane = getBoardLaneTitle(card.closest('.board-lane'));
-        card.dataset.startIndex = String(getBoardCardIndex(card));
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', card.id);
-        card.classList.add('dragging');
-      });
-      card.addEventListener('dragend', () => {
-        card.classList.remove('dragging');
-        board.querySelectorAll('.board-lane').forEach(lane => lane.classList.remove('drop-over'));
-        updateBoardCounts();
-        const endLane = getBoardLaneTitle(card.closest('.board-lane'));
-        const endIndex = String(getBoardCardIndex(card));
-        if (card.dataset.startLane && card.dataset.startLane !== endLane) {
-          toast(`Moved ${getBoardCardTitle(card)} to ${endLane}.`);
-        } else if (card.dataset.startIndex && card.dataset.startIndex !== endIndex) {
-          toast(`Reordered ${getBoardCardTitle(card)}.`);
-        }
-        delete card.dataset.startLane;
-        delete card.dataset.startIndex;
+      card.removeAttribute('tabindex');
+      card.draggable = false;
+    });
+
+    board.querySelectorAll('.board-done').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        markBoardCardDone(btn.closest('.board-card'));
       });
     });
 
     updateBoardCounts();
   }
 
-  function getBoardInsertTarget(lane, pointerY) {
-    const cards = [...lane.querySelectorAll('.board-card:not(.dragging)')];
-    return cards.reduce((closest, card) => {
-      const box = card.getBoundingClientRect();
-      const offset = pointerY - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) return { offset, card };
-      return closest;
-    }, { offset: Number.NEGATIVE_INFINITY, card: null }).card;
-  }
-
-  function setBoardCardLane(card, laneIndex) {
-    card.dataset.laneIndex = laneIndex;
+  function markBoardCardDone(card) {
+    if (!card) return;
+    const reviewLane = document.querySelector('.board-lane[data-lane="review"]');
+    if (!reviewLane) return;
+    card.classList.remove('active-work');
+    card.classList.add('waiting');
+    card.querySelector('.board-card-actions')?.remove();
+    const detail = card.querySelector('.board-detail');
+    if (detail) detail.textContent = 'Completed by the patient. Waiting for physician review and confirmation.';
+    reviewLane.appendChild(card);
+    updateBoardCounts();
+    toast(`${getBoardCardTitle(card)} is waiting for physician review.`);
   }
 
   function updateBoardCounts() {
@@ -3204,10 +3227,6 @@
       const countEl = lane.querySelector('.board-count');
       if (countEl) countEl.textContent = `${count} ${count === 1 ? 'card' : 'cards'}`;
     });
-  }
-
-  function getBoardCardIndex(card) {
-    return [...card.closest('.board-lane').querySelectorAll('.board-card')].indexOf(card);
   }
 
   function getBoardCardTitle(card) {
