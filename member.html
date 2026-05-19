@@ -1,0 +1,3978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F6F4EE">
+<title>Aleron MD Member</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<style>
+  /*
+    Aleron MD Member - v2 (4-tab architecture)
+    Plan (Message ↔ Act) · Quality of Life · You (Data ↔ Reasoning) · Connect (MD + AI)
+    Inherits Aleron MD patient app design system. Patient-voice allowed.
+  */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap');
+
+  :root {
+    --bg: #F6F4EE;
+    --bg-panel: #FBF8F1;
+    --bg-surface: #EFEAE0;
+    --bg-hover: #E7DDCA;
+
+    --border-subtle: rgba(10,10,11,0.10);
+    --border: rgba(10,10,11,0.16);
+    --border-strong: rgba(10,10,11,0.28);
+
+    --text: #0A0A0B;
+    --text-secondary: #3F3A32;
+    --text-muted: #4A4A4D;
+
+    --accent: #6F4A20;
+    --accent-hover: #B8854D;
+    --accent-bright: #D4A574;
+    --accent-light: rgba(212,165,116,0.12);
+    --accent-tint: rgba(212,165,116,0.20);
+
+    --status-ok: #2F7A45;
+    --status-ok-bright: #1F8A4C;
+    --status-warn: #B8854D;
+    --status-crit: #A44938;
+
+    /* Risk-domain colors - data-viz only, never UI chrome. Matches DS tokens.domain.* */
+    --dom-cardiac: #A44938;
+    --dom-cancer:  #9B4A58;
+    --dom-metab:   #557F7A;
+    --dom-neuro:   #75649A;
+    /* Legacy alias during migration: */
+    --dom-indep:   #B8854D;
+    --dom-mobility: #557F7A;
+
+    --radius: 10px;
+    --radius-sm: 6px;
+    --radius-xs: 4px;
+
+    --maxw: 480px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "cv01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    line-height: 1.5;
+    overscroll-behavior-y: none;
+  }
+
+  /* App shell */
+  .shell {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 88px;
+  }
+
+  /* ============ Topbar ============ */
+  .topbar {
+    position: sticky; top: 0;
+    background: rgba(246,244,238,0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 40;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 14px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .wordmark,
+  .nav-brand {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    color: var(--text);
+    line-height: 1.08;
+  }
+  .wordmark {
+    font-size: 27px;
+  }
+  .wordmark .md-tag,
+  .nav-brand .md-tag {
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.025em;
+  }
+  .brand .muted { color: var(--text-muted); font-weight: 400; }
+
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  /* ============ Segmented control (tab-internal states) ============ */
+  .segmented {
+    display: flex;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+    margin: 14px 16px 16px;
+  }
+  .seg-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 9px 12px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+  }
+  .seg-btn:hover { color: var(--text-secondary); }
+  .seg-btn.active {
+    background: var(--bg-surface);
+    color: var(--text);
+    box-shadow: 0 0 0 1px rgba(10,10,11,0.04);
+  }
+
+  /* ============ Screens ============ */
+  .screen {
+    display: none;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .screen.active { display: block; }
+  .substate {
+    display: none;
+    padding: 4px 16px 40px;
+    animation: fadeIn 0.18s ease-out;
+  }
+  .substate.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .screen-eyebrow {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .screen-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.25;
+    margin: 0 0 6px;
+  }
+  .screen-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 22px;
+    line-height: 1.5;
+  }
+  .section-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin: 24px 0 10px;
+  }
+
+  /* ============ Generic cards ============ */
+  .card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .card.clickable { cursor: pointer; }
+  .card.clickable:hover { border-color: var(--border); }
+
+  /* ============ PLAN › MESSAGE ============ */
+
+  /* Physician hero - main event. Portrait + audio + pull quote. */
+  .md-hero {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 6px 0 20px;
+  }
+  .md-hero-portrait {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .md-hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 28%;
+    display: block;
+  }
+  .md-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(63,58,50,0.34) 72%,
+      rgba(63,58,50,0.78) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 16px 18px;
+  }
+  .md-hero-label {
+    font-size: 11px;
+    color: #F6F4EE;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .md-hero-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 18px 10px;
+  }
+  .md-hero-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .md-hero-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .md-hero-duration {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .audio-player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 18px 16px;
+  }
+  .ap-play {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent-hover);
+    border: none;
+    color: #0A0A0B;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.12s, transform 0.1s;
+  }
+  .ap-play:hover { background: var(--accent-bright); }
+  .ap-play:active { transform: scale(0.95); }
+  .ap-play svg { width: 20px; height: 20px; }
+  .ap-play.playing .ap-ic-play { display: none !important; }
+  .ap-play.playing .ap-ic-pause { display: block !important; }
+
+  .ap-track {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-surface);
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+  }
+  .ap-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0%;
+    background: var(--accent-hover);
+    border-radius: 3px;
+    transition: width 0.08s linear;
+  }
+  .ap-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent-hover);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 3px var(--bg-panel);
+    transition: left 0.08s linear;
+    pointer-events: none;
+  }
+  .ap-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .md-hero-pull {
+    padding: 8px 20px 18px;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    letter-spacing: -0.01em;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 18px;
+    margin-top: 4px;
+  }
+  .md-hero-pull em {
+    font-style: normal;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .md-hero-transcript-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    padding: 14px 20px;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color 0.12s;
+    letter-spacing: 0.03em;
+  }
+  .md-hero-transcript-toggle:hover { color: var(--text-secondary); }
+  .md-hero-transcript-toggle .lbl { text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+  .md-hero-transcript-toggle .chev { transition: transform 0.2s; font-size: 14px; }
+  .md-hero-transcript-toggle.open .chev { transform: rotate(90deg); }
+
+  .md-hero-transcript {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-out;
+    background: rgba(10,10,11,0.025);
+  }
+  .md-hero-transcript.open { max-height: 900px; }
+  .md-hero-transcript p {
+    padding: 0 20px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .md-hero-transcript p:first-child { padding-top: 16px; }
+  .md-hero-transcript p:last-child { padding-bottom: 18px; margin-bottom: 0; }
+  .md-hero-transcript em {
+    font-style: normal;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Legacy doctor-note styling - kept in case of other references */
+  .doctor-hero {
+    background: linear-gradient(160deg, rgba(212,165,116,0.12), rgba(212,165,116,0.04));
+    border: 1px solid rgba(111,74,32,0.18);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .doctor-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .doc-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--bg-surface);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text); font-weight: 500; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .doc-name { font-weight: 500; color: var(--text); font-size: 14px; }
+  .doc-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .doctor-note {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .doctor-note em { color: var(--text); font-style: normal; font-weight: 500; }
+  .doctor-when {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(111,74,32,0.15);
+    letter-spacing: 0.03em;
+  }
+
+  /* Decisions under Message state - read-mode, expandable */
+  .decision {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .decision:hover { border-color: var(--border); }
+  .decision-hd {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .decision-num {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    color: var(--accent-hover);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .decision-num .chip {
+    background: var(--accent-tint);
+    color: var(--accent-bright);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .decision-num .chip.watch {
+    background: rgba(224,155,45,0.18);
+    color: var(--status-warn);
+  }
+  .decision-chev {
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    font-size: 12px;
+  }
+  .decision.open .decision-chev { transform: rotate(90deg); }
+  .decision h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .decision .why {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .decision-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease-out;
+  }
+  .decision.open .decision-detail { max-height: 640px; }
+  .decision-detail-inner {
+    padding-top: 14px;
+    margin-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 12px;
+  }
+  .kv {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .kv b {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  /* ============ PLAN › ACT ============ */
+  .plan-status {
+    max-width: 760px;
+    margin: 8px 0 28px;
+  }
+  .plan-status p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 16px;
+  }
+  .plan-status p:last-child {
+    margin-bottom: 0;
+  }
+  .plan-board {
+    display: grid;
+    gap: 12px;
+  }
+  .board-lane {
+    background: rgba(239,234,224,0.42);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-height: 260px;
+    padding: 0 10px 10px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .board-lane.drop-over {
+    background: rgba(212,165,116,0.12);
+    border-color: rgba(111,74,32,0.48);
+  }
+  .board-lane-head {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    margin: 0 -10px 10px;
+    padding: 13px 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .board-lane-title {
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .board-count {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .board-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 14px;
+    cursor: grab;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
+  }
+  .board-card:active {
+    cursor: grabbing;
+  }
+  .board-card.dragging {
+    opacity: 0.58;
+    transform: scale(0.995);
+    border-color: var(--accent-hover);
+  }
+  .board-card:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: -2px;
+  }
+  .board-title {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+  .board-detail {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .act-hero {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .act-hero-stat {
+    text-align: center;
+    padding: 0 14px;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .act-hero-stat:last-child { border-right: none; }
+  .act-hero-stat .num {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .act-hero-stat .lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .fg-action {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .fg-action::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent-hover);
+  }
+  .fg-action.done::before { background: var(--status-ok-bright); }
+  .fg-eyebrow {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-bright);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .fg-action.done .fg-eyebrow { color: var(--status-ok-bright); }
+  .fg-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .fg-detail {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .fg-meta {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .fg-meta b { color: var(--text-secondary); font-weight: 500; }
+  .fg-meta .divider { color: var(--border); }
+
+  .bg-action {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .bg-action:hover { border-color: var(--border); }
+  .bg-num {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    min-width: 18px;
+  }
+  .bg-text {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .bg-text small {
+    display: block;
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .bg-chev { color: var(--text-muted); font-size: 14px; }
+
+  /* Watching (check-in signals) inside Act */
+  .watch-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .watch-stage {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .watch-card.active .watch-stage {
+    background: var(--accent-tint); border-color: var(--accent-hover);
+    color: var(--accent-bright);
+  }
+  .watch-card.done .watch-stage {
+    background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4);
+    color: var(--status-ok-bright);
+  }
+  .watch-body { flex: 1; min-width: 0; }
+  .watch-title { font-size: 13px; color: var(--text); font-weight: 500; }
+  .watch-signals { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'JetBrains Mono', monospace; letter-spacing: -0.01em; }
+
+  /* ============ Buttons ============ */
+  .btn {
+    background: var(--accent);
+    color: #F6F4EE;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.12s, transform 0.08s;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--accent-hover); }
+  .btn:active { transform: scale(0.98); }
+  .btn.ghost {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost:hover { background: var(--bg-panel); border-color: var(--border-strong); }
+  .btn.wide { width: 100%; padding: 13px; font-size: 13px; }
+  .btn.success { background: var(--status-ok); }
+  .btn.success:hover { background: var(--status-ok-bright); }
+
+  /* Doctor CTA pair - under hero audio card */
+  .md-cta {
+    display: flex; flex-direction: column; gap: 8px;
+    margin: 14px 0 20px;
+  }
+
+  .connect-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+
+  .appointment-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .appointment-kicker {
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .appointment-title {
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+  .appointment-meta {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.45;
+    margin-top: 5px;
+  }
+  .appointment-status {
+    border: 1px solid var(--accent-soft);
+    background: var(--accent-tint);
+    color: var(--accent);
+    border-radius: 999px;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 9px;
+    white-space: nowrap;
+  }
+  .appointment-actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 8px;
+  }
+  .appointment-actions .btn {
+    min-height: 42px;
+  }
+  .appointment-switch {
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    gap: 22px;
+    margin: 0 0 16px;
+  }
+  .appointment-tab {
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: -1px;
+    padding: 0 0 10px;
+  }
+  .appointment-tab.active {
+    border-bottom-color: var(--accent);
+    color: var(--text);
+  }
+  .appointment-mode {
+    display: none;
+  }
+  .appointment-mode.active {
+    display: block;
+  }
+  .appointment-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow-card);
+  }
+  .appointment-row {
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 0;
+  }
+  .appointment-row:first-of-type {
+    border-top: 0;
+  }
+  .appointment-row b {
+    color: var(--text);
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .appointment-row span {
+    color: var(--text-muted);
+    display: block;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .appointment-row .btn {
+    flex-shrink: 0;
+  }
+  .meeting-checklist {
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+  .meeting-checklist div {
+    align-items: center;
+    color: var(--text-secondary);
+    display: flex;
+    font-size: 13px;
+    gap: 8px;
+    padding: 6px 0;
+  }
+  .meeting-checklist svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .meeting-room {
+    background: #1A1815;
+    border-radius: var(--radius);
+    color: #F6F4EE;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .meeting-video {
+    align-items: center;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(212,165,116,0.22), transparent 34%),
+      linear-gradient(145deg, #24211D, #0F0E0C);
+    display: flex;
+    height: clamp(280px, 44vh, 420px);
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+  .meeting-video img {
+    border: 1px solid rgba(246,244,238,0.22);
+    border-radius: 50%;
+    height: 124px;
+    object-fit: cover;
+    width: 124px;
+  }
+  .meeting-live {
+    background: rgba(246,244,238,0.12);
+    border: 1px solid rgba(246,244,238,0.18);
+    border-radius: 999px;
+    color: #F6F4EE;
+    font-size: 12px;
+    font-weight: 500;
+    left: 16px;
+    padding: 7px 10px;
+    position: absolute;
+    top: 16px;
+  }
+  .meeting-live span {
+    background: #D4A574;
+    border-radius: 50%;
+    display: inline-block;
+    height: 7px;
+    margin-right: 6px;
+    width: 7px;
+  }
+  .meeting-nameplate {
+    background: rgba(10,10,11,0.42);
+    border: 1px solid rgba(246,244,238,0.14);
+    border-radius: var(--radius-sm);
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 10px;
+    position: absolute;
+  }
+  .meeting-nameplate b {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .meeting-nameplate span {
+    color: rgba(246,244,238,0.68);
+    display: block;
+    font-size: 11px;
+    margin-top: 1px;
+  }
+  .meeting-controls {
+    align-items: center;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr auto auto auto;
+    padding: 14px;
+  }
+  .meeting-state b {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .meeting-state span {
+    color: rgba(246,244,238,0.62);
+    display: block;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .meeting-control {
+    background: rgba(246,244,238,0.10);
+    border: 1px solid rgba(246,244,238,0.16);
+    border-radius: var(--radius-sm);
+    color: #F6F4EE;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  .meeting-join {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ============ LEGACY TIMELINE STYLES ============ */
+  .framing {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 13px 15px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .framing b { color: var(--text); font-weight: 500; }
+  .framing .note {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 6px; display: block;
+  }
+  .chart-wrap {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 18px 14px 14px;
+    margin-bottom: 14px;
+  }
+  .chart-legend {
+    display: flex; flex-wrap: wrap; gap: 8px 14px;
+    font-size: 11px; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .chart-legend i {
+    width: 10px; height: 10px; border-radius: 2px; display: inline-block;
+  }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .chart-summary {
+    text-align: center; margin-top: 8px;
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .chart-summary b {
+    color: var(--text); font-weight: 500; font-size: 18px;
+    display: block; margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .slider-wrap {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px 18px 16px;
+    margin-bottom: 14px;
+  }
+  .slider-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .slider-head .label {
+    font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted); font-weight: 500;
+  }
+  .slider-head .stage {
+    font-size: 13px; color: var(--text); font-weight: 500;
+  }
+  .slider-head .stage small {
+    color: var(--text-muted); font-size: 11px;
+    font-weight: 400; margin-left: 6px;
+  }
+  .journey { position: relative; margin: 12px 0 4px; height: 34px; }
+  .journey input {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 6px;
+    background: var(--bg-surface); border-radius: 3px;
+    outline: none; margin: 14px 0;
+  }
+  .journey input::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent-hover); cursor: pointer;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent-hover), 0 0 10px rgba(184,133,77,0.25);
+  }
+  .journey input::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent-hover); cursor: pointer;
+    border: 3px solid var(--bg);
+  }
+  .journey-ticks {
+    display: flex; justify-content: space-between;
+    font-size: 10px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .journey-gain {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .journey-gain b {
+    color: var(--text); font-weight: 500;
+    font-size: 22px; letter-spacing: -0.01em;
+    display: inline-block; min-width: 44px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Collapsible methods / disclaimers */
+  .methods-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 0;
+    margin-bottom: 14px;
+  }
+  .methods-box summary {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .methods-box summary::-webkit-details-marker { display: none; }
+  .methods-box summary::after {
+    content: "›";
+    color: var(--text-muted);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+  .methods-box[open] summary::after { transform: rotate(90deg); }
+  .methods-body {
+    padding: 0 16px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .methods-body p { margin: 0 0 10px; }
+  .methods-body p:last-child { margin-bottom: 0; }
+  .methods-body b { color: var(--text); font-weight: 500; }
+
+  .people-wrap {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .people-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .people-head h4 { margin: 0; font-size: 14px; font-weight: 500; color: var(--text); }
+  .people-head .tag { font-size: 11px; color: var(--text-muted); }
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    gap: 3px;
+    margin: 8px 0 4px;
+  }
+  .ppl {
+    aspect-ratio: 1; border-radius: 50%;
+    background: var(--bg-surface);
+    transition: background 0.2s;
+  }
+  .ppl.risk { background: var(--status-crit); }
+  .ppl.saved { background: var(--status-ok-bright); }
+  .people-legend {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 10px; line-height: 1.55;
+  }
+  .people-legend b { color: var(--text); font-weight: 500; }
+
+  .disclosure-footer {
+    background: transparent;
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .disclosure-footer b { color: var(--text-secondary); font-weight: 500; }
+
+  /* ============ QUALITY OF LIFE TOOL ============ */
+  .qol-tool {
+    --qol-ink: #0A0A0B;
+    --qol-paper: #F6F4EE;
+    --qol-paper-warm: #EFEAE0;
+    --qol-gold: #D4A574;
+    --qol-gold-deep: #6F4A20;
+    --qol-line: rgba(10,10,11,0.12);
+    --qol-line-soft: rgba(10,10,11,0.06);
+    --qol-muted: #4A4A4D;
+    --qol-chart-bg: #FBF8F1;
+    --qol-chart-tick: rgba(10,10,11,0.22);
+    color: var(--qol-ink);
+    background: var(--qol-paper);
+    border: 1px solid rgba(10,10,11,0.10);
+    border-radius: 18px;
+    padding: clamp(24px, 4vw, 44px);
+    box-shadow: 0 24px 60px -34px rgba(10,10,11,0.22);
+  }
+
+  .qol-lede {
+    font-family: Georgia, 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 25px);
+    line-height: 1.45;
+    color: var(--qol-muted);
+    max-width: 58ch;
+    margin: 0 0 clamp(28px, 4vw, 48px);
+  }
+
+  .qol-chart-wrap {
+    background: var(--qol-chart-bg);
+    border: 1px solid var(--qol-line);
+    border-radius: 14px;
+    padding: 22px 18px 14px;
+    box-shadow: 0 1px 0 rgba(10,10,11,0.02), 0 24px 60px -28px rgba(10,10,11,0.18);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #qolChart {
+    display: block;
+    width: 100%;
+    min-width: 1040px;
+    height: auto;
+  }
+
+  @media (min-width: 1120px) {
+    #qolChart { min-width: 0; }
+  }
+
+  .qol-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    padding: 16px 4px 2px;
+    justify-content: flex-start;
+  }
+
+  .qol-legend-toggle {
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 2px;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 5px 2px;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    color: var(--qol-ink);
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  .qol-legend-toggle .track {
+    grid-row: 1 / span 2;
+    align-self: center;
+    position: relative;
+    width: 32px;
+    height: 18px;
+    background: rgba(10,10,11,0.12);
+    border-radius: 999px;
+    flex-shrink: 0;
+    transition: background 140ms ease;
+  }
+
+  .qol-legend-toggle .track::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: rgba(10,10,11,0.38);
+    border-radius: 50%;
+    transition: transform 140ms ease, background 140ms ease;
+    box-shadow: 0 1px 2px rgba(10,10,11,0.12);
+  }
+
+  .qol-legend-toggle .label {
+    grid-column: 2;
+    grid-row: 1;
+    font-weight: 600;
+  }
+
+  .qol-legend-toggle .pct {
+    grid-column: 2;
+    grid-row: 2;
+    font-variant-numeric: tabular-nums;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--qol-ink);
+  }
+
+  .qol-legend-toggle[data-active="true"] .track {
+    background: rgba(111,74,32,0.22);
+  }
+
+  .qol-legend-toggle[data-active="true"] .track::after {
+    transform: translateX(14px);
+    background: var(--swatch, var(--qol-gold));
+  }
+
+  .qol-legend-toggle[data-active="false"] .label,
+  .qol-legend-toggle[data-active="false"] .pct {
+    color: var(--qol-muted);
+    opacity: 0.72;
+  }
+
+  .qol-legend-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 2px;
+    font-size: 13px;
+    color: var(--qol-muted);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: 0.2px;
+  }
+
+  .qol-legend-ref .dash {
+    display: inline-block;
+    width: 32px;
+    height: 0;
+    border-top: 1.5px dashed rgba(10,10,11,0.45);
+  }
+
+  .qol-legend-ref .swatch {
+    display: inline-block;
+    width: 32px;
+    height: 12px;
+    background: rgba(100,100,100,0.5);
+    border-radius: 2px;
+  }
+
+  .qol-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 22px;
+  }
+
+  .qol-ctl {
+    background: var(--qol-paper-warm);
+    border: 1px solid var(--qol-line-soft);
+    border-radius: 12px;
+    padding: 18px 20px 16px;
+  }
+
+  .qol-ctl-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .qol-ctl-name {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--qol-muted);
+  }
+
+  .qol-ctl-val {
+    color: var(--qol-ink);
+    font-variant-numeric: tabular-nums;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .qol-tool input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: rgba(10,10,11,0.14);
+    border-radius: 4px;
+    outline: none;
+    margin: 6px 0 4px;
+  }
+
+  .qol-tool input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    cursor: pointer;
+    border: 2.5px solid var(--qol-gold-deep);
+    box-shadow: 0 1px 4px rgba(10,10,11,0.16);
+  }
+
+  .qol-tool input[type=range]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    cursor: pointer;
+    border: 2.5px solid var(--qol-gold-deep);
+    box-shadow: 0 1px 4px rgba(10,10,11,0.16);
+  }
+
+  .qol-ctl-marks {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--qol-muted);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 7px;
+  }
+
+  .qol-presets {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 28px 0 0;
+    align-items: center;
+  }
+
+  .qol-presets-label {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--qol-muted);
+    margin-right: 6px;
+  }
+
+  .qol-preset {
+    background: transparent;
+    color: var(--qol-ink);
+    border: 1px solid var(--qol-line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Inter', inherit;
+    letter-spacing: 0.01em;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .qol-preset:hover {
+    border-color: var(--qol-ink);
+  }
+
+  .qol-footnote {
+    margin: clamp(48px, 6vw, 76px) 0 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--qol-line-soft);
+    color: var(--qol-muted);
+    font-size: 13px;
+    max-width: 64ch;
+    line-height: 1.6;
+  }
+
+  .qol-tool .ax-tick {
+    stroke: var(--qol-chart-tick);
+  }
+
+  .qol-tool .ax-label {
+    fill: var(--qol-muted);
+    font-size: 13px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  .qol-tool .ref-curve {
+    fill: none;
+    stroke: rgba(10,10,11,0.38);
+    stroke-width: 1.4;
+    stroke-dasharray: 6 5;
+    opacity: 0.72;
+  }
+
+  .qol-tool .patient-curve {
+    fill: none;
+    stroke: var(--qol-gold-deep);
+    stroke-width: 2.4;
+    stroke-dasharray: 9 5;
+    opacity: 0.95;
+  }
+
+  .qol-tool .patient-marker {
+    fill: var(--qol-gold-deep);
+    stroke: var(--qol-chart-bg);
+    stroke-width: 2;
+  }
+
+  .qol-tool .patient-label {
+    fill: #67451E;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 600;
+  }
+
+  .qol-tool .event-marker {
+    fill: #A44938;
+    opacity: 1;
+  }
+
+  @media (max-width: 800px) {
+    .qol-controls {
+      grid-template-columns: 1fr;
+    }
+    .appointment-head,
+    .appointment-actions {
+      grid-template-columns: 1fr;
+    }
+    .appointment-head {
+      display: block;
+    }
+    .appointment-status {
+      display: inline-flex;
+      margin-top: 10px;
+    }
+    .meeting-video {
+      height: auto;
+      min-height: 220px;
+    }
+    .meeting-controls {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ============ YOU › DATA ============ */
+  .data-group {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .data-hd {
+    padding: 14px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .data-hd:hover { background: rgba(10,10,11,0.025); }
+  .data-hd h4 { margin: 0; font-size: 14px; font-weight: 500; color: var(--text); }
+  .data-hd .sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .data-hd .chev { color: var(--text-muted); transition: transform 0.2s; font-size: 14px; }
+  .data-group.open .data-hd .chev { transform: rotate(90deg); }
+  .data-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .data-group.open .data-body { max-height: 720px; }
+  .data-body-inner {
+    padding: 4px 16px 16px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+  }
+
+  /* Flowsheet-style row */
+  .metric {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .metric:last-child { border-bottom: none; }
+  .metric .name {
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .metric .name small {
+    display: block; color: var(--text-muted);
+    font-size: 11px; margin-top: 2px;
+  }
+  .metric .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--text); font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .metric .val small {
+    display: block; color: var(--text-muted);
+    font-size: 10px; font-weight: 400;
+    margin-top: 2px; letter-spacing: 0.02em;
+  }
+  .metric .flag {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 6px; border-radius: 3px; font-weight: 500;
+    white-space: nowrap;
+  }
+  .flag.ok { background: rgba(39,166,68,0.15); color: var(--status-ok-bright); }
+  .flag.warn { background: rgba(224,155,45,0.18); color: var(--status-warn); }
+  .flag.high { background: rgba(232,96,76,0.18); color: var(--status-crit); }
+
+  /* Sparkline */
+  .spark {
+    display: inline-block;
+    width: 48px; height: 16px;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
+  /* Genetic card */
+  .gene-hero {
+    background: linear-gradient(140deg, rgba(232,96,76,0.06), rgba(232,96,76,0.01));
+    border: 1px solid rgba(232,96,76,0.2);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .gene-hero .hd {
+    display: flex; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .gene-hero .title {
+    font-size: 14px; font-weight: 500; color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .gene-hero .chip {
+    background: rgba(232,96,76,0.18); color: var(--status-crit);
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 8px; border-radius: 3px; font-weight: 500;
+  }
+  .gene-hero .detail {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ============ YOU › REASONING ============ */
+  .dom-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .dom-hd {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .dom-name {
+    font-size: 14px; font-weight: 500; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dom-name .swatch {
+    width: 10px; height: 10px; border-radius: 2px;
+  }
+  .dom-risk {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .dom-risk b { color: var(--text); font-weight: 500; }
+  .dom-bar {
+    height: 6px; border-radius: 3px;
+    background: var(--bg-surface);
+    overflow: hidden; position: relative;
+    margin-bottom: 8px;
+  }
+  .dom-bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--status-crit);
+    border-radius: 3px;
+  }
+  .dom-bar-fill.after {
+    background: var(--status-ok-bright);
+  }
+  .dom-inputs {
+    font-size: 11px; color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+  }
+  .dom-inputs b { color: var(--text-secondary); font-weight: 500; }
+  .dom-conn {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed var(--border-subtle);
+    font-size: 12px; color: var(--text-secondary);
+  }
+  .dom-conn .arrow { color: var(--accent-hover); margin: 0 6px; }
+  /* Per-card AI affordance - neutral (DS: ai-accent-chrome banned inside content) */
+  .dom-ask {
+    margin-top: 12px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 12px;
+    padding: 9px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color .15s, color .15s;
+  }
+  .dom-ask:hover { border-color: var(--border-strong); color: var(--text-secondary); }
+  .dom-ask .arrow { color: var(--text-muted); font-size: 14px; }
+
+  /* ============ Risk bottom sheet ============ */
+  .risk-sheet-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(10,10,11,0.42);
+    z-index: 98;
+    opacity: 0; pointer-events: none;
+    transition: opacity .18s;
+  }
+  .risk-sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+  .risk-sheet {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    max-width: var(--maxw); margin: 0 auto;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    z-index: 99;
+    transform: translateY(100%);
+    transition: transform .22s cubic-bezier(.2,.8,.2,1);
+    max-height: 86vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 -18px 54px rgba(10,10,11,0.22);
+  }
+  .risk-sheet.open { transform: translateY(0); }
+  .rs-handle {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: var(--border-strong);
+    margin: 10px auto 2px;
+  }
+  .rs-head {
+    padding: 10px 16px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .rs-head h3 {
+    margin: 0; font-size: 15px; font-weight: 500; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rs-head .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .rs-close {
+    background: transparent; border: none; color: var(--text-muted);
+    font-size: 22px; line-height: 1; cursor: pointer; padding: 0 4px;
+  }
+  .rs-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px 8px;
+  }
+  .rs-seed {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+  }
+  .rs-seed .src { margin-top: 8px; font-size: 11px; color: var(--text-muted); }
+  .rs-seed b { color: var(--text); font-weight: 500; }
+  .rs-presets {
+    display: flex; flex-direction: column; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .rs-presets button {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font: inherit; font-size: 13px;
+    text-align: left;
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .rs-presets button:hover { border-color: var(--border-strong); color: var(--text); }
+  .rs-input {
+    display: flex; gap: 8px;
+    padding: 10px 12px 14px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .rs-input input {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    color: var(--text);
+    font: inherit; font-size: 14px;
+    padding: 9px 14px;
+    outline: none;
+  }
+  .rs-input input:focus { border-color: var(--accent); }
+  .rs-input button {
+    background: var(--accent-hover);
+    color: #0A0A0B;
+    border: none; border-radius: 50%;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ============ MESSAGES (AI + pinned MD strip) ============ */
+  .md-strip {
+    background: linear-gradient(140deg, rgba(212,165,116,0.18), rgba(212,165,116,0.05));
+    border: 1px solid rgba(111,74,32,0.18);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 0 16px 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .md-strip:hover { border-color: rgba(111,74,32,0.34); }
+  .md-strip .av {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; color: var(--text);
+    flex-shrink: 0;
+  }
+  .md-strip .body { flex: 1; min-width: 0; }
+  .md-strip .lbl {
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent-hover);
+    font-weight: 500; margin-bottom: 3px;
+  }
+  .md-strip .txt {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.45;
+  }
+  .md-strip .when {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .md-strip.empty {
+    display: none;
+  }
+
+  /* Chat thread */
+  .chat-wrap {
+    padding: 0 12px 16px;
+  }
+  .msg {
+    display: flex; gap: 10px;
+    margin-bottom: 14px;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .msg .av {
+    width: 28px; height: 28px; border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 500;
+  }
+  .msg.ai .av {
+    background: var(--accent);
+    color: #F6F4EE;
+  }
+  .msg.user {
+    flex-direction: row-reverse;
+  }
+  .msg.user .av {
+    background: var(--bg-surface); color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .msg .bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .msg.ai .bubble {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    border-top-left-radius: 4px;
+  }
+  .msg.user .bubble {
+    background: var(--accent);
+    color: #F6F4EE;
+    border-top-right-radius: 4px;
+  }
+  .msg .bubble em {
+    font-style: normal;
+    color: var(--text); font-weight: 500;
+  }
+  .msg .src {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px solid var(--border-subtle);
+    letter-spacing: 0.02em;
+  }
+  .msg .src b { color: var(--text-secondary); font-weight: 500; }
+
+  .suggest {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 0 12px 12px;
+    margin-bottom: 4px;
+  }
+  .suggest-label {
+    width: 100%;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 4px 4px 6px;
+  }
+  .suggest button {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 7px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .suggest button:hover {
+    border-color: var(--border);
+    color: var(--text);
+  }
+
+  /* Chat input */
+  .chat-input {
+    position: fixed;
+    bottom: 80px;
+    left: 0; right: 0;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    background: rgba(246,244,238,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 10px 12px;
+    display: none;
+    gap: 8px;
+    z-index: 45;
+  }
+  .chat-input.show { display: flex; }
+  .chat-input input {
+    flex: 1;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 20px;
+    outline: none;
+  }
+  .chat-input input:focus { border-color: var(--accent-hover); }
+  .chat-input button {
+    background: var(--accent-hover);
+    color: #0A0A0B;
+    border: none;
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* ============ Bottom nav ============ */
+  .navbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    background: rgba(246,244,238,0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    z-index: 50;
+  }
+  .nav-item {
+    flex: 1;
+    position: relative;
+    background: none; border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px 4px 6px;
+    font-family: inherit;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10px; letter-spacing: 0.02em;
+    border-radius: 6px;
+    transition: color 0.12s;
+  }
+  .nav-item:hover { color: var(--text-secondary); }
+  .nav-item.active { color: var(--accent-hover); }
+  .nav-item svg { width: 22px; height: 22px; display: block; }
+  .nav-label {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+  }
+  .attention-dot {
+    background: #2F6FED;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(47,111,237,0.12);
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+  }
+  .nav-item .dot {
+    position: absolute;
+    top: 4px; margin-left: 12px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-hover);
+    box-shadow: 0 0 6px var(--accent-hover);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 100px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    z-index: 100;
+    transition: transform 0.25s, opacity 0.25s;
+    opacity: 0; pointer-events: none;
+    max-width: calc(var(--maxw) - 32px);
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Screen wrapper padding (when no segmented control) */
+  .screen > .pad { padding: 18px 16px 40px; }
+
+  /* ============ Desktop web app shell ============ */
+  .nav-brand-block {
+    display: none;
+  }
+
+  @media (min-width: 981px) {
+    :root {
+      --navw: 276px;
+      --content-max: 1180px;
+    }
+
+    html, body {
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 36% -8%, rgba(212,165,116,0.20), transparent 30rem),
+        radial-gradient(circle at 100% 22%, rgba(140,160,130,0.12), transparent 24rem),
+        var(--bg);
+    }
+
+    .shell {
+      max-width: none;
+      width: auto;
+      min-height: 100vh;
+      margin: 0 0 0 var(--navw);
+      padding: 0;
+      display: block;
+    }
+
+    .topbar {
+      display: none;
+    }
+
+    .wordmark {
+      font-size: 27px;
+    }
+
+    .screen {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 28px 36px 72px;
+    }
+
+    .screen > .pad,
+    .substate {
+      padding: 0;
+    }
+
+    .screen-title {
+      font-size: 28px;
+      line-height: 1.18;
+    }
+
+    .screen-subtitle {
+      max-width: 720px;
+      font-size: 15px;
+      margin-bottom: 26px;
+    }
+
+    .segmented {
+      width: 420px;
+      max-width: 100%;
+      margin: 0 0 28px;
+    }
+
+    .md-hero {
+      display: grid;
+      grid-template-columns: minmax(260px, 34%) 1fr;
+      align-items: stretch;
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    .md-hero-portrait {
+      min-height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .md-hero-meta {
+      padding: 24px 26px 12px;
+    }
+
+    .audio-player {
+      padding: 8px 26px 20px;
+    }
+
+    .md-hero-pull {
+      padding: 22px 28px;
+      margin: 0;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 20px;
+    }
+
+    .md-hero-transcript-toggle,
+    .md-hero-transcript {
+      grid-column: 1 / -1;
+    }
+
+    .md-cta {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .md-cta .btn,
+    .connect-actions .btn {
+      width: auto;
+      flex: 1;
+    }
+
+    .connect-actions {
+      flex-direction: row;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+
+    .decision,
+    .fg-action,
+    .data-group,
+    .dom-card,
+    .chart-wrap,
+    .slider-wrap,
+    .methods-box {
+      margin-bottom: 14px;
+    }
+
+    .decision-detail-inner {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .plan-board {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+    }
+
+    .act-hero {
+      width: fit-content;
+      min-width: 520px;
+      padding: 16px 18px;
+    }
+
+    .act-hero-stat {
+      min-width: 132px;
+    }
+
+    .watch-card,
+    .bg-action {
+      min-height: 68px;
+    }
+
+    .data-body-inner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 24px;
+    }
+
+    .gene-hero {
+      grid-column: 1 / -1;
+    }
+
+    .metric:nth-last-child(2) {
+      border-bottom: none;
+    }
+
+    #screen-messages {
+      padding-bottom: 118px;
+    }
+
+    #screen-messages .segmented {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(251,248,241,0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    #screen-messages .substate > div[style] {
+      padding: 0 !important;
+    }
+
+    .md-strip {
+      margin: 0 0 18px;
+    }
+
+    .chat-wrap,
+    .suggest {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .msg .bubble {
+      max-width: 680px;
+    }
+
+    .chat-input {
+      left: var(--navw);
+      right: 0;
+      bottom: 0;
+      max-width: none;
+      margin: 0;
+      padding: 16px 36px calc(16px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-input input {
+      border-radius: var(--radius-sm);
+      min-height: 44px;
+    }
+
+    .chat-input button {
+      border-radius: var(--radius-sm);
+      width: 44px;
+      height: 44px;
+    }
+
+    .navbar {
+      top: 0;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      width: var(--navw);
+      max-width: none;
+      margin: 0;
+      padding: 24px 18px;
+      border-top: 0;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: rgba(246,244,238,0.96);
+    }
+
+    .nav-brand-block {
+      display: grid;
+      gap: 22px;
+      padding: 0 6px 18px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-brand {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 27px;
+    }
+
+    .nav-member {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .nav-member b {
+      display: block;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .nav-member span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-item {
+      position: relative;
+      flex: 0 0 auto;
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 12px;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: var(--bg-panel);
+      color: var(--text);
+    }
+
+    .nav-item.active::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background: var(--accent-hover);
+    }
+
+    .nav-item svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .risk-sheet {
+      left: var(--navw);
+      right: 0;
+      max-width: 760px;
+    }
+
+    .toast {
+      left: calc(var(--navw) + ((100vw - var(--navw)) / 2));
+      bottom: 28px;
+      max-width: 520px;
+    }
+  }
+
+  @media (min-width: 981px) and (max-width: 1260px) {
+    :root {
+      --content-max: 1040px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .screen-title { font-size: 20px; }
+    .chat-input { bottom: 76px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ================= TOPBAR ================= -->
+  <div class="topbar">
+    <div class="brand">
+      <span><span class="wordmark">Aleron <span class="md-tag">MD</span></span> <span class="muted" id="topbarSub">· your plan</span></span>
+    </div>
+    <div class="avatar" title="Jim Yason">JY</div>
+  </div>
+
+  <!-- =================================================== -->
+  <!-- TAB 1 - PLAN (Message ↔ Act) -->
+  <!-- =================================================== -->
+  <section class="screen active" id="screen-plan">
+    <div class="segmented" role="tablist">
+      <button class="seg-btn active" data-sub="message" onclick="gotoSub('plan','message')">Summary</button>
+      <button class="seg-btn" data-sub="act" onclick="gotoSub('plan','act')">Board</button>
+    </div>
+
+    <!-- ---- SUBSTATE: MESSAGE ---- -->
+    <div class="substate active" id="plan-message">
+      <div class="plan-status">
+        <p>Your main findings are straightforward: the ATM variant changes your cancer surveillance cadence, and elevated Lp(a) changes how aggressively we manage cardiovascular risk. The strategy is to act on the few things that matter now, then use the next results to decide whether the plan can stay simple or needs to intensify.</p>
+        <p>This week, the work is manageable: complete baseline PSA surveillance, start rosuvastatin, and choose a time for the coronary calcium scan. Longer-horizon items, including genetic counseling, pancreatic surveillance at age 50, and the 8-week lipid recheck, stay organized in the plan without becoming today's burden.</p>
+      </div>
+    </div>
+
+    <!-- ---- SUBSTATE: ACT ---- -->
+    <div class="substate" id="plan-act">
+      <div class="screen-eyebrow">Manage the plan</div>
+      <h1 class="screen-title">Your health work, organized.</h1>
+      <p class="screen-subtitle">A simple board for what you own, what matters most, and what needs physician review before the plan changes.</p>
+
+      <div class="plan-board" aria-label="Plan board">
+        <div class="board-lane">
+          <div class="board-lane-head">
+            <div class="board-lane-title">Things to do / upcoming</div>
+            <div class="board-count">4</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Schedule baseline PSA and DRE</div>
+            <div class="board-detail">One lab draw plus a brief in-office exam to reset your ATM-driven surveillance cadence.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Start rosuvastatin 5 mg</div>
+            <div class="board-detail">Take one tablet before bed. Tell the team about unusual muscle soreness or side effects.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Pick a CAC scan time</div>
+            <div class="board-detail">The office sends scheduling options. The scan helps decide how aggressive the lipid plan should be.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Pancreatic surveillance reminder</div>
+            <div class="board-detail">Documented now, first scan at age 50, then revisited annually.</div>
+          </div>
+        </div>
+
+        <div class="board-lane">
+          <div class="board-lane-head">
+            <div class="board-lane-title">Top priorities</div>
+            <div class="board-count">3</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">PSA surveillance starts now</div>
+            <div class="board-detail">ATM means the prostate screening cadence should already be active. This is the clearest immediate gap.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Lower modifiable risk around high Lp(a)</div>
+            <div class="board-detail">Lp(a) will not move much with lifestyle, so the plan focuses on ApoB and LDL lowering.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Use CAC to guide intensity</div>
+            <div class="board-detail">The result determines whether the current statin plan is enough or needs escalation.</div>
+          </div>
+        </div>
+
+        <div class="board-lane">
+          <div class="board-lane-head">
+            <div class="board-lane-title">Physician review</div>
+            <div class="board-count">3</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Dr. Thompson reviews prostate baseline</div>
+            <div class="board-detail">Normal results confirm annual cadence. Abnormal results trigger urology follow-up.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Decide whether to intensify cardiac prevention</div>
+            <div class="board-detail">CAC anchors the next 5 years of cardiovascular decisions.</div>
+          </div>
+          <div class="board-card">
+            <div class="board-title">Statin tolerance review</div>
+            <div class="board-detail">The team checks for side effects before dose escalation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== -->
+  <!-- TAB 2 - QUALITY OF LIFE -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-qol">
+    <div class="pad">
+      <div class="qol-tool" aria-label="Quality of Life model">
+        <p class="qol-lede">Understanding the relationship between capability, risk, and vitality is the key to building the life you want.</p>
+
+        <div class="qol-chart-wrap">
+          <svg id="qolChart" viewBox="0 0 1080 560" preserveAspectRatio="xMidYMid meet" aria-label="Quality of life curve"></svg>
+          <div class="qol-legend" id="qolLegend" aria-label="Trajectory toggles"></div>
+        </div>
+
+        <div class="qol-controls">
+          <div class="qol-ctl">
+            <div class="qol-ctl-head">
+              <span class="qol-ctl-name">Conditioning</span>
+              <span class="qol-ctl-val" id="qolCondVal">Average</span>
+            </div>
+            <input type="range" id="qolCond" min="0" max="100" step="1" value="33"/>
+            <div class="qol-ctl-marks"><span>Decond</span><span>Avg</span><span>Well</span><span>Elite</span></div>
+          </div>
+
+          <div class="qol-ctl">
+            <div class="qol-ctl-head">
+              <span class="qol-ctl-name">Lifestyle</span>
+              <span class="qol-ctl-val" id="qolLifeVal">Maintained</span>
+            </div>
+            <input type="range" id="qolLife" min="0" max="100" step="1" value="50"/>
+            <div class="qol-ctl-marks"><span>Neglected</span><span>Maintained</span><span>Optimized</span></div>
+          </div>
+
+          <div class="qol-ctl">
+            <div class="qol-ctl-head">
+              <span class="qol-ctl-name">Underlying Risk</span>
+              <span class="qol-ctl-val" id="qolRiskVal">Average</span>
+            </div>
+            <input type="range" id="qolRisk" min="0" max="100" step="1" value="50"/>
+            <div class="qol-ctl-marks"><span>Low</span><span>Avg</span><span>High</span></div>
+          </div>
+        </div>
+
+        <div class="qol-presets">
+          <span class="qol-presets-label">Try</span>
+          <button class="qol-preset" data-c="100" data-l="100" data-r="15">Elite athlete, low risk</button>
+          <button class="qol-preset" data-c="33" data-l="50" data-r="50">Average American</button>
+          <button class="qol-preset" data-c="15" data-l="20" data-r="85">Sedentary, high risk</button>
+          <button class="qol-preset" data-c="70" data-l="60" data-r="95">Fit but high underlying risk</button>
+          <button class="qol-preset" data-c="60" data-l="20" data-r="50">Fit body, neglected lifestyle</button>
+        </div>
+
+        <p class="qol-footnote">A teaching tool. The y-axis is VO2max, the best single measure of physical capability across age. Two events fork the trajectory: cancer treatment, and a cardiovascular event. Higher underlying risk pulls both earlier and makes them more likely. Not a personalized prediction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== -->
+  <!-- TAB 3 - YOU (Data ↔ Reasoning) -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-you">
+    <div class="segmented" role="tablist">
+      <button class="seg-btn active" data-sub="data" onclick="gotoSub('you','data')">Data</button>
+      <button class="seg-btn" data-sub="reasoning" onclick="gotoSub('you','reasoning')">Risk</button>
+    </div>
+
+    <!-- ---- DATA ---- -->
+    <div class="substate active" id="you-data">
+      <div class="screen-eyebrow">Everything we've collected</div>
+      <h1 class="screen-title">You, in numbers.</h1>
+      <p class="screen-subtitle">Wearable, labs, genetic. Open any group to expand.</p>
+
+      <!-- Wearable (open by default) -->
+      <div class="data-group open">
+        <div class="data-hd" onclick="toggleData(this.parentElement)">
+          <div>
+            <h4>Wearable · 30-day</h4>
+            <div class="sub">Apple Watch · last synced 3h ago</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+        <div class="data-body"><div class="data-body-inner">
+          <div class="metric">
+            <div class="name">HRV <small>4-week average, SDNN</small></div>
+            <div class="val">52 ms</div>
+            <div class="flag ok">normal</div>
+          </div>
+          <div class="metric">
+            <div class="name">Resting HR <small>7-day average</small></div>
+            <div class="val">52 bpm</div>
+            <div class="flag ok">athletic</div>
+          </div>
+          <div class="metric">
+            <div class="name">Sleep <small>30-day average</small></div>
+            <div class="val">7h 10m <small>deep 1h 20m</small></div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Steps <small>daily average</small></div>
+            <div class="val">8,400</div>
+            <div class="flag ok">normal</div>
+          </div>
+          <div class="metric">
+            <div class="name">Active energy <small>daily average</small></div>
+            <div class="val">620 kcal</div>
+            <div class="flag ok">active</div>
+          </div>
+          <div class="metric">
+            <div class="name">Workouts <small>last 30 days</small></div>
+            <div class="val">11 <small>9 cycling · 2 walking</small></div>
+            <div class="flag ok">consistent</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Labs -->
+      <div class="data-group">
+        <div class="data-hd" onclick="toggleData(this.parentElement)">
+          <div>
+            <h4>Labs · most recent panel</h4>
+            <div class="sub">Drawn April 10, 2026 · Quest Diagnostics</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+        <div class="data-body"><div class="data-body-inner">
+          <div class="metric">
+            <div class="name">ApoB</div>
+            <div class="val">98 mg/dL <small>goal &lt;80</small></div>
+            <div class="flag high">high</div>
+          </div>
+          <div class="metric">
+            <div class="name">Lp(a)</div>
+            <div class="val">62 mg/dL <small>goal &lt;30</small></div>
+            <div class="flag high">high</div>
+          </div>
+          <div class="metric">
+            <div class="name">LDL-C</div>
+            <div class="val">128 mg/dL <small>goal &lt;100</small></div>
+            <div class="flag high">high</div>
+          </div>
+          <div class="metric">
+            <div class="name">HDL-C</div>
+            <div class="val">58 mg/dL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Triglycerides</div>
+            <div class="val">85 mg/dL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Total cholesterol</div>
+            <div class="val">203 mg/dL <small>ref &lt;200</small></div>
+            <div class="flag warn">borderline</div>
+          </div>
+          <div class="metric">
+            <div class="name">hs-CRP</div>
+            <div class="val">1.1 mg/L <small>goal &lt;1.0</small></div>
+            <div class="flag warn">borderline</div>
+          </div>
+          <div class="metric">
+            <div class="name">A1c</div>
+            <div class="val">5.4% <small>normal</small></div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Fasting glucose</div>
+            <div class="val">88 mg/dL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Creatinine / eGFR</div>
+            <div class="val">0.98 / &gt;90</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">ALT / AST</div>
+            <div class="val">24 / 22</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">TSH</div>
+            <div class="val">1.8 mIU/L</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">CBC</div>
+            <div class="val">WNL</div>
+            <div class="flag ok">ok</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Genetic -->
+      <div class="data-group">
+        <div class="data-hd" onclick="toggleData(this.parentElement)">
+          <div>
+            <h4>Genetic · 163-gene panel</h4>
+            <div class="sub">Run Feb 3, 2026 · Invitae</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+        <div class="data-body"><div class="data-body-inner">
+          <div class="gene-hero">
+            <div class="hd">
+              <div class="title">ATM c.8147T&gt;C</div>
+              <div class="chip">Pathogenic</div>
+            </div>
+            <div class="detail">Associated with increased risk for pancreatic, breast, and prostate cancer. Drives the annual pancreatic MRI decision in your plan.</div>
+          </div>
+          <div class="metric">
+            <div class="name">Genes tested</div>
+            <div class="val">163</div>
+            <div class="flag ok">complete</div>
+          </div>
+          <div class="metric">
+            <div class="name">Other pathogenic findings</div>
+            <div class="val">None</div>
+            <div class="flag ok">clean</div>
+          </div>
+          <div class="metric">
+            <div class="name">Variants of uncertain significance</div>
+            <div class="val">2 <small>inactionable</small></div>
+            <div class="flag ok">noted</div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <!-- ---- RISK ---- -->
+    <div class="substate" id="you-reasoning">
+      <div class="screen-eyebrow">Your risk, broken down</div>
+      <h1 class="screen-title">Four risk models.</h1>
+      <p class="screen-subtitle">Each model fed by your data. Use "Ask about this" on any card to dig in.</p>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-cardiac)"></span>Cardiovascular</div>
+          <div class="dom-risk">10y risk <b>9.4%</b> → <b style="color: var(--status-ok-bright)">6.2%</b></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill" style="width: 48%"></div>
+          <div class="dom-bar-fill after" style="width: 32%"></div>
+        </div>
+        <div class="dom-inputs">
+          Driven by: <b>ApoB 98</b> · <b>Lp(a) 62</b> · age 47 · paternal GI cancer
+        </div>
+        <div class="dom-conn">
+          Highest-sensitivity input → ApoB <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 01 (statin)</em>
+        </div>
+        <div class="dom-conn">
+          Baseline data gap → CAC <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 02 (CAC + stress echo)</em>
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('cardiovascular')">Ask about this <span class="arrow">→</span></button>
+      </div>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-cancer)"></span>Cancer</div>
+          <div class="dom-risk">Pancreatic risk <b>elevated</b> <small>(ATM+)</small></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill" style="width: 42%"></div>
+        </div>
+        <div class="dom-inputs">
+          Driven by: <b>ATM c.8147T&gt;C pathogenic</b> · paternal GI cancer (early 80s)
+        </div>
+        <div class="dom-conn">
+          Surveillance trigger → NCCN ATM+ <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 03 (annual pancreatic MRI)</em>
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('cancer')">Ask about this <span class="arrow">→</span></button>
+      </div>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-metab)"></span>Metabolic &amp; autonomic</div>
+          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-bright)">stable</b></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill" style="width: 18%; background: var(--status-ok-bright)"></div>
+        </div>
+        <div class="dom-inputs">
+          Driven by: <b>A1c 5.4</b> · <b>fasting glucose 88</b> · <b>HRV 52 ms</b> · <b>RHR 52 bpm</b> · <b>sleep 7h 10m</b>
+        </div>
+        <div class="dom-conn">
+          No action needed · wearable and metabolic markers are in range
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('metabolic')">Ask about this <span class="arrow">→</span></button>
+      </div>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-neuro)"></span>Neuro &amp; cognitive</div>
+          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-bright)">stable</b></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill" style="width: 22%; background: var(--status-ok-bright)"></div>
+        </div>
+        <div class="dom-inputs">
+          Driven by: <b>sleep 7h 10m</b> · <b>deep sleep 1h 20m</b> · active lifestyle · in-laws dementia (not genetic)
+        </div>
+        <div class="dom-conn">
+          No action needed today · annual re-run is the longest-horizon lever
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('neuro')">Ask about this <span class="arrow">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== -->
+  <!-- TAB 4 - CONNECT (MD + Aleron AI) -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-messages">
+    <div class="segmented" role="tablist">
+      <button class="seg-btn active" data-sub="team" onclick="gotoSub('messages','team')">Dr. Thompson</button>
+      <button class="seg-btn" data-sub="appointments" onclick="gotoSub('messages','appointments')">Appointments</button>
+      <button class="seg-btn" data-sub="meridian" onclick="gotoSub('messages','meridian')">Aleron AI</button>
+    </div>
+
+    <!-- ---- TEAM (direct physician thread) ---- -->
+    <div class="substate active" id="messages-team">
+      <div style="padding: 4px 16px 0">
+        <div class="screen-eyebrow">Direct line</div>
+        <h1 class="screen-title" style="margin-bottom: 8px">Connect with Dr. Thompson.</h1>
+        <p class="screen-subtitle" style="margin-bottom: 14px">Send a direct message when a question needs his eyes. He'll respond within one business day.</p>
+      </div>
+
+      <div class="connect-actions">
+        <button class="btn wide ghost" onclick="document.getElementById('chatField').focus()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="margin-right:6px">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Message Dr. Thompson
+        </button>
+      </div>
+
+      <div class="md-strip" onclick="toast('Opening Dr. Thompson\\'s note')">
+        <div class="av">MT</div>
+        <div class="body">
+          <div class="lbl">From Dr. Thompson</div>
+          <div class="txt">"Jim - I'm out of town next week but wanted to make sure you saw the statin change. Start tonight if you can. Message me here if anything feels off."</div>
+          <div class="when">2 hours ago</div>
+        </div>
+      </div>
+
+      <div class="chat-wrap" id="teamChatWrap">
+        <div class="msg ai">
+          <div class="av">MT</div>
+          <div class="bubble">
+            Hey Jim - any questions about the plan? Happy to clarify anything. I'll also have my office reach out in the next day or two to schedule the CAC scan.
+            <div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="suggest">
+        <button onclick="askTeamPreset('About scheduling the cardiac workup')">Scheduling the cardiac workup</button>
+        <button onclick="askTeamPreset('Question about the statin')">Question about the statin</button>
+        <button onclick="askTeamPreset('Something doesn\\'t feel right')">Something doesn't feel right</button>
+      </div>
+    </div>
+
+    <!-- ---- APPOINTMENTS ---- -->
+    <div class="substate" id="messages-appointments">
+      <div style="padding: 4px 16px 0">
+        <div class="screen-eyebrow">Scheduler and meeting room</div>
+        <h1 class="screen-title" style="margin-bottom: 8px">Appointments.</h1>
+        <p class="screen-subtitle" style="margin-bottom: 14px">Book the next visit, join telemedicine, and prepare the agenda without entering a message thread.</p>
+      </div>
+
+      <div class="appointment-switch" role="tablist" aria-label="Appointment view">
+        <button class="appointment-tab active" data-appointment="scheduling" onclick="gotoAppointment('scheduling')">Scheduling</button>
+        <button class="appointment-tab" data-appointment="meeting" onclick="gotoAppointment('meeting')">Meeting <span class="attention-dot" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="appointment-mode active" id="appointment-scheduling">
+        <div class="appointment-panel">
+          <div class="appointment-kicker">Scheduler</div>
+          <div class="appointment-title">Book a visit</div>
+          <div class="appointment-meta">Choose from Dr. Thompson's next available telemedicine windows.</div>
+
+          <div class="appointment-row">
+            <div>
+              <b>Thursday, May 21</b>
+              <span>9:00 AM PT · 15 minutes</span>
+            </div>
+            <button class="btn ghost" onclick="toast('Thursday 9:00 AM selected')">Select</button>
+          </div>
+          <div class="appointment-row">
+            <div>
+              <b>Friday, May 22</b>
+              <span>1:30 PM PT · 15 minutes</span>
+            </div>
+            <button class="btn ghost" onclick="toast('Friday 1:30 PM selected')">Select</button>
+          </div>
+          <div class="appointment-row">
+            <div>
+              <b>Monday, May 25</b>
+              <span>4:00 PM PT · 30 minutes</span>
+            </div>
+            <button class="btn ghost" onclick="toast('Monday 4:00 PM selected')">Select</button>
+          </div>
+          <button class="btn wide" onclick="openScheduler()">Request another time</button>
+        </div>
+      </div>
+
+      <div class="appointment-mode" id="appointment-meeting">
+        <div class="appointment-panel">
+          <div class="appointment-head">
+            <div>
+              <div class="appointment-kicker">Meeting</div>
+              <div class="appointment-title">Telemedicine with Dr. Thompson</div>
+              <div class="appointment-meta">Today, 2:30 PM PT · secure video visit</div>
+            </div>
+            <div class="appointment-status">Ready to join</div>
+          </div>
+
+          <div class="meeting-room">
+            <div class="meeting-video">
+              <div class="meeting-live"><span></span>Live now</div>
+              <img src="../patient-app/assets/dr-thompson.png" alt="Dr. Thompson">
+              <div class="meeting-nameplate">
+                <b>Dr. Marcus Thompson</b>
+                <span>Primary care · waiting in secure room</span>
+              </div>
+            </div>
+            <div class="meeting-controls">
+              <div class="meeting-state">
+                <b>Ready for your visit</b>
+                <span>Camera and microphone check before joining</span>
+              </div>
+              <button class="meeting-control" onclick="toast('Microphone muted')">Mute</button>
+              <button class="meeting-control" onclick="toast('Camera off')">Camera</button>
+              <button class="meeting-control meeting-join" onclick="joinVisit()">Join visit</button>
+            </div>
+          </div>
+
+          <div class="meeting-checklist">
+            <div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+              Review statin start and side-effect watchouts
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+              Confirm CAC scan scheduling window
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+              Ask about genetic counseling timing
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- ALERON (AI) ---- -->
+    <div class="substate" id="messages-meridian">
+      <div style="padding: 4px 16px 0">
+        <div class="screen-eyebrow">Ask Aleron AI</div>
+        <h1 class="screen-title" style="margin-bottom: 8px">Ask Aleron AI.</h1>
+        <p class="screen-subtitle" style="margin-bottom: 14px">Grounded in your plan, your data, and Dr. Thompson's note. When I hit my limit, I route to your care team.</p>
+      </div>
+
+      <div class="chat-wrap" id="chatWrap">
+        <div class="msg ai">
+          <div class="av">AI</div>
+          <div class="bubble">
+            Good morning, Jim. Your plan was released two hours ago - <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?
+            <div class="src"><b>Source:</b> Your plan (released Apr 18) · Dr. Thompson's note</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preloaded questions - shown until the user sends the first message -->
+      <div class="suggest" id="suggest">
+        <div class="suggest-label">Good places to start</div>
+        <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
+        <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
+        <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
+        <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
+        <button onclick="askPreset('Walk me through Dr. Thompson\\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
+        <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat input (Connect tab only - target changes based on active sub) -->
+  <div class="chat-input" id="chatInput">
+    <input type="text" id="chatField" placeholder="Ask about your plan..." onkeypress="if(event.key==='Enter') sendChat()"/>
+    <button onclick="sendChat()">↑</button>
+  </div>
+
+</div>
+
+<!-- ================= APP NAV ================= -->
+<nav class="navbar">
+  <div class="nav-brand-block">
+    <a class="nav-brand" href="index.html">Aleron <span class="md-tag">MD</span></a>
+    <div class="nav-member">
+      <div class="avatar" aria-hidden="true">JY</div>
+      <div>
+        <b>Jim Yason</b>
+        <span>Member workspace</span>
+      </div>
+    </div>
+  </div>
+  <button class="nav-item active" data-tab="plan" onclick="gotoTab('plan')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M4 5h16M4 12h16M4 19h10"/>
+    </svg>
+    Plan
+  </button>
+  <button class="nav-item" data-tab="qol" onclick="gotoTab('qol')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M3 18l6-6 4 4 8-8"/>
+      <path d="M17 8h4v4"/>
+    </svg>
+    Quality of Life
+  </button>
+  <button class="nav-item" data-tab="you" onclick="gotoTab('you')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
+    </svg>
+    You
+  </button>
+  <button class="nav-item" data-tab="messages" onclick="openConnectAttention()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="9" cy="8" r="3.2"/>
+      <circle cx="15.5" cy="9.2" r="2.7"/>
+      <path d="M3.8 20c.5-4.1 2.4-6.2 5.2-6.2s4.7 2.1 5.2 6.2"/>
+      <path d="M12.2 20c.4-3.1 1.8-4.7 3.9-4.7 2.2 0 3.6 1.6 4.1 4.7"/>
+    </svg>
+    <span class="nav-label">Connect <span class="attention-dot" aria-hidden="true"></span></span>
+  </button>
+</nav>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Risk bottom sheet (opens from You → Risk cards) -->
+<div class="risk-sheet-backdrop" id="riskSheetBackdrop" onclick="closeRiskSheet()"></div>
+<div class="risk-sheet" id="riskSheet" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
+  <div class="rs-handle"></div>
+  <div class="rs-head">
+    <h3 id="rsTitle"><span class="swatch" id="rsSwatch"></span><span id="rsName">Cardiovascular</span></h3>
+    <button class="rs-close" onclick="closeRiskSheet()" aria-label="Close">×</button>
+  </div>
+  <div class="rs-body">
+    <div class="rs-seed" id="rsSeed">
+      <!-- seeded content injected by openRiskSheet() -->
+    </div>
+    <div class="rs-presets" id="rsPresets">
+      <!-- preset questions injected by openRiskSheet() -->
+    </div>
+  </div>
+  <div class="rs-input">
+    <input type="text" id="rsInput" placeholder="Ask about this risk..."/>
+    <button aria-label="Send" onclick="sendRiskMessage()">↑</button>
+  </div>
+</div>
+
+<script>
+  /* ===== Navigation ===== */
+  function gotoTab(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('screen-' + name);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => {
+      n.classList.toggle('active', n.dataset.tab === name);
+    });
+    updateChatInput(name);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Subtitle in topbar changes for personality
+    const sub = document.getElementById('topbarSub');
+    const subs = { plan: '· your plan', qol: '· quality of life', you: '· you', messages: '· connect' };
+    if (sub) sub.textContent = subs[name] || '· your plan';
+  }
+
+  function gotoSub(tab, sub) {
+    const scope = document.getElementById('screen-' + tab);
+    if (!scope) return;
+    scope.querySelectorAll('.substate').forEach(s => s.classList.remove('active'));
+    scope.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.sub === sub));
+    const target = document.getElementById(tab + '-' + sub);
+    if (target) target.classList.add('active');
+    updateChatInput(tab);
+  }
+
+  function updateChatInput(tab) {
+    const ci = document.getElementById('chatInput');
+    if (!ci) return;
+    const activeConnect = document.querySelector('#screen-messages .seg-btn.active');
+    const connectSub = activeConnect ? activeConnect.dataset.sub : 'team';
+    ci.classList.toggle('show', tab === 'messages' && connectSub !== 'appointments');
+  }
+
+  function gotoAppointment(view) {
+    document.querySelectorAll('.appointment-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.appointment === view);
+    });
+    document.querySelectorAll('.appointment-mode').forEach(mode => {
+      mode.classList.toggle('active', mode.id === 'appointment-' + view);
+    });
+  }
+
+  function openConnectAttention() {
+    gotoTab('messages');
+    gotoSub('messages', 'appointments');
+    gotoAppointment('meeting');
+  }
+
+  /* ===== Decision + data accordions ===== */
+  function toggleDecision(el) { el.classList.toggle('open'); }
+  function toggleData(el) { el.classList.toggle('open'); }
+
+  /* ===== Plan board movement ===== */
+  function initPlanBoard() {
+    const board = document.querySelector('.plan-board');
+    if (!board || board.dataset.ready === 'true') return;
+    board.dataset.ready = 'true';
+
+    board.querySelectorAll('.board-lane').forEach((lane, laneIndex) => {
+      lane.dataset.laneIndex = laneIndex;
+      lane.addEventListener('dragover', e => {
+        e.preventDefault();
+        const card = board.querySelector('.board-card.dragging');
+        if (!card) return;
+        lane.classList.add('drop-over');
+        const nextCard = getBoardInsertTarget(lane, e.clientY);
+        if (nextCard) lane.insertBefore(card, nextCard);
+        else lane.appendChild(card);
+        setBoardCardLane(card, laneIndex);
+        updateBoardCounts();
+      });
+      lane.addEventListener('dragleave', e => {
+        if (!lane.contains(e.relatedTarget)) lane.classList.remove('drop-over');
+      });
+      lane.addEventListener('drop', e => {
+        e.preventDefault();
+        lane.classList.remove('drop-over');
+        updateBoardCounts();
+      });
+    });
+
+    board.querySelectorAll('.board-card').forEach((card, index) => {
+      card.id = card.id || `plan-board-card-${index}`;
+      card.tabIndex = 0;
+      card.draggable = true;
+      card.addEventListener('dragstart', e => {
+        card.dataset.startLane = getBoardLaneTitle(card.closest('.board-lane'));
+        card.dataset.startIndex = String(getBoardCardIndex(card));
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', card.id);
+        card.classList.add('dragging');
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        board.querySelectorAll('.board-lane').forEach(lane => lane.classList.remove('drop-over'));
+        updateBoardCounts();
+        const endLane = getBoardLaneTitle(card.closest('.board-lane'));
+        const endIndex = String(getBoardCardIndex(card));
+        if (card.dataset.startLane && card.dataset.startLane !== endLane) {
+          toast(`Moved ${getBoardCardTitle(card)} to ${endLane}.`);
+        } else if (card.dataset.startIndex && card.dataset.startIndex !== endIndex) {
+          toast(`Reordered ${getBoardCardTitle(card)}.`);
+        }
+        delete card.dataset.startLane;
+        delete card.dataset.startIndex;
+      });
+    });
+
+    updateBoardCounts();
+  }
+
+  function getBoardInsertTarget(lane, pointerY) {
+    const cards = [...lane.querySelectorAll('.board-card:not(.dragging)')];
+    return cards.reduce((closest, card) => {
+      const box = card.getBoundingClientRect();
+      const offset = pointerY - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) return { offset, card };
+      return closest;
+    }, { offset: Number.NEGATIVE_INFINITY, card: null }).card;
+  }
+
+  function setBoardCardLane(card, laneIndex) {
+    card.dataset.laneIndex = laneIndex;
+  }
+
+  function updateBoardCounts() {
+    document.querySelectorAll('.plan-board .board-lane').forEach(lane => {
+      const count = lane.querySelectorAll('.board-card').length;
+      const countEl = lane.querySelector('.board-count');
+      if (countEl) countEl.textContent = `${count} ${count === 1 ? 'card' : 'cards'}`;
+    });
+  }
+
+  function getBoardCardIndex(card) {
+    return [...card.closest('.board-lane').querySelectorAll('.board-card')].indexOf(card);
+  }
+
+  function getBoardCardTitle(card) {
+    return card.querySelector('.board-title')?.textContent.trim() || 'card';
+  }
+
+  function getBoardLaneTitle(lane) {
+    return lane.querySelector('.board-lane-title')?.textContent.trim() || 'column';
+  }
+
+  /* ===== Act interactions ===== */
+  function markStartedTonight(btn) {
+    const card = btn.closest('.fg-action');
+    card.classList.add('done');
+    btn.classList.add('success');
+    btn.innerHTML = '✓ Started tonight';
+    btn.disabled = true;
+    btn.style.opacity = '0.85';
+    btn.style.cursor = 'default';
+    toast("Nice. We'll check in at Week 2.");
+  }
+
+  /* ===== Connect appointment actions ===== */
+  function joinVisit() {
+    gotoTab('messages');
+    gotoSub('messages', 'appointments');
+    gotoAppointment('meeting');
+    toast('Opening telemedicine visit');
+  }
+
+  function openScheduler() {
+    gotoTab('messages');
+    gotoSub('messages', 'appointments');
+    gotoAppointment('scheduling');
+    toast('Showing appointment times');
+  }
+
+  function prepareVisit() {
+    gotoTab('messages');
+    gotoSub('messages', 'appointments');
+    gotoAppointment('meeting');
+    toast('Opening visit agenda');
+  }
+
+  /* ===== Toast ===== */
+  let toastTimer;
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  initPlanBoard();
+
+  /* ===== People grid ===== */
+  (function renderPeople() {
+    const grid = document.getElementById('peopleGrid');
+    if (!grid) return;
+    for (let i = 0; i < 100; i++) {
+      const d = document.createElement('div');
+      d.className = 'ppl';
+      if (i < 4) d.classList.add('saved');
+      else if (i < 11) d.classList.add('risk');
+      grid.appendChild(d);
+    }
+  })();
+
+  /* ===== Quality of Life model ===== */
+  const QOL_TEMPLATES = {
+    elite: { 30: 56, 40: 53, 50: 50, 60: 47, 65: 45, 70: 42, 75: 38, 80: 34, 85: 30, 90: 26, 100: 18 },
+    average: { 30: 38, 40: 35, 50: 33, 60: 31, 65: 29, 70: 26, 75: 22, 80: 19, 85: 16, 90: 13, 100: 8 },
+    deconditioned: { 30: 26, 40: 23, 50: 20, 60: 18, 65: 16, 70: 14, 75: 12, 80: 10, 85: 8, 90: 7, 100: 5 }
+  };
+
+  function qolTemplateAt(tmpl, age) {
+    const ages = Object.keys(tmpl).map(Number).sort((a,b) => a - b);
+    if (age <= ages[0]) return tmpl[ages[0]];
+    if (age >= ages[ages.length-1]) return tmpl[ages[ages.length-1]];
+    for (let i = 0; i < ages.length - 1; i++) {
+      const a0 = ages[i], a1 = ages[i+1];
+      if (age >= a0 && age <= a1) {
+        const t = (age - a0) / (a1 - a0);
+        return tmpl[a0] * (1 - t) + tmpl[a1] * t;
+      }
+    }
+    return tmpl[ages[ages.length-1]];
+  }
+
+  function qolConditioningCurve(condSlider, age) {
+    const dec = qolTemplateAt(QOL_TEMPLATES.deconditioned, age);
+    const avg = qolTemplateAt(QOL_TEMPLATES.average, age);
+    const eli = qolTemplateAt(QOL_TEMPLATES.elite, age);
+    if (condSlider <= 33) {
+      const t = condSlider / 33;
+      return dec * (1 - t) + avg * t;
+    }
+    const t = (condSlider - 33) / 67;
+    return avg * (1 - t) + eli * t;
+  }
+
+  function qolBaseCapacity(condSlider, lifeSlider, age) {
+    const baseline = qolConditioningCurve(condSlider, 30);
+    const unmodified = qolConditioningCurve(condSlider, age);
+    const mult = 1.10 - (lifeSlider / 100) * 0.20;
+    return baseline + mult * (unmodified - baseline);
+  }
+
+  function qolEffectiveRisk(condSlider, lifeSlider, riskSlider) {
+    const r = riskSlider / 100;
+    const decon = 1 - condSlider / 100;
+    const neg = 1 - lifeSlider / 100;
+    return 0.55 * r + 0.35 * decon + 0.10 * neg;
+  }
+
+  function qolInterpolateAnchors(R, anchors) {
+    const n = anchors.length;
+    if (R <= anchors[0][0]) return anchors[0][1];
+    if (R >= anchors[n-1][0]) return anchors[n-1][1];
+    for (let i = 0; i < n - 1; i++) {
+      if (R >= anchors[i][0] && R <= anchors[i+1][0]) {
+        const t = (R - anchors[i][0]) / (anchors[i+1][0] - anchors[i][0]);
+        return anchors[i][1] * (1 - t) + anchors[i+1][1] * t;
+      }
+    }
+    return anchors[n-1][1];
+  }
+
+  const QOL_FORK_EVENTS = [
+    { id: 'cancer', name: 'Cancer treatment', shortName: 'cancer',
+      pAnchors: [[0.05, 0.18], [0.30, 0.25], [0.55, 0.40], [0.80, 0.55], [0.95, 0.68]],
+      ageAnchors: [[0.05, 73], [0.30, 70], [0.55, 65], [0.80, 58], [0.95, 54]],
+      drop: 0.25, tau: 24, recoveryFrac: 0.20 },
+    { id: 'cv', name: 'CV event', shortName: 'CV',
+      pAnchors: [[0.05, 0.05], [0.30, 0.10], [0.55, 0.30], [0.80, 0.55], [0.95, 0.68]],
+      ageAnchors: [[0.05, 85], [0.30, 82], [0.55, 75], [0.80, 67], [0.95, 63]],
+      drop: 0.25, tau: 6, recoveryFrac: 0.75 }
+  ];
+
+  function qolActiveForks(R) {
+    return QOL_FORK_EVENTS.map(ev => ({
+      ...ev,
+      pEvent: qolInterpolateAnchors(R, ev.pAnchors),
+      modalAge: qolInterpolateAnchors(R, ev.ageAnchors)
+    }));
+  }
+
+  function qolEventFactorAt(event, age) {
+    if (age < event.modalAge) return 1.0;
+    const yearsSince = age - event.modalAge;
+    const tauYears = event.tau / 12;
+    const residualFrac = event.drop * (1 - event.recoveryFrac);
+    const dropFrac = residualFrac + (event.drop - residualFrac) * Math.exp(-yearsSince / tauYears);
+    return 1 - dropFrac;
+  }
+
+  function qolJointOutcomes(forks) {
+    const cancer = forks.find(f => f.id === 'cancer');
+    const cv = forks.find(f => f.id === 'cv');
+    const pc = cancer.pEvent;
+    const pcv = cv.pEvent;
+    return [
+      { id: 'spared', label: 'spared both', shortLabel: 'spared', p: (1 - pc) * (1 - pcv), events: [] },
+      { id: 'cancer', label: 'cancer only', shortLabel: 'cancer only', p: pc * (1 - pcv), events: [cancer] },
+      { id: 'cv', label: 'CV only', shortLabel: 'CV only', p: (1 - pc) * pcv, events: [cv] },
+      { id: 'both', label: 'both events', shortLabel: 'both', p: pc * pcv, events: [cancer, cv] }
+    ];
+  }
+
+  const QOL_CAPACITY_FLOOR_VO2 = 3;
+  const QOL_VIT_DROP_SCALAR = 0.6;
+
+  function qolCapacityForOutcome(condSlider, lifeSlider, age, outcomeEvents) {
+    let factor = 1.0;
+    for (const ev of outcomeEvents) factor *= qolEventFactorAt(ev, age);
+    return Math.max(qolBaseCapacity(condSlider, lifeSlider, age) * factor, QOL_CAPACITY_FLOOR_VO2);
+  }
+
+  function qolVitalityAt(condSlider, lifeSlider, age, events) {
+    const lifeNorm = lifeSlider / 100;
+    const condNorm = condSlider / 100;
+    const mix = 0.65 * lifeNorm + 0.35 * condNorm;
+    let vit = 0.45 + 0.50 * mix;
+    const vit100 = 0.05 + 0.45 * mix;
+    if (age > 30) {
+      const ageT = (age - 30) / 70;
+      const curveT = ageT * ageT * 0.5 + ageT * 0.5;
+      vit = vit - (vit - vit100) * curveT;
+    }
+    for (const ev of events) {
+      if (age < ev.modalAge) continue;
+      const yearsSince = age - ev.modalAge;
+      const acuteVitDrop = ev.drop * QOL_VIT_DROP_SCALAR;
+      const tauYears = ev.tau / 12;
+      const residualVit = acuteVitDrop * (1 - ev.recoveryFrac);
+      const dropAtAge = residualVit + (acuteVitDrop - residualVit) * Math.exp(-yearsSince / tauYears);
+      vit -= dropAtAge;
+    }
+    return Math.max(0, Math.min(1, vit));
+  }
+
+  function qolVitalityColor(v) {
+    const stops = [
+      { v: 0.00, r: 200, g: 25,  b: 55 },
+      { v: 0.25, r: 232, g: 75,  b: 40 },
+      { v: 0.45, r: 240, g: 145, b: 30 },
+      { v: 0.55, r: 60,  g: 155, b: 80 },
+      { v: 1.00, r: 15,  g: 130, b: 60 }
+    ];
+    for (let i = 0; i < stops.length - 1; i++) {
+      const a = stops[i], b = stops[i+1];
+      if (v >= a.v && v <= b.v) {
+        const t = (v - a.v) / (b.v - a.v);
+        const r = Math.round(a.r * (1 - t) + b.r * t);
+        const g = Math.round(a.g * (1 - t) + b.g * t);
+        const bl = Math.round(a.b * (1 - t) + b.b * t);
+        return `rgb(${r},${g},${bl})`;
+      }
+    }
+    return 'rgb(120,120,120)';
+  }
+
+  function qolNeurodegenOnset(condSlider, lifeSlider, riskSlider) {
+    const R = qolEffectiveRisk(condSlider, lifeSlider, riskSlider);
+    const ageAtFloor = 95, ageAtMax = 73;
+    const t = Math.max(0, Math.min(1, R / 1.00));
+    return { age: ageAtFloor + t * (ageAtMax - ageAtFloor), opacity: 1 };
+  }
+
+  const QOL_BANDS = [
+    { lo: 55, hi: 65, name: 'Endurance athlete' },
+    { lo: 40, hi: 55, name: 'Hard recreation' },
+    { lo: 30, hi: 40, name: 'Stairs without thinking' },
+    { lo: 22, hi: 30, name: 'Independent daily life' },
+    { lo: 18, hi: 22, name: 'Strained effort' },
+    { lo: 0,  hi: 18, name: 'Needs help' }
+  ];
+
+  const QOL_AGE_MIN = 30, QOL_AGE_MAX = 100;
+  const QOL_VO2_MIN = 0, QOL_VO2_MAX = 65;
+  const QOL_PAD = { l: 262, r: 36, t: 64, b: 68 };
+  const QOL_W = 1080, QOL_H = 560;
+  const QOL_CW = QOL_W - QOL_PAD.l - QOL_PAD.r;
+  const QOL_CH = QOL_H - QOL_PAD.t - QOL_PAD.b;
+
+  function qolXAge(age) { return QOL_PAD.l + ((age - QOL_AGE_MIN) / (QOL_AGE_MAX - QOL_AGE_MIN)) * QOL_CW; }
+  function qolYV(v) { return QOL_PAD.t + (1 - (v - QOL_VO2_MIN) / (QOL_VO2_MAX - QOL_VO2_MIN)) * QOL_CH; }
+
+  const qolParams = new URLSearchParams(window.location.search);
+  const QOL_PATIENT_LINE = (() => {
+    const name = qolParams.get('patient') || qolParams.get('patientName');
+    const age = Number(qolParams.get('age') || qolParams.get('patientAge'));
+    const vo2 = Number(qolParams.get('vo2') || qolParams.get('patientVo2'));
+    const source = qolParams.get('source') || qolParams.get('patientSource') || 'estimated';
+    if (!name || !Number.isFinite(age) || !Number.isFinite(vo2)) return null;
+    if (age < QOL_AGE_MIN || age > QOL_AGE_MAX || vo2 <= QOL_VO2_MIN || vo2 > QOL_VO2_MAX) return null;
+    return { name, age, vo2, source };
+  })();
+
+  function qolCondLabel(c) {
+    if (c <= 8) return 'Deconditioned';
+    if (c <= 28) return 'Below average';
+    if (c <= 38) return 'Average';
+    if (c <= 60) return 'Above average';
+    if (c <= 75) return 'Well-conditioned';
+    if (c <= 92) return 'Highly conditioned';
+    return 'Elite';
+  }
+
+  function qolLifeLabel(l) {
+    if (l <= 15) return 'Neglected';
+    if (l <= 40) return 'Below average';
+    if (l <= 60) return 'Maintained';
+    if (l <= 85) return 'Optimized';
+    return 'Highly optimized';
+  }
+
+  function qolRiskLabel(r) {
+    if (r <= 15) return 'Very low';
+    if (r <= 35) return 'Low';
+    if (r < 50) return 'Below average';
+    if (r <= 65) return 'Average';
+    if (r <= 85) return 'High';
+    return 'Very high';
+  }
+
+  const qolActiveOutcomes = { spared: true, cancer: false, cv: false, both: false };
+
+  const QOL_OUTCOME_SWATCH = {
+    spared: '#7A5628',
+    cancer: '#A44938',
+    cv: '#6F5A3A',
+    both: '#3F3A32'
+  };
+
+  function renderQol() {
+    const chart = document.getElementById('qolChart');
+    if (!chart) return;
+
+    const cond = +document.getElementById('qolCond').value;
+    const life = +document.getElementById('qolLife').value;
+    const risk = +document.getElementById('qolRisk').value;
+
+    document.getElementById('qolCondVal').textContent = qolCondLabel(cond);
+    document.getElementById('qolLifeVal').textContent = qolLifeLabel(life);
+    document.getElementById('qolRiskVal').textContent = qolRiskLabel(risk);
+
+    const R = qolEffectiveRisk(cond, life, risk);
+    const forks = qolActiveForks(R);
+    const outcomes = qolJointOutcomes(forks);
+    const neuroOnset = qolNeurodegenOnset(cond, life, risk);
+    const bandTints = [
+      'rgba(140,160,130,0.10)',
+      'rgba(160,165,140,0.12)',
+      'rgba(180,170,150,0.08)',
+      'rgba(195,160,125,0.12)',
+      'rgba(190,120,85,0.16)',
+      'rgba(170,75,70,0.20)'
+    ];
+
+    let s = '';
+
+    for (let i = 0; i < QOL_BANDS.length; i++) {
+      const b = QOL_BANDS[i];
+      const y0 = qolYV(b.hi), y1 = qolYV(b.lo);
+      const fill = bandTints[i] || 'rgba(10,10,11,0.02)';
+      s += `<rect x="${QOL_PAD.l}" y="${y0}" width="${QOL_CW}" height="${y1 - y0}" fill="${fill}"/>`;
+      if (i > 0) {
+        s += `<line x1="${QOL_PAD.l}" y1="${y0}" x2="${QOL_PAD.l + QOL_CW}" y2="${y0}" stroke="rgba(10,10,11,0.08)" stroke-width="0.5"/>`;
+      }
+      const yMid = (y0 + y1) / 2;
+      s += `<text x="${QOL_PAD.l - 44}" y="${yMid + 5}" text-anchor="end" style="fill:#3F3A32;font-size:14px;letter-spacing:0.1px;font-family:'Inter',sans-serif;font-weight:550">${b.name}</text>`;
+    }
+
+    for (const v of [0, 10, 20, 30, 40, 50, 60]) {
+      const y = qolYV(v);
+      s += `<line x1="${QOL_PAD.l - 4}" y1="${y}" x2="${QOL_PAD.l}" y2="${y}" class="ax-tick"/>`;
+      s += `<text x="${QOL_PAD.l - 8}" y="${y + 3}" text-anchor="end" class="ax-label">${v}</text>`;
+    }
+    s += `<text x="${QOL_PAD.l - 8}" y="${QOL_PAD.t - 26}" text-anchor="end" class="ax-label" style="font-size:14px;font-weight:600;fill:#3F3A32">VO2max</text>`;
+    s += `<text x="${QOL_PAD.l - 8}" y="${QOL_PAD.t - 7}" text-anchor="end" class="ax-label" style="font-size:12px;fill:#4A4A4D">mL/kg/min</text>`;
+
+    for (const a of [30, 40, 50, 60, 70, 80, 90, 100]) {
+      const x = qolXAge(a);
+      s += `<line x1="${x}" y1="${QOL_PAD.t + QOL_CH}" x2="${x}" y2="${QOL_PAD.t + QOL_CH + 4}" class="ax-tick"/>`;
+      s += `<text x="${x}" y="${QOL_PAD.t + QOL_CH + 18}" text-anchor="middle" class="ax-label">${a}</text>`;
+    }
+    s += `<text x="${QOL_PAD.l + QOL_CW / 2}" y="${QOL_PAD.t + QOL_CH + 45}" text-anchor="middle" class="ax-label" style="letter-spacing:2px;font-size:13px;font-weight:600">AGE</text>`;
+
+    const refPts = [];
+    for (let a = QOL_AGE_MIN; a <= QOL_AGE_MAX; a += 1) {
+      refPts.push(`${qolXAge(a)},${qolYV(qolTemplateAt(QOL_TEMPLATES.average, a))}`);
+    }
+    s += `<polyline points="${refPts.join(' ')}" class="ref-curve"/>`;
+
+    if (QOL_PATIENT_LINE) {
+      const patientPts = [];
+      const avgAtStart = qolTemplateAt(QOL_TEMPLATES.average, QOL_PATIENT_LINE.age);
+      for (let a = QOL_PATIENT_LINE.age; a <= QOL_AGE_MAX; a += 1) {
+        const shifted = QOL_PATIENT_LINE.vo2 + (qolTemplateAt(QOL_TEMPLATES.average, a) - avgAtStart);
+        patientPts.push(`${qolXAge(a)},${qolYV(Math.max(QOL_VO2_MIN, Math.min(QOL_VO2_MAX, shifted)))}`);
+      }
+      s += `<polyline points="${patientPts.join(' ')}" class="patient-curve"/>`;
+      s += `<circle cx="${qolXAge(QOL_PATIENT_LINE.age)}" cy="${qolYV(QOL_PATIENT_LINE.vo2)}" r="5" class="patient-marker"/>`;
+      const startLabelY = Math.max(QOL_PAD.t + 14, qolYV(QOL_PATIENT_LINE.vo2) - 10);
+      s += `<text x="${qolXAge(QOL_PATIENT_LINE.age) + 8}" y="${startLabelY}" class="patient-label">${QOL_PATIENT_LINE.name} start · age ${Math.round(QOL_PATIENT_LINE.age)} · VO2max ${QOL_PATIENT_LINE.vo2.toFixed(0)} mL/kg/min</text>`;
+      const terminalVo2 = QOL_PATIENT_LINE.vo2 + (qolTemplateAt(QOL_TEMPLATES.average, QOL_AGE_MAX) - avgAtStart);
+      s += `<text x="${qolXAge(95)}" y="${qolYV(Math.max(QOL_VO2_MIN, Math.min(QOL_VO2_MAX, terminalVo2))) - 8}" class="patient-label" text-anchor="end">${QOL_PATIENT_LINE.name} est.</text>`;
+    }
+
+    const outcomeSamples = outcomes.map(o => {
+      const pts = [];
+      for (let a = QOL_AGE_MIN; a <= QOL_AGE_MAX; a += 0.5) {
+        pts.push({
+          a,
+          x: qolXAge(a),
+          y: qolYV(qolCapacityForOutcome(cond, life, a, o.events)),
+          vit: qolVitalityAt(cond, life, a, o.events)
+        });
+      }
+      return { outcome: o, pts };
+    });
+
+    const probVisible = outcomeSamples.filter(({ outcome }) => outcome.p >= 0.005);
+    const visibleOutcomes = probVisible.filter(({ outcome }) => qolActiveOutcomes[outcome.id] !== false);
+    const dashStart = neuroOnset ? neuroOnset.age : 95;
+
+    for (const { outcome, pts } of visibleOutcomes) {
+      const isMain = outcome.id === 'spared';
+      if (isMain) {
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i], p1 = pts[i + 1];
+          const vitMid = (p0.vit + p1.vit) / 2;
+          const color = qolVitalityColor(vitMid);
+          const width = 2.4 + vitMid * 1.4;
+          s += `<line x1="${p0.x}" y1="${p0.y}" x2="${p1.x}" y2="${p1.y}" stroke="${color}" stroke-width="${width.toFixed(2)}" stroke-linecap="round"/>`;
+        }
+      } else {
+        const onsetAge = outcome.events.reduce((m, e) => Math.min(m, e.modalAge), Infinity);
+        const tail = pts.filter(p => p.a >= onsetAge - 0.25);
+        if (tail.length > 1) {
+          const vitAvg = tail.reduce((acc, p) => acc + p.vit, 0) / tail.length;
+          const color = qolVitalityColor(vitAvg);
+          const polyPts = tail.map(p => `${p.x},${p.y}`).join(' ');
+          s += `<polyline points="${polyPts}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4" opacity="0.92"/>`;
+          const onsetPt = tail[0];
+          s += `<circle cx="${onsetPt.x}" cy="${onsetPt.y}" r="3.2" fill="#FBF8F1" stroke="${color}" stroke-width="1.5"/>`;
+        }
+      }
+    }
+
+    forks.forEach(ev => {
+      const x = qolXAge(ev.modalAge);
+      s += `<line x1="${x}" y1="${QOL_PAD.t + 4}" x2="${x}" y2="${QOL_PAD.t + QOL_CH}" stroke="rgba(10,10,11,0.20)" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.7"/>`;
+      const sparedSamples = outcomeSamples.find(o => o.outcome.id === 'spared').pts;
+      const sample = sparedSamples.find(p => Math.abs(p.a - ev.modalAge) < 0.3);
+      if (sample) s += `<circle cx="${x}" cy="${sample.y}" r="3" class="event-marker"/>`;
+    });
+
+    const cloudLeft = qolXAge(Math.max(QOL_AGE_MIN, dashStart));
+    const cloudRight = QOL_PAD.l + QOL_CW;
+    const cloudW = Math.max(0, cloudRight - cloudLeft);
+    if (cloudW > 0) {
+      s += `<rect x="${cloudLeft}" y="${QOL_PAD.t}" width="${cloudW}" height="${QOL_CH}" fill="rgba(110,110,115,0.50)"/>`;
+      s += `<line x1="${cloudLeft}" y1="${QOL_PAD.t}" x2="${cloudLeft}" y2="${QOL_PAD.t + QOL_CH}" stroke="rgba(60,60,65,0.55)" stroke-width="1"/>`;
+    }
+
+    s += `<rect x="${QOL_PAD.l}" y="${QOL_PAD.t}" width="${QOL_CW}" height="${QOL_CH}" fill="none" stroke="rgba(10,10,11,0.16)" stroke-width="1"/>`;
+
+    chart.innerHTML = s;
+    renderQolLegend(probVisible);
+  }
+
+  function renderQolLegend(probVisibleOutcomes) {
+    const el = document.getElementById('qolLegend');
+    if (!el) return;
+    const order = ['spared', 'cancer', 'cv', 'both'];
+    const byId = Object.fromEntries(probVisibleOutcomes.map(o => [o.outcome.id, o]));
+    el.innerHTML = order.map(id => {
+      const entry = byId[id];
+      if (!entry) return '';
+      const { outcome, pts } = entry;
+      const last = pts[pts.length - 1];
+      const swatch = QOL_OUTCOME_SWATCH[outcome.id] || qolVitalityColor(last.vit);
+      const pct = Math.round(outcome.p * 100);
+      const active = qolActiveOutcomes[id] !== false;
+      return `<button class="qol-legend-toggle" data-outcome="${id}" data-active="${active}" type="button" role="switch" aria-checked="${active}" style="--swatch:${swatch}">
+        <span class="track" aria-hidden="true"></span>
+        <span class="label">${outcome.label}</span>
+        <span class="pct">${pct}%</span>
+      </button>`;
+    }).join('') + `<span class="qol-legend-ref" aria-hidden="true"><span class="dash"></span><span class="ref-label">Average American reference</span></span><span class="qol-legend-ref" aria-hidden="true"><span class="swatch"></span><span class="ref-label">Cognitive impairment window</span></span>`;
+  }
+
+  ['qolCond', 'qolLife', 'qolRisk'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.addEventListener('input', renderQol);
+  });
+
+  const qolLegend = document.getElementById('qolLegend');
+  if (qolLegend) {
+    qolLegend.addEventListener('click', e => {
+      const pill = e.target.closest('.qol-legend-toggle');
+      if (!pill) return;
+      const id = pill.dataset.outcome;
+      const otherActive = Object.entries(qolActiveOutcomes).some(([k, v]) => k !== id && v);
+      if (qolActiveOutcomes[id] !== false && !otherActive) return;
+      qolActiveOutcomes[id] = qolActiveOutcomes[id] === false;
+      renderQol();
+    });
+  }
+
+  document.querySelectorAll('.qol-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('qolCond').value = btn.dataset.c;
+      document.getElementById('qolLife').value = btn.dataset.l;
+      document.getElementById('qolRisk').value = btn.dataset.r;
+      renderQol();
+    });
+  });
+
+  renderQol();
+
+  /* ===== AI Chat ===== */
+  const CANNED = {
+    'why the statin': {
+      text: `Two reasons, specific to you.
+
+<em>First</em>, your ApoB is 98 and Lp(a) is 62 - both above goal. Lifestyle changes alone typically drop ApoB 15-20%. That would land you in the low 80s, still at goal's edge. The statin reliably gets you into the 70s.
+
+<em>Second</em>, Lp(a) is genetic. It doesn't move with diet or exercise at all. A statin doesn't lower Lp(a) either - but it drops every other atherogenic particle, which matters more when Lp(a) is high, not less.
+
+Dr. Thompson flagged ApoB as the single highest-sensitivity input in your cardiovascular risk model. That's why it's Decision 01.`,
+      src: '<b>Source:</b> Decision 01 · CVD risk model · Dr. Thompson\'s note'
+    },
+    'side effects': {
+      text: `Honest version, based on the rosuvastatin literature:
+
+Real risks (~1-3% of patients):
+• Muscle soreness or weakness - most common. Tell us if it persists beyond a few days.
+• Transient liver enzyme rise - why we'll recheck labs at 12 weeks.
+
+Uncommon (&lt;0.5%):
+• New-onset diabetes - small signal, mostly in people already prediabetic. Your A1c is 5.4, so this is low-concern.
+• Cognitive fuzziness - rare, reversible if it happens.
+
+<em>What to do:</em> If you notice anything that feels off, message here. We'd rather hear about it early.`,
+      src: '<b>Source:</b> Rosuvastatin prescribing information · CTT meta-analyses'
+    },
+    'how fast': {
+      text: `Different signals move on different clocks.
+
+<em>Week 2</em> - nothing dramatic. The statin is doing silent work on LDL.
+<em>Week 4-6</em> - your cardiac workup window. CAC + stress echo results come in.
+<em>Week 12</em> - labs. ApoB under 80 is the headline. LDL should drop ~40% from baseline.
+<em>November</em> - first annual pancreatic MRI.
+
+That matches the "What we're watching" section in your Plan tab.`,
+      src: '<b>Source:</b> Your plan checkpoints · published statin pharmacokinetics'
+    },
+    'message dr. thompson': {
+      text: `Happy to draft one. What's the context?
+
+I can route it to his inbasket as a direct message - he'll see it when he's back. Or if it's urgent, I can flag it to his on-call partner instead.`,
+      src: '<b>Source:</b> Care team routing rules'
+    },
+    'walk me through how my risk models combined': {
+      text: `Three domain models ran on your data: cardiovascular, cancer, and metabolic/autonomic.
+
+<em>Each produced a risk estimate and flagged its most-sensitive input.</em>
+
+• CVD flagged ApoB (highest-sensitivity variable) and the CAC data gap
+• Cancer flagged the ATM+ variant - NCCN surveillance trigger
+• Metabolic/autonomic flagged nothing - A1c, glucose, HRV, RHR, sleep all in range
+
+Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-driven PSA took rank 01 because you're seven years overdue for surveillance and the survival delta on early vs. late prostate cancer is enormous. The statin took rank 02 because lowering ApoB is the single biggest dial we can turn given your Lp(a). The CAC scan took rank 03 because it reclassifies cardiovascular risk for about half of patients in your zone - it tells us whether to push harder or hold steady on the lipid plan. Pancreatic surveillance is documented but doesn't start until age 50 per CAPS criteria.`,
+      src: '<b>Source:</b> Aleron Risk Framework v.2.4 · your domain model outputs'
+    }
+  };
+
+  function sendChat() {
+    const field = document.getElementById('chatField');
+    const text = field.value.trim();
+    if (!text) return;
+    askPreset(text);
+    field.value = '';
+  }
+
+  function askPreset(q) {
+    addUserMsg(q);
+    // Hide suggestion chips after first ask
+    const s = document.getElementById('suggest');
+    if (s) s.style.display = 'none';
+    // Typing indicator
+    setTimeout(() => {
+      const canned = matchCanned(q);
+      if (canned) addAIMsg(canned.text, canned.src);
+      else addAIMsg(`Good question. I'd need to check your record in more detail - give me a moment, or I can route this to Dr. Thompson's team if it needs their eyes.`, '<b>Source:</b> Pattern-matched against your plan + record');
+    }, 650);
+  }
+
+  function matchCanned(q) {
+    const l = q.toLowerCase();
+    for (const key of Object.keys(CANNED)) {
+      if (l.includes(key)) return CANNED[key];
+    }
+    return null;
+  }
+
+  function addUserMsg(text) {
+    const wrap = document.getElementById('chatWrap');
+    const el = document.createElement('div');
+    el.className = 'msg user';
+    el.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(text)}</div>`;
+    wrap.appendChild(el);
+    scrollChatBottom();
+  }
+  function addAIMsg(html, src) {
+    const wrap = document.getElementById('chatWrap');
+    const el = document.createElement('div');
+    el.className = 'msg ai';
+    el.innerHTML = `<div class="av">AI</div><div class="bubble">${html.replace(/\n/g, '<br>')}${src ? `<div class="src">${src}</div>` : ''}</div>`;
+    wrap.appendChild(el);
+    scrollChatBottom();
+  }
+  function scrollChatBottom() {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  }
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  /* ===== Team thread (direct physician) ===== */
+  function askTeamPreset(q) {
+    const wrap = document.getElementById('teamChatWrap');
+    if (!wrap) return;
+    const u = document.createElement('div');
+    u.className = 'msg user';
+    u.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(q)}</div>`;
+    wrap.appendChild(u);
+    setTimeout(() => {
+      const a = document.createElement('div');
+      a.className = 'msg ai';
+      a.innerHTML = `<div class="av">MT</div><div class="bubble">Got it - I'll take a look and get back to you within the day. If it's urgent, call the office line.<div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div></div>`;
+      wrap.appendChild(a);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 700);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  /* ===== Risk bottom sheet (You → Risk cards) ===== */
+  const RISK_SHEETS = {
+    cardiovascular: {
+      name: 'Cardiovascular',
+      swatch: 'var(--dom-cardiac)',
+      seed: `Your 10-year cardiovascular risk is <b>9.4%</b> at baseline - with the planned statin, it drops toward <b>6.2%</b>. The drivers: ApoB <b>98</b> mg/dL (goal &lt;80), Lp(a) <b>62</b> mg/dL (goal &lt;30), age 47, and paternal-side GI cancer family history. <b>ApoB is the most sensitive lever</b>, which is why Decision 01 is the statin. Lp(a) is genetic and won't move - but lowering every other atherogenic particle matters more when Lp(a) is high, not less.`,
+      src: `Based on: your lab panel (Apr 10), intake, genetic report · model: PREVENT (AHA 2023)`,
+      presets: [
+        'Walk me through why ApoB matters more than LDL',
+        "What does my Lp(a) of 62 actually mean?",
+        'How much does the statin really lower my risk?',
+        'What would I expect to see on the CAC scan?',
+      ],
+    },
+    cancer: {
+      name: 'Cancer',
+      swatch: 'var(--dom-cancer)',
+      seed: `Your overall cancer risk is driven by a single finding: <b>ATM c.8147T&gt;C (pathogenic)</b>, heterozygous. ATM raises your lifetime risk of pancreatic, breast, and (to a lesser degree) prostate cancer. The clinically actionable one at 47 is <b>pancreatic</b> - which is why Decision 03 is annual pancreatic MRI starting November. Your paternal grandfather's GI cancer (early 80s) reinforces the surveillance stance but doesn't change it.`,
+      src: `Based on: Invitae 163-gene panel (Feb 3, 2026) · guideline: NCCN ATM+ surveillance`,
+      presets: [
+        "What are the odds I'll actually get pancreatic cancer?",
+        "Why MRI instead of CT or ultrasound?",
+        "Should my daughter Senna get tested?",
+        "Does ATM affect any other cancer risks I should track?",
+      ],
+    },
+    metabolic: {
+      name: 'Metabolic & autonomic',
+      swatch: 'var(--dom-metab)',
+      seed: `Everything in this domain is <b>in range</b>. A1c <b>5.4%</b>, fasting glucose <b>88</b>, HRV <b>52 ms</b>, RHR <b>52 bpm</b>, sleep <b>7h 10m</b>. No trajectory drift in the last 30 days of wearable data. This is why there's no metabolic action on your plan - <b>if it ain't broke, we don't fix it</b>. We'll re-run this model annually; if A1c creeps up or HRV trends down for a quarter, it moves onto the decision list.`,
+      src: `Based on: lab panel (Apr 10), Apple Watch wearable (30d)`,
+      presets: [
+        "What's the earliest sign something's drifting metabolically?",
+        "My RHR is low - is that really nothing to worry about?",
+        "Would continuous glucose monitoring add anything?",
+        'What if I stopped training for 6 weeks - would this move?',
+      ],
+    },
+    neuro: {
+      name: 'Neuro & cognitive',
+      swatch: 'var(--dom-neuro)',
+      seed: `Stable. The key drivers of long-horizon cognitive risk are sleep, cardiovascular health, and genetics. Your sleep is <b>7h 10m</b> average with <b>1h 20m deep</b> - in the favorable range. Your cardiovascular plan (statin + CAC) is also the single biggest lever for brain health, since the same arteries feed both. Your in-laws' dementia isn't genetically yours - different bloodline. Nothing to do today. <b>Annual re-run</b> is the longest-horizon lever we have.`,
+      src: `Based on: wearable sleep data (30d), cardiovascular model output, family history intake`,
+      presets: [
+        "How does cardiovascular health affect dementia risk?",
+        "Would I benefit from an APOE test?",
+        "What's the first early sign I should watch for?",
+        "Does my in-laws' dementia raise Senna's risk?",
+      ],
+    },
+  };
+
+  function openRiskSheet(key) {
+    const cfg = RISK_SHEETS[key];
+    if (!cfg) return;
+    document.getElementById('rsName').textContent = cfg.name;
+    document.getElementById('rsSwatch').style.background = cfg.swatch;
+    document.getElementById('rsSeed').innerHTML = cfg.seed + `<div class="src">${cfg.src}</div>`;
+    const presetsEl = document.getElementById('rsPresets');
+    presetsEl.innerHTML = '';
+    cfg.presets.forEach(q => {
+      const b = document.createElement('button');
+      b.textContent = q;
+      b.onclick = () => submitRiskPreset(q, key);
+      presetsEl.appendChild(b);
+    });
+    document.getElementById('riskSheet').classList.add('open');
+    document.getElementById('riskSheetBackdrop').classList.add('open');
+  }
+  function closeRiskSheet() {
+    document.getElementById('riskSheet').classList.remove('open');
+    document.getElementById('riskSheetBackdrop').classList.remove('open');
+  }
+  function submitRiskPreset(q, key) {
+    // Route into the Aleron AI chat, pre-seeded with the domain context
+    closeRiskSheet();
+    gotoTab('messages');
+    gotoSub('messages', 'meridian');
+    setTimeout(() => askPreset(q), 120);
+  }
+  function sendRiskMessage() {
+    const el = document.getElementById('rsInput');
+    const text = (el.value || '').trim();
+    if (!text) return;
+    el.value = '';
+    closeRiskSheet();
+    gotoTab('messages');
+    gotoSub('messages', 'meridian');
+    setTimeout(() => askPreset(text), 120);
+  }
+  // ESC closes sheet
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeRiskSheet();
+  });
+
+  /* ===== Audio player (physician message) ===== */
+  const audio = document.getElementById('mdAudio');
+  const playBtn = document.getElementById('apPlay');
+  const fill = document.getElementById('apFill');
+  const thumb = document.getElementById('apThumb');
+  const timeEl = document.getElementById('apTime');
+  const durEl = document.getElementById('audioDuration');
+
+  function fmtTime(s) {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
+  }
+
+  if (audio) {
+    audio.addEventListener('loadedmetadata', () => {
+      if (durEl) durEl.textContent = fmtTime(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+      if (fill)  fill.style.width = pct + '%';
+      if (thumb) thumb.style.left = pct + '%';
+      if (timeEl) timeEl.textContent = fmtTime(audio.currentTime);
+    });
+    audio.addEventListener('ended', () => {
+      if (playBtn) playBtn.classList.remove('playing');
+    });
+    audio.addEventListener('play', () => {
+      if (playBtn) playBtn.classList.add('playing');
+    });
+    audio.addEventListener('pause', () => {
+      if (playBtn) playBtn.classList.remove('playing');
+    });
+  }
+
+  function togglePlay() {
+    if (!audio) return;
+    if (audio.paused) audio.play().catch(e => toast('Select play to start'));
+    else audio.pause();
+  }
+
+  function seekAudio(event) {
+    if (!audio || !audio.duration) return;
+    const track = event.currentTarget;
+    const rect = track.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    audio.currentTime = pct * audio.duration;
+  }
+
+  function toggleTranscript(btn) {
+    btn.classList.toggle('open');
+    const panel = document.getElementById('mdTranscript');
+    if (panel) panel.classList.toggle('open');
+    const lbl = btn.querySelector('.lbl');
+    if (lbl) lbl.textContent = panel && panel.classList.contains('open') ? 'Hide transcript' : 'Read transcript';
+  }
+</script>
+</body>
+</html>
