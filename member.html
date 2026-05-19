@@ -592,12 +592,25 @@
     background: var(--bg-panel);
     border: 1px solid var(--border-subtle);
     border-radius: 8px;
+    color: inherit;
+    display: block;
+    font: inherit;
     margin-top: 10px;
     padding: 14px;
+    text-align: left;
     transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
+    width: 100%;
   }
   .board-card.active-work {
     border-color: var(--border);
+    cursor: pointer;
+  }
+  .board-card.active-work:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+  .board-card.active-work:active {
+    transform: translateY(1px);
   }
   .board-card.locked-card {
     background: rgba(239,234,224,0.68);
@@ -644,10 +657,76 @@
   .board-card.locked-card .board-detail {
     color: rgba(74,74,77,0.78);
   }
-  .board-card-actions {
-    margin-top: 12px;
+
+  .plan-modal-backdrop {
+    background: rgba(10,10,11,0.24);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 0.18s;
+    z-index: 180;
   }
-  .board-done {
+  .plan-modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .plan-modal {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 50px rgba(10,10,11,0.18);
+    left: 50%;
+    max-height: min(720px, calc(100vh - 32px));
+    max-width: 720px;
+    opacity: 0;
+    overflow: auto;
+    padding: 20px;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -48%);
+    transition: opacity 0.18s, transform 0.18s;
+    width: min(calc(100vw - 32px), 720px);
+    z-index: 181;
+  }
+  .plan-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+  }
+  .plan-modal-top {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .plan-modal-kicker {
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .plan-modal h2 {
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.04;
+    margin: 0;
+  }
+  .plan-modal-actions {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+  .plan-modal-complete,
+  .plan-modal-confirm-btn,
+  .plan-modal-cancel {
     background: transparent;
     border: 1px solid var(--border);
     border-radius: var(--radius-xs);
@@ -660,10 +739,90 @@
     padding: 6px 10px;
     transition: background 0.12s, border-color 0.12s, color 0.12s;
   }
-  .board-done:hover {
+  .plan-modal-complete:hover,
+  .plan-modal-confirm-btn:hover,
+  .plan-modal-cancel:hover {
     background: var(--bg-surface);
     border-color: var(--border-strong);
     color: var(--text);
+  }
+  .plan-modal-confirm-btn {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg-panel);
+  }
+  .plan-modal-confirm-btn:hover {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+    color: var(--bg-panel);
+  }
+  .plan-modal-close {
+    align-items: center;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+  }
+  .plan-modal-close:hover {
+    background: var(--bg-surface);
+    color: var(--text);
+  }
+  .plan-modal-confirm {
+    background: rgba(239,234,224,0.5);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    display: none;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+  .plan-modal-confirm.open {
+    display: grid;
+  }
+  .plan-modal-confirm p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .plan-modal-confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .plan-modal-body {
+    display: grid;
+    gap: 14px;
+  }
+  .plan-modal-summary {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .plan-modal-section {
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 5px;
+    padding-top: 14px;
+  }
+  .plan-modal-section b {
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .plan-modal-section span {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
   }
 
   .act-hero {
@@ -1588,6 +1747,13 @@
   }
 
   @media (max-width: 800px) {
+    .plan-modal-top {
+      display: grid;
+    }
+    .plan-modal-actions {
+      justify-content: space-between;
+      width: 100%;
+    }
     .qol-controls {
       grid-template-columns: 1fr;
     }
@@ -2523,27 +2689,18 @@
             <div class="board-lane-title">Top priorities</div>
             <div class="board-count">3</div>
           </div>
-          <div class="board-card active-work">
+          <button class="board-card active-work" type="button" data-plan-card="psa" aria-haspopup="dialog">
             <div class="board-title">PSA surveillance starts now</div>
             <div class="board-detail">ATM means the prostate screening cadence should already be active. This is the clearest immediate gap.</div>
-            <div class="board-card-actions">
-              <button class="board-done" type="button">Mark done</button>
-            </div>
-          </div>
-          <div class="board-card active-work">
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="lpa" aria-haspopup="dialog">
             <div class="board-title">Lower modifiable risk around high Lp(a)</div>
             <div class="board-detail">Lp(a) will not move much with lifestyle, so the plan focuses on ApoB and LDL lowering.</div>
-            <div class="board-card-actions">
-              <button class="board-done" type="button">Mark done</button>
-            </div>
-          </div>
-          <div class="board-card active-work">
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="cac" aria-haspopup="dialog">
             <div class="board-title">Use CAC to guide intensity</div>
             <div class="board-detail">The result determines whether the current statin plan is enough or needs escalation.</div>
-            <div class="board-card-actions">
-              <button class="board-done" type="button">Mark done</button>
-            </div>
-          </div>
+          </button>
         </div>
 
         <div class="board-lane locked" data-lane="review">
@@ -3108,6 +3265,43 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
+<!-- Plan priority modal -->
+<div class="plan-modal-backdrop" id="planModalBackdrop" onclick="closePlanModal()"></div>
+<div class="plan-modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" aria-describedby="planModalSummary">
+  <div class="plan-modal-top">
+    <div>
+      <div class="plan-modal-kicker">Top priority</div>
+      <h2 id="planModalTitle">Priority details</h2>
+    </div>
+    <div class="plan-modal-actions">
+      <button class="plan-modal-complete" id="planModalComplete" type="button">Mark as complete</button>
+      <button class="plan-modal-close" type="button" onclick="closePlanModal()" aria-label="Close">×</button>
+    </div>
+  </div>
+  <div class="plan-modal-confirm" id="planModalConfirm">
+    <p>Mark this priority as complete and move it to Physician review? It will stay there until Dr. Thompson reviews and confirms it.</p>
+    <div class="plan-modal-confirm-actions">
+      <button class="plan-modal-confirm-btn" id="planModalConfirmBtn" type="button">Confirm completion</button>
+      <button class="plan-modal-cancel" id="planModalCancel" type="button">Keep open</button>
+    </div>
+  </div>
+  <div class="plan-modal-body">
+    <p class="plan-modal-summary" id="planModalSummary"></p>
+    <div class="plan-modal-section">
+      <b>Why this matters</b>
+      <span id="planModalWhy"></span>
+    </div>
+    <div class="plan-modal-section">
+      <b>What to do</b>
+      <span id="planModalDo"></span>
+    </div>
+    <div class="plan-modal-section">
+      <b>What happens next</b>
+      <span id="planModalNext"></span>
+    </div>
+  </div>
+</div>
+
 <!-- Risk bottom sheet (opens from You → Risk cards) -->
 <div class="risk-sheet-backdrop" id="riskSheetBackdrop" onclick="closeRiskSheet()"></div>
 <div class="risk-sheet" id="riskSheet" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
@@ -3185,7 +3379,29 @@
   function toggleDecision(el) { el.classList.toggle('open'); }
   function toggleData(el) { el.classList.toggle('open'); }
 
-  /* ===== Plan board movement ===== */
+  /* ===== Plan board modal + movement ===== */
+  const PLAN_CARD_DETAILS = {
+    psa: {
+      summary: 'This priority is about getting the prostate baseline started now, rather than waiting for the next annual planning cycle.',
+      why: 'The ATM finding changes the screening cadence. A current PSA and exam give Dr. Thompson a clean baseline and make the next decision straightforward.',
+      do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
+      next: 'Once the baseline is complete, it moves to Physician review. Normal results confirm the annual cadence. Abnormal results trigger urology follow-up.'
+    },
+    lpa: {
+      summary: 'This priority focuses on the modifiable part of your cardiovascular risk while acknowledging that Lp(a) itself usually does not move much.',
+      why: 'High Lp(a) raises baseline risk, so the practical lever is lowering ApoB and LDL as reliably as possible.',
+      do: 'Start rosuvastatin 5 mg as directed, track side effects, and keep the planned lipid recheck so the response can be measured.',
+      next: 'After completion, Dr. Thompson reviews tolerance and follow-up labs before deciding whether the dose should stay the same or increase.'
+    },
+    cac: {
+      summary: 'This priority uses the coronary calcium scan to decide how intense the prevention plan needs to be.',
+      why: 'CAC helps separate a simple prevention plan from one that should be more aggressive because calcium is already visible in the arteries.',
+      do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
+      next: 'The result goes to Physician review and anchors the next cardiovascular decision, including whether the current statin plan is enough.'
+    }
+  };
+  let activePlanCard = null;
+
   function initPlanBoard() {
     const board = document.querySelector('.plan-board');
     if (!board || board.dataset.ready === 'true') return;
@@ -3193,32 +3409,76 @@
 
     board.querySelectorAll('.board-card').forEach((card, index) => {
       card.id = card.id || `plan-board-card-${index}`;
-      card.removeAttribute('tabindex');
       card.draggable = false;
     });
 
-    board.querySelectorAll('.board-done').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        markBoardCardDone(btn.closest('.board-card'));
-      });
+    board.querySelectorAll('.board-card.active-work').forEach(card => {
+      card.addEventListener('click', () => openPlanModal(card));
     });
 
+    document.getElementById('planModalComplete')?.addEventListener('click', showPlanCompleteConfirm);
+    document.getElementById('planModalConfirmBtn')?.addEventListener('click', confirmPlanComplete);
+    document.getElementById('planModalCancel')?.addEventListener('click', hidePlanCompleteConfirm);
     updateBoardCounts();
+  }
+
+  function openPlanModal(card) {
+    if (!card || !card.classList.contains('active-work')) return;
+    const key = card.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    if (!details) return;
+    activePlanCard = card;
+    document.getElementById('planModalTitle').textContent = getBoardCardTitle(card);
+    document.getElementById('planModalSummary').textContent = details.summary;
+    document.getElementById('planModalWhy').textContent = details.why;
+    document.getElementById('planModalDo').textContent = details.do;
+    document.getElementById('planModalNext').textContent = details.next;
+    hidePlanCompleteConfirm();
+    document.getElementById('planModal')?.classList.add('open');
+    document.getElementById('planModalBackdrop')?.classList.add('open');
+    document.getElementById('planModalComplete')?.focus();
+  }
+
+  function closePlanModal() {
+    document.getElementById('planModal')?.classList.remove('open');
+    document.getElementById('planModalBackdrop')?.classList.remove('open');
+    hidePlanCompleteConfirm();
+    activePlanCard = null;
+  }
+
+  function showPlanCompleteConfirm() {
+    document.getElementById('planModalConfirm')?.classList.add('open');
+    document.getElementById('planModalConfirmBtn')?.focus();
+  }
+
+  function hidePlanCompleteConfirm() {
+    document.getElementById('planModalConfirm')?.classList.remove('open');
+  }
+
+  function confirmPlanComplete() {
+    if (!activePlanCard) return;
+    const card = activePlanCard;
+    closePlanModal();
+    markBoardCardDone(card);
   }
 
   function markBoardCardDone(card) {
     if (!card) return;
     const reviewLane = document.querySelector('.board-lane[data-lane="review"]');
     if (!reviewLane) return;
-    card.classList.remove('active-work');
-    card.classList.add('waiting');
-    card.querySelector('.board-card-actions')?.remove();
-    const detail = card.querySelector('.board-detail');
-    if (detail) detail.textContent = 'Completed by the patient. Waiting for physician review and confirmation.';
-    reviewLane.appendChild(card);
+    const reviewCard = document.createElement('div');
+    reviewCard.className = 'board-card waiting';
+    const title = document.createElement('div');
+    title.className = 'board-title';
+    title.textContent = getBoardCardTitle(card);
+    const detail = document.createElement('div');
+    detail.className = 'board-detail';
+    detail.textContent = 'Completed by the patient. Waiting for physician review and confirmation.';
+    reviewCard.append(title, detail);
+    card.remove();
+    reviewLane.appendChild(reviewCard);
     updateBoardCounts();
-    toast(`${getBoardCardTitle(card)} is waiting for physician review.`);
+    toast(`${title.textContent} is waiting for physician review.`);
   }
 
   function updateBoardCounts() {
@@ -3932,7 +4192,10 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
   // ESC closes sheet
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeRiskSheet();
+    if (e.key === 'Escape') {
+      closePlanModal();
+      closeRiskSheet();
+    }
   });
 
   /* ===== Audio player (physician message) ===== */
