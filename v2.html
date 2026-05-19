@@ -133,7 +133,15 @@ img, video { max-width: 100%; height: auto; display: block; }
   font-style: italic;
   letter-spacing: -0.025em;
 }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: 500;
   padding: 11px 20px;
@@ -142,6 +150,14 @@ img, video { max-width: 100%; height: auto; display: block; }
   color: #fff;
   text-decoration: none;
   transition: all 0.2s var(--ease);
+}
+.nav-cta.primary {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+.nav-cta.secondary {
+  background: rgba(255,255,255,0.04);
 }
 .nav-cta:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .nav-link {
@@ -1765,14 +1781,15 @@ footer {
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <a href="#top" class="nav-brand">Aleron <span class="md-tag">MD</span></a>
-  <div style="display:flex;align-items:center;">
+  <div class="nav-actions">
     <a href="https://yimjason01-blip.github.io/qol-three-slider/aleron.html" class="nav-link">Quality of Life</a>
-    <a href="#apply" class="nav-cta">Apply</a>
+    <a href="#apply" class="nav-cta primary">Join</a>
+    <a href="login.html" class="nav-cta secondary">Login</a>
   </div>
 </nav>
 
 <div class="mobile-sticky-cta" aria-label="Mobile apply actions">
-  <a class="primary" href="#apply">Apply for membership</a>
+  <a class="primary" href="#apply">Join</a>
   <a class="secondary" href="#demo">Demo</a>
 </div>
 
