@@ -19,10 +19,10 @@ Apply the member portal board updates to the legacy landing repo that backs the 
 
 - The visible label now reads Patient Portal.
 - Upcoming contains six locked, muted cards with lock icons and no patient actions.
-- Top priorities contains three patient-action cards that open a detail modal.
+- Top priorities contains three patient-action cards with patient icons that open a detail modal.
 - The detail modal has a top-level Mark as complete action and an inline confirmation step.
-- Confirming completion moves the priority into Physician review as a waiting item.
-- Physician review cards are static waiting items.
+- Confirming completion moves the priority into Physician review as a waiting item with a stethoscope icon.
+- Physician review cards are static waiting items with stethoscope icons.
 
 ## Verification
 
