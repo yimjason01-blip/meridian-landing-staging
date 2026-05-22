@@ -549,6 +549,61 @@
   .plan-status p:last-child {
     margin-bottom: 0;
   }
+  .strategy-video-card {
+    max-width: 760px;
+    margin: 8px 0 18px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(63,58,50,0.08);
+  }
+  .strategy-video-head {
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .strategy-video-eyebrow {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  .strategy-video-title {
+    margin: 0;
+    color: var(--text);
+    font-family: 'Source Serif 4', serif;
+    font-size: 23px;
+    line-height: 1.18;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .strategy-video-sub {
+    margin: 7px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .strategy-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #191714;
+  }
+  .strategy-video-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px 14px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .strategy-video-meta strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
   .plan-board {
     display: grid;
     gap: 12px;
@@ -1980,12 +2035,20 @@
     border-radius: 16px 16px 0 0;
     z-index: 99;
     transform: translateY(100%);
-    transition: transform .22s cubic-bezier(.2,.8,.2,1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform .22s cubic-bezier(.2,.8,.2,1), opacity .18s, visibility .18s;
     max-height: 86vh;
     display: flex; flex-direction: column;
     box-shadow: 0 -18px 54px rgba(10,10,11,0.22);
   }
-  .risk-sheet.open { transform: translateY(0); }
+  .risk-sheet.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
   .rs-handle {
     width: 36px; height: 4px; border-radius: 2px;
     background: var(--border-strong);
@@ -2652,6 +2715,21 @@
 
     <!-- ---- SUBSTATE: MESSAGE ---- -->
     <div class="substate active" id="plan-message">
+      <section class="strategy-video-card" aria-label="Doctor initial assessment video">
+        <div class="strategy-video-head">
+          <div class="strategy-video-eyebrow">Initial assessment</div>
+          <h2 class="strategy-video-title">Dr. Thompson’s video summary</h2>
+          <p class="strategy-video-sub">A short physician review of what matters now, what can wait, and how the first week of the plan should feel.</p>
+        </div>
+        <video class="strategy-video" controls playsinline preload="metadata" poster="assets/video/doctor-initial-assessment-poster.jpg">
+          <source src="assets/video/doctor-initial-assessment.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="strategy-video-meta">
+          <span><strong>Dr. Nathan Thompson</strong> · Aleron MD</span>
+          <span>1:07</span>
+        </div>
+      </section>
       <div class="plan-status">
         <p>Your main findings are straightforward: the ATM variant changes your cancer surveillance cadence, and elevated Lp(a) changes how aggressively we manage cardiovascular risk. The strategy is to act on the few things that matter now, then use the next results to decide whether the plan can stay simple or needs to intensify.</p>
         <p>This week, the work is manageable: complete baseline PSA surveillance, start rosuvastatin, and choose a time for the coronary calcium scan. Longer-horizon items, including genetic counseling, pancreatic surveillance at age 50, and the 8-week lipid recheck, stay organized in the plan without becoming today's burden.</p>
