@@ -2762,9 +2762,16 @@
           </button>
         </div>
 
+        <div class="board-lane locked" data-lane="doing">
+          <div class="board-lane-head">
+            <div class="board-lane-title">Doing</div>
+            <div class="board-count">0</div>
+          </div>
+        </div>
+
         <div class="board-lane locked" data-lane="review">
           <div class="board-lane-head">
-            <div class="board-lane-title">Physician review</div>
+            <div class="board-lane-title">Done/Physician Review</div>
             <div class="board-count">0</div>
           </div>
         </div>
@@ -3326,7 +3333,7 @@
     </div>
   </div>
   <div class="plan-modal-confirm" id="planModalConfirm">
-    <p>Mark this priority as complete and move it to Physician review? It will stay there until Dr. Thompson reviews and confirms it.</p>
+    <p>Mark this priority as complete and move it to Done/Physician Review? It will stay there until Dr. Thompson reviews and confirms it.</p>
     <div class="plan-modal-confirm-actions">
       <button class="plan-modal-confirm-btn" id="planModalConfirmBtn" type="button">Confirm completion</button>
       <button class="plan-modal-cancel" id="planModalCancel" type="button">Keep open</button>
@@ -3525,7 +3532,7 @@
     card.remove();
     reviewLane.appendChild(reviewCard);
     updateBoardCounts();
-    toast(`${title.textContent} is waiting for physician review.`);
+    toast(`${title.textContent} moved to Done/Physician Review.`);
   }
 
   function updateBoardCounts() {
