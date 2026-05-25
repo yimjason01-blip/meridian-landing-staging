@@ -2779,36 +2779,24 @@
             <div class="board-lane-title">Top priorities</div>
             <div class="board-count">3</div>
           </div>
-          <button class="board-card active-work" type="button" data-plan-card="psa" aria-haspopup="dialog">
-            <div class="board-title">PSA surveillance starts now</div>
-            <div class="board-detail">ATM means the prostate screening cadence should already be active. This is the clearest immediate gap.</div>
-          </button>
-          <button class="board-card active-work" type="button" data-plan-card="lpa" aria-haspopup="dialog">
-            <div class="board-title">Lower modifiable risk around high Lp(a)</div>
-            <div class="board-detail">Lp(a) will not move much with lifestyle, so the plan focuses on ApoB and LDL lowering.</div>
-          </button>
           <button class="board-card active-work" type="button" data-plan-card="cac" aria-haspopup="dialog">
-            <div class="board-title">Use CAC to guide intensity</div>
-            <div class="board-detail">The result determines whether the current statin plan is enough or needs escalation.</div>
+            <div class="board-title">CAC Scan</div>
+            <div class="board-detail">Schedule the coronary calcium scan so the lipid plan has a clearer baseline.</div>
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="psa" aria-haspopup="dialog">
+            <div class="board-title">PSA baseline</div>
+            <div class="board-detail">Complete the baseline prostate screening now so future surveillance has a clean comparison point.</div>
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="colonoscopy" aria-haspopup="dialog">
+            <div class="board-title">Colonoscopy</div>
+            <div class="board-detail">Get the colonoscopy scheduled and close the most important cancer-screening gap.</div>
           </button>
         </div>
 
         <div class="board-lane locked" data-lane="review">
           <div class="board-lane-head">
             <div class="board-lane-title">Physician review</div>
-            <div class="board-count">3</div>
-          </div>
-          <div class="board-card waiting">
-            <div class="board-title">Dr. Thompson reviews prostate baseline</div>
-            <div class="board-detail">Normal results confirm annual cadence. Abnormal results trigger urology follow-up.</div>
-          </div>
-          <div class="board-card waiting">
-            <div class="board-title">Decide whether to intensify cardiac prevention</div>
-            <div class="board-detail">CAC anchors the next 5 years of cardiovascular decisions.</div>
-          </div>
-          <div class="board-card waiting">
-            <div class="board-title">Statin tolerance review</div>
-            <div class="board-detail">The team checks for side effects before dose escalation.</div>
+            <div class="board-count">0</div>
           </div>
         </div>
       </div>
@@ -3471,23 +3459,23 @@
 
   /* ===== Plan board modal + movement ===== */
   const PLAN_CARD_DETAILS = {
-    psa: {
-      summary: 'This priority is about getting the prostate baseline started now, rather than waiting for the next annual planning cycle.',
-      why: 'The ATM finding changes the screening cadence. A current PSA and exam give Dr. Thompson a clean baseline and make the next decision straightforward.',
-      do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
-      next: 'Once the baseline is complete, it moves to Physician review. Normal results confirm the annual cadence. Abnormal results trigger urology follow-up.'
-    },
-    lpa: {
-      summary: 'This priority focuses on the modifiable part of your cardiovascular risk while acknowledging that Lp(a) itself usually does not move much.',
-      why: 'High Lp(a) raises baseline risk, so the practical lever is lowering ApoB and LDL as reliably as possible.',
-      do: 'Start rosuvastatin 5 mg as directed, track side effects, and keep the planned lipid recheck so the response can be measured.',
-      next: 'After completion, Dr. Thompson reviews tolerance and follow-up labs before deciding whether the dose should stay the same or increase.'
-    },
     cac: {
       summary: 'This priority uses the coronary calcium scan to decide how intense the prevention plan needs to be.',
       why: 'CAC helps separate a simple prevention plan from one that should be more aggressive because calcium is already visible in the arteries.',
       do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
-      next: 'The result goes to Physician review and anchors the next cardiovascular decision, including whether the current statin plan is enough.'
+      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.'
+    },
+    psa: {
+      summary: 'This priority is about getting the prostate baseline started now, rather than waiting for the next annual planning cycle.',
+      why: 'The ATM finding changes the screening cadence. A current PSA and exam give Dr. Thompson a clean baseline and make the next decision straightforward.',
+      do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
+      next: 'Once the baseline is complete, normal results confirm the annual cadence. Abnormal results trigger urology follow-up.'
+    },
+    colonoscopy: {
+      summary: 'This priority closes the most important colon-cancer screening gap in the plan.',
+      why: 'A colonoscopy gives the team direct visibility and can remove precancerous polyps during the same procedure.',
+      do: 'Choose a GI appointment or scheduling window, confirm prep instructions, and complete the colonoscopy.',
+      next: 'The result sets the follow-up interval and determines whether any pathology or GI review is needed.'
     }
   };
   let activePlanCard = null;
