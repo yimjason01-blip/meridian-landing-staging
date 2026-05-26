@@ -1292,6 +1292,59 @@
   }
   .care-thread-panel .chat-wrap { padding: 14px 12px 4px; }
   .care-suggest.suggest { padding: 0; }
+  .care-chat-shell.ai-chat-shell {
+    min-height: 62vh;
+  }
+  .care-thread-pane.ai-thread-pane {
+    gap: 0;
+    padding-top: 10px;
+  }
+  .care-pane-card {
+    margin: 0 10px 10px;
+    padding: 12px;
+  }
+  .care-pane-card .care-head {
+    margin-bottom: 10px;
+  }
+  .care-pane-card .care-status {
+    font-size: 10.5px;
+    padding: 5px 8px;
+  }
+  .care-principles-compact {
+    gap: 6px;
+  }
+  .care-principles-compact .care-principle {
+    padding: 8px 9px;
+  }
+  .care-pane-block {
+    border-bottom: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 8px;
+    margin: 0 10px 10px;
+    padding-bottom: 12px;
+  }
+  .care-route-grid-compact .care-route-card {
+    padding: 9px 10px;
+  }
+  .care-route-grid-compact .care-route-card b {
+    font-size: 12.5px;
+    margin-bottom: 2px;
+  }
+  .care-route-grid-compact .care-route-card span {
+    font-size: 11.5px;
+  }
+  .care-history-list .ai-history-item.thread-pill.active {
+    background: rgba(111,74,32,0.44);
+  }
+  .care-thread-context.ai-thread-context {
+    margin-bottom: 10px;
+  }
+  .care-chat-wrap.ai-chat-wrap {
+    min-height: 180px;
+  }
+  .care-suggest.ai-suggest {
+    padding-bottom: 12px;
+  }
   @media (max-width: 520px) {
     .plan-modal-chat-grid,
     .care-route-grid { grid-template-columns: 1fr; }
@@ -3488,60 +3541,59 @@
       <div style="padding: 4px 16px 0">
         <div class="screen-eyebrow">Care team inbox</div>
         <h1 class="screen-title" style="margin-bottom: 8px">Message Dr. Thompson.</h1>
-        <p class="screen-subtitle" style="margin-bottom: 14px">A clinical inbox for decisions, symptoms, results, and plan changes. Scheduling stays in Appointments. Explainers go to Aleron AI.</p>
+        <p class="screen-subtitle" style="margin-bottom: 14px">Topic history on the left. The selected clinical thread stays on the right with its routing context, status, and next reply.</p>
       </div>
 
-      <div class="care-inbox">
-        <section class="care-card care-overview" aria-label="Doctor message rules">
-          <div class="care-head">
-            <div class="care-identity">
-              <div class="care-avatar">MT</div>
-              <div>
-                <div class="care-name">Dr. Marcus Thompson</div>
-                <div class="care-role">Primary care · Aleron MD care team</div>
+      <div class="ai-chat-shell care-chat-shell" aria-label="Doctor message chat">
+        <aside class="ai-history-rail care-history-rail" aria-label="Doctor topic history">
+          <div class="ai-history-head">
+            <span>History</span>
+            <button type="button" onclick="startDoctorTopic('plan')" aria-label="Start new doctor thread">+</button>
+          </div>
+          <div class="thread-list ai-history-list care-history-list" id="teamThreadList" aria-label="Doctor topic history"></div>
+        </aside>
+
+        <section class="ai-thread-pane care-thread-pane" aria-label="Selected doctor thread">
+          <section class="care-card care-overview care-pane-card" aria-label="Doctor message rules">
+            <div class="care-head">
+              <div class="care-identity">
+                <div class="care-avatar">MT</div>
+                <div>
+                  <div class="care-name">Dr. Marcus Thompson</div>
+                  <div class="care-role">Primary care · Aleron MD care team</div>
+                </div>
               </div>
+              <div class="care-status">Reply by next business day</div>
             </div>
-            <div class="care-status">Reply by next business day</div>
-          </div>
-          <p class="care-copy">The point is not another chat room. It is a clean clinical handoff: what changed, what you need, and which decision it touches.</p>
-          <div class="care-principles">
-            <div class="care-principle"><b>Use this for</b><span>Medication questions, new symptoms, outside results, or anything that could change the plan.</span></div>
-            <div class="care-principle"><b>Do not use this for</b><span>Emergencies, routine scheduling, or broad education questions Aleron AI can answer instantly.</span></div>
+            <div class="care-principles care-principles-compact">
+              <div class="care-principle"><b>Use this for</b><span>Medication questions, new symptoms, outside results, or anything that could change the plan.</span></div>
+              <div class="care-principle"><b>Do not use this for</b><span>Emergencies, routine scheduling, or broad education questions Aleron AI can answer instantly.</span></div>
+            </div>
+          </section>
+
+          <section class="care-pane-block" aria-label="Start a doctor thread">
+            <div class="care-section-head">
+              <div class="care-section-title">Start with the clinical reason</div>
+              <div class="care-section-note">Creates a topic in History</div>
+            </div>
+            <div class="care-route-grid care-route-grid-compact">
+              <button class="care-route-card" type="button" onclick="startDoctorTopic('plan')"><b>Plan decision</b><span>Medication, priority, or surveillance change.</span></button>
+              <button class="care-route-card" type="button" onclick="startDoctorTopic('symptom')"><b>Symptom or side effect</b><span>New issue tied to the current plan.</span></button>
+              <button class="care-route-card" type="button" onclick="startDoctorTopic('result')"><b>New result</b><span>Outside labs, imaging, or consult notes.</span></button>
+              <button class="care-route-card" type="button" onclick="gotoSub('messages','appointments')"><b>Scheduling</b><span>Times, prep, and visit logistics.</span></button>
+            </div>
+          </section>
+
+          <div class="thread-context ai-thread-context care-thread-context" id="teamThreadContext"></div>
+          <div class="chat-wrap ai-chat-wrap care-chat-wrap" id="teamChatWrap"></div>
+
+          <div class="suggest ai-suggest care-suggest">
+            <div class="suggest-label">Quick replies for the selected thread</div>
+            <button onclick="askTeamPreset('Can you confirm whether this changes the current plan?')">Does this change the plan?</button>
+            <button onclick="askTeamPreset('What should I watch for before our next visit?')">What should I watch for?</button>
+            <button onclick="askTeamPreset('Should the office help schedule the next step?')">Have the office schedule it</button>
           </div>
         </section>
-
-        <section class="care-section" aria-label="Start a doctor thread">
-          <div class="care-section-head">
-            <div class="care-section-title">Start with the clinical reason</div>
-            <div class="care-section-note">Routes the thread with context</div>
-          </div>
-          <div class="care-route-grid">
-            <button class="care-route-card" type="button" onclick="startDoctorTopic('plan')"><b>Plan decision</b><span>Ask if a priority, medication, or surveillance step should change.</span></button>
-            <button class="care-route-card" type="button" onclick="startDoctorTopic('symptom')"><b>Symptom or side effect</b><span>Report something new and tie it to the current plan.</span></button>
-            <button class="care-route-card" type="button" onclick="startDoctorTopic('result')"><b>New result</b><span>Upload or summarize outside labs, imaging, or consult notes.</span></button>
-            <button class="care-route-card" type="button" onclick="gotoSub('messages','appointments')"><b>Scheduling</b><span>Move to Appointments for times, prep, and visit logistics.</span></button>
-          </div>
-        </section>
-
-        <section class="care-section" aria-label="Doctor threads">
-          <div class="care-section-head">
-            <div class="care-section-title">Open threads</div>
-            <div class="care-section-note">One topic per thread</div>
-          </div>
-          <div class="thread-list care-thread-list" id="teamThreadList" aria-label="Doctor message threads"></div>
-        </section>
-
-        <section class="care-card care-thread-panel" aria-label="Selected doctor thread">
-          <div class="thread-context" id="teamThreadContext"></div>
-          <div class="chat-wrap" id="teamChatWrap"></div>
-        </section>
-
-        <div class="suggest care-suggest">
-          <div class="suggest-label">Quick replies for the selected thread</div>
-          <button onclick="askTeamPreset('Can you confirm whether this changes the current plan?')">Does this change the plan?</button>
-          <button onclick="askTeamPreset('What should I watch for before our next visit?')">What should I watch for?</button>
-          <button onclick="askTeamPreset('Should the office help schedule the next step?')">Have the office schedule it</button>
-        </div>
       </div>
     </div>
 
@@ -4518,6 +4570,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       meta: 'Dr. Thompson · Direct line',
       status: 'Open',
       context: 'Use this for questions that could change the plan or need clinical judgment.',
+      createdAt: 1,
       messages: [{
         from: 'ai',
         text: "Jim, I reviewed the plan release. CAC scheduling is the next operational step, and the statin change is the decision I want started now. Send one focused question here and my team will keep the context attached.",
@@ -4707,15 +4760,17 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const list = document.getElementById('teamThreadList');
     if (!list) return;
     list.innerHTML = '';
-    Object.values(TEAM_THREADS).forEach(thread => {
-      const btn = document.createElement('button');
-      btn.className = 'thread-pill care-thread-card';
-      btn.classList.toggle('active', thread.id === activeTeamThreadId);
-      btn.type = 'button';
-      btn.innerHTML = `<span class="care-thread-title">${escapeHtml(thread.title)}</span><span class="care-thread-meta">${escapeHtml(thread.meta || 'Doctor thread')}</span><span class="care-thread-status">${escapeHtml(thread.status || 'Open')}</span>`;
-      btn.onclick = () => { activeTeamThreadId = thread.id; renderTeamThreads(); };
-      list.appendChild(btn);
-    });
+    Object.values(TEAM_THREADS)
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+      .forEach(thread => {
+        const btn = document.createElement('button');
+        btn.className = 'thread-pill ai-history-item care-history-item';
+        btn.classList.toggle('active', thread.id === activeTeamThreadId);
+        btn.type = 'button';
+        btn.innerHTML = `<span class="ai-history-title">${escapeHtml(thread.title)}</span><span class="ai-history-meta">${escapeHtml(thread.meta || 'Doctor thread')} · ${escapeHtml(thread.status || 'Open')}</span><span class="ai-history-snippet">${escapeHtml(aiThreadSnippet(thread))}</span>`;
+        btn.onclick = () => { activeTeamThreadId = thread.id; renderTeamThreads(); };
+        list.appendChild(btn);
+      });
     renderTeamThread();
   }
 
@@ -4723,7 +4778,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
     const context = document.getElementById('teamThreadContext');
     const wrap = document.getElementById('teamChatWrap');
-    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)}`;
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)} · <span>${escapeHtml(thread.status || 'Open')}</span>`;
     if (!wrap) return;
     wrap.innerHTML = '';
     thread.messages.forEach(msg => {
@@ -4738,17 +4793,16 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
 
   function startDoctorTopic(kind) {
     const t = DOCTOR_TOPIC_TEMPLATES[kind] || DOCTOR_TOPIC_TEMPLATES.plan;
-    const id = `doctor-${kind}`;
-    if (!TEAM_THREADS[id]) {
-      TEAM_THREADS[id] = {
-        id,
-        title: t.title,
-        meta: t.meta,
-        status: t.status,
-        context: t.context,
-        messages: [{ from: 'ai', text: `Started a ${t.title.toLowerCase()} thread. Keep this to one clinical question so Dr. Thompson can answer without reconstructing the whole plan.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
-      };
-    }
+    const id = `doctor-${kind}-${Date.now()}`;
+    TEAM_THREADS[id] = {
+      id,
+      title: t.title,
+      meta: `${t.meta} · just now`,
+      status: t.status,
+      context: t.context,
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: `Started a ${t.title.toLowerCase()} thread. Keep this to one clinical question so Dr. Thompson can answer without reconstructing the whole plan.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+    };
     activeTeamThreadId = id;
     renderTeamThreads();
     const field = document.getElementById('chatField');
@@ -4764,17 +4818,16 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const key = activePlanCard.dataset.planCard;
     const details = PLAN_CARD_DETAILS[key];
     const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
-    const id = `plan-${key || 'priority'}`;
-    if (!TEAM_THREADS[id]) {
-      TEAM_THREADS[id] = {
-        id,
-        title,
-        meta: 'Top priority',
-        status: 'Drafting',
-        context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
-        messages: [{ from: 'ai', text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
-      };
-    }
+    const id = `doctor-plan-${key || 'priority'}-${Date.now()}`;
+    TEAM_THREADS[id] = {
+      id,
+      title,
+      meta: 'Top priority · just now',
+      status: 'Drafting',
+      context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+    };
     activeTeamThreadId = id;
     const starter = details?.starter || `I have a question about ${title}: `;
     closePlanModal();
