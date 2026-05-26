@@ -549,6 +549,49 @@
   .plan-status p:last-child {
     margin-bottom: 0;
   }
+  .plan-status strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .shared-frame {
+    background: rgba(255,255,255,0.52);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    margin: 18px 0 0;
+    padding: 16px 18px;
+  }
+  .shared-frame-title {
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .shared-frame ul {
+    display: grid;
+    gap: 9px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .shared-frame li {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.55;
+    padding-left: 18px;
+    position: relative;
+  }
+  .shared-frame li::before {
+    background: var(--accent-hover);
+    border-radius: 50%;
+    content: "";
+    height: 5px;
+    left: 2px;
+    position: absolute;
+    top: 9px;
+    width: 5px;
+  }
   .strategy-video-card {
     max-width: 760px;
     margin: 8px 0 18px;
@@ -687,6 +730,16 @@
     line-height: 1.35;
     margin-bottom: 5px;
   }
+  .board-rank {
+    color: var(--accent-hover);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
   .board-card.locked-card .board-title,
   .board-card.active-work .board-title,
   .board-card.waiting .board-title {
@@ -717,6 +770,18 @@
     color: var(--text-muted);
     font-size: 12px;
     line-height: 1.45;
+  }
+  .board-model-reason {
+    border-top: 1px solid rgba(10,10,11,0.08);
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.45;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .board-model-reason strong {
+    color: var(--text);
+    font-weight: 500;
   }
   .board-card.locked-card .board-detail {
     color: rgba(74,74,77,0.78);
@@ -1341,6 +1406,15 @@
   }
   .care-chat-wrap.ai-chat-wrap {
     min-height: 180px;
+  }
+  .care-empty-thread {
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin: 2px 0 12px;
+    padding: 12px;
   }
   .care-suggest.ai-suggest {
     padding-bottom: 12px;
@@ -4571,11 +4645,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       status: 'Open',
       context: 'Use this for questions that could change the plan or need clinical judgment.',
       createdAt: 1,
-      messages: [{
-        from: 'ai',
-        text: "Jim, I reviewed the plan release. CAC scheduling is the next operational step, and the statin change is the decision I want started now. Send one focused question here and my team will keep the context attached.",
-        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
-      }]
+      messages: []
     }
   };
   const DOCTOR_TOPIC_TEMPLATES = {
@@ -4781,6 +4851,10 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)} · <span>${escapeHtml(thread.status || 'Open')}</span>`;
     if (!wrap) return;
     wrap.innerHTML = '';
+    if (!(thread.messages || []).length) {
+      wrap.innerHTML = '<div class="care-empty-thread">No messages yet. Write the first note below.</div>';
+      return;
+    }
     thread.messages.forEach(msg => {
       const el = document.createElement('div');
       el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
@@ -4801,7 +4875,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       status: t.status,
       context: t.context,
       createdAt: Date.now(),
-      messages: [{ from: 'ai', text: `Started a ${t.title.toLowerCase()} thread. Keep this to one clinical question so Dr. Thompson can answer without reconstructing the whole plan.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+      messages: []
     };
     activeTeamThreadId = id;
     renderTeamThreads();
@@ -4826,7 +4900,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       status: 'Drafting',
       context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
       createdAt: Date.now(),
-      messages: [{ from: 'ai', text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+      messages: []
     };
     activeTeamThreadId = id;
     const starter = details?.starter || `I have a question about ${title}: `;
