@@ -811,7 +811,8 @@
   }
   .plan-modal-complete,
   .plan-modal-confirm-btn,
-  .plan-modal-cancel {
+  .plan-modal-cancel,
+  .plan-modal-chat {
     background: transparent;
     border: 1px solid var(--border);
     border-radius: var(--radius-xs);
@@ -826,7 +827,8 @@
   }
   .plan-modal-complete:hover,
   .plan-modal-confirm-btn:hover,
-  .plan-modal-cancel:hover {
+  .plan-modal-cancel:hover,
+  .plan-modal-chat:hover {
     background: var(--bg-surface);
     border-color: var(--border-strong);
     color: var(--text);
@@ -908,6 +910,32 @@
     color: var(--text-secondary);
     font-size: 13px;
     line-height: 1.55;
+  }
+  .plan-modal-chat-row {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+  }
+  .plan-modal-chat {
+    align-items: center;
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--bg-panel);
+    display: inline-flex;
+    gap: 8px;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px 14px;
+  }
+  .plan-modal-chat:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-panel);
+  }
+  .plan-modal-chat-note {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.45;
+    margin-top: 8px;
   }
 
   .act-hero {
@@ -2180,6 +2208,48 @@
   .md-strip.empty {
     display: none;
   }
+  .thread-list {
+    display: flex;
+    gap: 8px;
+    margin: 0 16px 12px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .thread-pill {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: inherit;
+    font-size: 12px;
+    max-width: 220px;
+    overflow: hidden;
+    padding: 8px 12px;
+    text-overflow: ellipsis;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+    white-space: nowrap;
+  }
+  .thread-pill.active {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--bg-panel);
+  }
+  .thread-context {
+    background: rgba(212,165,116,0.10);
+    border: 1px solid rgba(111,74,32,0.16);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin: 0 16px 12px;
+    padding: 10px 12px;
+  }
+  .thread-context b {
+    color: var(--text);
+    font-weight: 500;
+  }
 
   /* Chat thread */
   .chat-wrap {
@@ -3141,6 +3211,9 @@
         </button>
       </div>
 
+      <div class="thread-list" id="teamThreadList" aria-label="Doctor message threads"></div>
+      <div class="thread-context" id="teamThreadContext"></div>
+
       <div class="md-strip" onclick="toast('Opening Dr. Thompson\\'s note')">
         <div class="av">MT</div>
         <div class="body">
@@ -3379,6 +3452,10 @@
       <b>What happens next</b>
       <span id="planModalNext"></span>
     </div>
+    <div class="plan-modal-chat-row">
+      <button class="plan-modal-chat" id="planModalChat" type="button">Message Dr. Thompson about this →</button>
+      <div class="plan-modal-chat-note">Opens a focused doctor thread for this priority so the conversation stays separate from your general plan chat.</div>
+    </div>
   </div>
 </div>
 
@@ -3438,6 +3515,8 @@
     const activeConnect = document.querySelector('#screen-messages .seg-btn.active');
     const connectSub = activeConnect ? activeConnect.dataset.sub : 'team';
     ci.classList.toggle('show', tab === 'messages' && connectSub !== 'appointments');
+    const field = document.getElementById('chatField');
+    if (field) field.placeholder = connectSub === 'team' ? 'Message Dr. Thompson...' : 'Ask Aleron AI about your plan...';
   }
 
   function gotoAppointment(view) {
@@ -3465,19 +3544,28 @@
       summary: 'This priority uses the coronary calcium scan to decide how intense the prevention plan needs to be.',
       why: 'CAC helps separate a simple prevention plan from one that should be more aggressive because calcium is already visible in the arteries.',
       do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
-      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.'
+      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.',
+      threadTitle: 'CAC Scan',
+      threadIntro: 'Focused thread with Dr. Thompson about the CAC scan priority.',
+      starter: 'I have a question about the CAC Scan: '
     },
     psa: {
       summary: 'This priority is about getting the prostate baseline started now, rather than waiting for the next annual planning cycle.',
       why: 'The ATM finding changes the screening cadence. A current PSA and exam give Dr. Thompson a clean baseline and make the next decision straightforward.',
       do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
-      next: 'Once the baseline is complete, normal results confirm the annual cadence. Abnormal results trigger urology follow-up.'
+      next: 'Once the baseline is complete, normal results confirm the annual cadence. Abnormal results trigger urology follow-up.',
+      threadTitle: 'PSA baseline',
+      threadIntro: 'Focused thread with Dr. Thompson about the PSA baseline priority.',
+      starter: 'I have a question about the PSA baseline: '
     },
     colonoscopy: {
       summary: 'This priority closes the most important colon-cancer screening gap in the plan.',
       why: 'A colonoscopy gives the team direct visibility and can remove precancerous polyps during the same procedure.',
       do: 'Choose a GI appointment or scheduling window, confirm prep instructions, and complete the colonoscopy.',
-      next: 'The result sets the follow-up interval and determines whether any pathology or GI review is needed.'
+      next: 'The result sets the follow-up interval and determines whether any pathology or GI review is needed.',
+      threadTitle: 'Colonoscopy',
+      threadIntro: 'Focused thread with Dr. Thompson about the colonoscopy priority.',
+      starter: 'I have a question about the colonoscopy: '
     }
   };
   let activePlanCard = null;
@@ -3497,6 +3585,7 @@
     });
 
     document.getElementById('planModalComplete')?.addEventListener('click', showPlanCompleteConfirm);
+    document.getElementById('planModalChat')?.addEventListener('click', startPlanDoctorThread);
     document.getElementById('planModalConfirmBtn')?.addEventListener('click', confirmPlanComplete);
     document.getElementById('planModalCancel')?.addEventListener('click', hidePlanCompleteConfirm);
     updateBoardCounts();
@@ -4108,11 +4197,29 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     }
   };
 
+  const TEAM_THREADS = {
+    general: {
+      id: 'general',
+      title: 'Current plan',
+      meta: 'Direct line',
+      context: 'General thread with Dr. Thompson for questions that are not tied to one priority.',
+      messages: [{
+        from: 'ai',
+        text: "Hey Jim - any questions about the plan? Happy to clarify anything. I'll also have my office reach out in the next day or two to schedule the CAC scan.",
+        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
+      }]
+    }
+  };
+  let activeTeamThreadId = 'general';
+
   function sendChat() {
     const field = document.getElementById('chatField');
     const text = field.value.trim();
     if (!text) return;
-    askPreset(text);
+    const activeConnect = document.querySelector('#screen-messages .seg-btn.active');
+    const connectSub = activeConnect ? activeConnect.dataset.sub : 'team';
+    if (connectSub === 'team') askTeamPreset(text);
+    else askPreset(text);
     field.value = '';
   }
 
@@ -4162,23 +4269,92 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
 
-  /* ===== Team thread (direct physician) ===== */
-  function askTeamPreset(q) {
+  /* ===== Team threads (direct physician) ===== */
+  function renderTeamThreads() {
+    const list = document.getElementById('teamThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    Object.values(TEAM_THREADS).forEach(thread => {
+      const btn = document.createElement('button');
+      btn.className = 'thread-pill';
+      btn.classList.toggle('active', thread.id === activeTeamThreadId);
+      btn.type = 'button';
+      btn.textContent = thread.title;
+      btn.onclick = () => {
+        activeTeamThreadId = thread.id;
+        renderTeamThreads();
+      };
+      list.appendChild(btn);
+    });
+    renderTeamThread();
+  }
+
+  function renderTeamThread() {
+    const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
+    const context = document.getElementById('teamThreadContext');
     const wrap = document.getElementById('teamChatWrap');
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)}`;
     if (!wrap) return;
-    const u = document.createElement('div');
-    u.className = 'msg user';
-    u.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(q)}</div>`;
-    wrap.appendChild(u);
+    wrap.innerHTML = '';
+    thread.messages.forEach(msg => {
+      const el = document.createElement('div');
+      el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
+      const av = msg.from === 'user' ? 'JY' : 'MT';
+      const src = msg.src ? `<div class="src">${msg.src}</div>` : '';
+      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${escapeHtml(msg.text).replace(/\n/g, '<br>')}${src}</div>`;
+      wrap.appendChild(el);
+    });
+  }
+
+  function startPlanDoctorThread() {
+    if (!activePlanCard) return;
+    const key = activePlanCard.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
+    const id = `plan-${key || 'priority'}-${Date.now()}`;
+    TEAM_THREADS[id] = {
+      id,
+      title,
+      meta: 'Top priority',
+      context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
+      messages: [{
+        from: 'ai',
+        text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`,
+        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
+      }]
+    };
+    activeTeamThreadId = id;
+    const starter = details?.starter || `I have a question about ${title}: `;
+    closePlanModal();
+    gotoTab('messages');
+    gotoSub('messages', 'team');
+    renderTeamThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+    toast(`New doctor thread started for ${title}`);
+  }
+
+  function askTeamPreset(q) {
+    const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
+    thread.messages.push({ from: 'user', text: q });
+    renderTeamThread();
     setTimeout(() => {
-      const a = document.createElement('div');
-      a.className = 'msg ai';
-      a.innerHTML = `<div class="av">MT</div><div class="bubble">Got it - I'll take a look and get back to you within the day. If it's urgent, call the office line.<div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div></div>`;
-      wrap.appendChild(a);
+      thread.messages.push({
+        from: 'ai',
+        text: "Got it. I'll take a look and get back to you within the day. If it's urgent, call the office line.",
+        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
+      });
+      if (activeTeamThreadId === thread.id) renderTeamThread();
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }, 700);
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
+
+  renderTeamThreads();
 
   /* ===== Risk bottom sheet (You → Risk cards) ===== */
   const RISK_SHEETS = {
