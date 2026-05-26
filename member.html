@@ -553,44 +553,16 @@
     color: var(--text);
     font-weight: 500;
   }
-  .shared-frame {
-    background: rgba(255,255,255,0.52);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    margin: 18px 0 0;
-    padding: 16px 18px;
-  }
-  .shared-frame-title {
-    color: var(--text);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-  .shared-frame ul {
-    display: grid;
-    gap: 9px;
-    list-style: none;
-    margin: 0;
+  .plan-status ul {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: -4px 0 16px 1.1rem;
     padding: 0;
   }
-  .shared-frame li {
-    color: var(--text-secondary);
-    font-size: 14px;
-    line-height: 1.55;
-    padding-left: 18px;
-    position: relative;
-  }
-  .shared-frame li::before {
-    background: var(--accent-hover);
-    border-radius: 50%;
-    content: "";
-    height: 5px;
-    left: 2px;
-    position: absolute;
-    top: 9px;
-    width: 5px;
+  .plan-status li {
+    margin: 0 0 8px;
+    padding-left: 2px;
   }
   .strategy-video-card {
     max-width: 760px;
@@ -3281,15 +3253,13 @@
         <p>The main concern on the cardiovascular side is that your risk could reasonably move in either direction once we have better artery-level data. That is why the CAC scan matters. You are at a point where a CAC result could reclassify you into a low-risk or medium-risk lane, and that would affect how aggressive we want to be with the lipid and prevention plan. If the CAC is zero or very low, we can stay more measured. If it shows meaningful plaque, we should treat that as evidence to be more proactive.</p>
         <p>The ATM finding is different. ATM is an inherited cancer-risk signal. We cannot lower the inherited variant itself, so the goal is not to make you feel diagnosed with cancer. The goal is to use that information to set a smarter surveillance plan.</p>
         <p>That is why the PSA baseline and colonoscopy are both high-value next steps. The PSA gives us a clean starting point for prostate surveillance, which is relevant because ATM can be associated with higher prostate cancer risk in men. The colonoscopy closes a separate but very actionable cancer-screening gap. It can both detect risk and remove precancerous changes during the same procedure.</p>
-        <div class="shared-frame">
-          <div class="shared-frame-title">What happens next</div>
-          <ul>
-            <li><strong>If the CAC is low:</strong> we can keep the cardiovascular plan measured and spend more energy on optimization.</li>
-            <li><strong>If the CAC is elevated:</strong> we will likely become more aggressive about cardiovascular prevention.</li>
-            <li><strong>If the PSA or colonoscopy shows something that needs follow-up:</strong> we will route into the appropriate surveillance or treatment path.</li>
-            <li><strong>If those screenings are reassuring:</strong> we can keep the cancer-risk plan organized without letting it take over the whole care plan.</li>
-          </ul>
-        </div>
+        <p>What happens next:</p>
+        <ul>
+          <li><strong>If the CAC is low:</strong> we can keep the cardiovascular plan measured and spend more energy on optimization.</li>
+          <li><strong>If the CAC is elevated:</strong> we will likely become more aggressive about cardiovascular prevention.</li>
+          <li><strong>If the PSA or colonoscopy shows something that needs follow-up:</strong> we will route into the appropriate surveillance or treatment path.</li>
+          <li><strong>If those screenings are reassuring:</strong> we can keep the cancer-risk plan organized without letting it take over the whole care plan.</li>
+        </ul>
         <p>So the next move is not do everything. It is to finish the tests that can change the plan. Once those are in, we can decide what truly needs escalation and what can move into optimization.</p>
         <p>Best,<br>Dr. Thompson</p>
       </div>
