@@ -740,6 +740,16 @@
     margin-bottom: 6px;
     text-transform: uppercase;
   }
+  .board-rank {
+    color: var(--accent-hover);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
   .board-card.locked-card .board-title,
   .board-card.active-work .board-title,
   .board-card.waiting .board-title {
@@ -3221,9 +3231,9 @@
     <div class="substate active" id="plan-message">
       <section class="strategy-video-card" aria-label="Doctor initial assessment video">
         <div class="strategy-video-head">
-          <div class="strategy-video-eyebrow">Initial assessment</div>
-          <h2 class="strategy-video-title">Dr. Thompson’s video summary</h2>
-          <p class="strategy-video-sub">A short physician review of what matters now, what can wait, and how the first week of the plan should feel.</p>
+          <div class="strategy-video-eyebrow">Shared strategy</div>
+          <h2 class="strategy-video-title">Dr. Thompson’s risk-reduction readout</h2>
+          <p class="strategy-video-sub">The conversation surface for why these priorities matter now, what each one answers, and what would change the plan.</p>
         </div>
         <video class="strategy-video" controls playsinline preload="metadata" poster="assets/video/doctor-initial-assessment-poster.jpg">
           <source src="assets/video/doctor-initial-assessment.mp4" type="video/mp4">
@@ -3236,20 +3246,27 @@
       </section>
       <div class="plan-status">
         <p>Jason,</p>
-        <p>I reviewed your results, and I want you to hear the good news first: this is prevention work, not damage control. We have useful information, the important decisions are visible, and we are making those decisions from a position of time and choice.</p>
-        <p>Two findings still change how I would manage your plan. The ATM variant is not a cancer diagnosis, but it does mean we should be more intentional about surveillance. The elevated Lp(a) is not something you caused, but it does mean I want to lower the parts of cardiovascular risk we can actually change.</p>
-        <p>That is the balance I want you to take from this: there are real items to act on, but they are organized and manageable. For this week, please focus on three things: complete the baseline PSA, start rosuvastatin, and pick a time for the coronary calcium scan.</p>
-        <p>We will keep the longer-horizon items, including genetic counseling, pancreatic surveillance at age 50, and the 8-week lipid recheck, organized in the plan so they do not become today's burden.</p>
-        <p>You should feel good that we are finding the places where a deliberate step now can keep the future simpler. Message me if anything feels unclear or if you want to talk through the statin before starting.</p>
+        <p>I think you have the frame right. This plan is not a generic checklist. We are using the risk models as our shared map: lower risk where there is a modifiable lever, monitor more deliberately where inherited risk cannot be lowered, and close the data gaps that would change a real decision.</p>
+        <p>The good news is that we are still in prevention mode. Your current profile gives us time, and the models are not telling us to chase everything. They are telling us which few decisions deserve attention first.</p>
+        <p><strong>That is why the top three priorities are what they are.</strong> The CAC scan answers how aggressive the cardiovascular prevention plan should be. The PSA baseline gives us a clean starting point for ATM-informed prostate surveillance. The colonoscopy closes the most actionable cancer-screening gap because it can both find and remove precancerous changes.</p>
+        <p>Items that do not change the next decision stay organized, but they do not become today's burden: genetic counseling, pancreatic surveillance planning, and follow-up labs after the prevention path is set.</p>
+        <div class="shared-frame" aria-label="Shared decision frame">
+          <div class="shared-frame-title">How we are deciding</div>
+          <ul>
+            <li><strong>Change what can move risk:</strong> use the cardiovascular model to decide whether the lipid plan stays measured or needs more intensity.</li>
+            <li><strong>Watch what cannot be changed:</strong> use the ATM result to set better surveillance, not to make you feel diagnosed with something you do not have.</li>
+            <li><strong>Close the gaps that change decisions:</strong> prioritize tests that affect cadence, intensity, or follow-up rather than adding more tasks for their own sake.</li>
+          </ul>
+        </div>
         <p>Best,<br>Dr. Thompson</p>
       </div>
     </div>
 
     <!-- ---- SUBSTATE: ACT ---- -->
     <div class="substate" id="plan-act">
-      <div class="screen-eyebrow">Manage the plan</div>
-      <h1 class="screen-title">Your health work, organized.</h1>
-      <p class="screen-subtitle">A simple board for what you own, what matters most, and what needs physician review before the plan changes.</p>
+      <div class="screen-eyebrow">Shared risk-reduction framework</div>
+      <h1 class="screen-title">The first decisions, not a task list.</h1>
+      <p class="screen-subtitle">Each priority maps to the conversation we already had: what can we change, what should we surveil, and which missing data would change the next call.</p>
 
       <div class="plan-board" aria-label="Plan board">
         <div class="board-lane" data-lane="priority">
@@ -3258,18 +3275,24 @@
             <div class="board-count">3</div>
           </div>
           <button class="board-card active-work" type="button" data-plan-card="cac" aria-haspopup="dialog">
+            <span class="board-rank">01 · Cardiovascular model</span>
             <div class="board-title">CAC Scan</div>
-            <div class="board-detail">Schedule the coronary calcium scan so the lipid plan has a clearer baseline.</div>
+            <div class="board-detail">Question it answers: is there visible coronary calcium already, or are we still working from an early-prevention baseline?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> the result changes intensity, follow-up cadence, and how aggressively Dr. Thompson should treat lipid risk.</div>
             <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
           </button>
           <button class="board-card active-work" type="button" data-plan-card="psa" aria-haspopup="dialog">
+            <span class="board-rank">02 · ATM surveillance</span>
             <div class="board-title">PSA baseline</div>
-            <div class="board-detail">Complete the baseline prostate screening now so future surveillance has a clean comparison point.</div>
+            <div class="board-detail">Question it answers: what is the starting point for prostate surveillance now that inherited-risk context is part of the model?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> ATM is not a diagnosis, but it changes the value of having a clean baseline before future results need interpretation.</div>
             <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
           </button>
           <button class="board-card active-work" type="button" data-plan-card="colonoscopy" aria-haspopup="dialog">
+            <span class="board-rank">03 · Cancer screening gap</span>
             <div class="board-title">Colonoscopy</div>
-            <div class="board-detail">Get the colonoscopy scheduled and close the most important cancer-screening gap.</div>
+            <div class="board-detail">Question it answers: is there visible colon risk today, and can any precancerous finding be removed during the same procedure?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> it is both surveillance and intervention, so it is the highest-value cancer-screening gap to close now.</div>
             <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
           </button>
         </div>
@@ -3622,45 +3645,8 @@
         </aside>
 
         <section class="ai-thread-pane care-thread-pane" aria-label="Selected doctor thread">
-          <section class="care-card care-overview care-pane-card" aria-label="Doctor message rules">
-            <div class="care-head">
-              <div class="care-identity">
-                <div class="care-avatar">MT</div>
-                <div>
-                  <div class="care-name">Dr. Marcus Thompson</div>
-                  <div class="care-role">Primary care · Aleron MD care team</div>
-                </div>
-              </div>
-              <div class="care-status">Reply by next business day</div>
-            </div>
-            <div class="care-principles care-principles-compact">
-              <div class="care-principle"><b>Use this for</b><span>Medication questions, new symptoms, outside results, or anything that could change the plan.</span></div>
-              <div class="care-principle"><b>Do not use this for</b><span>Emergencies, routine scheduling, or broad education questions Aleron AI can answer instantly.</span></div>
-            </div>
-          </section>
-
-          <section class="care-pane-block" aria-label="Start a doctor thread">
-            <div class="care-section-head">
-              <div class="care-section-title">Start with the clinical reason</div>
-              <div class="care-section-note">Creates a topic in History</div>
-            </div>
-            <div class="care-route-grid care-route-grid-compact">
-              <button class="care-route-card" type="button" onclick="startDoctorTopic('plan')"><b>Plan decision</b><span>Medication, priority, or surveillance change.</span></button>
-              <button class="care-route-card" type="button" onclick="startDoctorTopic('symptom')"><b>Symptom or side effect</b><span>New issue tied to the current plan.</span></button>
-              <button class="care-route-card" type="button" onclick="startDoctorTopic('result')"><b>New result</b><span>Outside labs, imaging, or consult notes.</span></button>
-              <button class="care-route-card" type="button" onclick="gotoSub('messages','appointments')"><b>Scheduling</b><span>Times, prep, and visit logistics.</span></button>
-            </div>
-          </section>
-
           <div class="thread-context ai-thread-context care-thread-context" id="teamThreadContext"></div>
           <div class="chat-wrap ai-chat-wrap care-chat-wrap" id="teamChatWrap"></div>
-
-          <div class="suggest ai-suggest care-suggest">
-            <div class="suggest-label">Quick replies for the selected thread</div>
-            <button onclick="askTeamPreset('Can you confirm whether this changes the current plan?')">Does this change the plan?</button>
-            <button onclick="askTeamPreset('What should I watch for before our next visit?')">What should I watch for?</button>
-            <button onclick="askTeamPreset('Should the office help schedule the next step?')">Have the office schedule it</button>
-          </div>
         </section>
       </div>
     </div>
@@ -3968,28 +3954,28 @@
   /* ===== Plan board modal + movement ===== */
   const PLAN_CARD_DETAILS = {
     cac: {
-      summary: 'This priority uses the coronary calcium scan to decide how intense the prevention plan needs to be.',
-      why: 'CAC helps separate a simple prevention plan from one that should be more aggressive because calcium is already visible in the arteries.',
+      summary: 'Shared frame: the cardiovascular model gives us a modifiable risk lane. CAC tells us whether the plan can stay measured or should become more aggressive.',
+      why: 'This is top 3 because it can change the next prevention decision. If calcium is absent, the plan can focus on steady lipid lowering and follow-up. If calcium is present, the intensity conversation changes.',
       do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
-      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.',
+      next: 'Dr. Thompson uses the result to confirm statin intensity, follow-up cadence, and whether any additional cardiovascular testing belongs in the plan.',
       threadTitle: 'CAC Scan',
       threadIntro: 'Focused thread with Dr. Thompson about the CAC scan priority.',
       starter: 'I have a question about the CAC Scan: '
     },
     psa: {
-      summary: 'This priority is about getting the prostate baseline started now, rather than waiting for the next annual planning cycle.',
-      why: 'The ATM finding changes the screening cadence. A current PSA and exam give Dr. Thompson a clean baseline and make the next decision straightforward.',
+      summary: 'Shared frame: the ATM result is not a diagnosis, but it changes how baseline surveillance should be handled.',
+      why: 'This is top 3 because future PSA values are only useful if we know the starting point. The baseline makes the next surveillance decision cleaner instead of reactive.',
       do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
-      next: 'Once the baseline is complete, normal results confirm the annual cadence. Abnormal results trigger urology follow-up.',
+      next: 'Normal results support a deliberate surveillance cadence. Abnormal results trigger urology follow-up instead of leaving the team to guess from incomplete context.',
       threadTitle: 'PSA baseline',
       threadIntro: 'Focused thread with Dr. Thompson about the PSA baseline priority.',
       starter: 'I have a question about the PSA baseline: '
     },
     colonoscopy: {
-      summary: 'This priority closes the most important colon-cancer screening gap in the plan.',
-      why: 'A colonoscopy gives the team direct visibility and can remove precancerous polyps during the same procedure.',
+      summary: 'Shared frame: some cancer risk cannot be lowered directly, so the model prioritizes finding actionable disease early and removing what can be removed.',
+      why: 'This is top 3 because colonoscopy is both surveillance and intervention. It closes the highest-value screening gap instead of adding another abstract risk label.',
       do: 'Choose a GI appointment or scheduling window, confirm prep instructions, and complete the colonoscopy.',
-      next: 'The result sets the follow-up interval and determines whether any pathology or GI review is needed.',
+      next: 'The result sets the follow-up interval and determines whether pathology review, GI follow-up, or a longer routine cadence is appropriate.',
       threadTitle: 'Colonoscopy',
       threadIntro: 'Focused thread with Dr. Thompson about the colonoscopy priority.',
       starter: 'I have a question about the colonoscopy: '
@@ -4836,7 +4822,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
     const context = document.getElementById('teamThreadContext');
     const wrap = document.getElementById('teamChatWrap');
-    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)} · <span>${escapeHtml(thread.status || 'Open')}</span>`;
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · <span>${escapeHtml(thread.status || 'Open')}</span>`;
     if (!wrap) return;
     wrap.innerHTML = '';
     if (!(thread.messages || []).length) {
