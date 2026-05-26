@@ -704,12 +704,12 @@
     margin-top: 10px;
     padding: 14px;
     text-align: left;
-    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s, box-shadow 0.15s;
     width: 100%;
   }
   .board-card.active-work {
     border-color: var(--border);
-    cursor: pointer;
+    cursor: grab;
     box-shadow: 0 1px 0 rgba(255,255,255,0.45) inset;
   }
   .board-card.active-work:hover {
@@ -717,7 +717,31 @@
     border-color: var(--border-strong);
   }
   .board-card.active-work:active {
+    cursor: grabbing;
     transform: translateY(1px);
+  }
+  .board-card.dragging {
+    box-shadow: 0 14px 36px rgba(10,10,11,0.24), 0 1px 0 rgba(255,255,255,0.45) inset;
+    cursor: grabbing;
+    margin-top: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: none;
+    z-index: 220;
+  }
+  .board-drop-slot {
+    border: 1px dashed var(--border-strong);
+    border-radius: 8px;
+    margin-top: 10px;
+    min-height: 84px;
+  }
+  .board-lane.drag-over {
+    background: rgba(239,234,224,0.58);
+    border-color: var(--border-strong);
+  }
+  body.plan-card-dragging {
+    cursor: grabbing;
+    user-select: none;
   }
   .board-card.locked-card {
     background: rgba(239,234,224,0.68);
@@ -4017,7 +4041,18 @@
     });
 
     board.querySelectorAll('.board-card.active-work').forEach(card => {
-      card.addEventListener('click', () => openPlanModal(card));
+      card.setAttribute('aria-label', `${getBoardCardTitle(card)}. Open details, or drag to move between columns.`);
+      card.addEventListener('pointerdown', startPlanCardDrag);
+      card.addEventListener('keydown', handlePlanCardKeyMove);
+      card.addEventListener('click', event => {
+        if (card.dataset.dragSuppress === 'true') {
+          event.preventDefault();
+          event.stopPropagation();
+          delete card.dataset.dragSuppress;
+          return;
+        }
+        openPlanModal(card);
+      });
     });
 
     document.getElementById('planModalComplete')?.addEventListener('click', showPlanCompleteConfirm);
@@ -4101,6 +4136,165 @@
 
   function getBoardLaneTitle(lane) {
     return lane.querySelector('.board-lane-title')?.textContent.trim() || 'column';
+  }
+
+  let planCardDrag = null;
+
+  function startPlanCardDrag(event) {
+    if (event.button !== 0) return;
+    const card = event.currentTarget;
+    if (!card.closest('.plan-board')) return;
+    const rect = card.getBoundingClientRect();
+    planCardDrag = {
+      card,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      width: rect.width,
+      height: rect.height,
+      started: false,
+      placeholder: null
+    };
+    try { card.setPointerCapture?.(event.pointerId); } catch (error) { /* Synthetic pointer events do not own capture. */ }
+    card.addEventListener('pointermove', movePlanCardDrag);
+    card.addEventListener('pointerup', endPlanCardDrag, { once: true });
+    card.addEventListener('pointercancel', cancelPlanCardDrag, { once: true });
+  }
+
+  function beginPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.started) return;
+    const { card } = drag;
+    const rect = card.getBoundingClientRect();
+    const slot = document.createElement('div');
+    slot.className = 'board-drop-slot';
+    slot.style.height = `${rect.height}px`;
+    card.parentElement.insertBefore(slot, card);
+    drag.placeholder = slot;
+    drag.started = true;
+    card.dataset.dragSuppress = 'true';
+    card.classList.add('dragging');
+    card.style.left = `${rect.left}px`;
+    card.style.top = `${rect.top}px`;
+    card.style.width = `${rect.width}px`;
+    card.style.height = `${rect.height}px`;
+    document.body.classList.add('plan-card-dragging');
+    positionPlanDraggedCard(event.clientX, event.clientY);
+  }
+
+  function movePlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+    if (!drag.started && distance < 6) return;
+    event.preventDefault();
+    beginPlanCardDrag(event);
+    positionPlanDraggedCard(event.clientX, event.clientY);
+    updatePlanDropSlot(event.clientX, event.clientY);
+  }
+
+  function positionPlanDraggedCard(clientX, clientY) {
+    const drag = planCardDrag;
+    if (!drag) return;
+    drag.card.style.left = `${clientX - drag.offsetX}px`;
+    drag.card.style.top = `${clientY - drag.offsetY}px`;
+  }
+
+  function updatePlanDropSlot(clientX, clientY) {
+    const drag = planCardDrag;
+    if (!drag?.placeholder) return;
+    const lanes = Array.from(document.querySelectorAll('.plan-board .board-lane'));
+    let lane = lanes.find(candidate => {
+      const rect = candidate.getBoundingClientRect();
+      return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+    });
+    if (!lane) {
+      lane = lanes.reduce((nearest, candidate) => {
+        const rect = candidate.getBoundingClientRect();
+        const cx = Math.max(rect.left, Math.min(clientX, rect.right));
+        const cy = Math.max(rect.top, Math.min(clientY, rect.bottom));
+        const dist = Math.hypot(clientX - cx, clientY - cy);
+        return !nearest || dist < nearest.dist ? { lane: candidate, dist } : nearest;
+      }, null)?.lane;
+    }
+    if (!lane) return;
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    lane.classList.add('drag-over');
+    const cards = Array.from(lane.querySelectorAll('.board-card:not(.dragging)'));
+    const insertBefore = cards.find(card => {
+      const rect = card.getBoundingClientRect();
+      return clientY < rect.top + rect.height / 2;
+    });
+    if (insertBefore) lane.insertBefore(drag.placeholder, insertBefore);
+    else lane.appendChild(drag.placeholder);
+  }
+
+  function endPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    drag.card.removeEventListener('pointermove', movePlanCardDrag);
+    if (!drag.started) {
+      planCardDrag = null;
+      return;
+    }
+    event.preventDefault();
+    const destinationLane = drag.placeholder.closest('.board-lane');
+    drag.placeholder.replaceWith(drag.card);
+    resetPlanDraggedCard(drag.card);
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document.body.classList.remove('plan-card-dragging');
+    updateBoardCounts();
+    if (destinationLane) toast(`${getBoardCardTitle(drag.card)} moved to ${getBoardLaneTitle(destinationLane)}.`);
+    planCardDrag = null;
+  }
+
+  function cancelPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag) return;
+    drag.card.removeEventListener('pointermove', movePlanCardDrag);
+    if (drag.started && drag.placeholder) drag.placeholder.replaceWith(drag.card);
+    resetPlanDraggedCard(drag.card);
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document.body.classList.remove('plan-card-dragging');
+    planCardDrag = null;
+  }
+
+  function resetPlanDraggedCard(card) {
+    card.classList.remove('dragging');
+    card.style.left = '';
+    card.style.top = '';
+    card.style.width = '';
+    card.style.height = '';
+    setTimeout(() => { delete card.dataset.dragSuppress; }, 120);
+  }
+
+  function handlePlanCardKeyMove(event) {
+    if (!event.shiftKey || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    const card = event.currentTarget;
+    const lane = card.closest('.board-lane');
+    const board = card.closest('.plan-board');
+    if (!lane || !board) return;
+    event.preventDefault();
+    const lanes = Array.from(board.querySelectorAll('.board-lane'));
+    const laneIndex = lanes.indexOf(lane);
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      const nextLane = lanes[laneIndex + (event.key === 'ArrowRight' ? 1 : -1)];
+      if (!nextLane) return;
+      nextLane.appendChild(card);
+      updateBoardCounts();
+      card.focus();
+      toast(`${getBoardCardTitle(card)} moved to ${getBoardLaneTitle(nextLane)}.`);
+      return;
+    }
+    const siblings = Array.from(lane.querySelectorAll('.board-card'));
+    const index = siblings.indexOf(card);
+    const target = siblings[index + (event.key === 'ArrowDown' ? 1 : -1)];
+    if (!target) return;
+    if (event.key === 'ArrowDown') lane.insertBefore(target, card);
+    else lane.insertBefore(card, target);
+    card.focus();
   }
 
   /* ===== Act interactions ===== */
