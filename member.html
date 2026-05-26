@@ -915,6 +915,11 @@
     border-top: 1px solid var(--border-subtle);
     padding-top: 14px;
   }
+  .plan-modal-chat-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+  }
   .plan-modal-chat {
     align-items: center;
     background: var(--accent-hover);
@@ -923,13 +928,23 @@
     display: inline-flex;
     gap: 8px;
     justify-content: center;
-    min-height: 40px;
-    padding: 9px 14px;
+    min-height: 42px;
+    padding: 9px 12px;
   }
   .plan-modal-chat:hover {
     background: var(--accent);
     border-color: var(--accent);
     color: var(--bg-panel);
+  }
+  .plan-modal-chat.ai {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-secondary);
+  }
+  .plan-modal-chat.ai:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text);
   }
   .plan-modal-chat-note {
     color: var(--text-muted);
@@ -937,6 +952,7 @@
     line-height: 1.45;
     margin-top: 8px;
   }
+
 
   .act-hero {
     background: var(--bg-panel);
@@ -1117,6 +1133,168 @@
     flex-direction: column;
     gap: 8px;
     margin: 0 0 16px;
+  }
+
+  .care-inbox {
+    display: grid;
+    gap: 14px;
+    padding: 0 16px 22px;
+  }
+  .care-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+  }
+  .care-overview { padding: 16px; }
+  .care-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .care-identity {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    min-width: 0;
+  }
+  .care-avatar {
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50%;
+    color: var(--text);
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 600;
+    height: 42px;
+    justify-content: center;
+    width: 42px;
+  }
+  .care-name {
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .care-role,
+  .care-copy,
+  .care-principle span,
+  .care-route-card span,
+  .care-thread-meta,
+  .care-thread-status {
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .care-status {
+    border: 1px solid var(--accent-soft);
+    border-radius: 999px;
+    color: var(--accent);
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 9px;
+    white-space: nowrap;
+  }
+  .care-copy { margin: 0 0 14px; }
+  .care-principles {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+  .care-principle {
+    background: rgba(239,234,224,0.42);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 10px 11px;
+  }
+  .care-principle b,
+  .care-section-title,
+  .care-route-card b,
+  .care-thread-title {
+    color: var(--text);
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 3px;
+  }
+  .care-section {
+    display: grid;
+    gap: 10px;
+  }
+  .care-section-head {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+  }
+  .care-section-note {
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+  .care-route-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+  .care-route-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 12px;
+    text-align: left;
+    transition: background 0.12s, border-color 0.12s, transform 0.12s;
+  }
+  .care-route-card:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .care-route-card b { font-size: 13px; }
+  .care-thread-list.thread-list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+  }
+  .care-thread-card.thread-pill {
+    align-items: flex-start;
+    border-radius: var(--radius-sm);
+    display: grid;
+    gap: 4px;
+    max-width: none;
+    padding: 11px 12px;
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+  }
+  .care-thread-card.thread-pill.active {
+    background: rgba(212,165,116,0.12);
+    border-color: rgba(111,74,32,0.28);
+    color: var(--text);
+  }
+  .care-thread-panel { overflow: hidden; }
+  .care-thread-panel .thread-context {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0;
+    margin: 0;
+    padding: 12px 14px;
+  }
+  .care-thread-panel .chat-wrap { padding: 14px 12px 4px; }
+  .care-suggest.suggest { padding: 0; }
+  @media (max-width: 520px) {
+    .plan-modal-chat-grid,
+    .care-route-grid { grid-template-columns: 1fr; }
   }
 
   .appointment-head {
@@ -3194,49 +3372,65 @@
       <button class="seg-btn" data-sub="meridian" onclick="gotoSub('messages','meridian')">Aleron AI</button>
     </div>
 
-    <!-- ---- TEAM (direct physician thread) ---- -->
+    <!-- ---- TEAM (clinical communication hub) ---- -->
     <div class="substate active" id="messages-team">
       <div style="padding: 4px 16px 0">
-        <div class="screen-eyebrow">Direct line</div>
-        <h1 class="screen-title" style="margin-bottom: 8px">Connect with Dr. Thompson.</h1>
-        <p class="screen-subtitle" style="margin-bottom: 14px">Send a direct message when a question needs his eyes. He'll respond within one business day.</p>
+        <div class="screen-eyebrow">Care team inbox</div>
+        <h1 class="screen-title" style="margin-bottom: 8px">Message Dr. Thompson.</h1>
+        <p class="screen-subtitle" style="margin-bottom: 14px">A clinical inbox for decisions, symptoms, results, and plan changes. Scheduling stays in Appointments. Explainers go to Aleron AI.</p>
       </div>
 
-      <div class="connect-actions">
-        <button class="btn wide ghost" onclick="document.getElementById('chatField').focus()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="margin-right:6px">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-          Message Dr. Thompson
-        </button>
-      </div>
-
-      <div class="thread-list" id="teamThreadList" aria-label="Doctor message threads"></div>
-      <div class="thread-context" id="teamThreadContext"></div>
-
-      <div class="md-strip" onclick="toast('Opening Dr. Thompson\\'s note')">
-        <div class="av">MT</div>
-        <div class="body">
-          <div class="lbl">From Dr. Thompson</div>
-          <div class="txt">"Jim - I'm out of town next week but wanted to make sure you saw the statin change. Start tonight if you can. Message me here if anything feels off."</div>
-          <div class="when">2 hours ago</div>
-        </div>
-      </div>
-
-      <div class="chat-wrap" id="teamChatWrap">
-        <div class="msg ai">
-          <div class="av">MT</div>
-          <div class="bubble">
-            Hey Jim - any questions about the plan? Happy to clarify anything. I'll also have my office reach out in the next day or two to schedule the CAC scan.
-            <div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div>
+      <div class="care-inbox">
+        <section class="care-card care-overview" aria-label="Doctor message rules">
+          <div class="care-head">
+            <div class="care-identity">
+              <div class="care-avatar">MT</div>
+              <div>
+                <div class="care-name">Dr. Marcus Thompson</div>
+                <div class="care-role">Primary care · Aleron MD care team</div>
+              </div>
+            </div>
+            <div class="care-status">Reply by next business day</div>
           </div>
-        </div>
-      </div>
+          <p class="care-copy">The point is not another chat room. It is a clean clinical handoff: what changed, what you need, and which decision it touches.</p>
+          <div class="care-principles">
+            <div class="care-principle"><b>Use this for</b><span>Medication questions, new symptoms, outside results, or anything that could change the plan.</span></div>
+            <div class="care-principle"><b>Do not use this for</b><span>Emergencies, routine scheduling, or broad education questions Aleron AI can answer instantly.</span></div>
+          </div>
+        </section>
 
-      <div class="suggest">
-        <button onclick="askTeamPreset('About scheduling the cardiac workup')">Scheduling the cardiac workup</button>
-        <button onclick="askTeamPreset('Question about the statin')">Question about the statin</button>
-        <button onclick="askTeamPreset('Something doesn\\'t feel right')">Something doesn't feel right</button>
+        <section class="care-section" aria-label="Start a doctor thread">
+          <div class="care-section-head">
+            <div class="care-section-title">Start with the clinical reason</div>
+            <div class="care-section-note">Routes the thread with context</div>
+          </div>
+          <div class="care-route-grid">
+            <button class="care-route-card" type="button" onclick="startDoctorTopic('plan')"><b>Plan decision</b><span>Ask if a priority, medication, or surveillance step should change.</span></button>
+            <button class="care-route-card" type="button" onclick="startDoctorTopic('symptom')"><b>Symptom or side effect</b><span>Report something new and tie it to the current plan.</span></button>
+            <button class="care-route-card" type="button" onclick="startDoctorTopic('result')"><b>New result</b><span>Upload or summarize outside labs, imaging, or consult notes.</span></button>
+            <button class="care-route-card" type="button" onclick="gotoSub('messages','appointments')"><b>Scheduling</b><span>Move to Appointments for times, prep, and visit logistics.</span></button>
+          </div>
+        </section>
+
+        <section class="care-section" aria-label="Doctor threads">
+          <div class="care-section-head">
+            <div class="care-section-title">Open threads</div>
+            <div class="care-section-note">One topic per thread</div>
+          </div>
+          <div class="thread-list care-thread-list" id="teamThreadList" aria-label="Doctor message threads"></div>
+        </section>
+
+        <section class="care-card care-thread-panel" aria-label="Selected doctor thread">
+          <div class="thread-context" id="teamThreadContext"></div>
+          <div class="chat-wrap" id="teamChatWrap"></div>
+        </section>
+
+        <div class="suggest care-suggest">
+          <div class="suggest-label">Quick replies for the selected thread</div>
+          <button onclick="askTeamPreset('Can you confirm whether this changes the current plan?')">Does this change the plan?</button>
+          <button onclick="askTeamPreset('What should I watch for before our next visit?')">What should I watch for?</button>
+          <button onclick="askTeamPreset('Should the office help schedule the next step?')">Have the office schedule it</button>
+        </div>
       </div>
     </div>
 
@@ -3341,15 +3535,10 @@
         <p class="screen-subtitle" style="margin-bottom: 14px">Grounded in your plan, your data, and Dr. Thompson's note. When I hit my limit, I route to your care team.</p>
       </div>
 
-      <div class="chat-wrap" id="chatWrap">
-        <div class="msg ai">
-          <div class="av">AI</div>
-          <div class="bubble">
-            Good morning, Jim. Your plan was released two hours ago - <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?
-            <div class="src"><b>Source:</b> Your plan (released Apr 18) · Dr. Thompson's note</div>
-          </div>
-        </div>
-      </div>
+      <div class="thread-list" id="aiThreadList" aria-label="Aleron AI threads"></div>
+      <div class="thread-context" id="aiThreadContext"></div>
+
+      <div class="chat-wrap" id="chatWrap"></div>
 
       <!-- Preloaded questions - shown until the user sends the first message -->
       <div class="suggest" id="suggest">
@@ -3453,8 +3642,11 @@
       <span id="planModalNext"></span>
     </div>
     <div class="plan-modal-chat-row">
-      <button class="plan-modal-chat" id="planModalChat" type="button">Message Dr. Thompson about this →</button>
-      <div class="plan-modal-chat-note">Opens a focused doctor thread for this priority so the conversation stays separate from your general plan chat.</div>
+      <div class="plan-modal-chat-grid">
+        <button class="plan-modal-chat" id="planModalChat" type="button">Message Dr. Thompson →</button>
+        <button class="plan-modal-chat ai" id="planModalAIChat" type="button">Ask Aleron AI →</button>
+      </div>
+      <div class="plan-modal-chat-note">Doctor threads are for decisions and plan changes. Aleron AI is for instant explanation using this priority as context.</div>
     </div>
   </div>
 </div>
@@ -3586,6 +3778,7 @@
 
     document.getElementById('planModalComplete')?.addEventListener('click', showPlanCompleteConfirm);
     document.getElementById('planModalChat')?.addEventListener('click', startPlanDoctorThread);
+    document.getElementById('planModalAIChat')?.addEventListener('click', startPlanAIThread);
     document.getElementById('planModalConfirmBtn')?.addEventListener('click', confirmPlanComplete);
     document.getElementById('planModalCancel')?.addEventListener('click', hidePlanCompleteConfirm);
     updateBoardCounts();
@@ -4201,16 +4394,37 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     general: {
       id: 'general',
       title: 'Current plan',
-      meta: 'Direct line',
-      context: 'General thread with Dr. Thompson for questions that are not tied to one priority.',
+      meta: 'Dr. Thompson · Direct line',
+      status: 'Open',
+      context: 'Use this for questions that could change the plan or need clinical judgment.',
       messages: [{
         from: 'ai',
-        text: "Hey Jim - any questions about the plan? Happy to clarify anything. I'll also have my office reach out in the next day or two to schedule the CAC scan.",
+        text: "Jim, I reviewed the plan release. CAC scheduling is the next operational step, and the statin change is the decision I want started now. Send one focused question here and my team will keep the context attached.",
         src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
       }]
     }
   };
+  const DOCTOR_TOPIC_TEMPLATES = {
+    plan: { title: 'Plan decision', meta: 'Clinical judgment', status: 'Drafting', context: 'For questions about whether a medication, priority, or surveillance step should change.', starter: 'I want to ask whether this should change the current plan: ' },
+    symptom: { title: 'Symptom or side effect', meta: 'Clinical update', status: 'Drafting', context: 'For new symptoms, side effects, or tolerance issues that Dr. Thompson should review.', starter: 'I am noticing a symptom or side effect and want guidance: ' },
+    result: { title: 'New result', meta: 'Result review', status: 'Drafting', context: 'For outside labs, imaging, consult notes, or documents that should be interpreted against the plan.', starter: 'I have a new result to review: ' }
+  };
   let activeTeamThreadId = 'general';
+
+  const AI_THREADS = {
+    general: {
+      id: 'general',
+      title: 'Current plan',
+      meta: 'Aleron AI',
+      context: 'General AI thread grounded in your plan, your data, and Dr. Thompson\'s note.',
+      messages: [{
+        from: 'ai',
+        html: "Good morning, Jim. Your plan was released two hours ago: <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?",
+        src: '<b>Source:</b> Your plan (released Apr 18) · Dr. Thompson\'s note'
+      }]
+    }
+  };
+  let activeAIThreadId = 'general';
 
   function sendChat() {
     const field = document.getElementById('chatField');
@@ -4224,15 +4438,17 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
 
   function askPreset(q) {
-    addUserMsg(q);
-    // Hide suggestion chips after first ask
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'user', text: q });
+    renderAIThread();
     const s = document.getElementById('suggest');
     if (s) s.style.display = 'none';
-    // Typing indicator
     setTimeout(() => {
       const canned = matchCanned(q);
-      if (canned) addAIMsg(canned.text, canned.src);
-      else addAIMsg(`Good question. I'd need to check your record in more detail - give me a moment, or I can route this to Dr. Thompson's team if it needs their eyes.`, '<b>Source:</b> Pattern-matched against your plan + record');
+      if (canned) thread.messages.push({ from: 'ai', html: canned.text, src: canned.src });
+      else thread.messages.push({ from: 'ai', text: "Good question. I can explain what is in the plan, but I would route anything that changes treatment or timing to Dr. Thompson.", src: '<b>Source:</b> Pattern-matched against your plan + record' });
+      if (activeAIThreadId === thread.id) renderAIThread();
+      scrollChatBottom();
     }, 650);
   }
 
@@ -4245,20 +4461,14 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
 
   function addUserMsg(text) {
-    const wrap = document.getElementById('chatWrap');
-    const el = document.createElement('div');
-    el.className = 'msg user';
-    el.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(text)}</div>`;
-    wrap.appendChild(el);
-    scrollChatBottom();
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'user', text });
+    renderAIThread();
   }
   function addAIMsg(html, src) {
-    const wrap = document.getElementById('chatWrap');
-    const el = document.createElement('div');
-    el.className = 'msg ai';
-    el.innerHTML = `<div class="av">AI</div><div class="bubble">${html.replace(/\n/g, '<br>')}${src ? `<div class="src">${src}</div>` : ''}</div>`;
-    wrap.appendChild(el);
-    scrollChatBottom();
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'ai', html, src });
+    renderAIThread();
   }
   function scrollChatBottom() {
     requestAnimationFrame(() => {
@@ -4266,24 +4476,87 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     });
   }
   function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+  function threadBody(msg) {
+    if (msg.html) return msg.html.replace(/\n/g, '<br>');
+    return escapeHtml(msg.text || '').replace(/\n/g, '<br>');
   }
 
-  /* ===== Team threads (direct physician) ===== */
+  function renderAIThreads() {
+    const list = document.getElementById('aiThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    Object.values(AI_THREADS).forEach(thread => {
+      const btn = document.createElement('button');
+      btn.className = 'thread-pill';
+      btn.classList.toggle('active', thread.id === activeAIThreadId);
+      btn.type = 'button';
+      btn.textContent = thread.title;
+      btn.onclick = () => { activeAIThreadId = thread.id; renderAIThreads(); };
+      list.appendChild(btn);
+    });
+    renderAIThread();
+  }
+
+  function renderAIThread() {
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    const context = document.getElementById('aiThreadContext');
+    const wrap = document.getElementById('chatWrap');
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)}`;
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    thread.messages.forEach(msg => {
+      const el = document.createElement('div');
+      el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
+      const av = msg.from === 'user' ? 'JY' : 'AI';
+      const src = msg.src ? `<div class="src">${msg.src}</div>` : '';
+      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${threadBody(msg)}${src}</div>`;
+      wrap.appendChild(el);
+    });
+  }
+
+  function startPlanAIThread() {
+    if (!activePlanCard) return;
+    const key = activePlanCard.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
+    const id = `ai-plan-${key || 'priority'}`;
+    if (!AI_THREADS[id]) {
+      AI_THREADS[id] = {
+        id,
+        title,
+        meta: 'Aleron AI',
+        context: details?.threadIntro?.replace('Focused thread with Dr. Thompson', 'Focused AI explainer') || `Focused AI explainer about ${title}.`,
+        messages: [{ from: 'ai', text: `I can explain the ${title} priority, what it changes, and what to ask Dr. Thompson. If your question would change timing or treatment, I will route you back to the doctor thread.`, src: '<b>Source:</b> Plan priority details · Aleron AI' }]
+      };
+    }
+    activeAIThreadId = id;
+    const starter = details?.starter || `I have a question about ${title}: `;
+    closePlanModal();
+    gotoTab('messages');
+    gotoSub('messages', 'meridian');
+    renderAIThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+    toast(`Aleron AI thread started for ${title}`);
+  }
+
   function renderTeamThreads() {
     const list = document.getElementById('teamThreadList');
     if (!list) return;
     list.innerHTML = '';
     Object.values(TEAM_THREADS).forEach(thread => {
       const btn = document.createElement('button');
-      btn.className = 'thread-pill';
+      btn.className = 'thread-pill care-thread-card';
       btn.classList.toggle('active', thread.id === activeTeamThreadId);
       btn.type = 'button';
-      btn.textContent = thread.title;
-      btn.onclick = () => {
-        activeTeamThreadId = thread.id;
-        renderTeamThreads();
-      };
+      btn.innerHTML = `<span class="care-thread-title">${escapeHtml(thread.title)}</span><span class="care-thread-meta">${escapeHtml(thread.meta || 'Doctor thread')}</span><span class="care-thread-status">${escapeHtml(thread.status || 'Open')}</span>`;
+      btn.onclick = () => { activeTeamThreadId = thread.id; renderTeamThreads(); };
       list.appendChild(btn);
     });
     renderTeamThread();
@@ -4301,9 +4574,32 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
       const av = msg.from === 'user' ? 'JY' : 'MT';
       const src = msg.src ? `<div class="src">${msg.src}</div>` : '';
-      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${escapeHtml(msg.text).replace(/\n/g, '<br>')}${src}</div>`;
+      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${threadBody(msg)}${src}</div>`;
       wrap.appendChild(el);
     });
+  }
+
+  function startDoctorTopic(kind) {
+    const t = DOCTOR_TOPIC_TEMPLATES[kind] || DOCTOR_TOPIC_TEMPLATES.plan;
+    const id = `doctor-${kind}`;
+    if (!TEAM_THREADS[id]) {
+      TEAM_THREADS[id] = {
+        id,
+        title: t.title,
+        meta: t.meta,
+        status: t.status,
+        context: t.context,
+        messages: [{ from: 'ai', text: `Started a ${t.title.toLowerCase()} thread. Keep this to one clinical question so Dr. Thompson can answer without reconstructing the whole plan.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+      };
+    }
+    activeTeamThreadId = id;
+    renderTeamThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = t.starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
   }
 
   function startPlanDoctorThread() {
@@ -4311,18 +4607,17 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const key = activePlanCard.dataset.planCard;
     const details = PLAN_CARD_DETAILS[key];
     const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
-    const id = `plan-${key || 'priority'}-${Date.now()}`;
-    TEAM_THREADS[id] = {
-      id,
-      title,
-      meta: 'Top priority',
-      context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
-      messages: [{
-        from: 'ai',
-        text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`,
-        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
-      }]
-    };
+    const id = `plan-${key || 'priority'}`;
+    if (!TEAM_THREADS[id]) {
+      TEAM_THREADS[id] = {
+        id,
+        title,
+        meta: 'Top priority',
+        status: 'Drafting',
+        context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
+        messages: [{ from: 'ai', text: `Started a focused thread for ${title}. Ask the question here and I will review it in the context of this priority.`, src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' }]
+      };
+    }
     activeTeamThreadId = id;
     const starter = details?.starter || `I have a question about ${title}: `;
     closePlanModal();
@@ -4335,19 +4630,16 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       field.focus();
       field.setSelectionRange(field.value.length, field.value.length);
     }
-    toast(`New doctor thread started for ${title}`);
+    toast(`Doctor thread started for ${title}`);
   }
 
   function askTeamPreset(q) {
     const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
     thread.messages.push({ from: 'user', text: q });
-    renderTeamThread();
+    thread.status = 'Waiting on care team';
+    renderTeamThreads();
     setTimeout(() => {
-      thread.messages.push({
-        from: 'ai',
-        text: "Got it. I'll take a look and get back to you within the day. If it's urgent, call the office line.",
-        src: '<b>From:</b> Dr. Marcus Thompson · Primary Care'
-      });
+      thread.messages.push({ from: 'ai', text: "Received. This is attached to the selected thread and marked for Dr. Thompson's review. If it becomes urgent, call the office line.", src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' });
       if (activeTeamThreadId === thread.id) renderTeamThread();
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }, 700);
@@ -4355,6 +4647,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
 
   renderTeamThreads();
+  renderAIThreads();
 
   /* ===== Risk bottom sheet (You → Risk cards) ===== */
   const RISK_SHEETS = {
