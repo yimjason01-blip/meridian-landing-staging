@@ -3232,6 +3232,7 @@
     <div class="segmented" role="tablist">
       <button class="seg-btn active" data-sub="message" onclick="gotoSub('plan','message')">Strategy</button>
       <button class="seg-btn" data-sub="act" onclick="gotoSub('plan','act')">To do</button>
+      <button class="seg-btn" data-sub="arc" onclick="gotoSub('plan','arc')">Plan Arc</button>
     </div>
 
     <!-- ---- SUBSTATE: MESSAGE ---- -->
@@ -3379,16 +3380,11 @@
   </section>
 
   <!-- =================================================== -->
-  <!-- TAB 3 - YOU (Data ↔ Reasoning) -->
+  <!-- TAB 3 - YOUR DATA -->
   <!-- =================================================== -->
   <section class="screen" id="screen-you">
-    <div class="segmented" role="tablist">
-      <button class="seg-btn active" data-sub="data" onclick="gotoSub('you','data')">Data</button>
-      <button class="seg-btn" data-sub="reasoning" onclick="gotoSub('you','reasoning')">Risk</button>
-    </div>
-
     <!-- ---- DATA ---- -->
-    <div class="substate active" id="you-data">
+    <div id="you-data">
       <div class="screen-eyebrow">Everything we've collected</div>
       <h1 class="screen-title">You, in numbers.</h1>
       <p class="screen-subtitle">Wearable, labs, genetic. Open any group to expand.</p>
@@ -3550,9 +3546,14 @@
       </div>
 
     </div>
+  </section>
 
+  <!-- =================================================== -->
+  <!-- TAB 4 - RISK -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-risk">
     <!-- ---- RISK ---- -->
-    <div class="substate" id="you-reasoning">
+    <div id="risk-models">
       <div class="screen-eyebrow">Your risk, broken down</div>
       <h1 class="screen-title">Four risk models.</h1>
       <p class="screen-subtitle">Each model fed by your data. Use "Ask about this" on any card to dig in.</p>
@@ -3632,7 +3633,7 @@
   </section>
 
   <!-- =================================================== -->
-  <!-- TAB 4 - CHAT (MD + Aleron AI) -->
+  <!-- TAB 5 - CHAT (MD + Aleron AI) -->
   <!-- =================================================== -->
   <section class="screen" id="screen-messages">
     <div class="segmented" role="tablist">
@@ -3690,7 +3691,7 @@
 
 
   <!-- =================================================== -->
-  <!-- TAB 5 - APPOINTMENTS -->
+  <!-- TAB 6 - APPOINTMENTS -->
   <!-- =================================================== -->
   <section class="screen" id="screen-appointments">
     <!-- ---- APPOINTMENTS ---- -->
@@ -3825,6 +3826,13 @@
     </svg>
     Your Data
   </button>
+  <button class="nav-item" data-tab="risk" onclick="gotoTab('risk')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M12 3.5l7 3v5.3c0 4.1-2.8 7.8-7 8.7-4.2-.9-7-4.6-7-8.7V6.5l7-3Z"/>
+      <path d="M8.5 13.2l2.2-2.2 2.1 2.1 2.8-3.8"/>
+    </svg>
+    Risk
+  </button>
   <button class="nav-item" data-tab="messages" onclick="gotoTab('messages')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
       <path d="M5 6.5h14a2 2 0 0 1 2 2v6.2a2 2 0 0 1-2 2H10.5L6 20v-3.3H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2Z"/>
@@ -3889,7 +3897,7 @@
   </div>
 </div>
 
-<!-- Risk bottom sheet (opens from You → Risk cards) -->
+<!-- Risk bottom sheet (opens from Risk cards) -->
 <div class="risk-sheet-backdrop" id="riskSheetBackdrop" onclick="closeRiskSheet()"></div>
 <div class="risk-sheet" id="riskSheet" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
   <div class="rs-handle"></div>
@@ -3925,7 +3933,7 @@
 
     // Subtitle in topbar changes for personality
     const sub = document.getElementById('topbarSub');
-    const subs = { plan: '· your plan', qol: '· quality of life', you: '· you', messages: '· chat', appointments: '· appointments' };
+    const subs = { plan: '· your plan', qol: '· quality of life', you: '· your data', risk: '· risk', messages: '· chat', appointments: '· appointments' };
     if (sub) sub.textContent = subs[name] || '· your plan';
   }
 
