@@ -4029,6 +4029,7 @@
     }
   };
   let activePlanCard = null;
+  const PLAN_BOARD_STORAGE_KEY = 'aleron-plan-board-state-v1';
 
   function initPlanBoard() {
     const board = document.querySelector('.plan-board');
@@ -4036,9 +4037,10 @@
     board.dataset.ready = 'true';
 
     board.querySelectorAll('.board-card').forEach((card, index) => {
-      card.id = card.id || `plan-board-card-${index}`;
+      card.id = card.id || (card.dataset.planCard ? `plan-card-${card.dataset.planCard}` : `plan-board-card-${index}`);
       card.draggable = false;
     });
+    restorePlanBoardState(board);
 
     board.querySelectorAll('.board-card.active-work').forEach(card => {
       card.setAttribute('aria-label', `${getBoardCardTitle(card)}. Open details, or drag to move between columns.`);
@@ -4119,7 +4121,32 @@
     card.remove();
     reviewLane.appendChild(reviewCard);
     updateBoardCounts();
+    savePlanBoardState();
     toast(`${title.textContent} moved to Done/Physician Review.`);
+  }
+
+  function savePlanBoardState() {
+    const board = document.querySelector('.plan-board');
+    if (!board) return;
+    const state = Array.from(board.querySelectorAll('.board-lane')).map(lane => ({
+      lane: lane.dataset.lane,
+      cards: Array.from(lane.querySelectorAll('.board-card[id]')).map(card => card.id)
+    }));
+    try { window.localStorage.setItem(PLAN_BOARD_STORAGE_KEY, JSON.stringify(state)); } catch (error) {}
+  }
+
+  function restorePlanBoardState(board) {
+    let state;
+    try { state = JSON.parse(window.localStorage.getItem(PLAN_BOARD_STORAGE_KEY) || '[]'); } catch (error) { state = []; }
+    if (!Array.isArray(state) || !state.length) return;
+    state.forEach(column => {
+      const lane = board.querySelector(`.board-lane[data-lane="${column.lane}"]`);
+      if (!lane || !Array.isArray(column.cards)) return;
+      column.cards.forEach(cardId => {
+        const card = document.getElementById(cardId);
+        if (card) lane.appendChild(card);
+      });
+    });
   }
 
   function updateBoardCounts() {
@@ -4246,6 +4273,7 @@
     document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
     document.body.classList.remove('plan-card-dragging');
     updateBoardCounts();
+    savePlanBoardState();
     if (destinationLane) toast(`${getBoardCardTitle(drag.card)} moved to ${getBoardLaneTitle(destinationLane)}.`);
     planCardDrag = null;
   }
@@ -4284,6 +4312,7 @@
       if (!nextLane) return;
       nextLane.appendChild(card);
       updateBoardCounts();
+      savePlanBoardState();
       card.focus();
       toast(`${getBoardCardTitle(card)} moved to ${getBoardLaneTitle(nextLane)}.`);
       return;
@@ -4294,6 +4323,7 @@
     if (!target) return;
     if (event.key === 'ArrowDown') lane.insertBefore(target, card);
     else lane.insertBefore(card, target);
+    savePlanBoardState();
     card.focus();
   }
 
