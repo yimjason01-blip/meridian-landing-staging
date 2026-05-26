@@ -2428,6 +2428,117 @@
     color: var(--text);
     font-weight: 500;
   }
+  .ai-chat-shell {
+    background: rgba(255,255,255,0.36);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(112px, 34%) minmax(0, 1fr);
+    margin: 0 12px 96px;
+    min-height: 58vh;
+    overflow: hidden;
+  }
+  .ai-history-rail {
+    background: rgba(34,36,38,0.96);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    color: rgba(246,244,238,0.92);
+    min-width: 0;
+    padding: 10px 8px;
+  }
+  .ai-history-head {
+    align-items: center;
+    display: flex;
+    font-size: 11px;
+    font-weight: 600;
+    justify-content: space-between;
+    letter-spacing: 0.08em;
+    margin: 0 2px 10px;
+    text-transform: uppercase;
+  }
+  .ai-history-head button {
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: rgba(246,244,238,0.9);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+  }
+  .ai-history-list.thread-list {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+  }
+  .ai-history-item.thread-pill {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: rgba(246,244,238,0.72);
+    display: grid;
+    gap: 2px;
+    max-width: none;
+    min-width: 0;
+    padding: 8px 7px;
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+  }
+  .ai-history-item.thread-pill.active {
+    background: rgba(70,91,115,0.56);
+    border-color: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .ai-history-title {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ai-history-meta,
+  .ai-history-snippet {
+    color: rgba(246,244,238,0.56);
+    display: block;
+    font-size: 10.5px;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ai-history-item.thread-pill.active .ai-history-meta,
+  .ai-history-item.thread-pill.active .ai-history-snippet { color: rgba(255,255,255,0.7); }
+  .ai-thread-pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 10px;
+  }
+  .ai-thread-context.thread-context {
+    margin: 0 10px 12px;
+  }
+  .ai-chat-wrap.chat-wrap {
+    flex: 1;
+    padding: 0 10px 12px;
+  }
+  .ai-suggest.suggest {
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+    padding: 10px;
+  }
+  @media (max-width: 380px) {
+    .ai-chat-shell { grid-template-columns: 104px minmax(0, 1fr); margin-left: 8px; margin-right: 8px; }
+    .ai-history-rail { padding-left: 6px; padding-right: 6px; }
+    .ai-history-snippet { display: none; }
+  }
 
   /* Chat thread */
   .chat-wrap {
@@ -3535,20 +3646,30 @@
         <p class="screen-subtitle" style="margin-bottom: 14px">Grounded in your plan, your data, and Dr. Thompson's note. When I hit my limit, I route to your care team.</p>
       </div>
 
-      <div class="thread-list" id="aiThreadList" aria-label="Aleron AI threads"></div>
-      <div class="thread-context" id="aiThreadContext"></div>
+      <div class="ai-chat-shell" aria-label="Aleron AI chat">
+        <aside class="ai-history-rail" aria-label="AI topic history">
+          <div class="ai-history-head">
+            <span>History</span>
+            <button type="button" onclick="startBlankAIThread()" aria-label="Start new Aleron AI chat">+</button>
+          </div>
+          <div class="thread-list ai-history-list" id="aiThreadList" aria-label="Aleron AI topic history"></div>
+        </aside>
 
-      <div class="chat-wrap" id="chatWrap"></div>
+        <section class="ai-thread-pane" aria-label="Selected Aleron AI thread">
+          <div class="thread-context ai-thread-context" id="aiThreadContext"></div>
+          <div class="chat-wrap ai-chat-wrap" id="chatWrap"></div>
 
-      <!-- Preloaded questions - shown until the user sends the first message -->
-      <div class="suggest" id="suggest">
-        <div class="suggest-label">Good places to start</div>
-        <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
-        <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
-        <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
-        <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
-        <button onclick="askPreset('Walk me through Dr. Thompson\\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
-        <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
+          <!-- Preloaded questions, shown until the user sends the first message -->
+          <div class="suggest ai-suggest" id="suggest">
+            <div class="suggest-label">Good places to start</div>
+            <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
+            <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
+            <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
+            <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
+            <button onclick="askPreset('Walk me through Dr. Thompson\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
+            <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
+          </div>
+        </section>
       </div>
     </div>
   </section>
@@ -4417,6 +4538,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       title: 'Current plan',
       meta: 'Aleron AI',
       context: 'General AI thread grounded in your plan, your data, and Dr. Thompson\'s note.',
+      createdAt: 1,
       messages: [{
         from: 'ai',
         html: "Good morning, Jim. Your plan was released two hours ago: <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?",
@@ -4440,14 +4562,14 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   function askPreset(q) {
     const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
     thread.messages.push({ from: 'user', text: q });
-    renderAIThread();
+    renderAIThreads();
     const s = document.getElementById('suggest');
     if (s) s.style.display = 'none';
     setTimeout(() => {
       const canned = matchCanned(q);
       if (canned) thread.messages.push({ from: 'ai', html: canned.text, src: canned.src });
       else thread.messages.push({ from: 'ai', text: "Good question. I can explain what is in the plan, but I would route anything that changes treatment or timing to Dr. Thompson.", src: '<b>Source:</b> Pattern-matched against your plan + record' });
-      if (activeAIThreadId === thread.id) renderAIThread();
+      if (activeAIThreadId === thread.id) renderAIThreads();
       scrollChatBottom();
     }, 650);
   }
@@ -4483,19 +4605,34 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     return escapeHtml(msg.text || '').replace(/\n/g, '<br>');
   }
 
+  function stripThreadText(value) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = value || '';
+    return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function aiThreadSnippet(thread) {
+    const last = [...(thread.messages || [])].reverse().find(msg => msg.text || msg.html);
+    if (!last) return 'New chat';
+    const body = last.text || stripThreadText(last.html || '');
+    return body.length > 46 ? `${body.slice(0, 46)}...` : body;
+  }
+
   function renderAIThreads() {
     const list = document.getElementById('aiThreadList');
     if (!list) return;
     list.innerHTML = '';
-    Object.values(AI_THREADS).forEach(thread => {
-      const btn = document.createElement('button');
-      btn.className = 'thread-pill';
-      btn.classList.toggle('active', thread.id === activeAIThreadId);
-      btn.type = 'button';
-      btn.textContent = thread.title;
-      btn.onclick = () => { activeAIThreadId = thread.id; renderAIThreads(); };
-      list.appendChild(btn);
-    });
+    Object.values(AI_THREADS)
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+      .forEach(thread => {
+        const btn = document.createElement('button');
+        btn.className = 'thread-pill ai-history-item';
+        btn.classList.toggle('active', thread.id === activeAIThreadId);
+        btn.type = 'button';
+        btn.innerHTML = `<span class="ai-history-title">${escapeHtml(thread.title)}</span><span class="ai-history-meta">${escapeHtml(thread.meta || 'Aleron AI')}</span><span class="ai-history-snippet">${escapeHtml(aiThreadSnippet(thread))}</span>`;
+        btn.onclick = () => { activeAIThreadId = thread.id; renderAIThreads(); };
+        list.appendChild(btn);
+      });
     renderAIThread();
   }
 
@@ -4503,7 +4640,9 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
     const context = document.getElementById('aiThreadContext');
     const wrap = document.getElementById('chatWrap');
+    const suggest = document.getElementById('suggest');
     if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)}`;
+    if (suggest) suggest.style.display = (thread.messages || []).some(msg => msg.from === 'user') ? 'none' : 'flex';
     if (!wrap) return;
     wrap.innerHTML = '';
     thread.messages.forEach(msg => {
@@ -4516,21 +4655,39 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     });
   }
 
+  function startBlankAIThread() {
+    const id = `ai-chat-${Date.now()}`;
+    AI_THREADS[id] = {
+      id,
+      title: 'New chat',
+      meta: 'Aleron AI · just now',
+      context: 'Open AI thread grounded in your plan and your data.',
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: 'Start a new question here. I will keep it separate from your other topics and route clinical decisions back to Dr. Thompson.', src: '<b>Source:</b> Aleron AI routing rules' }]
+    };
+    activeAIThreadId = id;
+    renderAIThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = '';
+      field.focus();
+    }
+  }
+
   function startPlanAIThread() {
     if (!activePlanCard) return;
     const key = activePlanCard.dataset.planCard;
     const details = PLAN_CARD_DETAILS[key];
     const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
-    const id = `ai-plan-${key || 'priority'}`;
-    if (!AI_THREADS[id]) {
-      AI_THREADS[id] = {
-        id,
-        title,
-        meta: 'Aleron AI',
-        context: details?.threadIntro?.replace('Focused thread with Dr. Thompson', 'Focused AI explainer') || `Focused AI explainer about ${title}.`,
-        messages: [{ from: 'ai', text: `I can explain the ${title} priority, what it changes, and what to ask Dr. Thompson. If your question would change timing or treatment, I will route you back to the doctor thread.`, src: '<b>Source:</b> Plan priority details · Aleron AI' }]
-      };
-    }
+    const id = `ai-plan-${key || 'priority'}-${Date.now()}`;
+    AI_THREADS[id] = {
+      id,
+      title,
+      meta: 'Plan card · just now',
+      context: details?.threadIntro?.replace('Focused thread with Dr. Thompson', 'Focused AI explainer') || `Focused AI explainer about ${title}.`,
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: `I started a new AI thread for ${title}. I can explain what this priority means, what it changes, and what would need Dr. Thompson.`, src: '<b>Source:</b> Plan priority details · Aleron AI' }]
+    };
     activeAIThreadId = id;
     const starter = details?.starter || `I have a question about ${title}: `;
     closePlanModal();
@@ -4543,7 +4700,7 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
       field.focus();
       field.setSelectionRange(field.value.length, field.value.length);
     }
-    toast(`Aleron AI thread started for ${title}`);
+    toast(`New Aleron AI thread started for ${title}`);
   }
 
   function renderTeamThreads() {
