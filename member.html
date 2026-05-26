@@ -1579,11 +1579,19 @@
     position: relative;
     width: 100%;
   }
-  .meeting-video img {
+  .meeting-avatar {
+    align-items: center;
+    background:
+      linear-gradient(145deg, rgba(246,244,238,0.16), rgba(246,244,238,0.06));
     border: 1px solid rgba(246,244,238,0.22);
     border-radius: 50%;
+    color: rgba(246,244,238,0.86);
+    display: flex;
+    font-size: 30px;
+    font-weight: 600;
     height: 124px;
-    object-fit: cover;
+    justify-content: center;
+    letter-spacing: 0.08em;
     width: 124px;
   }
   .meeting-live {
@@ -3742,7 +3750,7 @@
         <div class="meeting-room">
           <div class="meeting-video">
             <div class="meeting-live"><span></span>Live now</div>
-            <img src="../patient-app/assets/dr-thompson.png" alt="Dr. Thompson">
+            <div class="meeting-avatar" role="img" aria-label="Dr. Thompson">MT</div>
             <div class="meeting-nameplate">
               <b>Dr. Marcus Thompson</b>
               <span>Primary care · waiting in secure room</span>
