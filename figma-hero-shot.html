@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aleron MD Figma Rebase</title>
+  <title>Aleron MD Layered Figma Hero</title>
   <style>
     :root {
       --page-bg: #fffefb;
-      --frame-w: 1728;
-      --hero-h: 968;
-      --curve-h: 861;
+      --hero-base: #414c6a;
+      --cream: #efeae0;
+      --ink: #242426;
+      --white: #ffffff;
+      --rust: #a2653b;
+      --navy: #2c3240;
+      --gold-line: rgba(197, 162, 110, 0.2);
     }
 
     * {
@@ -21,215 +25,721 @@
       margin: 0;
       min-height: 100%;
       background: var(--page-bg);
-      overflow-x: hidden;
     }
 
     body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      font-family: PolySans, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .page {
-      width: 100%;
-      overflow: hidden;
-      background: var(--page-bg);
-    }
-
-    .figma-frame {
+    .hero-frame {
       position: relative;
       width: 100vw;
+      aspect-ratio: 1728 / 968;
+      height: min(calc(100vw * 968 / 1728), 100svh);
       overflow: hidden;
+      background: var(--hero-base);
       isolation: isolate;
-      background: var(--page-bg);
     }
 
-    .hero {
-      height: min(calc(100vw * var(--hero-h) / var(--frame-w)), 100svh);
-      min-height: 420px;
-      background: #414c6a;
+    .layer {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .curve-section {
-      aspect-ratio: 1728 / 861;
-    }
-
-    .figma-export {
+    .hero-slide {
       position: absolute;
       inset: 0;
       z-index: 1;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 360ms ease;
-    }
-
-    .figma-export.is-active,
-    .curve-section .figma-export {
       opacity: 1;
-      visibility: visible;
+      visibility: hidden;
+      pointer-events: none;
+      --slide-image-shift: 112vw;
+      --slide-float-shift: 230vw;
     }
 
-    .figma-export img {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .hero-slide.is-active {
+      z-index: 3;
+      visibility: visible;
+      --slide-image-shift: 0px;
+      --slide-float-shift: 0px;
+    }
+
+    .hero-slide.is-exiting {
+      z-index: 2;
+      visibility: visible;
+      --slide-image-shift: -58vw;
+      --slide-float-shift: -170vw;
+    }
+
+    .photo-base-bg {
+      z-index: 1;
+      left: 0;
+      top: 0.413223%;
+      width: 142.939815%;
+      height: 164.359504%;
       object-fit: fill;
-      user-select: none;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .photo-natalia-bg {
+      z-index: 1;
+      left: 11.689815%;
+      top: 0;
+      width: 89.0625%;
+      height: 100%;
+      object-fit: fill;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .photo-base-full {
+      z-index: 1;
+      left: 0;
+      top: 0.413223%;
+      width: 100%;
+      height: 99.586777%;
+      object-fit: fill;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .photo-primary {
+      z-index: 1;
+      left: 12.962963%;
+      top: 0;
+      width: 87.037037%;
+      height: 100%;
+      object-fit: fill;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .base-union {
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100.312501%;
+      height: 100.413223%;
+      object-fit: fill;
+      transform: none;
+    }
+
+    .grid-gradient-back {
+      z-index: 3;
+      left: 0;
+      top: 0;
+      width: 100.312501%;
+      height: 100.413223%;
+      object-fit: fill;
+      transform: none;
+    }
+
+    .photo-foreground {
+      z-index: 4;
+      left: 12.962963%;
+      top: 0;
+      width: 87.152778%;
+      height: 100%;
+      object-fit: fill;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .grid-gradient-front {
+      z-index: 3;
+      left: 0;
+      top: 0;
+      width: 100.312501%;
+      height: 100.413223%;
+      object-fit: fill;
+      transform: none;
+    }
+
+    .floating-block {
+      z-index: 3;
+      position: absolute;
+      display: block;
       pointer-events: none;
+      user-select: none;
+      background: #434e6c;
+      object-fit: fill;
+      transform: translate3d(calc(var(--slide-float-shift) + var(--hero-floating-block-shift, 0px)), 0, 0);
+      transition: transform 980ms cubic-bezier(.16, .82, .18, 1);
+      will-change: transform;
+    }
+
+    .floating-block.between-faces {
+      left: 42.824074%;
+      top: 50.309917%;
+      width: 14.0625%;
+      height: 12.505165%;
+    }
+
+    .floating-block.lower-left {
+      left: 29.84375%;
+      top: 62.809917%;
+      width: 12.962963%;
+      height: 12.5%;
+    }
+
+    .floating-block.far-right {
+      left: 85.9375%;
+      top: 62.804752%;
+      width: 14.0625%;
+      height: 12.505165%;
+    }
+
+    .slide-one .grid-gradient-front {
+      z-index: 5;
+    }
+
+    .slide-two .photo-primary,
+    .slide-two .photo-foreground {
+      left: 15.68287%;
+      width: 84.31713%;
+    }
+
+    .slide-two .floating-block.between-faces {
+      background: #38323d;
+    }
+
+    .slide-two .floating-block.far-right {
+      background: #323545;
+    }
+
+    .slide-three .photo-primary,
+    .slide-three .photo-foreground,
+    .slide-four .photo-primary {
+      left: 15.335648%;
+      width: 84.664352%;
+    }
+
+    .slide-four .photo-foreground {
+      left: 15.277778%;
+      width: 84.722222%;
+    }
+
+    .slide-three .floating-block.between-faces {
+      background: #38303b;
+    }
+
+    .slide-three .floating-block.far-right {
+      z-index: 2;
+      left: 85.821759%;
+      top: 62.913223%;
+      width: 14.178241%;
+      height: 12.5%;
+      background: #3b4662;
+    }
+
+    .slide-four .floating-block.between-faces {
+      background: #af463a;
+    }
+
+    .slide-four .floating-block.far-right {
+      background: #323445;
+    }
+
+    .carousel-dots {
+      z-index: 8;
+      position: absolute;
+      left: 50%;
+      bottom: max(16px, 3.1%);
+      display: flex;
+      gap: 10px;
+      transform: translateX(-50%);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.22);
+      padding: 0;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .carousel-dot.is-active {
+      background: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .carousel-dot:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .floating-block {
+        transform: none;
+      }
+    }
+
+    .brand-logo {
+      z-index: 5;
+      left: 4.166667%;
+      top: 4.958678%;
+      width: 7.407407%;
+      height: auto;
+    }
+
+    .headline {
+      z-index: 5;
+      position: absolute;
+      left: 4.166667%;
+      top: 69.731405%;
+      width: 31.076389%;
+      margin: 0;
+      color: var(--white);
+      font-weight: 400;
+      font-size: clamp(32px, 3.703704vw, 64px);
+      line-height: 1.02;
+      letter-spacing: clamp(-1.6px, -0.092593vw, -0.8px);
+      text-wrap: balance;
+    }
+
+    .button-layer {
+      z-index: 6;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .figma-button {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      padding: 0;
+      border-radius: 0;
+      font: inherit;
+      font-size: clamp(12px, 0.925926vw, 16px);
+      line-height: 1.2;
+      letter-spacing: clamp(-0.16px, -0.009259vw, -0.08px);
+      text-decoration: none;
+      pointer-events: auto;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .figma-button.apply {
+      left: 89.930556%;
+      top: 3.512397%;
+      width: 7.928241%;
+      height: 6.095041%;
+      background: var(--cream);
+      color: var(--ink);
+      border: 1px solid var(--cream);
+    }
+
+    .figma-button.demo {
+      left: 4.166667%;
+      top: 87.293388%;
+      width: 8.101852%;
+      height: 6.301653%;
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid var(--cream);
+    }
+
+    .slide-count {
+      z-index: 5;
+      position: absolute;
+      margin: 0;
+      color: var(--white);
+      font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: clamp(12px, 0.810185vw, 14px);
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    .slide-count.current {
+      left: 50.173611%;
+      top: 89.359504%;
+      width: 1.50463%;
+    }
+
+    .slide-count.total {
+      left: 88.888889%;
+      top: 89.359504%;
+      width: 2.025463%;
     }
 
     .section-gap {
       width: 100vw;
       height: calc(100vw * 75 / 1728);
-      min-height: 36px;
       background: var(--page-bg);
     }
 
-    .hotspot {
+    .curve-section {
+      position: relative;
+      width: 100vw;
+      aspect-ratio: 1728 / 861;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(to right, rgba(255, 255, 255, 0.92) 0 1px, transparent 1px calc(100% * 247 / 1728)),
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.92) 0 1px, transparent 1px calc(100% * 123 / 861)),
+        linear-gradient(115deg, #fefdfc 0%, #f6f4ee 46%, #dedede 100%);
+      isolation: isolate;
+    }
+
+    .curve-bg-grid {
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 85.598142%;
+      object-fit: fill;
+    }
+
+    .curve-title {
+      z-index: 3;
       position: absolute;
-      z-index: 2;
-      display: block;
-      min-width: 44px;
-      min-height: 44px;
-      border: 0;
-      background: transparent;
-      color: transparent;
-      text-decoration: none;
-      cursor: pointer;
+      left: 29.918981%;
+      top: 7.897793%;
+      width: 40.162037%;
+      margin: 0;
+      color: var(--ink);
+      font-weight: 400;
+      font-size: clamp(24px, 2.662037vw, 46px);
+      line-height: 1.02;
+      letter-spacing: clamp(-1.15px, -0.066551vw, -0.55px);
+      text-align: center;
+      text-wrap: balance;
     }
 
-    .top-action-hotspot {
-      left: 89.930556%;
-      top: 3.512397%;
-      width: 7.928241%;
-      height: 6.095041%;
-    }
-
-    .demo-hotspot {
-      left: 4.166667%;
-      top: 87.293388%;
-      width: 8.101852%;
-      height: 6.301653%;
-    }
-
-    .play-hotspot {
+    .play-video {
+      z-index: 4;
+      position: absolute;
       left: 45.138889%;
       top: 25.087108%;
       width: 7.928241%;
       height: 6.852497%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      color: var(--white);
+      border: 1px solid var(--navy);
+      border-radius: 0;
+      font: inherit;
+      font-size: clamp(12px, 0.925926vw, 16px);
+      line-height: 1.2;
+      letter-spacing: clamp(-0.16px, -0.009259vw, -0.08px);
+      text-decoration: none;
     }
 
-    .hotspot:focus-visible {
-      outline: 2px solid #ffffff;
-      outline-offset: 4px;
+    .curve-line {
+      z-index: 2;
+      left: 14.351852%;
+      top: 28.687573%;
+      width: 71.469907%;
+      height: 56.794425%;
+      object-fit: fill;
     }
 
-    .sr-only {
+    .age-card {
+      z-index: 5;
       position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      width: 5.266204%;
+      height: 12.23981%;
+      background: var(--white);
+      border: 1px solid var(--gold-line);
+      color: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: calc(100vw * 20 / 1728);
     }
 
-    @media (max-width: 760px) {
-      .hero {
-        min-height: 620px;
-      }
-
-      .figma-export img {
-        width: auto;
-        min-width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .hero .figma-export img {
-        object-position: 58% 50%;
-      }
-
-      .curve-section {
-        min-height: 520px;
-      }
-
-      .curve-section .figma-export img {
-        object-position: center top;
-      }
-
-      .top-action-hotspot {
-        left: auto;
-        right: 7%;
-        top: 28px;
-        width: 112px;
-      }
-
-      .demo-hotspot {
-        left: 7%;
-        top: auto;
-        bottom: 52px;
-        width: 112px;
-      }
-
-      .play-hotspot {
-        left: 50%;
-        top: 25%;
-        width: 116px;
-        transform: translateX(-50%);
-      }
+    .age-card.left {
+      left: 11.631944%;
+      top: 35.307782%;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .figma-export {
-        transition: none;
-      }
+    .age-card.right {
+      left: 83.101852%;
+      top: 66.666667%;
+    }
+
+    .age-card::after {
+      content: "";
+      position: absolute;
+      left: 37.35%;
+      top: 80.93%;
+      width: 27.51%;
+      height: 19.07%;
+      background: #d9d9d9;
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+    }
+
+    .age-label {
+      position: relative;
+      z-index: 1;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: clamp(12px, 0.694444vw, 12px);
+      line-height: 1.23;
+      text-align: center;
+    }
+
+    .age-number {
+      position: relative;
+      z-index: 1;
+      color: var(--navy);
+      font-weight: 400;
+      font-size: clamp(20px, 1.851852vw, 32px);
+      line-height: 1.23;
+      letter-spacing: clamp(-1.92px, -0.111111vw, -0.96px);
+      text-align: center;
+      margin-top: calc(100vw * 3 / 1728);
+    }
+
+    .curve-marker {
+      z-index: 5;
+      position: absolute;
+      width: 0.983796%;
+      height: 1.974448%;
+    }
+
+    .curve-marker.start {
+      left: 13.831019%;
+      top: 49.012776%;
+      background: var(--rust);
+      border: 1px solid var(--rust);
+    }
+
+    .curve-marker.end {
+      left: 85.300926%;
+      top: 80.487805%;
+      background: var(--navy);
+      border: 1px solid var(--navy);
+    }
+
+    .axis-label {
+      z-index: 5;
+      position: absolute;
+      margin: 0;
+      color: var(--navy);
+      font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: clamp(12px, 0.810185vw, 14px);
+      line-height: 1;
+      font-weight: 400;
+      text-align: center;
+      width: 1.194408%;
+      height: 1.626016%;
+    }
+
+    .axis-40 { left: 14.178241%; top: 87.921022%; }
+    .axis-50 { left: 28.472222%; top: 87.921022%; }
+    .axis-60 { left: 42.766204%; top: 87.921022%; }
+    .axis-70 { left: 57.060185%; top: 87.921022%; }
+    .axis-80 { left: 71.296296%; top: 87.921022%; }
+    .axis-90 { left: 86.747685%; top: 87.921022%; }
+
+    .debug .layer,
+    .debug .floating-block,
+    .debug .headline,
+    .debug .figma-button,
+    .debug .slide-count,
+    .debug .curve-title,
+    .debug .play-video,
+    .debug .age-card,
+    .debug .curve-marker,
+    .debug .axis-label {
+      outline: 1px solid rgba(0, 255, 255, 0.65);
+      outline-offset: 0;
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <section class="figma-frame hero" aria-label="Aleron MD hero" data-source="Figma Hero Treatment">
-      <picture class="figma-export is-active" data-slide="0" data-figma-node="674:41401">
-        <img src="assets/figma-hero-rebase/hero-01-674-41401.png" alt="Aleron MD: Your best days are still ahead." />
-      </picture>
-      <picture class="figma-export" data-slide="1" data-figma-node="674:41815">
-        <img src="assets/figma-hero-rebase/hero-02-674-41815.png" alt="Aleron MD hero slide." loading="eager" />
-      </picture>
-      <picture class="figma-export" data-slide="2" data-figma-node="674:42168">
-        <img src="assets/figma-hero-rebase/hero-03-674-42168.png" alt="Aleron MD hero slide." loading="eager" />
-      </picture>
-      <picture class="figma-export" data-slide="3" data-figma-node="674:42997">
-        <img src="assets/figma-hero-rebase/hero-04-674-42997.png" alt="Aleron MD hero slide." loading="eager" />
-      </picture>
-      <a class="hotspot top-action-hotspot" href="#apply"><span class="sr-only">Apply</span></a>
-      <a class="hotspot demo-hotspot" href="#demo"><span class="sr-only">Demo</span></a>
-    </section>
+  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="layered-rebuild-20260529">
+    <div class="hero-slide slide-one is-active" data-slide="0" aria-hidden="false">
+      <img class="layer photo-base-bg" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:41457" src="assets/figma-hero-layers/photo_base_41457.png" alt="" aria-hidden="true" />
+      <img class="layer photo-natalia-bg" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:41458" src="assets/figma-hero-layers/natalia_41458.png" alt="" aria-hidden="true" />
+      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:41459" src="assets/figma-hero-layers/lawrence_41459.png" alt="" aria-hidden="true" />
+      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:41460" src="assets/figma-hero-layers/base_union_41460_static.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:41466" src="assets/figma-hero-layers/grid_gradient_41466_static.png" alt="" aria-hidden="true" />
+      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41474" src="assets/figma-hero-layers/slide1_block_mid_41474.png" alt="" aria-hidden="true" />
+      <img class="floating-block lower-left" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41462,674:41477,674:41494" src="assets/figma-hero-layers/slide1_block_lower_41462_41477_41494.png" alt="" aria-hidden="true" />
+      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41497" src="assets/figma-hero-layers/slide1_block_right_41497.png" alt="" aria-hidden="true" />
+      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:41485" src="assets/figma-hero-layers/subject_cutout_41459_expanded.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:41486" src="assets/figma-hero-layers/fg_grid_gradient_41486_static.png" alt="" aria-hidden="true" />
+    </div>
 
-    <div class="section-gap" aria-hidden="true"></div>
+    <div class="hero-slide slide-two" data-slide="1" aria-hidden="true">
+      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:41871" src="assets/figma-hero-layers/slide2_photo_41871.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:41872" src="assets/figma-hero-layers/slide2_blocks_back_41872_static.png" alt="" aria-hidden="true" />
+      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41880" src="assets/figma-hero-layers/slide2_block_mid_41880.png" alt="" aria-hidden="true" />
+      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41884" src="assets/figma-hero-layers/slide2_block_right_41884.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:41891" src="assets/figma-hero-layers/slide2_blocks_front_41891_static.png" alt="" aria-hidden="true" />
+      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:41904" src="assets/figma-hero-layers/slide2_photo_fg_41904.png" alt="" aria-hidden="true" />
+    </div>
 
-    <section class="figma-frame curve-section" aria-label="Future curve section" data-figma-node="674:41519">
-      <picture class="figma-export is-active">
-        <img src="assets/figma-hero-rebase/curve-674-41519.png" alt="The story of your future is written on top of this curve." loading="eager" />
-      </picture>
-      <a class="hotspot play-hotspot" href="#play-video"><span class="sr-only">Play Video</span></a>
-    </section>
+    <div class="hero-slide slide-three" data-slide="2" aria-hidden="true">
+      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:42199" src="assets/figma-hero-layers/slide3_photo_42199.png" alt="" aria-hidden="true" />
+      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:42200" src="assets/figma-hero-layers/slide3_base_union_42200_static.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:42206" src="assets/figma-hero-layers/slide3_blocks_back_42206_static.png" alt="" aria-hidden="true" />
+      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:42203" src="assets/figma-hero-layers/slide3_block_right_42203.png" alt="" aria-hidden="true" />
+      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:42214" src="assets/figma-hero-layers/slide3_block_mid_42214.png" alt="" aria-hidden="true" />
+      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:42225" src="assets/figma-hero-layers/slide3_photo_fg_42225.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:42226" src="assets/figma-hero-layers/slide3_blocks_front_42226_static.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="hero-slide slide-four" data-slide="3" aria-hidden="true">
+      <img class="layer photo-base-full" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:43053" src="assets/figma-hero-layers/slide4_base_photo_43053.png" alt="" aria-hidden="true" />
+      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:43082" src="assets/figma-hero-layers/slide4_base_union_43082_static.png" alt="" aria-hidden="true" />
+      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:43088" src="assets/figma-hero-layers/slide4_photo_43088.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:43089" src="assets/figma-hero-layers/slide4_blocks_back_43089_static.png" alt="" aria-hidden="true" />
+      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:43097" src="assets/figma-hero-layers/slide4_block_mid_43097.png" alt="" aria-hidden="true" />
+      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:43101" src="assets/figma-hero-layers/slide4_block_right_43101.png" alt="" aria-hidden="true" />
+      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="693:43384" src="assets/figma-hero-layers/slide4_photo_fg_69343384.png" alt="" aria-hidden="true" />
+      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:43109" src="assets/figma-hero-layers/slide4_blocks_front_43109_static.png" alt="" aria-hidden="true" />
+    </div>
+
+    <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png" alt="Aleron MD" />
+
+    <h1 class="headline" data-figma-node="674:41514">Your best days are still ahead.</h1>
+
+    <nav class="button-layer" aria-label="Hero actions">
+      <a class="figma-button apply" data-figma-node="674:41754" href="#apply">Apply</a>
+      <a class="figma-button demo" data-figma-node="674:41513" href="#demo">Demo</a>
+    </nav>
+
+    <p class="slide-count current" data-figma-node="674:41516">004</p>
+    <p class="slide-count total" data-figma-node="674:41515">/005</p>
+
+    <div class="carousel-dots" role="tablist" aria-label="Hero image carousel">
+      <button class="carousel-dot is-active" type="button" role="tab" aria-selected="true" aria-label="Show hero image 1" data-carousel-target="0"></button>
+      <button class="carousel-dot" type="button" role="tab" aria-selected="false" aria-label="Show hero image 2" data-carousel-target="1"></button>
+      <button class="carousel-dot" type="button" role="tab" aria-selected="false" aria-label="Show hero image 3" data-carousel-target="2"></button>
+      <button class="carousel-dot" type="button" role="tab" aria-selected="false" aria-label="Show hero image 4" data-carousel-target="3"></button>
+    </div>
   </main>
 
+  <div class="section-gap" aria-hidden="true"></div>
+
+  <section class="curve-section" aria-label="Aleron MD future curve section">
+    <img class="layer curve-bg-grid" data-figma-node="674:41521" src="assets/figma-hero-layers/section2_bg_grid.png" alt="" aria-hidden="true" />
+
+    <h2 class="curve-title" data-figma-node="674:41545">The story of your future is written on top of this curve.</h2>
+    <a class="play-video" data-figma-node="674:41546" href="#play-video">Play Video</a>
+
+    <img class="layer curve-line" data-figma-node="674:41538" src="assets/figma-hero-layers/section2_chart.png" alt="" aria-hidden="true" />
+
+    <div class="age-card left" data-figma-node="674:41564" aria-label="Age 40">
+      <span class="age-label">Age</span>
+      <span class="age-number">40</span>
+    </div>
+    <div class="age-card right" data-figma-node="674:41547" aria-label="Age 90">
+      <span class="age-label">Age</span>
+      <span class="age-number">90</span>
+    </div>
+
+    <div class="curve-marker start" data-figma-node="674:41562" aria-hidden="true"></div>
+    <div class="curve-marker end" data-figma-node="674:41563" aria-hidden="true"></div>
+
+    <p class="axis-label axis-40" data-figma-node="674:41559">40</p>
+    <p class="axis-label axis-50" data-figma-node="674:41556">50</p>
+    <p class="axis-label axis-60" data-figma-node="674:41557">60</p>
+    <p class="axis-label axis-70" data-figma-node="674:41558">70</p>
+    <p class="axis-label axis-80" data-figma-node="674:41560">80</p>
+    <p class="axis-label axis-90" data-figma-node="674:41561">90</p>
+  </section>
+
   <script>
-    const slides = Array.from(document.querySelectorAll('.hero .figma-export'));
-    let activeSlide = 0;
+    document.addEventListener('keydown', function (event) {
+      if (event.key.toLowerCase() === 'l') {
+        document.documentElement.classList.toggle('debug');
+      }
+    });
 
-    function showSlide(index) {
-      activeSlide = (index + slides.length) % slides.length;
-      slides.forEach((slide, slideIndex) => {
-        slide.classList.toggle('is-active', slideIndex === activeSlide);
+    (function () {
+      const hero = document.querySelector('.hero-frame');
+      if (!hero) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const slides = Array.from(hero.querySelectorAll('.hero-slide'));
+      const dots = Array.from(hero.querySelectorAll('.carousel-dot'));
+      const currentCount = hero.querySelector('.slide-count.current');
+      const totalCount = hero.querySelector('.slide-count.total');
+      let activeIndex = 0;
+      let ticking = false;
+      let exitTimer = 0;
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function updateHeroBlocks() {
+        if (!reduceMotion) {
+          const heroHeight = hero.offsetHeight || 1;
+          const progress = clamp(window.scrollY / heroHeight, 0, 1);
+          const maxShift = Math.min(window.innerWidth * 0.1, 150);
+          hero.style.setProperty('--hero-floating-block-shift', `${progress * -maxShift}px`);
+        }
+        ticking = false;
+      }
+
+      function requestUpdate() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateHeroBlocks);
+      }
+
+      function setSlide(nextIndex) {
+        if (nextIndex === activeIndex || nextIndex < 0 || nextIndex >= slides.length) return;
+
+        window.clearTimeout(exitTimer);
+        const previous = slides[activeIndex];
+        const next = slides[nextIndex];
+
+        slides.forEach((slide, index) => {
+          slide.classList.remove('is-active', 'is-exiting');
+          slide.setAttribute('aria-hidden', index === nextIndex ? 'false' : 'true');
+        });
+
+        if (!reduceMotion && previous) {
+          previous.classList.add('is-exiting');
+          exitTimer = window.setTimeout(() => previous.classList.remove('is-exiting'), 760);
+        }
+
+        next.classList.add('is-active');
+        activeIndex = nextIndex;
+
+        dots.forEach((dot, index) => {
+          const isActive = index === activeIndex;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        if (currentCount) currentCount.textContent = String(activeIndex + 1).padStart(3, '0');
+        if (totalCount) totalCount.textContent = '/005';
+
+        requestUpdate();
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          setSlide(Number(dot.dataset.carouselTarget));
+        });
       });
-    }
 
-    if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.setInterval(() => showSlide(activeSlide + 1), 6500);
-    }
+      updateHeroBlocks();
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+    })();
   </script>
 </body>
 </html>
