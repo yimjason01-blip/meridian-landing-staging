@@ -548,6 +548,193 @@
     .axis-80 { left: 71.296296%; top: 87.921022%; }
     .axis-90 { left: 86.747685%; top: 87.921022%; }
 
+    @media (max-width: 760px) {
+      :root {
+        --mobile-hero-h: clamp(520px, 72svh, 640px);
+      }
+
+      .hero-frame {
+        height: var(--mobile-hero-h);
+        min-height: 520px;
+        aspect-ratio: auto;
+      }
+
+      .hero-slide {
+        inset: auto;
+        top: 0;
+        left: 0;
+        width: calc(var(--mobile-hero-h) * 1.785124);
+        height: var(--mobile-hero-h);
+        transform: translateX(-42%);
+      }
+
+      .slide-two,
+      .slide-three,
+      .slide-four {
+        transform: translateX(-46%);
+      }
+
+      .brand-logo {
+        left: 24px;
+        top: 24px;
+        width: 116px;
+      }
+
+      .headline {
+        left: 24px;
+        top: auto;
+        bottom: 104px;
+        width: min(340px, calc(100vw - 48px));
+        font-size: clamp(42px, 12vw, 54px);
+        line-height: 0.98;
+        letter-spacing: -1.2px;
+      }
+
+      .button-layer {
+        z-index: 9;
+      }
+
+      .figma-button {
+        font-size: 14px;
+        min-height: 44px;
+      }
+
+      .figma-button.apply {
+        left: auto;
+        right: 20px;
+        top: 22px;
+        width: 88px;
+        height: 40px;
+        background: rgba(239, 234, 224, 0.92);
+        font-size: 13px;
+      }
+
+      .figma-button.demo {
+        left: 24px;
+        top: auto;
+        bottom: 38px;
+        width: 112px;
+        height: 48px;
+      }
+
+      .slide-count {
+        display: none;
+      }
+
+      .slide-count.current {
+        left: auto;
+        right: 98px;
+        top: auto;
+        bottom: 32px;
+        width: auto;
+      }
+
+      .slide-count.total {
+        left: auto;
+        right: 24px;
+        top: auto;
+        bottom: 32px;
+        width: auto;
+      }
+
+      .carousel-dots {
+        display: none;
+      }
+
+      .carousel-dot {
+        width: 9px;
+        height: 9px;
+        font-size: 0;
+        line-height: 0;
+      }
+
+      .section-gap {
+        height: 0;
+      }
+
+      .curve-section {
+        height: 560px;
+        min-height: 560px;
+        aspect-ratio: auto;
+      }
+
+      .curve-title {
+        left: 24px;
+        top: 52px;
+        width: calc(100vw - 48px);
+        font-size: clamp(28px, 8.5vw, 38px);
+        line-height: 1.04;
+        letter-spacing: -0.8px;
+      }
+
+      .play-video {
+        left: 50%;
+        top: 174px;
+        width: 132px;
+        height: 48px;
+        transform: translateX(-50%);
+        font-size: 14px;
+      }
+
+      .curve-line {
+        left: 8%;
+        top: 238px;
+        width: 84%;
+        height: 250px;
+      }
+
+      .curve-bg-grid {
+        height: 100%;
+      }
+
+      .age-card {
+        width: 64px;
+        height: 74px;
+        padding-top: 11px;
+      }
+
+      .age-card.left {
+        left: 36px;
+        top: 254px;
+      }
+
+      .age-card.right {
+        left: auto;
+        right: 36px;
+        top: 398px;
+      }
+
+      .curve-marker {
+        width: 13px;
+        height: 13px;
+      }
+
+      .curve-marker.start {
+        left: 64px;
+        top: 347px;
+      }
+
+      .curve-marker.end {
+        left: auto;
+        right: 63px;
+        top: 452px;
+      }
+
+      .axis-label {
+        top: 512px;
+        width: auto;
+        height: auto;
+        font-size: 12px;
+      }
+
+      .axis-40 { left: 8%; }
+      .axis-50 { left: 24%; }
+      .axis-60 { left: 40%; }
+      .axis-70 { left: 56%; }
+      .axis-80 { left: 72%; }
+      .axis-90 { left: 88%; }
+    }
+
     .debug .layer,
     .debug .floating-block,
     .debug .headline,
