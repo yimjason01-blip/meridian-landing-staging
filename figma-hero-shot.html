@@ -74,6 +74,54 @@
       --slide-float-shift: -170vw;
     }
 
+    .hero-artwork {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      user-select: none;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .five-plane-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: fill;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-bg-plane {
+      z-index: 1;
+      transform: translate3d(calc(var(--slide-image-shift) * 0.35), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .hero-mid-blocks-plane {
+      z-index: 2;
+      transform: translate3d(calc(var(--slide-float-shift) + var(--hero-floating-block-shift, 0px)), 0, 0);
+      transition: transform 980ms cubic-bezier(.16, .82, .18, 1);
+      will-change: transform;
+    }
+
+    .hero-subject-plane {
+      z-index: 3;
+      transform: translate3d(var(--slide-image-shift), 0, 0);
+      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+    }
+
+    .hero-anchor-block-plane {
+      z-index: 2;
+      transform: none;
+    }
+
     .photo-base-bg {
       z-index: 1;
       left: 0;
@@ -781,51 +829,24 @@
   </style>
 </head>
 <body>
-  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="layered-rebuild-20260529">
+  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="five-plane-test-20260529">
     <div class="hero-slide slide-one is-active" data-slide="0" aria-hidden="false">
-      <img class="layer photo-base-bg" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:41457" src="assets/figma-hero-layers/photo_base_41457.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-natalia-bg" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:41458" src="assets/figma-hero-layers/natalia_41458.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:41459" src="assets/figma-hero-layers/lawrence_41459.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:41460" src="assets/figma-hero-layers/base_union_41460_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:41466" src="assets/figma-hero-layers/grid_gradient_41466_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41474" src="assets/figma-hero-layers/slide1_block_mid_41474.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block lower-left" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41462,674:41477,674:41494" src="assets/figma-hero-layers/slide1_block_lower_41462_41477_41494.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41497" src="assets/figma-hero-layers/slide1_block_right_41497.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:41485" src="assets/figma-hero-layers/subject_cutout_41459_expanded.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:41486" src="assets/figma-hero-layers/fg_grid_gradient_41486_static.png?v=layered-20260529" alt="" aria-hidden="true" />
+      <img class="five-plane-layer hero-bg-plane" data-depth-plane="background" data-motion-layer="background" data-figma-node="674:41457 674:41458 674:41459" src="assets/figma-five-plane-test/hero01-bg-plane.png?v=five-plane-20260529d" alt="" aria-hidden="true" />
+      <img class="five-plane-layer hero-mid-blocks-plane" data-depth-plane="midground-blocks" data-motion-layer="parallax-blocks" data-figma-node="674:41460 674:41466" src="assets/figma-five-plane-test/hero01-mid-blocks-plane.png?v=five-plane-20260529d" alt="" aria-hidden="true" />
+      <img class="five-plane-layer hero-subject-plane" data-depth-plane="foreground-subject" data-motion-layer="subject" data-figma-node="674:41485" src="assets/figma-five-plane-test/hero01-subject-plane.png?v=five-plane-20260529d" alt="" aria-hidden="true" />
+      <img class="five-plane-layer hero-anchor-block-plane" data-depth-plane="anchored-left-structure" data-motion-layer="anchored" data-figma-node="674:41460 674:41466 674:41486" src="assets/figma-five-plane-test/hero01-anchor-block-plane.png?v=five-plane-20260530a" alt="" aria-hidden="true" />
     </div>
 
     <div class="hero-slide slide-two" data-slide="1" aria-hidden="true">
-      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:41871" src="assets/figma-hero-layers/slide2_photo_41871.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:41872" src="assets/figma-hero-layers/slide2_blocks_back_41872_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41880" src="assets/figma-hero-layers/slide2_block_mid_41880.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:41884" src="assets/figma-hero-layers/slide2_block_right_41884.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:41891" src="assets/figma-hero-layers/slide2_blocks_front_41891_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:41904" src="assets/figma-hero-layers/slide2_photo_fg_41904.png?v=layered-20260529" alt="" aria-hidden="true" />
+      <img class="hero-artwork" data-depth-plane="figma-artwork" data-motion-layer="artwork" data-figma-node="674:41870" src="assets/figma-hero-artwork/hero-art-02-674-41870.png?v=artwork-20260529" alt="" aria-hidden="true" />
     </div>
 
     <div class="hero-slide slide-three" data-slide="2" aria-hidden="true">
-      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:42199" src="assets/figma-hero-layers/slide3_photo_42199.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:42200" src="assets/figma-hero-layers/slide3_base_union_42200_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:42206" src="assets/figma-hero-layers/slide3_blocks_back_42206_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <span class="static-rect rect-42208" data-depth-plane="anchored-grid-back" data-figma-node="674:42208" aria-hidden="true"></span>
-      <span class="static-rect rect-42211" data-depth-plane="anchored-grid-back" data-figma-node="674:42211" aria-hidden="true"></span>
-      <span class="static-rect rect-42217" data-depth-plane="anchored-grid-back" data-figma-node="674:42217" aria-hidden="true"></span>
-      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:42203" src="assets/figma-hero-layers/slide3_block_right_42203.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:42214" src="assets/figma-hero-layers/slide3_block_mid_42214.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="674:42225" src="assets/figma-hero-layers/slide3_photo_fg_42225.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:42226" src="assets/figma-hero-layers/slide3_blocks_front_42226_static.png?v=layered-20260529" alt="" aria-hidden="true" />
+      <img class="hero-artwork" data-depth-plane="figma-artwork" data-motion-layer="artwork" data-figma-node="674:42169" src="assets/figma-hero-artwork/hero-art-03-674-42169.png?v=artwork-20260529" alt="" aria-hidden="true" />
     </div>
 
     <div class="hero-slide slide-four" data-slide="3" aria-hidden="true">
-      <img class="layer photo-base-full" data-depth-plane="photo-background" data-motion-layer="photo" data-figma-node="674:43053" src="assets/figma-hero-layers/slide4_base_photo_43053.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer base-union" data-depth-plane="anchored-color-mass" data-figma-node="674:43082" src="assets/figma-hero-layers/slide4_base_union_43082_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-primary" data-depth-plane="photo-primary" data-motion-layer="photo" data-figma-node="674:43088" src="assets/figma-hero-layers/slide4_photo_43088.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-back" data-depth-plane="anchored-grid-back" data-figma-node="674:43089" src="assets/figma-hero-layers/slide4_blocks_back_43089_static.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block between-faces" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:43097" src="assets/figma-hero-layers/slide4_block_mid_43097.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="floating-block far-right" data-depth-plane="floating-block" data-motion-layer="floating-block" data-figma-node="674:43101" src="assets/figma-hero-layers/slide4_block_right_43101.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer photo-foreground" data-depth-plane="photo-foreground" data-motion-layer="foreground" data-figma-node="693:43384" src="assets/figma-hero-layers/slide4_photo_fg_69343384.png?v=layered-20260529" alt="" aria-hidden="true" />
-      <img class="layer grid-gradient-front" data-depth-plane="anchored-grid-front" data-figma-node="674:43109" src="assets/figma-hero-layers/slide4_blocks_front_43109_static.png?v=layered-20260529" alt="" aria-hidden="true" />
+      <img class="hero-artwork" data-depth-plane="figma-artwork" data-motion-layer="artwork" data-figma-node="674:43052" src="assets/figma-hero-artwork/hero-art-04-674-43052.png?v=artwork-20260529" alt="" aria-hidden="true" />
     </div>
 
     <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png?v=layered-20260529" alt="Aleron MD" />
