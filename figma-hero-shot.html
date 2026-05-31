@@ -428,53 +428,31 @@
       top: 4.958678%;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px;
-      background: rgba(20, 24, 32, 0.6);
-      border: 1px solid rgba(239, 234, 224, 0.26);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 18px 42px rgba(16, 20, 32, 0.22);
+      gap: clamp(18px, 1.62037vw, 28px);
     }
 
     .header-action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      padding: 0 18px;
-      border: 1px solid transparent;
+      min-height: 40px;
       color: var(--cream);
-      background: transparent;
       font-size: clamp(12px, 0.810185vw, 14px);
       line-height: 1;
       letter-spacing: -0.01em;
       text-decoration: none;
-      transition: background var(--duration-base) ease, border-color var(--duration-base) ease, color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+      text-shadow: 0 1px 18px rgba(16, 20, 32, 0.72);
+      transition: opacity var(--duration-base) ease, color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
     }
 
     .header-action:hover {
       transform: translateY(-1px);
-      background: rgba(239, 234, 224, 0.1);
-      border-color: rgba(239, 234, 224, 0.32);
+      color: var(--white);
     }
 
     .header-action:focus-visible {
       outline: 2px solid var(--cream);
       outline-offset: 4px;
-    }
-
-    .header-action.primary {
-      background: var(--cream);
-      border-color: var(--cream);
-      color: var(--ink);
-      min-width: 88px;
-    }
-
-    .header-action.primary:hover {
-      background: var(--white);
-      border-color: var(--white);
-      box-shadow: 0 12px 28px rgba(16, 20, 32, 0.24);
     }
 
     .headline { 
@@ -1069,7 +1047,7 @@
   </style>
 </head>
 <body>
-  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="live-polish-20260530-sticky-header-ctas">
+  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="live-polish-20260531-header-login-only">
     <div class="hero-slide slide-one is-active" data-slide="0" aria-hidden="false">
       <img class="five-plane-layer hero-bg-plane" data-depth-plane="background" data-motion-layer="background" data-figma-node="674:41457 674:41458 674:41459" src="assets/figma-five-plane-test/hero01-bg-plane.png?v=five-plane-20260530b" alt="" aria-hidden="true" />
       <img class="five-plane-layer hero-mid-blocks-plane" data-depth-plane="midground-blocks" data-motion-layer="parallax-blocks" data-figma-node="674:41460 674:41466" src="assets/figma-five-plane-test/hero01-mid-blocks-plane.png?v=five-plane-20260530b" alt="" aria-hidden="true" />
@@ -1100,9 +1078,8 @@
 
     <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png?v=layered-20260529" alt="Aleron MD" />
 
-    <nav class="header-actions" aria-label="Account and application actions">
+    <nav class="header-actions" aria-label="Account action">
       <a class="header-action" href="login.html">Log in</a>
-      <a class="header-action primary" href="#apply">Apply</a>
     </nav>
 
     <h1 class="headline" data-figma-node="674:41514">Your best days are still ahead.</h1>
