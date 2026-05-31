@@ -429,7 +429,6 @@
       top: 4.958678%;
       display: flex;
       align-items: center;
-      gap: clamp(12px, 1.04167vw, 18px);
     }
 
     .header-action {
@@ -437,45 +436,25 @@
       align-items: center;
       justify-content: center;
       min-height: 40px;
-      padding: 0 clamp(16px, 1.27315vw, 22px);
-      border-radius: 8px;
-      font-size: clamp(13px, 0.81019vw, 14px);
-      font-weight: 500;
-      line-height: 1;
-      letter-spacing: -0.01em;
+      padding: 0 clamp(18px, 1.388889vw, 24px);
+      border-radius: 0;
+      background: var(--cream);
+      color: var(--ink);
+      border: 1px solid var(--cream);
+      font: inherit;
+      font-size: clamp(12px, 0.925926vw, 16px);
+      line-height: 1.2;
+      letter-spacing: clamp(-0.16px, -0.009259vw, -0.08px);
       text-decoration: none;
       white-space: nowrap;
-      transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+      transition: background var(--duration-base) ease, color var(--duration-base) ease, border-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
     }
 
-    /* Login: lighter frosted ghost button */
-    .header-action.secondary {
-      color: var(--ink, #1b1d22);
-      background: rgba(255, 255, 255, 0.74);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-      box-shadow: 0 1px 14px rgba(12, 16, 26, 0.16);
-    }
-
-    .header-action.secondary:hover {
-      background: rgba(255, 255, 255, 0.88);
+    .header-action:hover {
+      background: var(--white);
+      border-color: var(--white);
       transform: translateY(-1px);
-    }
-
-    /* Apply: more opaque, slightly stronger near-white fill */
-    .header-action.primary {
-      color: var(--ink, #1b1d22);
-      background: rgba(250, 249, 245, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-      box-shadow: 0 2px 18px rgba(12, 16, 26, 0.22);
-    }
-
-    .header-action.primary:hover {
-      background: rgba(255, 255, 255, 1);
-      transform: translateY(-1px);
+      box-shadow: var(--cta-shadow);
     }
 
     .header-action:focus-visible {
@@ -577,7 +556,7 @@
     .figma-button.apply {
       left: 4.166667%;
       top: 87.293388%;
-      width: 8.738426%;
+      width: 16.25%;
       height: 6.301653%;
       background: var(--cream);
       color: var(--ink);
@@ -590,7 +569,7 @@
     }
 
     .figma-button.demo {
-      left: 13.831019%;
+      left: 21.759259%;
       top: 87.293388%;
       width: 10.99537%;
       height: 6.301653%;
@@ -1106,16 +1085,15 @@
 
     <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png?v=layered-20260529" alt="Aleron MD" />
 
-    <nav class="header-actions" aria-label="Account actions">
-      <a class="header-action secondary" href="login.html">Login</a>
-      <a class="header-action primary" href="#apply">Apply for Membership</a>
+    <nav class="header-actions" aria-label="Account action">
+      <a class="header-action" href="login.html">Log In</a>
     </nav>
 
     <h1 class="headline" data-figma-node="674:41514">Your best days are still ahead.</h1>
     <p class="hero-subheadline">Physician-led longevity care, powered by AI and your genetic, lab, and wearable data.</p>
 
     <nav class="button-layer" aria-label="Hero actions">
-      <a class="figma-button apply" data-figma-node="674:41754" href="#demo">See a demo</a>
+      <a class="figma-button apply" data-figma-node="674:41754" href="#apply">Apply for Membership</a>
       <a class="figma-button demo" data-figma-node="674:41513" href="#partners">For Employers</a>
     </nav>
 
