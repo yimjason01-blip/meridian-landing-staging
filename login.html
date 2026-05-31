@@ -37,31 +37,17 @@ body {
   place-items: center;
   padding: clamp(22px, 4vw, 64px);
   color: var(--cream);
-  background: var(--hero-base);
+  background:
+    radial-gradient(circle at 18% 14%, rgba(239,234,224,0.10), transparent 22rem),
+    radial-gradient(circle at 76% 18%, rgba(162,101,59,0.22), transparent 26rem),
+    linear-gradient(138deg, #a2653b 0%, #72463a 38%, #414c6a 100%);
   font-family: PolySans, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-x: hidden;
 }
 
 body::before,
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
-body::before {
-  z-index: -2;
-  background:
-    linear-gradient(135deg, rgba(162,101,59,0.98) 0%, rgba(92,55,42,0.94) 32%, rgba(44,50,64,0.98) 74%, rgba(65,76,106,1) 100%);
-}
-
-body::after {
-  z-index: -1;
-  background:
-    radial-gradient(circle at 18% 14%, rgba(239,234,224,0.10), transparent 22rem),
-    radial-gradient(circle at 76% 18%, rgba(162,101,59,0.24), transparent 26rem),
-    linear-gradient(90deg, rgba(35,40,56,0.72) 0%, rgba(35,40,56,0.30) 42%, rgba(35,40,56,0) 68%);
+  display: none;
 }
 
 body:has(.panel.google-mode) {
@@ -271,16 +257,16 @@ input::placeholder { color: rgba(239,234,224,0.42); }
 
 .email-button {
   margin-top: 6px;
-  border: 1px solid var(--cream);
+  border: 1px solid rgba(239,234,224,0.34);
   border-radius: 0;
   padding: 14px 18px;
-  color: var(--ink);
-  background: var(--cream);
+  color: rgba(239,234,224,0.52);
+  background: rgba(239,234,224,0.06);
   font: inherit;
   font-weight: 500;
   cursor: not-allowed;
-  opacity: 0.72;
-  transition: transform 0.18s var(--ease), background 0.18s var(--ease), border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+  opacity: 1;
+  transition: transform 0.18s var(--ease), background 0.18s var(--ease), border-color 0.18s var(--ease), box-shadow 0.18s var(--ease), color 0.18s var(--ease);
 }
 .email-button.is-ready {
   border-color: var(--cream);
