@@ -1,4 +1,4 @@
-# Figma hero carousel — current state and open items
+# Figma hero carousel - current state and open items
 
 Date: 2026-05-31
 Agent: Hermes
@@ -21,7 +21,7 @@ Build signature currently live: `live-polish-20260531-header-login-only`
 
 ## Canonical file
 
-`figma-hero-shot.html` — single self-contained HTML file (inline CSS + JS). 1728x968 desktop canvas.
+`figma-hero-shot.html` - single self-contained HTML file (inline CSS + JS). 1728x968 desktop canvas.
 
 Note: this is NOT `index.html` or `v2.html`. Per AGENTS.md, `v2.html` is the higher-fidelity landing
 candidate and `index.html` is the root entry. `figma-hero-shot.html` is the layered-hero work surface.
@@ -33,9 +33,9 @@ Four slides, each built from five depth planes (z-index order):
 
 1. Background photo plane (z1)
 2. Midground moving blocks plane (z2)
-3. Subject cutout plane (z3) — person
+3. Subject cutout plane (z3) - person
 4. Foreground anchored blocks plane (z4)
-5. Chrome / DOM (z5+) — logo, headline, CTAs, carousel dots
+5. Chrome / DOM (z5+) - logo, headline, CTAs, carousel dots
 
 Assets live in `assets/figma-five-plane-test/hero0{1-4}-*.png`.
 
@@ -51,7 +51,7 @@ Hard rules:
 ## Current shipped interaction state
 
 - Hero entrance animation (staggered fade/rise on logo, headline, subheadline, CTAs).
-- Carousel: dots + keyboard + swipe. NO arrows (Jason found them too busy — keep them removed).
+- Carousel: dots + keyboard + swipe. NO arrows (Jason found them too busy - keep them removed).
 - Slide count micro-animation (001 / 004).
 - Curve section: IntersectionObserver draw-on reveal.
 - Partner modal (employer/broker/employee preview), opens from `#partners`, closes on backdrop/Escape.
@@ -102,9 +102,9 @@ Run before claiming any hero change is live:
 
 ## Source-of-truth pointers
 
-- `AGENTS.md` — collaboration rules, writing/design rules.
-- `PROJECT_STATE.md` — canonical file choices (note: predates the figma-hero work; reflects v2/index).
-- Skill `aleron-md-canonical-repo-location` — repo location trap, deploy nuance, CTA conventions
+- `AGENTS.md` - collaboration rules, writing/design rules.
+- `PROJECT_STATE.md` - canonical file choices (note: predates the figma-hero work; reflects v2/index).
+- Skill `aleron-md-canonical-repo-location` - repo location trap, deploy nuance, CTA conventions
   (`references/public-landing-cta-conventions.md`).
 - Prior handoffs: `2026-05-30-figma-hero-five-plane-carousel.md`,
   `2026-05-30-figma-hero-slide3-motion-block-fix.md`, `2026-05-30-selected-surfer-frame-swap.md`.
