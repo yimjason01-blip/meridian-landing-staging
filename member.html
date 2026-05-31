@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F6F4EE">
 <title>Aleron MD Member</title>
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=aleron-a-small-20260531">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=aleron-a-small-20260531">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png?v=aleron-a-small-20260531">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=aleron-a-small-20260531">
+<link rel="shortcut icon" href="assets/favicon.ico?v=aleron-a-small-20260531">
 <style>
   /*
-    Aleron MD Member - v2 (4-tab architecture)
-    Plan (Message ↔ Act) · Quality of Life · You (Data ↔ Reasoning) · Connect (MD + AI)
+    Aleron MD Member - v2 (5-tab architecture)
+    Plan (Message ↔ Act) · Quality of Life · You (Data ↔ Reasoning) · Chat · Appointments
     Inherits Aleron MD patient app design system. Patient-voice allowed.
   */
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap');
@@ -549,6 +549,84 @@
   .plan-status p:last-child {
     margin-bottom: 0;
   }
+  .plan-status strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .plan-status ul {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: -4px 0 16px 1.1rem;
+    padding: 0;
+  }
+  .plan-status li {
+    margin: 0 0 8px;
+    padding-left: 2px;
+  }
+  .strategy-video-card {
+    max-width: 760px;
+    margin: 8px 0 18px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(63,58,50,0.08);
+  }
+  .strategy-video-head {
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .strategy-video-eyebrow {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+  .strategy-video-title {
+    margin: 0;
+    color: var(--text);
+    font-family: 'Source Serif 4', serif;
+    font-size: 23px;
+    line-height: 1.18;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .strategy-video-sub {
+    margin: 7px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .strategy-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #191714;
+  }
+  .strategy-video-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px 14px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .strategy-video-meta strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .plan-updated {
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    margin: -8px 0 18px;
+    text-transform: uppercase;
+  }
   .plan-board {
     display: grid;
     gap: 12px;
@@ -562,9 +640,8 @@
     padding: 0 10px 10px;
     transition: border-color 0.15s, background 0.15s;
   }
-  .board-lane.drop-over {
-    background: rgba(212,165,116,0.12);
-    border-color: rgba(111,74,32,0.48);
+  .board-lane.locked {
+    background: rgba(239,234,224,0.28);
   }
   .board-lane-head {
     background: var(--bg-surface);
@@ -593,18 +670,58 @@
     background: var(--bg-panel);
     border: 1px solid var(--border-subtle);
     border-radius: 8px;
+    color: inherit;
+    display: block;
+    font: inherit;
     margin-top: 10px;
     padding: 14px;
-    cursor: grab;
-    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+    width: 100%;
   }
-  .board-card:active {
+  .board-card.active-work {
+    border-color: var(--border);
+    cursor: grab;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.45) inset;
+  }
+  .board-card.active-work:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+  .board-card.active-work:active {
     cursor: grabbing;
+    transform: translateY(1px);
   }
   .board-card.dragging {
-    opacity: 0.58;
-    transform: scale(0.995);
-    border-color: var(--accent-hover);
+    box-shadow: 0 14px 36px rgba(10,10,11,0.24), 0 1px 0 rgba(255,255,255,0.45) inset;
+    cursor: grabbing;
+    margin-top: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: none;
+    z-index: 220;
+  }
+  .board-drop-slot {
+    border: 1px dashed var(--border-strong);
+    border-radius: 8px;
+    margin-top: 10px;
+    min-height: 84px;
+  }
+  .board-lane.drag-over {
+    background: rgba(239,234,224,0.58);
+    border-color: var(--border-strong);
+  }
+  body.plan-card-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+  .board-card.locked-card {
+    background: rgba(239,234,224,0.68);
+    border-color: rgba(10,10,11,0.08);
+    cursor: default;
+  }
+  .board-card.waiting {
+    background: rgba(251,248,241,0.72);
   }
   .board-card:focus-visible {
     outline: 2px solid var(--accent-hover);
@@ -617,11 +734,294 @@
     line-height: 1.35;
     margin-bottom: 5px;
   }
+  .board-rank {
+    color: var(--accent-hover);
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .board-card.locked-card .board-title,
+  .board-card.active-work .board-title,
+  .board-card.waiting .board-title {
+    align-items: flex-start;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  .board-card.locked-card .board-title::after,
+  .board-card.waiting .board-title::after {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    content: "";
+    flex: 0 0 14px;
+    height: 14px;
+    margin-top: 2px;
+    opacity: 0.7;
+    width: 14px;
+  }
+  .board-card.locked-card .board-title::after {
+    background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Crect%20x%3D%275%27%20y%3D%2710%27%20width%3D%2714%27%20height%3D%2710%27%20rx%3D%272%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27/%3E%3Cpath%20d%3D%27M8%2010V7a4%204%200%200%201%208%200v3%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E");
+  }
+  .board-card.waiting .board-title::after {
+    background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20d%3D%27M6%202a2%202%200%200%200-2%202v3a5%205%200%200%200%2010%200V4a2%202%200%200%200-2-2%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3Cpath%20d%3D%27M14%207v7a4%204%200%200%200%204%204h1%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27%20stroke-linecap%3D%27round%27/%3E%3Ccircle%20cx%3D%2720%27%20cy%3D%2718%27%20r%3D%272%27%20stroke%3D%27%234A4A4D%27%20stroke-width%3D%271.7%27/%3E%3C/svg%3E");
+  }
   .board-detail {
     color: var(--text-muted);
     font-size: 12px;
     line-height: 1.45;
   }
+  .board-model-reason {
+    border-top: 1px solid rgba(10,10,11,0.08);
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.45;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .board-model-reason strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .board-card.locked-card .board-detail {
+    color: rgba(74,74,77,0.78);
+  }
+  .board-card-cta {
+    align-items: center;
+    border-top: 1px solid rgba(10,10,11,0.08);
+    color: var(--accent-hover);
+    display: flex;
+    font-size: 12px;
+    font-weight: 600;
+    justify-content: space-between;
+    letter-spacing: 0.01em;
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+  .board-card-arrow {
+    font-size: 15px;
+    line-height: 1;
+    transform: translateX(0);
+    transition: transform 0.15s;
+  }
+  .board-card.active-work:hover .board-card-arrow {
+    transform: translateX(2px);
+  }
+
+  .plan-modal-backdrop {
+    background: rgba(10,10,11,0.24);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 0.18s;
+    z-index: 180;
+  }
+  .plan-modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .plan-modal {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 50px rgba(10,10,11,0.18);
+    left: 50%;
+    max-height: min(720px, calc(100vh - 32px));
+    max-width: 720px;
+    opacity: 0;
+    overflow: auto;
+    padding: 20px;
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -48%);
+    transition: opacity 0.18s, transform 0.18s;
+    width: min(calc(100vw - 32px), 720px);
+    z-index: 181;
+  }
+  .plan-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+  }
+  .plan-modal-top {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .plan-modal-kicker {
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .plan-modal h2 {
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.04;
+    margin: 0;
+  }
+  .plan-modal-actions {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+  .plan-modal-complete,
+  .plan-modal-confirm-btn,
+  .plan-modal-cancel,
+  .plan-modal-chat {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 32px;
+    padding: 6px 10px;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  .plan-modal-complete:hover,
+  .plan-modal-confirm-btn:hover,
+  .plan-modal-cancel:hover,
+  .plan-modal-chat:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .plan-modal-confirm-btn {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg-panel);
+  }
+  .plan-modal-confirm-btn:hover {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+    color: var(--bg-panel);
+  }
+  .plan-modal-close {
+    align-items: center;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+  }
+  .plan-modal-close:hover {
+    background: var(--bg-surface);
+    color: var(--text);
+  }
+  .plan-modal-confirm {
+    background: rgba(239,234,224,0.5);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    display: none;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+  .plan-modal-confirm.open {
+    display: grid;
+  }
+  .plan-modal-confirm p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .plan-modal-confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .plan-modal-body {
+    display: grid;
+    gap: 14px;
+  }
+  .plan-modal-summary {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .plan-modal-section {
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 5px;
+    padding-top: 14px;
+  }
+  .plan-modal-section b {
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .plan-modal-section span {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .plan-modal-chat-row {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 14px;
+  }
+  .plan-modal-chat-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .plan-modal-chat {
+    align-items: center;
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--bg-panel);
+    display: inline-flex;
+    gap: 8px;
+    justify-content: center;
+    min-height: 42px;
+    padding: 9px 12px;
+  }
+  .plan-modal-chat:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-panel);
+  }
+  .plan-modal-chat.ai {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-secondary);
+  }
+  .plan-modal-chat.ai:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .plan-modal-chat-note {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.45;
+    margin-top: 8px;
+  }
+
 
   .act-hero {
     background: var(--bg-panel);
@@ -804,6 +1204,230 @@
     margin: 0 0 16px;
   }
 
+  .care-inbox {
+    display: grid;
+    gap: 14px;
+    padding: 0 16px 22px;
+  }
+  .care-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+  }
+  .care-overview { padding: 16px; }
+  .care-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .care-identity {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    min-width: 0;
+  }
+  .care-avatar {
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50%;
+    color: var(--text);
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 600;
+    height: 42px;
+    justify-content: center;
+    width: 42px;
+  }
+  .care-name {
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .care-role,
+  .care-copy,
+  .care-principle span,
+  .care-route-card span,
+  .care-thread-meta,
+  .care-thread-status {
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .care-status {
+    border: 1px solid var(--accent-soft);
+    border-radius: 999px;
+    color: var(--accent);
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 9px;
+    white-space: nowrap;
+  }
+  .care-copy { margin: 0 0 14px; }
+  .care-principles {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+  .care-principle {
+    background: rgba(239,234,224,0.42);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    padding: 10px 11px;
+  }
+  .care-principle b,
+  .care-section-title,
+  .care-route-card b,
+  .care-thread-title {
+    color: var(--text);
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 3px;
+  }
+  .care-section {
+    display: grid;
+    gap: 10px;
+  }
+  .care-section-head {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+  }
+  .care-section-note {
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+  .care-route-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+  .care-route-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 12px;
+    text-align: left;
+    transition: background 0.12s, border-color 0.12s, transform 0.12s;
+  }
+  .care-route-card:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .care-route-card b { font-size: 13px; }
+  .care-thread-list.thread-list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+  }
+  .care-thread-card.thread-pill {
+    align-items: flex-start;
+    border-radius: var(--radius-sm);
+    display: grid;
+    gap: 4px;
+    max-width: none;
+    padding: 11px 12px;
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+  }
+  .care-thread-card.thread-pill.active {
+    background: rgba(212,165,116,0.12);
+    border-color: rgba(111,74,32,0.28);
+    color: var(--text);
+  }
+  .care-thread-panel { overflow: hidden; }
+  .care-thread-panel .thread-context {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0;
+    margin: 0;
+    padding: 12px 14px;
+  }
+  .care-thread-panel .chat-wrap { padding: 14px 12px 4px; }
+  .care-suggest.suggest { padding: 0; }
+  .care-chat-shell.ai-chat-shell {
+    min-height: 62vh;
+  }
+  .care-thread-pane.ai-thread-pane {
+    gap: 0;
+    padding-top: 10px;
+  }
+  .care-pane-card {
+    margin: 0 10px 10px;
+    padding: 12px;
+  }
+  .care-pane-card .care-head {
+    margin-bottom: 10px;
+  }
+  .care-pane-card .care-status {
+    font-size: 10.5px;
+    padding: 5px 8px;
+  }
+  .care-principles-compact {
+    gap: 6px;
+  }
+  .care-principles-compact .care-principle {
+    padding: 8px 9px;
+  }
+  .care-pane-block {
+    border-bottom: 1px solid var(--border-subtle);
+    display: grid;
+    gap: 8px;
+    margin: 0 10px 10px;
+    padding-bottom: 12px;
+  }
+  .care-route-grid-compact .care-route-card {
+    padding: 9px 10px;
+  }
+  .care-route-grid-compact .care-route-card b {
+    font-size: 12.5px;
+    margin-bottom: 2px;
+  }
+  .care-route-grid-compact .care-route-card span {
+    font-size: 11.5px;
+  }
+  .care-history-list .ai-history-item.thread-pill.active {
+    background: rgba(111,74,32,0.44);
+  }
+  .care-thread-context.ai-thread-context {
+    margin-bottom: 10px;
+  }
+  .care-chat-wrap.ai-chat-wrap {
+    min-height: 180px;
+  }
+  .care-empty-thread {
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin: 2px 0 12px;
+    padding: 12px;
+  }
+  .care-suggest.ai-suggest {
+    padding-bottom: 12px;
+  }
+  @media (max-width: 520px) {
+    .plan-modal-chat-grid,
+    .care-route-grid { grid-template-columns: 1fr; }
+  }
+
   .appointment-head {
     display: flex;
     align-items: flex-start;
@@ -951,11 +1575,19 @@
     position: relative;
     width: 100%;
   }
-  .meeting-video img {
+  .meeting-avatar {
+    align-items: center;
+    background:
+      linear-gradient(145deg, rgba(246,244,238,0.16), rgba(246,244,238,0.06));
     border: 1px solid rgba(246,244,238,0.22);
     border-radius: 50%;
+    color: rgba(246,244,238,0.86);
+    display: flex;
+    font-size: 30px;
+    font-weight: 600;
     height: 124px;
-    object-fit: cover;
+    justify-content: center;
+    letter-spacing: 0.08em;
     width: 124px;
   }
   .meeting-live {
@@ -1545,6 +2177,13 @@
   }
 
   @media (max-width: 800px) {
+    .plan-modal-top {
+      display: grid;
+    }
+    .plan-modal-actions {
+      justify-content: space-between;
+      width: 100%;
+    }
     .qol-controls {
       grid-template-columns: 1fr;
     }
@@ -1759,12 +2398,20 @@
     border-radius: 16px 16px 0 0;
     z-index: 99;
     transform: translateY(100%);
-    transition: transform .22s cubic-bezier(.2,.8,.2,1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform .22s cubic-bezier(.2,.8,.2,1), opacity .18s, visibility .18s;
     max-height: 86vh;
     display: flex; flex-direction: column;
     box-shadow: 0 -18px 54px rgba(10,10,11,0.22);
   }
-  .risk-sheet.open { transform: translateY(0); }
+  .risk-sheet.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
   .rs-handle {
     width: 36px; height: 4px; border-radius: 2px;
     background: var(--border-strong);
@@ -1877,6 +2524,159 @@
   }
   .md-strip.empty {
     display: none;
+  }
+  .thread-list {
+    display: flex;
+    gap: 8px;
+    margin: 0 16px 12px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .thread-pill {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: inherit;
+    font-size: 12px;
+    max-width: 220px;
+    overflow: hidden;
+    padding: 8px 12px;
+    text-overflow: ellipsis;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+    white-space: nowrap;
+  }
+  .thread-pill.active {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--bg-panel);
+  }
+  .thread-context {
+    background: rgba(212,165,116,0.10);
+    border: 1px solid rgba(111,74,32,0.16);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin: 0 16px 12px;
+    padding: 10px 12px;
+  }
+  .thread-context b {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .ai-chat-shell {
+    background: rgba(255,255,255,0.36);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(112px, 34%) minmax(0, 1fr);
+    margin: 0 12px 96px;
+    min-height: 58vh;
+    overflow: hidden;
+  }
+  .ai-history-rail {
+    background: rgba(34,36,38,0.96);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    color: rgba(246,244,238,0.92);
+    min-width: 0;
+    padding: 10px 8px;
+  }
+  .ai-history-head {
+    align-items: center;
+    display: flex;
+    font-size: 11px;
+    font-weight: 600;
+    justify-content: space-between;
+    letter-spacing: 0.08em;
+    margin: 0 2px 10px;
+    text-transform: uppercase;
+  }
+  .ai-history-head button {
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: rgba(246,244,238,0.9);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+  }
+  .ai-history-list.thread-list {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+  }
+  .ai-history-item.thread-pill {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: rgba(246,244,238,0.72);
+    display: grid;
+    gap: 2px;
+    max-width: none;
+    min-width: 0;
+    padding: 8px 7px;
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+  }
+  .ai-history-item.thread-pill.active {
+    background: rgba(70,91,115,0.56);
+    border-color: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .ai-history-title {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ai-history-meta,
+  .ai-history-snippet {
+    color: rgba(246,244,238,0.56);
+    display: block;
+    font-size: 10.5px;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ai-history-item.thread-pill.active .ai-history-meta,
+  .ai-history-item.thread-pill.active .ai-history-snippet { color: rgba(255,255,255,0.7); }
+  .ai-thread-pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 10px;
+  }
+  .ai-thread-context.thread-context {
+    margin: 0 10px 12px;
+  }
+  .ai-chat-wrap.chat-wrap {
+    flex: 1;
+    padding: 0 10px 12px;
+  }
+  .ai-suggest.suggest {
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+    padding: 10px;
+  }
+  @media (max-width: 380px) {
+    .ai-chat-shell { grid-template-columns: 104px minmax(0, 1fr); margin-left: 8px; margin-right: 8px; }
+    .ai-history-rail { padding-left: 6px; padding-right: 6px; }
+    .ai-history-snippet { display: none; }
   }
 
   /* Chat thread */
@@ -2243,7 +3043,8 @@
       border-bottom: none;
     }
 
-    #screen-messages {
+    #screen-messages,
+    #screen-appointments {
       padding-bottom: 118px;
     }
 
@@ -2256,7 +3057,7 @@
       -webkit-backdrop-filter: blur(14px);
     }
 
-    #screen-messages .substate > div[style] {
+    #screen-appointments > div[style] {
       padding: 0 !important;
     }
 
@@ -2425,83 +3226,92 @@
   <!-- =================================================== -->
   <section class="screen active" id="screen-plan">
     <div class="segmented" role="tablist">
-      <button class="seg-btn active" data-sub="message" onclick="gotoSub('plan','message')">Summary</button>
-      <button class="seg-btn" data-sub="act" onclick="gotoSub('plan','act')">Board</button>
+      <button class="seg-btn active" data-sub="message" onclick="gotoSub('plan','message')">Strategy</button>
+      <button class="seg-btn" data-sub="act" onclick="gotoSub('plan','act')">To do</button>
     </div>
 
     <!-- ---- SUBSTATE: MESSAGE ---- -->
     <div class="substate active" id="plan-message">
+      <section class="strategy-video-card" aria-label="Doctor strategy video">
+        <div class="strategy-video-head">
+          <div class="strategy-video-eyebrow">Shared strategy</div>
+          <h2 class="strategy-video-title">Dr. Thompson’s risk-reduction readout</h2>
+          <p class="strategy-video-sub">A short physician review of why these few decisions matter first, what can wait, and how the plan should feel.</p>
+        </div>
+        <video class="strategy-video" controls playsinline preload="metadata" poster="assets/video/doctor-initial-assessment-poster.jpg">
+          <source src="assets/video/doctor-initial-assessment.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="strategy-video-meta">
+          <span><strong>Dr. Nathan Thompson</strong> · Aleron MD</span>
+          <span>1:07</span>
+        </div>
+      </section>
       <div class="plan-status">
-        <p>Your main findings are straightforward: the ATM variant changes your cancer surveillance cadence, and elevated Lp(a) changes how aggressively we manage cardiovascular risk. The strategy is to act on the few things that matter now, then use the next results to decide whether the plan can stay simple or needs to intensify.</p>
-        <p>This week, the work is manageable: complete baseline PSA surveillance, start rosuvastatin, and choose a time for the coronary calcium scan. Longer-horizon items, including genetic counseling, pancreatic surveillance at age 50, and the 8-week lipid recheck, stay organized in the plan without becoming today's burden.</p>
+        <p>Jason,</p>
+        <p>There are positives here. You are still in prevention mode. Nothing in the current picture says we need to chase every possible issue at once. The plan is not to medicalize everything. It is to identify the few places where better information could change what we do next.</p>
+        <p>The main concern on the cardiovascular side is that your risk could reasonably move in either direction once we have better artery-level data. That is why the CAC scan matters. You are at a point where a CAC result could reclassify you into a low-risk or medium-risk lane, and that would affect how aggressive we want to be with the lipid and prevention plan. If the CAC is zero or very low, we can stay more measured. If it shows meaningful plaque, we should treat that as evidence to be more proactive.</p>
+        <p>The ATM finding is different. ATM is an inherited cancer-risk signal. We cannot lower the inherited variant itself, so the goal is not to make you feel diagnosed with cancer. The goal is to use that information to set a smarter surveillance plan.</p>
+        <p>That is why the PSA baseline and colonoscopy are both high-value next steps. The PSA gives us a clean starting point for prostate surveillance, which is relevant because ATM can be associated with higher prostate cancer risk in men. The colonoscopy closes a separate but very actionable cancer-screening gap. It can both detect risk and remove precancerous changes during the same procedure.</p>
+        <p>What happens next:</p>
+        <ul>
+          <li><strong>If the CAC is low:</strong> we can keep the cardiovascular plan measured and spend more energy on optimization.</li>
+          <li><strong>If the CAC is elevated:</strong> we will likely become more aggressive about cardiovascular prevention.</li>
+          <li><strong>If the PSA or colonoscopy shows something that needs follow-up:</strong> we will route into the appropriate surveillance or treatment path.</li>
+          <li><strong>If those screenings are reassuring:</strong> we can keep the cancer-risk plan organized without letting it take over the whole care plan.</li>
+        </ul>
+        <p>So the next move is not do everything. It is to finish the tests that can change the plan. Once those are in, we can decide what truly needs escalation and what can move into optimization.</p>
+        <p>Best,<br>Dr. Thompson</p>
       </div>
     </div>
 
     <!-- ---- SUBSTATE: ACT ---- -->
     <div class="substate" id="plan-act">
-      <div class="screen-eyebrow">Manage the plan</div>
-      <h1 class="screen-title">Your health work, organized.</h1>
-      <p class="screen-subtitle">A simple board for what you own, what matters most, and what needs physician review before the plan changes.</p>
+      <div class="screen-eyebrow">Shared risk-reduction framework</div>
+      <h1 class="screen-title">The first decisions, not a task list.</h1>
+      <p class="screen-subtitle">Each priority answers a specific question from the model. If an item does not change the next decision, it stays organized but out of today's burden.</p>
+      <div class="plan-updated">Updated May 25, 2026 at 9:37 PM PT</div>
 
       <div class="plan-board" aria-label="Plan board">
-        <div class="board-lane">
-          <div class="board-lane-head">
-            <div class="board-lane-title">Things to do / upcoming</div>
-            <div class="board-count">4</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Schedule baseline PSA and DRE</div>
-            <div class="board-detail">One lab draw plus a brief in-office exam to reset your ATM-driven surveillance cadence.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Start rosuvastatin 5 mg</div>
-            <div class="board-detail">Take one tablet before bed. Tell the team about unusual muscle soreness or side effects.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Pick a CAC scan time</div>
-            <div class="board-detail">The office sends scheduling options. The scan helps decide how aggressive the lipid plan should be.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Pancreatic surveillance reminder</div>
-            <div class="board-detail">Documented now, first scan at age 50, then revisited annually.</div>
-          </div>
-        </div>
-
-        <div class="board-lane">
+        <div class="board-lane" data-lane="priority">
           <div class="board-lane-head">
             <div class="board-lane-title">Top priorities</div>
             <div class="board-count">3</div>
           </div>
-          <div class="board-card">
-            <div class="board-title">PSA surveillance starts now</div>
-            <div class="board-detail">ATM means the prostate screening cadence should already be active. This is the clearest immediate gap.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Lower modifiable risk around high Lp(a)</div>
-            <div class="board-detail">Lp(a) will not move much with lifestyle, so the plan focuses on ApoB and LDL lowering.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Use CAC to guide intensity</div>
-            <div class="board-detail">The result determines whether the current statin plan is enough or needs escalation.</div>
+          <button class="board-card active-work" type="button" data-plan-card="cac" aria-haspopup="dialog">
+            <span class="board-rank">01 · Cardiovascular model</span>
+            <div class="board-title">CAC Scan</div>
+            <div class="board-detail"><strong>Question it answers:</strong> should the cardiovascular prevention plan stay measured, or become more aggressive?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> it calibrates the lipid plan against actual artery findings instead of treating the lab pattern in isolation.</div>
+            <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="psa" aria-haspopup="dialog">
+            <span class="board-rank">02 · ATM surveillance</span>
+            <div class="board-title">PSA baseline</div>
+            <div class="board-detail"><strong>Question it answers:</strong> what is the clean starting point for prostate surveillance?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> ATM cannot be changed, so the right move is a better baseline and a clear future cadence.</div>
+            <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
+          </button>
+          <button class="board-card active-work" type="button" data-plan-card="colonoscopy" aria-haspopup="dialog">
+            <span class="board-rank">03 · Cancer screening gap</span>
+            <div class="board-title">Colonoscopy</div>
+            <div class="board-detail"><strong>Question it answers:</strong> is there a preventable colon-cancer risk we can remove now?</div>
+            <div class="board-model-reason"><strong>Why top 3:</strong> it is both surveillance and intervention because precancerous changes can be removed during the same procedure.</div>
+            <div class="board-card-cta" aria-hidden="true"><span>View details</span><span class="board-card-arrow">→</span></div>
+          </button>
+        </div>
+
+        <div class="board-lane locked" data-lane="doing">
+          <div class="board-lane-head">
+            <div class="board-lane-title">Doing</div>
+            <div class="board-count">0</div>
           </div>
         </div>
 
-        <div class="board-lane">
+        <div class="board-lane locked" data-lane="review">
           <div class="board-lane-head">
-            <div class="board-lane-title">Physician review</div>
-            <div class="board-count">3</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Dr. Thompson reviews prostate baseline</div>
-            <div class="board-detail">Normal results confirm annual cadence. Abnormal results trigger urology follow-up.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Decide whether to intensify cardiac prevention</div>
-            <div class="board-detail">CAC anchors the next 5 years of cardiovascular decisions.</div>
-          </div>
-          <div class="board-card">
-            <div class="board-title">Statin tolerance review</div>
-            <div class="board-detail">The team checks for side effects before dose escalation.</div>
+            <div class="board-lane-title">Done/Physician Review</div>
+            <div class="board-count">0</div>
           </div>
         </div>
       </div>
@@ -2565,16 +3375,11 @@
   </section>
 
   <!-- =================================================== -->
-  <!-- TAB 3 - YOU (Data ↔ Reasoning) -->
+  <!-- TAB 3 - YOUR DATA -->
   <!-- =================================================== -->
   <section class="screen" id="screen-you">
-    <div class="segmented" role="tablist">
-      <button class="seg-btn active" data-sub="data" onclick="gotoSub('you','data')">Data</button>
-      <button class="seg-btn" data-sub="reasoning" onclick="gotoSub('you','reasoning')">Risk</button>
-    </div>
-
     <!-- ---- DATA ---- -->
-    <div class="substate active" id="you-data">
+    <div id="you-data">
       <div class="screen-eyebrow">Everything we've collected</div>
       <h1 class="screen-title">You, in numbers.</h1>
       <p class="screen-subtitle">Wearable, labs, genetic. Open any group to expand.</p>
@@ -2736,9 +3541,14 @@
       </div>
 
     </div>
+  </section>
 
+  <!-- =================================================== -->
+  <!-- TAB 4 - RISK -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-risk">
     <!-- ---- RISK ---- -->
-    <div class="substate" id="you-reasoning">
+    <div id="risk-models">
       <div class="screen-eyebrow">Your risk, broken down</div>
       <h1 class="screen-title">Four risk models.</h1>
       <p class="screen-subtitle">Each model fed by your data. Use "Ask about this" on any card to dig in.</p>
@@ -2818,183 +3628,160 @@
   </section>
 
   <!-- =================================================== -->
-  <!-- TAB 4 - CONNECT (MD + Aleron AI) -->
+  <!-- TAB 5 - CHAT (MD + Aleron AI) -->
   <!-- =================================================== -->
   <section class="screen" id="screen-messages">
     <div class="segmented" role="tablist">
       <button class="seg-btn active" data-sub="team" onclick="gotoSub('messages','team')">Dr. Thompson</button>
-      <button class="seg-btn" data-sub="appointments" onclick="gotoSub('messages','appointments')">Appointments</button>
       <button class="seg-btn" data-sub="meridian" onclick="gotoSub('messages','meridian')">Aleron AI</button>
     </div>
 
-    <!-- ---- TEAM (direct physician thread) ---- -->
+    <!-- ---- TEAM (clinical communication hub) ---- -->
     <div class="substate active" id="messages-team">
-      <div style="padding: 4px 16px 0">
-        <div class="screen-eyebrow">Direct line</div>
-        <h1 class="screen-title" style="margin-bottom: 8px">Connect with Dr. Thompson.</h1>
-        <p class="screen-subtitle" style="margin-bottom: 14px">Send a direct message when a question needs his eyes. He'll respond within one business day.</p>
-      </div>
-
-      <div class="connect-actions">
-        <button class="btn wide ghost" onclick="document.getElementById('chatField').focus()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="margin-right:6px">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
-          Message Dr. Thompson
-        </button>
-      </div>
-
-      <div class="md-strip" onclick="toast('Opening Dr. Thompson\\'s note')">
-        <div class="av">MT</div>
-        <div class="body">
-          <div class="lbl">From Dr. Thompson</div>
-          <div class="txt">"Jim - I'm out of town next week but wanted to make sure you saw the statin change. Start tonight if you can. Message me here if anything feels off."</div>
-          <div class="when">2 hours ago</div>
-        </div>
-      </div>
-
-      <div class="chat-wrap" id="teamChatWrap">
-        <div class="msg ai">
-          <div class="av">MT</div>
-          <div class="bubble">
-            Hey Jim - any questions about the plan? Happy to clarify anything. I'll also have my office reach out in the next day or two to schedule the CAC scan.
-            <div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div>
+      <div class="ai-chat-shell care-chat-shell" aria-label="Doctor message chat">
+        <aside class="ai-history-rail care-history-rail" aria-label="Doctor topic history">
+          <div class="ai-history-head">
+            <span>History</span>
+            <button type="button" onclick="startDoctorTopic('plan')" aria-label="Start new doctor thread">+</button>
           </div>
-        </div>
-      </div>
+          <div class="thread-list ai-history-list care-history-list" id="teamThreadList" aria-label="Doctor topic history"></div>
+        </aside>
 
-      <div class="suggest">
-        <button onclick="askTeamPreset('About scheduling the cardiac workup')">Scheduling the cardiac workup</button>
-        <button onclick="askTeamPreset('Question about the statin')">Question about the statin</button>
-        <button onclick="askTeamPreset('Something doesn\\'t feel right')">Something doesn't feel right</button>
-      </div>
-    </div>
-
-    <!-- ---- APPOINTMENTS ---- -->
-    <div class="substate" id="messages-appointments">
-      <div style="padding: 4px 16px 0">
-        <div class="screen-eyebrow">Scheduler and meeting room</div>
-        <h1 class="screen-title" style="margin-bottom: 8px">Appointments.</h1>
-        <p class="screen-subtitle" style="margin-bottom: 14px">Book the next visit, join telemedicine, and prepare the agenda without entering a message thread.</p>
-      </div>
-
-      <div class="appointment-switch" role="tablist" aria-label="Appointment view">
-        <button class="appointment-tab active" data-appointment="scheduling" onclick="gotoAppointment('scheduling')">Scheduling</button>
-        <button class="appointment-tab" data-appointment="meeting" onclick="gotoAppointment('meeting')">Meeting <span class="attention-dot" aria-hidden="true"></span></button>
-      </div>
-
-      <div class="appointment-mode active" id="appointment-scheduling">
-        <div class="appointment-panel">
-          <div class="appointment-kicker">Scheduler</div>
-          <div class="appointment-title">Book a visit</div>
-          <div class="appointment-meta">Choose from Dr. Thompson's next available telemedicine windows.</div>
-
-          <div class="appointment-row">
-            <div>
-              <b>Thursday, May 21</b>
-              <span>9:00 AM PT · 15 minutes</span>
-            </div>
-            <button class="btn ghost" onclick="toast('Thursday 9:00 AM selected')">Select</button>
-          </div>
-          <div class="appointment-row">
-            <div>
-              <b>Friday, May 22</b>
-              <span>1:30 PM PT · 15 minutes</span>
-            </div>
-            <button class="btn ghost" onclick="toast('Friday 1:30 PM selected')">Select</button>
-          </div>
-          <div class="appointment-row">
-            <div>
-              <b>Monday, May 25</b>
-              <span>4:00 PM PT · 30 minutes</span>
-            </div>
-            <button class="btn ghost" onclick="toast('Monday 4:00 PM selected')">Select</button>
-          </div>
-          <button class="btn wide" onclick="openScheduler()">Request another time</button>
-        </div>
-      </div>
-
-      <div class="appointment-mode" id="appointment-meeting">
-        <div class="appointment-panel">
-          <div class="appointment-head">
-            <div>
-              <div class="appointment-kicker">Meeting</div>
-              <div class="appointment-title">Telemedicine with Dr. Thompson</div>
-              <div class="appointment-meta">Today, 2:30 PM PT · secure video visit</div>
-            </div>
-            <div class="appointment-status">Ready to join</div>
-          </div>
-
-          <div class="meeting-room">
-            <div class="meeting-video">
-              <div class="meeting-live"><span></span>Live now</div>
-              <img src="../patient-app/assets/dr-thompson.png" alt="Dr. Thompson">
-              <div class="meeting-nameplate">
-                <b>Dr. Marcus Thompson</b>
-                <span>Primary care · waiting in secure room</span>
-              </div>
-            </div>
-            <div class="meeting-controls">
-              <div class="meeting-state">
-                <b>Ready for your visit</b>
-                <span>Camera and microphone check before joining</span>
-              </div>
-              <button class="meeting-control" onclick="toast('Microphone muted')">Mute</button>
-              <button class="meeting-control" onclick="toast('Camera off')">Camera</button>
-              <button class="meeting-control meeting-join" onclick="joinVisit()">Join visit</button>
-            </div>
-          </div>
-
-          <div class="meeting-checklist">
-            <div>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
-              Review statin start and side-effect watchouts
-            </div>
-            <div>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
-              Confirm CAC scan scheduling window
-            </div>
-            <div>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
-              Ask about genetic counseling timing
-            </div>
-          </div>
-        </div>
+        <section class="ai-thread-pane care-thread-pane" aria-label="Selected doctor thread">
+          <div class="thread-context ai-thread-context care-thread-context" id="teamThreadContext"></div>
+          <div class="chat-wrap ai-chat-wrap care-chat-wrap" id="teamChatWrap"></div>
+        </section>
       </div>
     </div>
 
     <!-- ---- ALERON (AI) ---- -->
     <div class="substate" id="messages-meridian">
-      <div style="padding: 4px 16px 0">
-        <div class="screen-eyebrow">Ask Aleron AI</div>
-        <h1 class="screen-title" style="margin-bottom: 8px">Ask Aleron AI.</h1>
-        <p class="screen-subtitle" style="margin-bottom: 14px">Grounded in your plan, your data, and Dr. Thompson's note. When I hit my limit, I route to your care team.</p>
-      </div>
-
-      <div class="chat-wrap" id="chatWrap">
-        <div class="msg ai">
-          <div class="av">AI</div>
-          <div class="bubble">
-            Good morning, Jim. Your plan was released two hours ago - <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?
-            <div class="src"><b>Source:</b> Your plan (released Apr 18) · Dr. Thompson's note</div>
+      <div class="ai-chat-shell" aria-label="Aleron AI chat">
+        <aside class="ai-history-rail" aria-label="AI topic history">
+          <div class="ai-history-head">
+            <span>History</span>
+            <button type="button" onclick="startBlankAIThread()" aria-label="Start new Aleron AI chat">+</button>
           </div>
-        </div>
-      </div>
+          <div class="thread-list ai-history-list" id="aiThreadList" aria-label="Aleron AI topic history"></div>
+        </aside>
 
-      <!-- Preloaded questions - shown until the user sends the first message -->
-      <div class="suggest" id="suggest">
-        <div class="suggest-label">Good places to start</div>
-        <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
-        <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
-        <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
-        <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
-        <button onclick="askPreset('Walk me through Dr. Thompson\\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
-        <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
+        <section class="ai-thread-pane" aria-label="Selected Aleron AI thread">
+          <div class="thread-context ai-thread-context" id="aiThreadContext"></div>
+          <div class="chat-wrap ai-chat-wrap" id="chatWrap"></div>
+
+          <!-- Preloaded questions, shown until the user sends the first message -->
+          <div class="suggest ai-suggest" id="suggest">
+            <div class="suggest-label">Good places to start</div>
+            <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
+            <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
+            <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
+            <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
+            <button onclick="askPreset('Walk me through Dr. Thompson\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
+            <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
+          </div>
+        </section>
       </div>
     </div>
   </section>
 
-  <!-- Chat input (Connect tab only - target changes based on active sub) -->
+
+  <!-- =================================================== -->
+  <!-- TAB 6 - APPOINTMENTS -->
+  <!-- =================================================== -->
+  <section class="screen" id="screen-appointments">
+    <!-- ---- APPOINTMENTS ---- -->
+    <div style="padding: 4px 16px 0">
+      <div class="screen-eyebrow">Scheduler and meeting room</div>
+      <h1 class="screen-title" style="margin-bottom: 8px">Appointments.</h1>
+      <p class="screen-subtitle" style="margin-bottom: 14px">Book the next visit, join telemedicine, and prepare the agenda without entering a message thread.</p>
+    </div>
+
+    <div class="appointment-switch" role="tablist" aria-label="Appointment view">
+      <button class="appointment-tab active" data-appointment="scheduling" onclick="gotoAppointment('scheduling')">Scheduling</button>
+      <button class="appointment-tab" data-appointment="meeting" onclick="gotoAppointment('meeting')">Meeting <span class="attention-dot" aria-hidden="true"></span></button>
+    </div>
+
+    <div class="appointment-mode active" id="appointment-scheduling">
+      <div class="appointment-panel">
+        <div class="appointment-kicker">Scheduler</div>
+        <div class="appointment-title">Book a visit</div>
+        <div class="appointment-meta">Choose from Dr. Thompson's next available telemedicine windows.</div>
+
+        <div class="appointment-row">
+          <div>
+            <b>Thursday, May 21</b>
+            <span>9:00 AM PT · 15 minutes</span>
+          </div>
+          <button class="btn ghost" onclick="toast('Thursday 9:00 AM selected')">Select</button>
+        </div>
+        <div class="appointment-row">
+          <div>
+            <b>Friday, May 22</b>
+            <span>1:30 PM PT · 15 minutes</span>
+          </div>
+          <button class="btn ghost" onclick="toast('Friday 1:30 PM selected')">Select</button>
+        </div>
+        <div class="appointment-row">
+          <div>
+            <b>Monday, May 25</b>
+            <span>4:00 PM PT · 30 minutes</span>
+          </div>
+          <button class="btn ghost" onclick="toast('Monday 4:00 PM selected')">Select</button>
+        </div>
+        <button class="btn wide" onclick="openScheduler()">Request another time</button>
+      </div>
+    </div>
+
+    <div class="appointment-mode" id="appointment-meeting">
+      <div class="appointment-panel">
+        <div class="appointment-head">
+          <div>
+            <div class="appointment-kicker">Meeting</div>
+            <div class="appointment-title">Telemedicine with Dr. Thompson</div>
+            <div class="appointment-meta">Today, 2:30 PM PT · secure video visit</div>
+          </div>
+          <div class="appointment-status">Ready to join</div>
+        </div>
+
+        <div class="meeting-room">
+          <div class="meeting-video">
+            <div class="meeting-live"><span></span>Live now</div>
+            <div class="meeting-avatar" role="img" aria-label="Dr. Thompson">MT</div>
+            <div class="meeting-nameplate">
+              <b>Dr. Marcus Thompson</b>
+              <span>Primary care · waiting in secure room</span>
+            </div>
+          </div>
+          <div class="meeting-controls">
+            <div class="meeting-state">
+              <b>Ready for your visit</b>
+              <span>Camera and microphone check before joining</span>
+            </div>
+            <button class="meeting-control" onclick="toast('Microphone muted')">Mute</button>
+            <button class="meeting-control" onclick="toast('Camera off')">Camera</button>
+            <button class="meeting-control meeting-join" onclick="joinVisit()">Join visit</button>
+          </div>
+        </div>
+
+        <div class="meeting-checklist">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+            Review statin start and side-effect watchouts
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+            Confirm CAC scan scheduling window
+          </div>
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
+            Ask about genetic counseling timing
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat input (Chat tab only - target changes based on active thread) -->
   <div class="chat-input" id="chatInput">
     <input type="text" id="chatField" placeholder="Ask about your plan..." onkeypress="if(event.key==='Enter') sendChat()"/>
     <button onclick="sendChat()">↑</button>
@@ -3010,7 +3797,7 @@
       <div class="avatar" aria-hidden="true">JY</div>
       <div>
         <b>Jim Yason</b>
-        <span>Member workspace</span>
+        <span>Patient Portal</span>
       </div>
     </div>
   </div>
@@ -3032,23 +3819,80 @@
       <circle cx="12" cy="8" r="4"/>
       <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
     </svg>
-    You
+    Your Data
   </button>
-  <button class="nav-item" data-tab="messages" onclick="openConnectAttention()">
+  <button class="nav-item" data-tab="risk" onclick="gotoTab('risk')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-      <circle cx="9" cy="8" r="3.2"/>
-      <circle cx="15.5" cy="9.2" r="2.7"/>
-      <path d="M3.8 20c.5-4.1 2.4-6.2 5.2-6.2s4.7 2.1 5.2 6.2"/>
-      <path d="M12.2 20c.4-3.1 1.8-4.7 3.9-4.7 2.2 0 3.6 1.6 4.1 4.7"/>
+      <path d="M12 3.5l7 3v5.3c0 4.1-2.8 7.8-7 8.7-4.2-.9-7-4.6-7-8.7V6.5l7-3Z"/>
+      <path d="M8.5 13.2l2.2-2.2 2.1 2.1 2.8-3.8"/>
     </svg>
-    <span class="nav-label">Connect <span class="attention-dot" aria-hidden="true"></span></span>
+    Risk
+  </button>
+  <button class="nav-item" data-tab="messages" onclick="gotoTab('messages')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M5 6.5h14a2 2 0 0 1 2 2v6.2a2 2 0 0 1-2 2H10.5L6 20v-3.3H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2Z"/>
+      <path d="M7.5 10.2h9M7.5 13.2h6.2"/>
+    </svg>
+    Chat
+  </button>
+  <button class="nav-item" data-tab="appointments" onclick="openAppointmentsAttention()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="4" y="5.5" width="16" height="15" rx="2"/>
+      <path d="M8 3.5v4M16 3.5v4M4 10h16"/>
+      <path d="M8 14h3M13.5 14H16M8 17h3"/>
+    </svg>
+    <span class="nav-label">Appointments <span class="attention-dot" aria-hidden="true"></span></span>
   </button>
 </nav>
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Risk bottom sheet (opens from You → Risk cards) -->
+<!-- Plan priority modal -->
+<div class="plan-modal-backdrop" id="planModalBackdrop" onclick="closePlanModal()"></div>
+<div class="plan-modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" aria-describedby="planModalSummary">
+  <div class="plan-modal-top">
+    <div>
+      <div class="plan-modal-kicker">Top priority</div>
+      <h2 id="planModalTitle">Priority details</h2>
+    </div>
+    <div class="plan-modal-actions">
+      <button class="plan-modal-complete" id="planModalComplete" type="button">Mark as complete</button>
+      <button class="plan-modal-close" type="button" onclick="closePlanModal()" aria-label="Close">×</button>
+    </div>
+  </div>
+  <div class="plan-modal-confirm" id="planModalConfirm">
+    <p>Mark this priority as complete and move it to Done/Physician Review? It will stay there until Dr. Thompson reviews and confirms it.</p>
+    <div class="plan-modal-confirm-actions">
+      <button class="plan-modal-confirm-btn" id="planModalConfirmBtn" type="button">Confirm completion</button>
+      <button class="plan-modal-cancel" id="planModalCancel" type="button">Keep open</button>
+    </div>
+  </div>
+  <div class="plan-modal-body">
+    <p class="plan-modal-summary" id="planModalSummary"></p>
+    <div class="plan-modal-section">
+      <b>Why this matters</b>
+      <span id="planModalWhy"></span>
+    </div>
+    <div class="plan-modal-section">
+      <b>What to do</b>
+      <span id="planModalDo"></span>
+    </div>
+    <div class="plan-modal-section">
+      <b>What happens next</b>
+      <span id="planModalNext"></span>
+    </div>
+    <div class="plan-modal-chat-row">
+      <div class="plan-modal-chat-grid">
+        <button class="plan-modal-chat" id="planModalChat" type="button">Message Dr. Thompson about this →</button>
+        <button class="plan-modal-chat ai" id="planModalAIChat" type="button">Ask Aleron AI about this →</button>
+      </div>
+      <div class="plan-modal-chat-note">Doctor threads are for decisions and plan changes. Aleron AI is for instant explanation using this priority as context.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Risk bottom sheet (opens from Risk cards) -->
 <div class="risk-sheet-backdrop" id="riskSheetBackdrop" onclick="closeRiskSheet()"></div>
 <div class="risk-sheet" id="riskSheet" role="dialog" aria-modal="true" aria-labelledby="rsTitle">
   <div class="rs-handle"></div>
@@ -3084,7 +3928,7 @@
 
     // Subtitle in topbar changes for personality
     const sub = document.getElementById('topbarSub');
-    const subs = { plan: '· your plan', qol: '· quality of life', you: '· you', messages: '· connect' };
+    const subs = { plan: '· your plan', qol: '· quality of life', you: '· your data', risk: '· risk', messages: '· chat', appointments: '· appointments' };
     if (sub) sub.textContent = subs[name] || '· your plan';
   }
 
@@ -3101,9 +3945,11 @@
   function updateChatInput(tab) {
     const ci = document.getElementById('chatInput');
     if (!ci) return;
-    const activeConnect = document.querySelector('#screen-messages .seg-btn.active');
-    const connectSub = activeConnect ? activeConnect.dataset.sub : 'team';
-    ci.classList.toggle('show', tab === 'messages' && connectSub !== 'appointments');
+    const activeChat = document.querySelector('#screen-messages .seg-btn.active');
+    const chatSub = activeChat ? activeChat.dataset.sub : 'team';
+    ci.classList.toggle('show', tab === 'messages');
+    const field = document.getElementById('chatField');
+    if (field) field.placeholder = chatSub === 'team' ? 'Message Dr. Thompson...' : 'Ask Aleron AI about your plan...';
   }
 
   function gotoAppointment(view) {
@@ -3115,9 +3961,8 @@
     });
   }
 
-  function openConnectAttention() {
-    gotoTab('messages');
-    gotoSub('messages', 'appointments');
+  function openAppointmentsAttention() {
+    gotoTab('appointments');
     gotoAppointment('meeting');
   }
 
@@ -3125,77 +3970,155 @@
   function toggleDecision(el) { el.classList.toggle('open'); }
   function toggleData(el) { el.classList.toggle('open'); }
 
-  /* ===== Plan board movement ===== */
+  /* ===== Plan board modal + movement ===== */
+  const PLAN_CARD_DETAILS = {
+    cac: {
+      summary: 'Shared frame: the CAC scan helps decide whether the cardiovascular plan should stay measured or become more aggressive.',
+      why: 'The model has a modifiable lever here. If calcium is present, prevention intensity changes. If calcium is absent, the plan can stay focused without adding unnecessary burden.',
+      do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
+      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.',
+      threadTitle: 'CAC Scan',
+      threadIntro: 'Focused thread with Dr. Thompson about the CAC scan priority.',
+      starter: 'I have a question about the CAC Scan: '
+    },
+    psa: {
+      summary: 'Shared frame: the PSA baseline turns inherited ATM risk into a surveillance plan with a clear starting point.',
+      why: 'ATM cannot be lowered like a cholesterol marker. The decision is how deliberately to watch, and a current baseline makes future changes interpretable.',
+      do: 'Complete the PSA lab draw and DRE through the office schedule. Bring up any urinary symptoms, family history updates, or prior PSA values before the visit.',
+      next: 'Once the baseline is complete, normal results confirm the annual cadence. Abnormal results trigger urology follow-up.',
+      threadTitle: 'PSA baseline',
+      threadIntro: 'Focused thread with Dr. Thompson about the PSA baseline priority.',
+      starter: 'I have a question about the PSA baseline: '
+    },
+    colonoscopy: {
+      summary: 'Shared frame: the colonoscopy closes the highest-value cancer-screening gap because it can find and remove risk in the same procedure.',
+      why: 'This is not just more surveillance. It can directly reduce future risk if precancerous changes are found and removed.',
+      do: 'Choose a GI appointment or scheduling window, confirm prep instructions, and complete the colonoscopy.',
+      next: 'The result sets the follow-up interval and determines whether any pathology or GI review is needed.',
+      threadTitle: 'Colonoscopy',
+      threadIntro: 'Focused thread with Dr. Thompson about the colonoscopy priority.',
+      starter: 'I have a question about the colonoscopy: '
+    }
+  };
+  let activePlanCard = null;
+  const PLAN_BOARD_STORAGE_KEY = 'aleron-plan-board-state-v1';
+
   function initPlanBoard() {
     const board = document.querySelector('.plan-board');
     if (!board || board.dataset.ready === 'true') return;
     board.dataset.ready = 'true';
 
-    board.querySelectorAll('.board-lane').forEach((lane, laneIndex) => {
-      lane.dataset.laneIndex = laneIndex;
-      lane.addEventListener('dragover', e => {
-        e.preventDefault();
-        const card = board.querySelector('.board-card.dragging');
-        if (!card) return;
-        lane.classList.add('drop-over');
-        const nextCard = getBoardInsertTarget(lane, e.clientY);
-        if (nextCard) lane.insertBefore(card, nextCard);
-        else lane.appendChild(card);
-        setBoardCardLane(card, laneIndex);
-        updateBoardCounts();
-      });
-      lane.addEventListener('dragleave', e => {
-        if (!lane.contains(e.relatedTarget)) lane.classList.remove('drop-over');
-      });
-      lane.addEventListener('drop', e => {
-        e.preventDefault();
-        lane.classList.remove('drop-over');
-        updateBoardCounts();
-      });
-    });
-
     board.querySelectorAll('.board-card').forEach((card, index) => {
-      card.id = card.id || `plan-board-card-${index}`;
-      card.tabIndex = 0;
-      card.draggable = true;
-      card.addEventListener('dragstart', e => {
-        card.dataset.startLane = getBoardLaneTitle(card.closest('.board-lane'));
-        card.dataset.startIndex = String(getBoardCardIndex(card));
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', card.id);
-        card.classList.add('dragging');
-      });
-      card.addEventListener('dragend', () => {
-        card.classList.remove('dragging');
-        board.querySelectorAll('.board-lane').forEach(lane => lane.classList.remove('drop-over'));
-        updateBoardCounts();
-        const endLane = getBoardLaneTitle(card.closest('.board-lane'));
-        const endIndex = String(getBoardCardIndex(card));
-        if (card.dataset.startLane && card.dataset.startLane !== endLane) {
-          toast(`Moved ${getBoardCardTitle(card)} to ${endLane}.`);
-        } else if (card.dataset.startIndex && card.dataset.startIndex !== endIndex) {
-          toast(`Reordered ${getBoardCardTitle(card)}.`);
+      card.id = card.id || (card.dataset.planCard ? `plan-card-${card.dataset.planCard}` : `plan-board-card-${index}`);
+      card.draggable = false;
+    });
+    restorePlanBoardState(board);
+
+    board.querySelectorAll('.board-card.active-work').forEach(card => {
+      card.setAttribute('aria-label', `${getBoardCardTitle(card)}. Open details, or drag to move between columns.`);
+      card.addEventListener('pointerdown', startPlanCardDrag);
+      card.addEventListener('keydown', handlePlanCardKeyMove);
+      card.addEventListener('click', event => {
+        if (card.dataset.dragSuppress === 'true') {
+          event.preventDefault();
+          event.stopPropagation();
+          delete card.dataset.dragSuppress;
+          return;
         }
-        delete card.dataset.startLane;
-        delete card.dataset.startIndex;
+        openPlanModal(card);
       });
     });
 
+    document.getElementById('planModalComplete')?.addEventListener('click', showPlanCompleteConfirm);
+    document.getElementById('planModalChat')?.addEventListener('click', startPlanDoctorThread);
+    document.getElementById('planModalAIChat')?.addEventListener('click', startPlanAIThread);
+    document.getElementById('planModalConfirmBtn')?.addEventListener('click', confirmPlanComplete);
+    document.getElementById('planModalCancel')?.addEventListener('click', hidePlanCompleteConfirm);
     updateBoardCounts();
   }
 
-  function getBoardInsertTarget(lane, pointerY) {
-    const cards = [...lane.querySelectorAll('.board-card:not(.dragging)')];
-    return cards.reduce((closest, card) => {
-      const box = card.getBoundingClientRect();
-      const offset = pointerY - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) return { offset, card };
-      return closest;
-    }, { offset: Number.NEGATIVE_INFINITY, card: null }).card;
+  function openPlanModal(card) {
+    if (!card || !card.classList.contains('active-work')) return;
+    const key = card.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    if (!details) return;
+    activePlanCard = card;
+    document.getElementById('planModalTitle').textContent = getBoardCardTitle(card);
+    document.getElementById('planModalSummary').textContent = details.summary;
+    document.getElementById('planModalWhy').textContent = details.why;
+    document.getElementById('planModalDo').textContent = details.do;
+    document.getElementById('planModalNext').textContent = details.next;
+    hidePlanCompleteConfirm();
+    document.getElementById('planModal')?.classList.add('open');
+    document.getElementById('planModalBackdrop')?.classList.add('open');
+    document.getElementById('planModalComplete')?.focus();
   }
 
-  function setBoardCardLane(card, laneIndex) {
-    card.dataset.laneIndex = laneIndex;
+  function closePlanModal() {
+    document.getElementById('planModal')?.classList.remove('open');
+    document.getElementById('planModalBackdrop')?.classList.remove('open');
+    hidePlanCompleteConfirm();
+    activePlanCard = null;
+  }
+
+  function showPlanCompleteConfirm() {
+    document.getElementById('planModalConfirm')?.classList.add('open');
+    document.getElementById('planModalConfirmBtn')?.focus();
+  }
+
+  function hidePlanCompleteConfirm() {
+    document.getElementById('planModalConfirm')?.classList.remove('open');
+  }
+
+  function confirmPlanComplete() {
+    if (!activePlanCard) return;
+    const card = activePlanCard;
+    closePlanModal();
+    markBoardCardDone(card);
+  }
+
+  function markBoardCardDone(card) {
+    if (!card) return;
+    const reviewLane = document.querySelector('.board-lane[data-lane="review"]');
+    if (!reviewLane) return;
+    const reviewCard = document.createElement('div');
+    reviewCard.className = 'board-card waiting';
+    const title = document.createElement('div');
+    title.className = 'board-title';
+    title.textContent = getBoardCardTitle(card);
+    const detail = document.createElement('div');
+    detail.className = 'board-detail';
+    detail.textContent = 'Completed by the patient. Waiting for physician review and confirmation.';
+    reviewCard.append(title, detail);
+    card.remove();
+    reviewLane.appendChild(reviewCard);
+    updateBoardCounts();
+    savePlanBoardState();
+    toast(`${title.textContent} moved to Done/Physician Review.`);
+  }
+
+  function savePlanBoardState() {
+    const board = document.querySelector('.plan-board');
+    if (!board) return;
+    const state = Array.from(board.querySelectorAll('.board-lane')).map(lane => ({
+      lane: lane.dataset.lane,
+      cards: Array.from(lane.querySelectorAll('.board-card[id]')).map(card => card.id)
+    }));
+    try { window.localStorage.setItem(PLAN_BOARD_STORAGE_KEY, JSON.stringify(state)); } catch (error) {}
+  }
+
+  function restorePlanBoardState(board) {
+    let state;
+    try { state = JSON.parse(window.localStorage.getItem(PLAN_BOARD_STORAGE_KEY) || '[]'); } catch (error) { state = []; }
+    if (!Array.isArray(state) || !state.length) return;
+    state.forEach(column => {
+      const lane = board.querySelector(`.board-lane[data-lane="${column.lane}"]`);
+      if (!lane || !Array.isArray(column.cards)) return;
+      column.cards.forEach(cardId => {
+        const card = document.getElementById(cardId);
+        if (card) lane.appendChild(card);
+      });
+    });
   }
 
   function updateBoardCounts() {
@@ -3206,16 +4129,174 @@
     });
   }
 
-  function getBoardCardIndex(card) {
-    return [...card.closest('.board-lane').querySelectorAll('.board-card')].indexOf(card);
-  }
-
   function getBoardCardTitle(card) {
     return card.querySelector('.board-title')?.textContent.trim() || 'card';
   }
 
   function getBoardLaneTitle(lane) {
     return lane.querySelector('.board-lane-title')?.textContent.trim() || 'column';
+  }
+
+  let planCardDrag = null;
+
+  function startPlanCardDrag(event) {
+    if (event.button !== 0) return;
+    const card = event.currentTarget;
+    if (!card.closest('.plan-board')) return;
+    const rect = card.getBoundingClientRect();
+    planCardDrag = {
+      card,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      width: rect.width,
+      height: rect.height,
+      started: false,
+      placeholder: null
+    };
+    try { card.setPointerCapture?.(event.pointerId); } catch (error) { /* Synthetic pointer events do not own capture. */ }
+    card.addEventListener('pointermove', movePlanCardDrag);
+    card.addEventListener('pointerup', endPlanCardDrag, { once: true });
+    card.addEventListener('pointercancel', cancelPlanCardDrag, { once: true });
+  }
+
+  function beginPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.started) return;
+    const { card } = drag;
+    const rect = card.getBoundingClientRect();
+    const slot = document.createElement('div');
+    slot.className = 'board-drop-slot';
+    slot.style.height = `${rect.height}px`;
+    card.parentElement.insertBefore(slot, card);
+    drag.placeholder = slot;
+    drag.started = true;
+    card.dataset.dragSuppress = 'true';
+    card.classList.add('dragging');
+    card.style.left = `${rect.left}px`;
+    card.style.top = `${rect.top}px`;
+    card.style.width = `${rect.width}px`;
+    card.style.height = `${rect.height}px`;
+    document.body.classList.add('plan-card-dragging');
+    positionPlanDraggedCard(event.clientX, event.clientY);
+  }
+
+  function movePlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+    if (!drag.started && distance < 6) return;
+    event.preventDefault();
+    beginPlanCardDrag(event);
+    positionPlanDraggedCard(event.clientX, event.clientY);
+    updatePlanDropSlot(event.clientX, event.clientY);
+  }
+
+  function positionPlanDraggedCard(clientX, clientY) {
+    const drag = planCardDrag;
+    if (!drag) return;
+    drag.card.style.left = `${clientX - drag.offsetX}px`;
+    drag.card.style.top = `${clientY - drag.offsetY}px`;
+  }
+
+  function updatePlanDropSlot(clientX, clientY) {
+    const drag = planCardDrag;
+    if (!drag?.placeholder) return;
+    const lanes = Array.from(document.querySelectorAll('.plan-board .board-lane'));
+    let lane = lanes.find(candidate => {
+      const rect = candidate.getBoundingClientRect();
+      return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+    });
+    if (!lane) {
+      lane = lanes.reduce((nearest, candidate) => {
+        const rect = candidate.getBoundingClientRect();
+        const cx = Math.max(rect.left, Math.min(clientX, rect.right));
+        const cy = Math.max(rect.top, Math.min(clientY, rect.bottom));
+        const dist = Math.hypot(clientX - cx, clientY - cy);
+        return !nearest || dist < nearest.dist ? { lane: candidate, dist } : nearest;
+      }, null)?.lane;
+    }
+    if (!lane) return;
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    lane.classList.add('drag-over');
+    const cards = Array.from(lane.querySelectorAll('.board-card:not(.dragging)'));
+    const insertBefore = cards.find(card => {
+      const rect = card.getBoundingClientRect();
+      return clientY < rect.top + rect.height / 2;
+    });
+    if (insertBefore) lane.insertBefore(drag.placeholder, insertBefore);
+    else lane.appendChild(drag.placeholder);
+  }
+
+  function endPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    drag.card.removeEventListener('pointermove', movePlanCardDrag);
+    if (!drag.started) {
+      planCardDrag = null;
+      return;
+    }
+    event.preventDefault();
+    const destinationLane = drag.placeholder.closest('.board-lane');
+    drag.placeholder.replaceWith(drag.card);
+    resetPlanDraggedCard(drag.card);
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document.body.classList.remove('plan-card-dragging');
+    updateBoardCounts();
+    savePlanBoardState();
+    if (destinationLane) toast(`${getBoardCardTitle(drag.card)} moved to ${getBoardLaneTitle(destinationLane)}.`);
+    planCardDrag = null;
+  }
+
+  function cancelPlanCardDrag(event) {
+    const drag = planCardDrag;
+    if (!drag) return;
+    drag.card.removeEventListener('pointermove', movePlanCardDrag);
+    if (drag.started && drag.placeholder) drag.placeholder.replaceWith(drag.card);
+    resetPlanDraggedCard(drag.card);
+    document.querySelectorAll('.plan-board .board-lane.drag-over').forEach(el => el.classList.remove('drag-over'));
+    document.body.classList.remove('plan-card-dragging');
+    planCardDrag = null;
+  }
+
+  function resetPlanDraggedCard(card) {
+    card.classList.remove('dragging');
+    card.style.left = '';
+    card.style.top = '';
+    card.style.width = '';
+    card.style.height = '';
+    setTimeout(() => { delete card.dataset.dragSuppress; }, 120);
+  }
+
+  function handlePlanCardKeyMove(event) {
+    if (!event.shiftKey || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    const card = event.currentTarget;
+    const lane = card.closest('.board-lane');
+    const board = card.closest('.plan-board');
+    if (!lane || !board) return;
+    event.preventDefault();
+    const lanes = Array.from(board.querySelectorAll('.board-lane'));
+    const laneIndex = lanes.indexOf(lane);
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      const nextLane = lanes[laneIndex + (event.key === 'ArrowRight' ? 1 : -1)];
+      if (!nextLane) return;
+      nextLane.appendChild(card);
+      updateBoardCounts();
+      savePlanBoardState();
+      card.focus();
+      toast(`${getBoardCardTitle(card)} moved to ${getBoardLaneTitle(nextLane)}.`);
+      return;
+    }
+    const siblings = Array.from(lane.querySelectorAll('.board-card'));
+    const index = siblings.indexOf(card);
+    const target = siblings[index + (event.key === 'ArrowDown' ? 1 : -1)];
+    if (!target) return;
+    if (event.key === 'ArrowDown') lane.insertBefore(target, card);
+    else lane.insertBefore(card, target);
+    savePlanBoardState();
+    card.focus();
   }
 
   /* ===== Act interactions ===== */
@@ -3230,24 +4311,21 @@
     toast("Nice. We'll check in at Week 2.");
   }
 
-  /* ===== Connect appointment actions ===== */
+  /* ===== Appointment actions ===== */
   function joinVisit() {
-    gotoTab('messages');
-    gotoSub('messages', 'appointments');
+    gotoTab('appointments');
     gotoAppointment('meeting');
     toast('Opening telemedicine visit');
   }
 
   function openScheduler() {
-    gotoTab('messages');
-    gotoSub('messages', 'appointments');
+    gotoTab('appointments');
     gotoAppointment('scheduling');
     toast('Showing appointment times');
   }
 
   function prepareVisit() {
-    gotoTab('messages');
-    gotoSub('messages', 'appointments');
+    gotoTab('appointments');
     gotoAppointment('meeting');
     toast('Opening visit agenda');
   }
@@ -3749,24 +4827,63 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     }
   };
 
+  const TEAM_THREADS = {
+    general: {
+      id: 'general',
+      title: 'Current plan',
+      meta: 'Dr. Thompson · Direct line',
+      status: 'Open',
+      context: 'Use this for questions that could change the plan or need clinical judgment.',
+      createdAt: 1,
+      messages: []
+    }
+  };
+  const DOCTOR_TOPIC_TEMPLATES = {
+    plan: { title: 'Plan decision', meta: 'Clinical judgment', status: 'Drafting', context: 'For questions about whether a medication, priority, or surveillance step should change.', starter: 'I want to ask whether this should change the current plan: ' },
+    symptom: { title: 'Symptom or side effect', meta: 'Clinical update', status: 'Drafting', context: 'For new symptoms, side effects, or tolerance issues that Dr. Thompson should review.', starter: 'I am noticing a symptom or side effect and want guidance: ' },
+    result: { title: 'New result', meta: 'Result review', status: 'Drafting', context: 'For outside labs, imaging, consult notes, or documents that should be interpreted against the plan.', starter: 'I have a new result to review: ' }
+  };
+  let activeTeamThreadId = 'general';
+
+  const AI_THREADS = {
+    general: {
+      id: 'general',
+      title: 'Current plan',
+      meta: 'Aleron AI',
+      context: 'General AI thread grounded in your plan, your data, and Dr. Thompson\'s note.',
+      createdAt: 1,
+      messages: [{
+        from: 'ai',
+        html: "Good morning, Jim. Your plan was released two hours ago: <em>three decisions, plus the genetic counseling visit on the books</em>. Want me to walk through how Dr. Thompson thought about this, or jump to a specific question?",
+        src: '<b>Source:</b> Your plan (released Apr 18) · Dr. Thompson\'s note'
+      }]
+    }
+  };
+  let activeAIThreadId = 'general';
+
   function sendChat() {
     const field = document.getElementById('chatField');
     const text = field.value.trim();
     if (!text) return;
-    askPreset(text);
+    const activeChat = document.querySelector('#screen-messages .seg-btn.active');
+    const chatSub = activeChat ? activeChat.dataset.sub : 'team';
+    if (chatSub === 'team') askTeamPreset(text);
+    else askPreset(text);
     field.value = '';
   }
 
   function askPreset(q) {
-    addUserMsg(q);
-    // Hide suggestion chips after first ask
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'user', text: q });
+    renderAIThreads();
     const s = document.getElementById('suggest');
     if (s) s.style.display = 'none';
-    // Typing indicator
     setTimeout(() => {
       const canned = matchCanned(q);
-      if (canned) addAIMsg(canned.text, canned.src);
-      else addAIMsg(`Good question. I'd need to check your record in more detail - give me a moment, or I can route this to Dr. Thompson's team if it needs their eyes.`, '<b>Source:</b> Pattern-matched against your plan + record');
+      if (canned) thread.messages.push({ from: 'ai', html: canned.text, src: canned.src });
+      else thread.messages.push({ from: 'ai', text: "Good question. I can explain what is in the plan, but I would route anything that changes treatment or timing to Dr. Thompson.", src: '<b>Source:</b> Pattern-matched against your plan + record' });
+      if (activeAIThreadId === thread.id) renderAIThreads();
+      scrollChatBottom();
     }, 650);
   }
 
@@ -3779,20 +4896,14 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
 
   function addUserMsg(text) {
-    const wrap = document.getElementById('chatWrap');
-    const el = document.createElement('div');
-    el.className = 'msg user';
-    el.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(text)}</div>`;
-    wrap.appendChild(el);
-    scrollChatBottom();
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'user', text });
+    renderAIThread();
   }
   function addAIMsg(html, src) {
-    const wrap = document.getElementById('chatWrap');
-    const el = document.createElement('div');
-    el.className = 'msg ai';
-    el.innerHTML = `<div class="av">AI</div><div class="bubble">${html.replace(/\n/g, '<br>')}${src ? `<div class="src">${src}</div>` : ''}</div>`;
-    wrap.appendChild(el);
-    scrollChatBottom();
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    thread.messages.push({ from: 'ai', html, src });
+    renderAIThread();
   }
   function scrollChatBottom() {
     requestAnimationFrame(() => {
@@ -3800,26 +4911,217 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     });
   }
   function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+  function threadBody(msg) {
+    if (msg.html) return msg.html.replace(/\n/g, '<br>');
+    return escapeHtml(msg.text || '').replace(/\n/g, '<br>');
   }
 
-  /* ===== Team thread (direct physician) ===== */
-  function askTeamPreset(q) {
-    const wrap = document.getElementById('teamChatWrap');
+  function stripThreadText(value) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = value || '';
+    return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function aiThreadSnippet(thread) {
+    const last = [...(thread.messages || [])].reverse().find(msg => msg.text || msg.html);
+    if (!last) return 'New chat';
+    const body = last.text || stripThreadText(last.html || '');
+    return body.length > 46 ? `${body.slice(0, 46)}...` : body;
+  }
+
+  function renderAIThreads() {
+    const list = document.getElementById('aiThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    Object.values(AI_THREADS)
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+      .forEach(thread => {
+        const btn = document.createElement('button');
+        btn.className = 'thread-pill ai-history-item';
+        btn.classList.toggle('active', thread.id === activeAIThreadId);
+        btn.type = 'button';
+        btn.innerHTML = `<span class="ai-history-title">${escapeHtml(thread.title)}</span><span class="ai-history-meta">${escapeHtml(thread.meta || 'Aleron AI')}</span><span class="ai-history-snippet">${escapeHtml(aiThreadSnippet(thread))}</span>`;
+        btn.onclick = () => { activeAIThreadId = thread.id; renderAIThreads(); };
+        list.appendChild(btn);
+      });
+    renderAIThread();
+  }
+
+  function renderAIThread() {
+    const thread = AI_THREADS[activeAIThreadId] || AI_THREADS.general;
+    const context = document.getElementById('aiThreadContext');
+    const wrap = document.getElementById('chatWrap');
+    const suggest = document.getElementById('suggest');
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · ${escapeHtml(thread.context)}`;
+    if (suggest) suggest.style.display = (thread.messages || []).some(msg => msg.from === 'user') ? 'none' : 'flex';
     if (!wrap) return;
-    const u = document.createElement('div');
-    u.className = 'msg user';
-    u.innerHTML = `<div class="av">JY</div><div class="bubble">${escapeHtml(q)}</div>`;
-    wrap.appendChild(u);
+    wrap.innerHTML = '';
+    thread.messages.forEach(msg => {
+      const el = document.createElement('div');
+      el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
+      const av = msg.from === 'user' ? 'JY' : 'AI';
+      const src = msg.src ? `<div class="src">${msg.src}</div>` : '';
+      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${threadBody(msg)}${src}</div>`;
+      wrap.appendChild(el);
+    });
+  }
+
+  function startBlankAIThread() {
+    const id = `ai-chat-${Date.now()}`;
+    AI_THREADS[id] = {
+      id,
+      title: 'New chat',
+      meta: 'Aleron AI · just now',
+      context: 'Open AI thread grounded in your plan and your data.',
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: 'Start a new question here. I will keep it separate from your other topics and route clinical decisions back to Dr. Thompson.', src: '<b>Source:</b> Aleron AI routing rules' }]
+    };
+    activeAIThreadId = id;
+    renderAIThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = '';
+      field.focus();
+    }
+  }
+
+  function startPlanAIThread() {
+    if (!activePlanCard) return;
+    const key = activePlanCard.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
+    const id = `ai-plan-${key || 'priority'}-${Date.now()}`;
+    AI_THREADS[id] = {
+      id,
+      title,
+      meta: 'Plan card · just now',
+      context: details?.threadIntro?.replace('Focused thread with Dr. Thompson', 'Focused AI explainer') || `Focused AI explainer about ${title}.`,
+      createdAt: Date.now(),
+      messages: [{ from: 'ai', text: `I started a new AI thread for ${title}. I can explain what this priority means, what it changes, and what would need Dr. Thompson.`, src: '<b>Source:</b> Plan priority details · Aleron AI' }]
+    };
+    activeAIThreadId = id;
+    const starter = details?.starter || `I have a question about ${title}: `;
+    closePlanModal();
+    gotoTab('messages');
+    gotoSub('messages', 'meridian');
+    renderAIThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+    toast(`New Aleron AI thread started for ${title}`);
+  }
+
+  function renderTeamThreads() {
+    const list = document.getElementById('teamThreadList');
+    if (!list) return;
+    list.innerHTML = '';
+    Object.values(TEAM_THREADS)
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+      .forEach(thread => {
+        const btn = document.createElement('button');
+        btn.className = 'thread-pill ai-history-item care-history-item';
+        btn.classList.toggle('active', thread.id === activeTeamThreadId);
+        btn.type = 'button';
+        btn.innerHTML = `<span class="ai-history-title">${escapeHtml(thread.title)}</span><span class="ai-history-meta">${escapeHtml(thread.meta || 'Doctor thread')} · ${escapeHtml(thread.status || 'Open')}</span><span class="ai-history-snippet">${escapeHtml(aiThreadSnippet(thread))}</span>`;
+        btn.onclick = () => { activeTeamThreadId = thread.id; renderTeamThreads(); };
+        list.appendChild(btn);
+      });
+    renderTeamThread();
+  }
+
+  function renderTeamThread() {
+    const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
+    const context = document.getElementById('teamThreadContext');
+    const wrap = document.getElementById('teamChatWrap');
+    if (context) context.innerHTML = `<b>${escapeHtml(thread.title)}</b> · <span>${escapeHtml(thread.status || 'Open')}</span>`;
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (!(thread.messages || []).length) {
+      wrap.innerHTML = '<div class="care-empty-thread">No messages yet. Write the first note below.</div>';
+      return;
+    }
+    thread.messages.forEach(msg => {
+      const el = document.createElement('div');
+      el.className = `msg ${msg.from === 'user' ? 'user' : 'ai'}`;
+      const av = msg.from === 'user' ? 'JY' : 'MT';
+      const src = msg.src ? `<div class="src">${msg.src}</div>` : '';
+      el.innerHTML = `<div class="av">${av}</div><div class="bubble">${threadBody(msg)}${src}</div>`;
+      wrap.appendChild(el);
+    });
+  }
+
+  function startDoctorTopic(kind) {
+    const t = DOCTOR_TOPIC_TEMPLATES[kind] || DOCTOR_TOPIC_TEMPLATES.plan;
+    const id = `doctor-${kind}-${Date.now()}`;
+    TEAM_THREADS[id] = {
+      id,
+      title: t.title,
+      meta: `${t.meta} · just now`,
+      status: t.status,
+      context: t.context,
+      createdAt: Date.now(),
+      messages: []
+    };
+    activeTeamThreadId = id;
+    renderTeamThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = t.starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+  }
+
+  function startPlanDoctorThread() {
+    if (!activePlanCard) return;
+    const key = activePlanCard.dataset.planCard;
+    const details = PLAN_CARD_DETAILS[key];
+    const title = details?.threadTitle || getBoardCardTitle(activePlanCard);
+    const id = `doctor-plan-${key || 'priority'}-${Date.now()}`;
+    TEAM_THREADS[id] = {
+      id,
+      title,
+      meta: 'Top priority · just now',
+      status: 'Drafting',
+      context: details?.threadIntro || `Focused thread with Dr. Thompson about ${title}.`,
+      createdAt: Date.now(),
+      messages: []
+    };
+    activeTeamThreadId = id;
+    const starter = details?.starter || `I have a question about ${title}: `;
+    closePlanModal();
+    gotoTab('messages');
+    gotoSub('messages', 'team');
+    renderTeamThreads();
+    const field = document.getElementById('chatField');
+    if (field) {
+      field.value = starter;
+      field.focus();
+      field.setSelectionRange(field.value.length, field.value.length);
+    }
+    toast(`Doctor thread started for ${title}`);
+  }
+
+  function askTeamPreset(q) {
+    const thread = TEAM_THREADS[activeTeamThreadId] || TEAM_THREADS.general;
+    thread.messages.push({ from: 'user', text: q });
+    thread.status = 'Waiting on care team';
+    renderTeamThreads();
     setTimeout(() => {
-      const a = document.createElement('div');
-      a.className = 'msg ai';
-      a.innerHTML = `<div class="av">MT</div><div class="bubble">Got it - I'll take a look and get back to you within the day. If it's urgent, call the office line.<div class="src"><b>From:</b> Dr. Marcus Thompson · Primary Care</div></div>`;
-      wrap.appendChild(a);
+      thread.messages.push({ from: 'ai', text: "Received. This is attached to the selected thread and marked for Dr. Thompson's review. If it becomes urgent, call the office line.", src: '<b>From:</b> Dr. Marcus Thompson · Care team inbox' });
+      if (activeTeamThreadId === thread.id) renderTeamThread();
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }, 700);
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
+
+  renderTeamThreads();
+  renderAIThreads();
 
   /* ===== Risk bottom sheet (You → Risk cards) ===== */
   const RISK_SHEETS = {
@@ -3913,7 +5215,10 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
   }
   // ESC closes sheet
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeRiskSheet();
+    if (e.key === 'Escape') {
+      closePlanModal();
+      closeRiskSheet();
+    }
   });
 
   /* ===== Audio player (physician message) ===== */
