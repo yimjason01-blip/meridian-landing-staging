@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aleron MD Layered Figma Hero</title>
+  <title>Aleron MD</title>
   <style>
     :root {
       --page-bg: #fffefb;
@@ -14,6 +14,12 @@
       --rust: #a2653b;
       --navy: #2c3240;
       --gold-line: rgba(197, 162, 110, 0.2);
+      --ease-out-premium: cubic-bezier(.22, .72, .18, 1);
+      --ease-soft: cubic-bezier(.16, .82, .18, 1);
+      --duration-fast: 160ms;
+      --duration-base: 240ms;
+      --duration-slow: 680ms;
+      --cta-shadow: 0 18px 40px rgba(16, 20, 32, 0.24);
     }
 
     * {
@@ -30,6 +36,30 @@
     body {
       overflow-x: hidden;
       font-family: PolySans, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 6;
+      width: 100%;
+      height: 96px;
+      pointer-events: none;
+      background: rgba(20, 24, 32, 0.72);
+      border-bottom: 1px solid rgba(239, 234, 224, 0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium);
+    }
+
+    body.is-scrolled::before {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .hero-frame {
@@ -84,7 +114,7 @@
       pointer-events: none;
       user-select: none;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .five-plane-layer {
@@ -101,20 +131,20 @@
     .hero-bg-plane {
       z-index: 1;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .hero-mid-blocks-plane {
       z-index: 2;
       transform: translate3d(calc(var(--slide-float-shift) + var(--hero-floating-block-shift, 0px)), 0, 0);
-      transition: transform 980ms cubic-bezier(.16, .82, .18, 1);
+      transition: transform 980ms var(--ease-soft);
       will-change: transform;
     }
 
     .hero-subject-plane {
       z-index: 3;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .hero-anchor-block-plane {
@@ -130,7 +160,7 @@
       height: 164.359504%;
       object-fit: fill;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .photo-natalia-bg {
@@ -141,7 +171,7 @@
       height: 100%;
       object-fit: fill;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .photo-base-full {
@@ -152,7 +182,7 @@
       height: 99.586777%;
       object-fit: fill;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .photo-primary {
@@ -163,7 +193,7 @@
       height: 100%;
       object-fit: fill;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .base-union {
@@ -194,7 +224,7 @@
       height: 100%;
       object-fit: fill;
       transform: translate3d(var(--slide-image-shift), 0, 0);
-      transition: transform 780ms cubic-bezier(.22, .72, .18, 1);
+      transition: transform 780ms var(--ease-out-premium);
     }
 
     .grid-gradient-front {
@@ -216,7 +246,7 @@
       background: #434e6c;
       object-fit: fill;
       transform: translate3d(calc(var(--slide-float-shift) + var(--hero-floating-block-shift, 0px)), 0, 0);
-      transition: transform 980ms cubic-bezier(.16, .82, .18, 1);
+      transition: transform 980ms var(--ease-soft);
       will-change: transform;
     }
 
@@ -338,19 +368,27 @@
     }
 
     .carousel-dot {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.88);
-      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.18);
       padding: 0;
       cursor: pointer;
-      transition: background 180ms ease, border-color 180ms ease;
+      transform: scale(1);
+      transition: background var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease, width var(--duration-fast) ease;
+    }
+
+    .carousel-dot:hover {
+      background: rgba(255, 255, 255, 0.48);
+      transform: scale(1.18);
     }
 
     .carousel-dot.is-active {
+      width: 26px;
       background: #ffffff;
       border-color: #ffffff;
+      transform: scale(1);
     }
 
     .carousel-dot:focus-visible {
@@ -358,32 +396,114 @@
       outline-offset: 4px;
     }
 
+
+
     @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 1ms !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+
       .floating-block {
         transform: none;
       }
     }
 
     .brand-logo {
-      z-index: 5;
+      position: fixed;
+      z-index: 8;
       left: 4.166667%;
       top: 4.958678%;
       width: 7.407407%;
+      min-width: 94px;
+      max-width: 128px;
       height: auto;
     }
 
-    .headline {
+    .header-actions {
+      z-index: 9;
+      position: fixed;
+      right: 4.166667%;
+      top: 4.958678%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      background: rgba(20, 24, 32, 0.6);
+      border: 1px solid rgba(239, 234, 224, 0.26);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 18px 42px rgba(16, 20, 32, 0.22);
+    }
+
+    .header-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      color: var(--cream);
+      background: transparent;
+      font-size: clamp(12px, 0.810185vw, 14px);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: background var(--duration-base) ease, border-color var(--duration-base) ease, color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+    }
+
+    .header-action:hover {
+      transform: translateY(-1px);
+      background: rgba(239, 234, 224, 0.1);
+      border-color: rgba(239, 234, 224, 0.32);
+    }
+
+    .header-action:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 4px;
+    }
+
+    .header-action.primary {
+      background: var(--cream);
+      border-color: var(--cream);
+      color: var(--ink);
+      min-width: 88px;
+    }
+
+    .header-action.primary:hover {
+      background: var(--white);
+      border-color: var(--white);
+      box-shadow: 0 12px 28px rgba(16, 20, 32, 0.24);
+    }
+
+    .headline { 
       z-index: 5;
       position: absolute;
       left: 4.166667%;
-      top: 69.731405%;
-      width: 31.076389%;
+      top: 63.8%;
+      width: 34.5%;
       margin: 0;
       color: var(--white);
       font-weight: 400;
       font-size: clamp(32px, 3.703704vw, 64px);
       line-height: 1.02;
       letter-spacing: clamp(-1.6px, -0.092593vw, -0.8px);
+      text-wrap: balance;
+    }
+
+    .hero-subheadline {
+      z-index: 5;
+      position: absolute;
+      left: 4.166667%;
+      top: 77.9%;
+      width: 32.2%;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-weight: 400;
+      font-size: clamp(14px, 1.041667vw, 18px);
+      line-height: 1.42;
+      letter-spacing: -0.01em;
       text-wrap: balance;
     }
 
@@ -411,26 +531,73 @@
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
+      overflow: hidden;
+      gap: 0.45em;
+      transition: background var(--duration-base) ease, color var(--duration-base) ease, border-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+    }
+
+    .figma-button::after,
+    .play-video::after {
+      content: "→";
+      display: inline-block;
+      margin-left: 0.45em;
+      transform: translateX(0);
+      transition: transform var(--duration-base) var(--ease-out-premium);
+    }
+
+    .figma-button:hover,
+    .play-video:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--cta-shadow);
+    }
+
+    .figma-button:hover::after,
+    .play-video:hover::after {
+      transform: translateX(4px);
+    }
+
+    .figma-button:active,
+    .play-video:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .figma-button:focus-visible,
+    .play-video:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 4px;
     }
 
     .figma-button.apply {
-      left: 89.930556%;
-      top: 3.512397%;
-      width: 7.928241%;
-      height: 6.095041%;
+      left: 4.166667%;
+      top: 87.293388%;
+      width: 8.738426%;
+      height: 6.301653%;
       background: var(--cream);
       color: var(--ink);
       border: 1px solid var(--cream);
     }
 
+    .figma-button.apply:hover {
+      background: var(--white);
+      border-color: var(--white);
+    }
+
     .figma-button.demo {
-      left: 4.166667%;
+      left: 13.831019%;
       top: 87.293388%;
-      width: 8.101852%;
+      width: 10.99537%;
       height: 6.301653%;
-      background: transparent;
+      background: rgba(239, 234, 224, 0.08);
       color: var(--cream);
-      border: 1px solid var(--cream);
+      border: 1px solid rgba(239, 234, 224, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .figma-button.demo:hover {
+      background: rgba(239, 234, 224, 0.18);
+      border-color: var(--cream);
     }
 
     .slide-count {
@@ -458,8 +625,9 @@
 
     .section-gap {
       width: 100vw;
-      height: calc(100vw * 75 / 1728);
-      background: var(--page-bg);
+      height: calc(100vw * 64 / 1728);
+      margin-top: -1px;
+      background: linear-gradient(180deg, rgba(65, 76, 106, 0.85) 0%, rgba(239, 234, 224, 0.5) 42%, var(--page-bg) 100%);
     }
 
     .curve-section {
@@ -515,6 +683,12 @@
       line-height: 1.2;
       letter-spacing: clamp(-0.16px, -0.009259vw, -0.08px);
       text-decoration: none;
+      cursor: pointer;
+      transition: background var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+    }
+
+    .play-video:hover {
+      background: #1f2531;
     }
 
     .curve-line {
@@ -626,6 +800,71 @@
     .axis-80 { left: 71.296296%; top: 87.921022%; }
     .axis-90 { left: 86.747685%; top: 87.921022%; }
 
+
+
+    .curve-title,
+    .play-video,
+    .curve-line,
+    .age-card,
+    .curve-marker,
+    .axis-label {
+      transition: opacity 620ms var(--ease-out-premium), transform 620ms var(--ease-out-premium), clip-path 980ms var(--ease-soft);
+    }
+
+    .curve-section:not(.is-in-view) .curve-title,
+    .curve-section:not(.is-in-view) .play-video,
+    .curve-section:not(.is-in-view) .age-card,
+    .curve-section:not(.is-in-view) .axis-label {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .curve-section:not(.is-in-view) .curve-line {
+      clip-path: inset(0 100% 0 0);
+    }
+
+    .curve-section:not(.is-in-view) .curve-marker {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    .curve-section.is-in-view .curve-line {
+      clip-path: inset(0 0 0 0);
+    }
+
+    .curve-section.is-in-view .curve-title { transition-delay: 80ms; }
+    .curve-section.is-in-view .play-video { transition-delay: 180ms; }
+    .curve-section.is-in-view .curve-line { transition-delay: 220ms; }
+    .curve-section.is-in-view .age-card.left,
+    .curve-section.is-in-view .curve-marker.start { transition-delay: 560ms; }
+    .curve-section.is-in-view .age-card.right,
+    .curve-section.is-in-view .curve-marker.end { transition-delay: 900ms; }
+    .curve-section.is-in-view .axis-label { transition-delay: 720ms; }
+
+    .brand-logo,
+    .header-actions,
+    .headline,
+    .hero-subheadline,
+    .figma-button,
+    .slide-count,
+    .carousel-dots {
+      animation: heroFadeUp 720ms var(--ease-out-premium) both;
+    }
+
+    .brand-logo { animation-delay: 120ms; }
+    .header-actions { animation-delay: 160ms; }
+    .headline { animation-delay: 220ms; }
+    .hero-subheadline { animation-delay: 340ms; }
+    .figma-button.apply { animation-delay: 460ms; }
+    .figma-button.demo { animation-delay: 520ms; }
+    .slide-count,
+    .carousel-dots { animation-delay: 640ms; }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 760px) {
       /* Mobile inspection mode: preserve the full Figma canvas instead of using a portrait crop. */
       .hero-frame {
@@ -650,6 +889,11 @@
       .headline {
         font-size: 3.703704vw;
         letter-spacing: -0.092593vw;
+      }
+
+      .hero-subheadline {
+        font-size: 1.041667vw;
+        letter-spacing: -0.01em;
       }
 
       .figma-button,
@@ -681,6 +925,7 @@
     .debug .layer,
     .debug .floating-block,
     .debug .headline,
+    .debug .hero-subheadline,
     .debug .figma-button,
     .debug .slide-count,
     .debug .curve-title,
@@ -691,10 +936,140 @@
       outline: 1px solid rgba(0, 255, 255, 0.65);
       outline-offset: 0;
     }
+
+
+    .demo-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(20, 24, 32, 0.58);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--duration-base) ease, visibility var(--duration-base) ease;
+    }
+
+    .demo-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .demo-modal-panel {
+      position: relative;
+      width: min(780px, 92vw);
+      min-height: 420px;
+      padding: clamp(30px, 4vw, 58px);
+      background: #fffefb;
+      color: var(--ink);
+      border: 1px solid rgba(197, 162, 110, 0.28);
+      box-shadow: 0 34px 90px rgba(10, 12, 18, 0.34);
+      transform: translateY(18px) scale(0.98);
+      transition: transform var(--duration-slow) var(--ease-out-premium);
+    }
+
+    .demo-modal.is-open .demo-modal-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    .demo-modal-kicker {
+      margin: 0 0 18px;
+      color: var(--rust);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .demo-modal-title {
+      margin: 0 0 18px;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 0.98;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+    }
+
+    .demo-modal-copy {
+      max-width: 520px;
+      margin: 0;
+      color: rgba(36, 36, 38, 0.72);
+      font-size: clamp(16px, 1.4vw, 20px);
+      line-height: 1.5;
+    }
+
+    .demo-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(44, 50, 64, 0.16);
+      background: rgba(255, 254, 251, 0.92);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .demo-modal-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 32px 0 28px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .demo-modal-list li {
+      min-height: 104px;
+      padding: 18px;
+      border: 1px solid rgba(197, 162, 110, 0.22);
+      background: rgba(239, 234, 224, 0.34);
+      color: rgba(36, 36, 38, 0.76);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .demo-modal-list strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .demo-modal-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 148px;
+      min-height: 48px;
+      padding: 0 22px;
+      background: var(--navy);
+      color: var(--white);
+      border: 1px solid var(--navy);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+    }
+
+    .demo-modal-action:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--cta-shadow);
+    }
+
+    @media (max-width: 760px) {
+      .demo-modal-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
-  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="five-plane-test-20260530e-selected-surfer-frame">
+  <main class="hero-frame" aria-label="Aleron MD layered Figma hero carousel" data-build-signature="live-polish-20260530-sticky-header-ctas">
     <div class="hero-slide slide-one is-active" data-slide="0" aria-hidden="false">
       <img class="five-plane-layer hero-bg-plane" data-depth-plane="background" data-motion-layer="background" data-figma-node="674:41457 674:41458 674:41459" src="assets/figma-five-plane-test/hero01-bg-plane.png?v=five-plane-20260530b" alt="" aria-hidden="true" />
       <img class="five-plane-layer hero-mid-blocks-plane" data-depth-plane="midground-blocks" data-motion-layer="parallax-blocks" data-figma-node="674:41460 674:41466" src="assets/figma-five-plane-test/hero01-mid-blocks-plane.png?v=five-plane-20260530b" alt="" aria-hidden="true" />
@@ -725,11 +1100,17 @@
 
     <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png?v=layered-20260529" alt="Aleron MD" />
 
+    <nav class="header-actions" aria-label="Account and application actions">
+      <a class="header-action" href="login.html">Log in</a>
+      <a class="header-action primary" href="#apply">Apply</a>
+    </nav>
+
     <h1 class="headline" data-figma-node="674:41514">Your best days are still ahead.</h1>
+    <p class="hero-subheadline">Physician-led longevity care, powered by AI and your genetic, lab, and wearable data.</p>
 
     <nav class="button-layer" aria-label="Hero actions">
       <a class="figma-button apply" data-figma-node="674:41754" href="#apply">Apply</a>
-      <a class="figma-button demo" data-figma-node="674:41513" href="#demo">Demo</a>
+      <a class="figma-button demo" data-figma-node="674:41513" href="#partners">For Employers</a>
     </nav>
 
     <p class="slide-count current" data-figma-node="694:45103">001</p>
@@ -773,12 +1154,37 @@
     <p class="axis-label axis-90" data-figma-node="674:41561">90</p>
   </section>
 
+
+
+  <div class="demo-modal" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title" aria-hidden="true">
+    <div class="demo-modal-panel">
+      <button class="demo-modal-close" type="button" aria-label="Close demo preview">×</button>
+      <p class="demo-modal-kicker">Employer partnership</p>
+      <h2 class="demo-modal-title" id="demo-modal-title">A longevity benefit people actually understand.</h2>
+      <p class="demo-modal-copy">Aleron partners with employers, brokers, and benefits advisors to offer physician-led longevity care as a premium health benefit.</p>
+      <ul class="demo-modal-list" aria-label="Partnership preview contents">
+        <li><strong>For employees</strong>A clear personal risk model built from genetics, labs, wearables, records, and a physician interview.</li>
+        <li><strong>For employers</strong>A differentiated benefit for high-value teams without pretending to replace primary care.</li>
+        <li><strong>For brokers</strong>A premium, explainable program that is easier to position than another point solution.</li>
+      </ul>
+      <a class="demo-modal-action" href="#partners">Start partnership conversation</a>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('keydown', function (event) {
       if (event.key.toLowerCase() === 'l') {
         document.documentElement.classList.toggle('debug');
       }
     });
+
+    (function () {
+      function updateStickyHeader() {
+        document.body.classList.toggle('is-scrolled', window.scrollY > 24);
+      }
+      updateStickyHeader();
+      window.addEventListener('scroll', updateStickyHeader, { passive: true });
+    })();
 
     (function () {
       const hero = document.querySelector('.hero-frame');
@@ -814,7 +1220,9 @@
       }
 
       function setSlide(nextIndex) {
-        if (nextIndex === activeIndex || nextIndex < 0 || nextIndex >= slides.length) return;
+        if (nextIndex < 0) nextIndex = slides.length - 1;
+        if (nextIndex >= slides.length) nextIndex = 0;
+        if (nextIndex === activeIndex) return;
 
         window.clearTimeout(exitTimer);
         const previous = slides[activeIndex];
@@ -839,7 +1247,13 @@
           dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
 
-        if (currentCount) currentCount.textContent = String(activeIndex + 1).padStart(3, '0');
+        if (currentCount) {
+          currentCount.animate(
+            [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: reduceMotion ? 0 : 240, easing: 'cubic-bezier(.22,.72,.18,1)' }
+          );
+          currentCount.textContent = String(activeIndex + 1).padStart(3, '0');
+        }
         if (totalCount) totalCount.textContent = '/004';
 
         requestUpdate();
@@ -851,9 +1265,66 @@
         });
       });
 
+
+      hero.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') setSlide(activeIndex + 1);
+        if (event.key === 'ArrowLeft') setSlide(activeIndex - 1);
+      });
+
+      let touchStartX = null;
+      hero.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0].clientX;
+      }, { passive: true });
+      hero.addEventListener('touchend', (event) => {
+        if (touchStartX == null) return;
+        const delta = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 42) setSlide(activeIndex + (delta < 0 ? 1 : -1));
+        touchStartX = null;
+      }, { passive: true });
+
       updateHeroBlocks();
       window.addEventListener('scroll', requestUpdate, { passive: true });
       window.addEventListener('resize', requestUpdate);
+    })();
+
+
+    (function () {
+      const curve = document.querySelector('.curve-section');
+      if (!curve) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) curve.classList.add('is-in-view');
+        });
+      }, { threshold: 0.28 });
+      observer.observe(curve);
+    })();
+
+    (function () {
+      const modal = document.getElementById('demo-modal');
+      const close = modal ? modal.querySelector('.demo-modal-close') : null;
+      const triggers = Array.from(document.querySelectorAll('a[href="#partners"]'));
+      if (!modal || !close) return;
+
+      function openModal(event) {
+        event.preventDefault();
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        window.setTimeout(() => close.focus({ preventScroll: true }), 0);
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      triggers.forEach((trigger) => trigger.addEventListener('click', openModal));
+      close.addEventListener('click', closeModal);
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      });
     })();
   </script>
 </body>
