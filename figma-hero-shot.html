@@ -419,6 +419,7 @@
       min-width: 94px;
       max-width: 128px;
       height: auto;
+      filter: drop-shadow(0 1px 10px rgba(10, 13, 20, 0.45));
     }
 
     .header-actions {
@@ -428,7 +429,7 @@
       top: 4.958678%;
       display: flex;
       align-items: center;
-      gap: clamp(18px, 1.62037vw, 28px);
+      gap: clamp(12px, 1.04167vw, 18px);
     }
 
     .header-action {
@@ -436,53 +437,50 @@
       align-items: center;
       justify-content: center;
       min-height: 40px;
-      color: var(--cream);
-      font-size: clamp(13px, 0.879630vw, 15px);
+      padding: 0 clamp(16px, 1.27315vw, 22px);
+      border-radius: 8px;
+      font-size: clamp(13px, 0.81019vw, 14px);
       font-weight: 500;
       line-height: 1;
-      letter-spacing: 0.005em;
-      text-decoration: underline;
-      text-decoration-color: rgba(239, 234, 224, 0.42);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 5px;
-      text-shadow:
-        0 0 1px rgba(8, 11, 18, 0.92),
-        0 1px 2px rgba(8, 11, 18, 0.88),
-        0 1px 14px rgba(8, 11, 18, 0.70);
-      transition: opacity var(--duration-base) ease, color var(--duration-base) ease, text-decoration-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
     }
 
-    .header-action:hover {
+    /* Login: lighter frosted ghost button */
+    .header-action.secondary {
+      color: var(--ink, #1b1d22);
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: 0 1px 14px rgba(12, 16, 26, 0.16);
+    }
+
+    .header-action.secondary:hover {
+      background: rgba(255, 255, 255, 0.88);
       transform: translateY(-1px);
-      color: var(--white);
-      text-decoration-color: var(--white);
+    }
+
+    /* Apply: more opaque, slightly stronger near-white fill */
+    .header-action.primary {
+      color: var(--ink, #1b1d22);
+      background: rgba(250, 249, 245, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: 0 2px 18px rgba(12, 16, 26, 0.22);
+    }
+
+    .header-action.primary:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-1px);
     }
 
     .header-action:focus-visible {
       outline: 2px solid var(--cream);
       outline-offset: 4px;
-    }
-
-    /* Top-edge legibility scrim: darkens only the hero top band so the wordmark
-       and Log in stay readable across all carousel slides. Lives inside the hero
-       frame (absolute, not fixed) so it scrolls away with the hero and never
-       darkens sections below. Sits above the parallax planes (z<=3) and below
-       the headline (z5) / brand-logo (z8) / header-actions (z9). */
-    .hero-top-scrim {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: clamp(120px, 13.5vh, 176px);
-      z-index: 4;
-      pointer-events: none;
-      background: linear-gradient(
-        180deg,
-        rgba(12, 15, 23, 0.50) 0%,
-        rgba(12, 15, 23, 0.30) 38%,
-        rgba(12, 15, 23, 0.12) 70%,
-        rgba(12, 15, 23, 0) 100%
-      );
     }
 
     .headline { 
@@ -1106,19 +1104,18 @@
       <img class="five-plane-layer hero-anchor-block-plane" data-depth-plane="anchored-left-structure" data-motion-layer="anchored" data-figma-node="674:43082 674:43089 674:43109" src="assets/figma-five-plane-test/hero04-anchor-block-plane.png?v=five-plane-20260530b" alt="" aria-hidden="true" />
     </div>
 
-    <div class="hero-top-scrim" aria-hidden="true"></div>
-
     <img class="layer brand-logo" data-figma-node="674:41500" src="assets/figma-hero-layers/logo_4x.png?v=layered-20260529" alt="Aleron MD" />
 
-    <nav class="header-actions" aria-label="Account action">
-      <a class="header-action" href="login.html">Log in</a>
+    <nav class="header-actions" aria-label="Account actions">
+      <a class="header-action secondary" href="login.html">Login</a>
+      <a class="header-action primary" href="#apply">Apply for Membership</a>
     </nav>
 
     <h1 class="headline" data-figma-node="674:41514">Your best days are still ahead.</h1>
     <p class="hero-subheadline">Physician-led longevity care, powered by AI and your genetic, lab, and wearable data.</p>
 
     <nav class="button-layer" aria-label="Hero actions">
-      <a class="figma-button apply" data-figma-node="674:41754" href="#apply">Apply</a>
+      <a class="figma-button apply" data-figma-node="674:41754" href="#demo">See a demo</a>
       <a class="figma-button demo" data-figma-node="674:41513" href="#partners">For Employers</a>
     </nav>
 
