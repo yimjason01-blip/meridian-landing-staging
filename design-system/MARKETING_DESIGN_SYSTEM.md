@@ -15,14 +15,15 @@ Help a builder create Aleron public, login, application, and member-facing surfa
 
 See `PROVENANCE.md` for source-lane ownership. Do not add a token, asset, component, or pattern without a source lane.
 
-1. Figma `Reference` page exports in `design-system/assets/reference-page/`
-2. Brand assets in `design-system/assets/`
-3. Semantic tokens in `tokens.css`
-4. Shared primitives in `components.css`
-5. Page patterns in `patterns.css`
-6. Live landing implementation for behavior and layer mechanics
+1. Source map in the visible page.
+2. Figma `Reference` page exports in `design-system/assets/reference-page/`.
+3. Brand assets in `design-system/assets/`.
+4. Semantic tokens in `tokens.css`.
+5. Shared primitives in `components.css`.
+6. Page patterns in `patterns.css`.
+7. Live landing implementation for behavior and layer mechanics.
 
-## Provenance
+## Source lanes
 
 Every item belongs to one of these lanes: `figma-reference`, `figma-trajectory`, `figma-illustration`, `live-hero`, `identity-favicon`, `wordmark`, `login`, `landing-surface`, `component-derived`, or `excluded`.
 
@@ -56,16 +57,25 @@ Every item belongs to one of these lanes: `figma-reference`, `figma-trajectory`,
 - Modal shell
 - Code snippets
 
+## Visible page order
+
+- Overview.
+- Identity.
+- Source map.
+- Foundations.
+- Typography.
+- Components.
+- Forms.
+- Patterns.
+- Implementation.
+
 ## Patterns
 
-- Reference page overview
-- Landing hero
-- Landing hero reference from `figma-hero-shot.html`
-- Trajectory proof from the Reference page frames
-- Texture/moment screen references
-- Application form section
-- Login shell
-- CTA/footer section
+- Hero implementation pattern from `figma-hero-shot.html`.
+- Trajectory proof from Reference page frames.
+- Application form section.
+- Login shell.
+- CTA/footer section.
 
 ## Usage rules
 
