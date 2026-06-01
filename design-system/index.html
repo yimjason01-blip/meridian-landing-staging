@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./patterns.css?v=kit-20260601d">
+<link rel="stylesheet" href="./patterns.css?v=kit-20260601j">
 <style>
   .ds-shell { min-height: 100vh; display: grid; grid-template-columns: 286px minmax(0, 1fr); }
   .ds-side { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 30px 26px; color: var(--amd-color-text-inverse); background: var(--amd-login-fade), var(--amd-color-surface-deep); }
@@ -31,12 +31,14 @@
   .ds-section h1, .ds-section h2, .ds-section h3, .ds-section p { margin-top: 0; }
   .ds-section h1 { max-width: 11ch; margin-bottom: var(--amd-space-5); }
   .ds-section h2 { margin-bottom: var(--amd-space-4); }
-  .ds-lede { max-width: 72ch; color: var(--amd-color-text-secondary); font-size: var(--amd-type-body-lg-size); line-height: var(--amd-type-body-lg-line); }
+  .ds-lede { max-width: 68ch; margin-bottom: 0; color: var(--amd-color-text-secondary); font-size: var(--amd-type-body-lg-size); line-height: var(--amd-type-body-lg-line); }
   .ds-note { color: var(--amd-color-text-secondary); font-size: 14px; line-height: 1.55; }
   .amd-grid-field .ds-note, .amd-grid-field .ds-lede { color: var(--amd-color-text-primary); }
   .ds-mono { font-family: var(--amd-font-mono); font-size: 12px; color: var(--amd-color-text-secondary); }
-  .ds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
-  .ds-grid-wide { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
+  .ds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
+  .ds-grid-wide { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); align-items: start; }
+  .ds-identity-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
+  @media (max-width: 720px) { .ds-identity-grid { grid-template-columns: 1fr; } }
   .ds-spec { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-5); display: grid; gap: var(--amd-space-4); }
   .ds-spec-dark { color: var(--amd-color-text-inverse); background: var(--amd-color-surface-dark); border-color: var(--amd-color-border-inverse); }
   .ds-spec-dark .ds-note, .ds-spec-dark .ds-mono { color: var(--amd-color-text-inverse-muted); }
@@ -50,18 +52,21 @@
   .ds-apple { width: 72px; height: 72px; }
   .ds-wordmark-dark { width: 190px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.22)); }
   .ds-wordmark-light { width: 230px; }
-  .ds-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
-  .ds-swatch { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); }
+  .ds-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-5); }
+  .ds-swatch { position: relative; border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); }
   .ds-chip { height: 86px; border-bottom: 1px solid rgba(36,36,38,.22); box-shadow: inset 0 0 0 1px rgba(36,36,38,.16); }
+  .ds-swatch-tick { position: absolute; top: 8px; right: 8px; width: 18px; height: 18px; display: grid; place-items: center; background: var(--amd-color-surface-card); border: 1px solid var(--amd-color-success-text); color: var(--amd-color-success-text); font: 700 11px/1 var(--amd-font-mono); }
   .ds-meta { padding: var(--amd-space-3); display: grid; gap: 3px; }
   .ds-meta strong { font-size: 14px; }
   .ds-meta code { font: 12px var(--amd-font-mono); color: var(--amd-color-text-secondary); }
-  .ds-verify { font: 600 12px/1.3 var(--amd-font-mono); color: var(--amd-color-success-text); display: flex; align-items: baseline; gap: 5px; }
-  .ds-verify::before { content: "\2713"; font-weight: 700; }
-  .ds-type-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: var(--amd-space-5); align-items: baseline; padding: var(--amd-space-5) 0; border-bottom: 1px solid var(--amd-color-border-subtle); }
   .ds-token-row { display: grid; grid-template-columns: 210px minmax(0, 1fr) 110px; gap: var(--amd-space-4); padding: 10px 0; border-bottom: 1px solid var(--amd-color-border-subtle); align-items: baseline; }
   .ds-token-row code { font: 12px var(--amd-font-mono); }
   .ds-token-row span { color: var(--amd-color-text-secondary); font-size: 14px; }
+  .ds-type-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 168px; gap: var(--amd-space-5); align-items: baseline; padding: var(--amd-space-5) 0; border-bottom: 1px solid var(--amd-color-border-subtle); }
+  .ds-type-row:last-child { border-bottom: 0; }
+  .ds-type-spec { font: 12px/1.5 var(--amd-font-mono); color: var(--amd-color-text-secondary); text-align: right; }
+  .ds-type-spec b { display: block; color: var(--amd-color-text-primary); font-weight: 600; }
+  @media (max-width: 720px) { .ds-type-row { grid-template-columns: 1fr; } .ds-type-spec { text-align: left; } }
   .ds-source-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
   .ds-source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
   .ds-source-card figcaption { padding: var(--amd-space-4); }
@@ -107,6 +112,34 @@
   .ds-usage .use { color: var(--amd-color-text-primary); }
   .ds-usage .never { color: var(--amd-color-danger); }
   .ds-usage b { font-weight: 600; }
+  .ds-verify-appendix { margin-top: var(--amd-space-5); border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); }
+  .ds-verify-appendix summary { cursor: pointer; padding: var(--amd-space-4) var(--amd-space-5); font: 600 13px/1.2 var(--amd-font-body); color: var(--amd-color-text-primary); display: flex; align-items: center; gap: 8px; list-style: none; }
+  .ds-verify-appendix summary::-webkit-details-marker { display: none; }
+  .ds-verify-appendix summary::before { content: "\2713"; color: var(--amd-color-success-text); font-weight: 700; }
+  .ds-verify-appendix[open] summary { border-bottom: 1px solid var(--amd-color-border-subtle); }
+  .ds-verify-list { margin: 0; padding: var(--amd-space-4) var(--amd-space-5); display: grid; gap: 6px; }
+  .ds-verify-list div { display: grid; grid-template-columns: 220px 1fr; gap: var(--amd-space-4); font: 12px/1.5 var(--amd-font-mono); color: var(--amd-color-text-secondary); }
+  .ds-verify-list code { color: var(--amd-color-text-primary); }
+  @media (max-width: 720px) { .ds-verify-list div { grid-template-columns: 1fr; } }
+  /* Rich card anatomy + variants */
+  .ds-card-stack { display: grid; gap: var(--amd-space-4); }
+  .amd-card-media { aspect-ratio: 16 / 9; background: var(--amd-color-surface-cream) center / cover no-repeat; border-bottom: 1px solid var(--amd-color-border-default); }
+  .amd-card-tag { font: 600 12px/1 var(--amd-font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--amd-color-text-accent); }
+  .amd-card-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--amd-space-3); margin-top: var(--amd-space-2); }
+  .amd-card-meta { font: 12px var(--amd-font-mono); color: var(--amd-color-text-secondary); }
+  .amd-card.is-selected { box-shadow: inset 0 0 0 2px var(--amd-color-text-accent); }
+  .amd-card-compact { padding: var(--amd-space-4); gap: var(--amd-space-2); }
+  .ds-card-hint { font: 12px var(--amd-font-mono); color: var(--amd-color-text-secondary); }
+  /* Component state demos: empty / loading / error / overflow */
+  .ds-state-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-4); display: grid; gap: var(--amd-space-3); min-height: 132px; }
+  .ds-state-empty { display: grid; place-items: center; gap: 6px; text-align: center; color: var(--amd-color-text-secondary); border: 1px dashed var(--amd-color-border-default); padding: var(--amd-space-5); }
+  .ds-skeleton { display: grid; gap: 8px; }
+  .ds-skeleton span { height: 12px; background: linear-gradient(90deg, var(--amd-color-surface-cream), var(--amd-color-surface-bone), var(--amd-color-surface-cream)); background-size: 200% 100%; animation: ds-shimmer 1.4s ease-in-out infinite; }
+  .ds-skeleton span:nth-child(2) { width: 80%; } .ds-skeleton span:nth-child(3) { width: 55%; }
+  @keyframes ds-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .ds-skeleton span { animation: none; } }
+  .ds-overflow-clip { max-width: 220px; }
+  .ds-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
   @media (max-width: 900px) { .ds-shell { grid-template-columns: 1fr; } .ds-side { position: relative; height: auto; } .ds-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-type-row, .ds-token-row, .ds-file-map-row, .ds-role-row { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -146,7 +179,7 @@
       <p class="ds-kicker">Brand</p>
       <h2 class="amd-h2">Identity assets</h2>
       <p class="ds-lede">These are the reusable brand marks. They are not layout references and should not carry page behavior with them.</p>
-      <div class="ds-grid">
+      <div class="ds-identity-grid">
         <div class="ds-spec ds-asset"><span class="ds-source-badge">identity-favicon</span><img class="ds-icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Aleron icon logo"><div><strong>Icon logo</strong><div class="ds-mono">rust-to-navy fade</div></div></div>
         <div class="ds-spec ds-asset"><span class="ds-source-badge">identity-favicon</span><div class="ds-favicon-row"><img class="ds-favicon-lg" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview"><img class="ds-favicon-md" src="./assets/favicon-32.png" alt="32 px favicon"><img class="ds-favicon-sm" src="./assets/favicon-16.png" alt="16 px favicon"><img class="ds-apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon"></div><div><strong>Favicon set</strong><div class="ds-mono">SVG, ICO, PNG, Apple touch</div></div></div>
         <div class="ds-spec ds-spec-dark ds-asset"><span class="ds-source-badge inverse">wordmark</span><img class="ds-wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark"><div><strong>Wordmark on dark</strong><div class="ds-mono">Figma hero asset</div></div></div>
@@ -183,19 +216,35 @@
       </div>
 
       <p class="ds-subhead">Reference palette &middot; swatch only</p>
-      <p class="ds-note" style="margin-top:calc(-1 * var(--amd-space-2))">Every reference value below is verified EXACT against Figma page <code>Reference</code> (<code>785:6560</code>), node-by-node. Source node IDs are shown per swatch.</p>
+      <p class="ds-note" style="margin-top:calc(-1 * var(--amd-space-2)); max-width:68ch">Raw Figma pigments. Each carries a <span style="color:var(--amd-color-success-text);font-weight:600">&#10003;</span> when its fill is verified exact against the source. Full audit trail with node IDs is in the appendix below.</p>
       <div class="ds-swatch-grid">
         <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-logo-icon-fade)"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Logo fade</strong><code>--amd-logo-icon-fade</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Page</strong><code>--amd-color-surface-page</code><span class="ds-verify">= Figma 785:7679 #FFFEFB</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Cream</strong><code>--amd-color-surface-cream</code><span class="ds-verify">= Figma 785:7678 #EFEAE0</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Charcoal</strong><code>--amd-color-surface-dark</code><span class="ds-verify">= Figma 785:7674 #242426</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#2C1F29"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Burgundy black</strong><code>--amd-color-surface-burgundy</code><span class="ds-verify">= Figma 785:7675 #2C1F29</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#3C4662"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Slate blue</strong><code>--amd-color-reference-blue</code><span class="ds-verify">= Figma 785:7676 #3C4662</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#A35520"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference rust</strong><code>--amd-color-rust-reference</code><span class="ds-verify">= Figma 785:7700 #A35520</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#CD9453"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference gold</strong><code>--amd-color-gold-reference</code><span class="ds-verify">= Figma 785:7677 #CD9453</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-reference-warm-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Warm fade</strong><code>--amd-reference-warm-fade</code><span class="ds-verify">= Figma 785:7713 grad</span></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-reference-main-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Main fade</strong><code>--amd-reference-main-fade</code><span class="ds-verify">= Figma 785:7673 grad</span></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Page</strong><code>--amd-color-surface-page</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Charcoal</strong><code>--amd-color-surface-dark</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#2C1F29"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Burgundy black</strong><code>--amd-color-surface-burgundy</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#3C4662"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Slate blue</strong><code>--amd-color-reference-blue</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#A35520"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference rust</strong><code>--amd-color-rust-reference</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:#CD9453"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference gold</strong><code>--amd-color-gold-reference</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:var(--amd-reference-warm-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Warm fade</strong><code>--amd-reference-warm-fade</code></div></div>
+        <div class="ds-swatch"><span class="ds-swatch-tick" title="Verified against Figma">&#10003;</span><div class="ds-chip" style="background:var(--amd-reference-main-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Main fade</strong><code>--amd-reference-main-fade</code></div></div>
       </div>
+      <details class="ds-verify-appendix">
+        <summary>Figma verification audit &middot; 11/11 exact, zero drift</summary>
+        <div class="ds-verify-list">
+          <div><code>--amd-color-surface-page</code><span>Figma 785:7679 &middot; #FFFEFB exact</span></div>
+          <div><code>--amd-color-surface-cream</code><span>Figma 785:7678 &middot; #EFEAE0 exact</span></div>
+          <div><code>--amd-color-surface-dark</code><span>Figma 785:7674 &middot; #242426 exact</span></div>
+          <div><code>--amd-color-surface-burgundy</code><span>Figma 785:7675 &middot; #2C1F29 exact</span></div>
+          <div><code>--amd-color-reference-blue</code><span>Figma 785:7676 &middot; #3C4662 exact</span></div>
+          <div><code>--amd-color-rust-reference</code><span>Figma 785:7700 &middot; #A35520 exact</span></div>
+          <div><code>--amd-color-gold-reference</code><span>Figma 785:7677 &middot; #CD9453 exact</span></div>
+          <div><code>--amd-reference-warm-fade</code><span>Figma 785:7713 &middot; gradient stops exact</span></div>
+          <div><code>--amd-reference-main-fade</code><span>Figma 785:7673 &middot; gradient stops exact</span></div>
+          <div><code>--amd-color-rust-figma</code><span>Figma 785:7209 &middot; #A2653B exact (trajectory marker)</span></div>
+          <div><code>--amd-color-navy-figma</code><span>Figma 785:7210 &middot; #2C3240 exact (trajectory axis)</span></div>
+        </div>
+      </details>
 
       <p class="ds-subhead">Semantic text roles &middot; measured AAA</p>
       <div class="ds-spec">
@@ -219,12 +268,18 @@
     <section class="ds-section" id="type">
       <p class="ds-kicker">Typography</p>
       <h2 class="amd-h2">Type scale</h2>
-      <div class="ds-type-row"><div class="ds-mono">display</div><div class="amd-display">Aa</div></div>
-      <div class="ds-type-row"><div class="ds-mono">h1</div><div class="amd-h1">Your best days are still ahead.</div></div>
-      <div class="ds-type-row"><div class="ds-mono">h2</div><div class="amd-h2">The curve is not destiny.</div></div>
-      <div class="ds-type-row"><div class="ds-mono">h3</div><div class="amd-h3">A physician who knows you.</div></div>
-      <div class="ds-type-row"><div class="ds-mono">body large</div><div class="amd-body-lg">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div></div>
-      <div class="ds-type-row"><div class="ds-mono">serif</div><div style="font: italic 32px/1.35 var(--amd-font-serif);">More of life remains open.</div></div>
+      <p class="ds-lede">Inter Tight for display and headings, Inter for body, Source Serif 4 for editorial accents, JetBrains Mono for code. Sizes are fluid; the clamp range is shown per level.</p>
+      <div class="ds-type-row"><div class="ds-mono">display</div><div class="amd-display">Best days ahead</div><div class="ds-type-spec"><b>64&ndash;120px</b>Inter Tight 500 &middot; -0.045em</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h1</div><div class="amd-h1">Your best days are still ahead.</div><div class="ds-type-spec"><b>48&ndash;88px</b>Inter Tight 500 &middot; 1.0 lh &middot; -0.038em</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h2</div><div class="amd-h2" style="margin:0">The curve is not destiny.</div><div class="ds-type-spec"><b>34&ndash;62px</b>Inter Tight 500 &middot; 1.04 lh &middot; -0.032em</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h3</div><div class="amd-h3">A physician who knows you.</div><div class="ds-type-spec"><b>24&ndash;36px</b>Inter Tight 500 &middot; 1.12 lh &middot; -0.024em</div></div>
+      <div class="ds-type-row"><div class="ds-mono">subhead</div><div style="font:600 18px/1.4 var(--amd-font-body);color:var(--amd-color-text-primary)">Genetics, labs, and consult in one plan.</div><div class="ds-type-spec"><b>18px</b>Inter 600 &middot; 1.4 lh</div></div>
+      <div class="ds-type-row"><div class="ds-mono">body large</div><div class="amd-body-lg" style="color:var(--amd-color-text-primary)">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div><div class="ds-type-spec"><b>18&ndash;22px</b>Inter 400 &middot; 1.55 lh</div></div>
+      <div class="ds-type-row"><div class="ds-mono">body</div><div style="font:400 16px/1.6 var(--amd-font-body);color:var(--amd-color-text-primary)">The default reading size for paragraphs and long-form copy across product surfaces.</div><div class="ds-type-spec"><b>16px</b>Inter 400 &middot; 1.6 lh</div></div>
+      <div class="ds-type-row"><div class="ds-mono">caption</div><div style="font:400 13px/1.45 var(--amd-font-body);color:var(--amd-color-text-secondary)">Helper text, footnotes, and field hints sit at the smallest readable size.</div><div class="ds-type-spec"><b>13px</b>Inter 400 &middot; 1.45 lh</div></div>
+      <div class="ds-type-row"><div class="ds-mono">label</div><div style="font:600 12px/1 var(--amd-font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--amd-color-text-accent)">Membership &middot; Genetics</div><div class="ds-type-spec"><b>12px</b>Inter 600 &middot; 0.16em caps</div></div>
+      <div class="ds-type-row"><div class="ds-mono">code</div><div style="font:500 14px/1.6 var(--amd-font-mono);color:var(--amd-color-text-primary)">--amd-color-text-primary</div><div class="ds-type-spec"><b>14px</b>JetBrains Mono 500 &middot; 1.6 lh</div></div>
+      <div class="ds-type-row"><div class="ds-mono">serif</div><div style="font: italic 32px/1.35 var(--amd-font-serif);color:var(--amd-color-text-primary)">More of life remains open.</div><div class="ds-type-spec"><b>28&ndash;32px</b>Source Serif 4 italic 400 &middot; 1.35 lh</div></div>
     </section>
 
     <section class="ds-section" id="components">
@@ -232,11 +287,12 @@
       <h2 class="amd-h2">Buttons, cards, navigation, alerts</h2>
       <div class="ds-grid-wide">
         <div class="ds-spec"><div class="ds-demo-label">Buttons</div><div class="ds-state-row"><a class="amd-button amd-button-primary">Apply for Membership</a><a class="amd-button amd-button-primary is-hover">Hover</a><a class="amd-button amd-button-primary is-disabled" aria-disabled="true">Disabled</a><a class="amd-button amd-button-primary is-loading" aria-label="Saving" aria-busy="true">Saving</a></div><pre class="amd-code ds-snippet">&lt;a class="amd-button amd-button-primary"&gt;Apply for Membership&lt;/a&gt;</pre><div class="ds-usage"><p class="use"><b>Use:</b> one primary action per view. States: default, hover, disabled, loading.</p><p class="never"><b>Never:</b> two primaries side by side, or rounded corners.</p></div></div>
-        <div class="ds-spec ds-spec-dark"><div class="ds-demo-label">On dark</div><div class="ds-state-row"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">Log In</a></div><pre class="amd-code ds-snippet">&lt;a class="amd-button amd-button-cream"&gt;Apply for Membership&lt;/a&gt;</pre></div>
-        <div class="ds-spec"><div class="ds-demo-label">Header</div><header class="amd-header" style="padding:16px;"><span class="amd-wordmark"><img src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD"></span><div class="amd-header-actions"><a class="amd-button amd-button-ghost-dark amd-button-sm">Log In</a></div></header></div>
-        <div class="ds-spec"><div class="ds-demo-label">Cards</div><div class="amd-card"><h3 class="amd-h3">Clinical-grade genetics</h3><p>A 163-gene panel screens for variants that can change care.</p></div></div>
-        <div class="ds-spec"><div class="ds-demo-label">Tabs</div><div class="amd-tabs"><button class="amd-tab" aria-selected="true">Onboarding</button><button class="amd-tab">Genetics</button><button class="amd-tab">Labs</button><button class="amd-tab">Consult</button></div><p class="ds-note" style="margin-top:var(--amd-space-4)">Intake checklist, ID verification, and membership terms. The selected tab carries the rust underline; the panel renders below.</p></div>
-        <div class="ds-spec"><div class="ds-demo-label">Alerts</div><div class="amd-alert amd-alert-success"><strong>Application saved</strong><p>We received the intake and will follow up by email.</p></div><div style="height:12px"></div><div class="amd-alert amd-alert-danger"><strong>Missing email</strong><p>Add an email address before submitting.</p></div></div>
+        <div class="ds-spec ds-spec-dark"><div class="ds-demo-label">On dark</div><div class="ds-state-row"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">Log In</a></div><pre class="amd-code ds-snippet">&lt;a class="amd-button amd-button-cream"&gt;Apply for Membership&lt;/a&gt;</pre><div class="ds-usage"><p class="use" style="color:var(--amd-color-text-inverse)"><b>Use:</b> cream fill for the primary action on charcoal; ghost outline for the secondary. One cream button per dark surface.</p><p style="color:var(--amd-color-text-accent-on-dark)"><b>Never:</b> a dark-on-dark button, or two cream fills competing on the same panel.</p></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Header</div><header class="amd-header" style="padding:16px;"><span class="amd-wordmark"><img src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD"></span><nav style="display:flex;gap:20px;align-items:center"><a style="color:var(--amd-color-text-inverse-muted);text-decoration:none;font:600 13px var(--amd-font-body)">Approach</a><a style="color:var(--amd-color-text-inverse-muted);text-decoration:none;font:600 13px var(--amd-font-body)">Membership</a><a style="color:var(--amd-color-text-inverse-muted);text-decoration:none;font:600 13px var(--amd-font-body)">For employers</a><a class="amd-button amd-button-ghost-dark amd-button-sm">Log In</a></nav></header><div style="display:grid;gap:6px"><span class="amd-card-tag">Mobile</span><header class="amd-header" style="padding:14px 16px"><span class="amd-wordmark"><img src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD" style="width:104px"></span><span aria-hidden="true" style="display:grid;gap:4px"><span style="display:block;width:22px;height:2px;background:var(--amd-color-text-inverse)"></span><span style="display:block;width:22px;height:2px;background:var(--amd-color-text-inverse)"></span><span style="display:block;width:22px;height:2px;background:var(--amd-color-text-inverse)"></span></span></header></div><p class="ds-note">Charcoal bar, lowercase wordmark left. Desktop shows nav plus one ghost Log In; mobile collapses to a menu toggle. Stays solid on scroll, never transparent over content.</p></div>
+        <div class="ds-spec"><div class="ds-demo-label">Cards</div><div class="ds-card-stack"><div class="amd-card" style="padding:0;overflow:hidden;gap:0"><div class="amd-card-media" style="background-image:url('./assets/reference-page/hero-3.png')"></div><div style="padding:var(--amd-space-5);display:grid;gap:var(--amd-space-2)"><span class="amd-card-tag">Genetics</span><h3 class="amd-h3" style="margin:0">Clinical-grade genetics</h3><p style="margin:0;color:var(--amd-color-text-secondary)">A 163-gene panel screens for variants that can change care.</p><div class="amd-card-foot"><span class="amd-card-meta">163 genes</span><a class="amd-button amd-button-ghost-light amd-button-sm">View panel</a></div></div></div><div class="amd-card amd-card-compact is-selected"><span class="amd-card-tag">Selected variant</span><h3 style="margin:0;font:600 16px var(--amd-font-body)">Compact card</h3><p style="margin:0;color:var(--amd-color-text-secondary);font-size:14px">No media. Used in lists and selectable grids; rust inset ring marks the selected state.</p></div></div><div class="ds-usage"><p class="use"><b>Anatomy:</b> media, tag, title, body, footer (meta + action). Compact drops media.</p><p class="never"><b>Never:</b> a card without a title, or a media slot with no aspect ratio.</p></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Tabs</div><div class="amd-tabs"><button class="amd-tab" aria-selected="true">Onboarding</button><button class="amd-tab">Genetics</button><button class="amd-tab">Labs</button><button class="amd-tab">Consult</button></div><div style="padding:var(--amd-space-4) 0;display:grid;gap:var(--amd-space-2)"><span class="amd-card-tag">Onboarding</span><p style="margin:0;color:var(--amd-color-text-secondary)">Intake checklist, ID verification, and membership terms. The selected tab carries the rust underline; the panel below swaps on change.</p><div class="amd-cluster"><a class="amd-button amd-button-ghost-light amd-button-sm">Resume intake</a></div></div><div class="ds-usage"><p class="use"><b>Use:</b> 4 to 6 peer sections; exactly one active at a time.</p><p class="never"><b>Never:</b> mix tabs with accordion disclosure, or leave zero tabs selected.</p></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Alerts</div><div class="amd-alert amd-alert-success"><strong>Application saved</strong><p>We received the intake and will follow up by email.</p></div><div style="height:12px"></div><div class="amd-alert amd-alert-warning"><strong>Lab kit expiring</strong><p>Return your sample within 7 days to keep results valid.</p></div><div style="height:12px"></div><div class="amd-alert amd-alert-danger"><strong>Missing email</strong><p>Add an email address before submitting.</p></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">States</div><p class="ds-note" style="margin:0">Universal data-surface states for any card, table, or list: every fetch-backed component ships all four. The empty state names the next action; the error state always offers a recovery path.</p><div class="ds-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--amd-space-3)"><div class="ds-state-card"><span class="amd-card-tag">Loading</span><div class="ds-skeleton"><span></span><span></span><span></span></div></div><div class="ds-state-card"><span class="amd-card-tag">Empty</span><div class="ds-state-empty"><strong style="color:var(--amd-color-text-primary);font-size:14px">No results yet</strong><span style="font-size:13px">Labs appear here once processed.</span></div></div><div class="ds-state-card"><span class="amd-card-tag" style="color:var(--amd-color-danger)">Error</span><div class="amd-alert amd-alert-danger" style="border:1px solid var(--amd-color-border-default);border-left:4px solid var(--amd-color-danger)"><strong>Couldn't load labs</strong><p>Retry or contact your care team.</p></div></div><div class="ds-state-card"><span class="amd-card-tag">Overflow</span><div class="ds-overflow-clip"><div class="ds-truncate" style="color:var(--amd-color-text-primary)">Pharmacogenomic clopidogrel non-response panel result</div><span class="amd-card-meta">long values truncate with ellipsis</span></div></div></div></div>
       </div>
     </section>
 
@@ -285,10 +341,10 @@
 .hero-subject-plane  { z-index: 3; transform: translate3d(var(--slide-image-shift), 0, 0); }
 .hero-anchor-block-plane { z-index: 4; transform: none; }</pre>
         </div>
-        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">figma-trajectory</span><div class="ds-demo-label">Trajectory proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Reference page trajectory frame"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern only from the Reference page trajectory family: cream grid, semantic gradient curve, square markers, and dashed counterfactual where needed.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">figma-trajectory</span><div class="ds-demo-label">Trajectory proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Capability vs age trajectory, with and without prevention"><svg viewBox="0 0 720 460" role="img" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="dsTraj" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A35520"/><stop offset="0.45" stop-color="#532F4B"/><stop offset="1" stop-color="#23315F"/></linearGradient></defs><g stroke="#DED8CC" stroke-width="1"><line x1="84" y1="30" x2="84" y2="392"/><line x1="84" y1="392" x2="680" y2="392"/><line x1="84" y1="301" x2="680" y2="301"/><line x1="84" y1="211" x2="680" y2="211"/><line x1="84" y1="120" x2="680" y2="120"/><line x1="233" y1="30" x2="233" y2="392"/><line x1="382" y1="30" x2="382" y2="392"/><line x1="531" y1="30" x2="531" y2="392"/></g><g fill="#242426" font-family="'JetBrains Mono',monospace" font-size="18"><text x="84" y="418" text-anchor="middle">40</text><text x="233" y="418" text-anchor="middle">55</text><text x="382" y="418" text-anchor="middle">70</text><text x="531" y="418" text-anchor="middle">85</text><text x="680" y="418" text-anchor="middle">100</text></g><text x="34" y="211" fill="#242426" font-family="'JetBrains Mono',monospace" font-size="16" transform="rotate(-90 34 211)" text-anchor="middle">Functional capacity</text><path d="M84 96 C 260 120, 420 250, 680 384" fill="none" stroke="#2C3240" stroke-width="2.5" stroke-dasharray="7 7" opacity="0.5"/><path d="M84 96 C 280 70, 470 96, 680 150" fill="none" stroke="url(#dsTraj)" stroke-width="5"/><g fill="#A35520"><rect x="79" y="91" width="11" height="11"/><rect x="377" y="78" width="11" height="11"/></g><rect x="674" y="144" width="11" height="11" fill="#23315F"/><g font-family="'JetBrains Mono',monospace" font-size="16"><rect x="108" y="44" width="16" height="16" fill="url(#dsTraj)"/><text x="132" y="57" fill="#242426">With prevention</text><rect x="320" y="44" width="16" height="16" fill="#2C3240" opacity="0.5"/><text x="344" y="57" fill="#2C3240">Default trajectory</text></g></svg></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Built only from the Reference page trajectory family: cream grid, semantic gradient curve in verified palette, square markers, and a dashed counterfactual. The gradient stroke uses the same warm-fade stops as the source.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
         <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
         <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">login</span><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>
-        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">See a demo</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark amd-button-sm">See a demo</a></div></div></div>
       </div>
     </section>
 
