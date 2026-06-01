@@ -1,17 +1,17 @@
 ---
-title: Aleron MD Lowercase Design System
+title: Aleron MD Design System
 status: locked lowercase reference
 updated: 2026-06-01
 source: live landing, Figma hero frames, current lowercase favicon asset
 ---
 
-# Aleron MD Lowercase Design System
+# Aleron MD Design System
 
 ## Identity
 
 Aleron MD is premium preventive medicine with a lowercase, warm, human, editorial visual system. The system starts with the lowercase white `a` on a rust-to-navy fade, then expands into the Figma hero language: human photography, hard rectangular color planes, cream editorial sections, rust/navy curves, and restrained physician-led copy.
 
-This is the lowercase system. Do not pull from the black square uppercase `A` favicon branch, the reverted pitch-deck redesign, or generic medical SaaS patterns.
+Use the approved Aleron assets and visual references in this folder. Do not substitute historical, deck, or generic medical SaaS directions.
 
 ## Source stack
 
