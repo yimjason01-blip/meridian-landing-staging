@@ -1,0 +1,27 @@
+@import url("./base.css");
+
+.amd-wordmark { display: inline-flex; align-items: center; height: 32px; }
+.amd-wordmark img { width: 128px; height: auto; }
+
+.amd-button { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 30px; border: 1px solid currentColor; border-radius: 0; font-family: var(--amd-font-body); font-size: 14px; font-weight: 600; letter-spacing: .01em; text-decoration: none; transition: background var(--amd-fast) var(--amd-ease), color var(--amd-fast) var(--amd-ease), border-color var(--amd-fast) var(--amd-ease); }
+.amd-button-primary { color: var(--amd-on-dark); background: var(--amd-ink); border-color: var(--amd-ink); }
+.amd-button-primary:hover { background: var(--amd-rust); border-color: var(--amd-rust); }
+.amd-button-cream { color: var(--amd-ink); background: var(--amd-cream); border-color: var(--amd-cream); }
+.amd-button-ghost-dark { color: var(--amd-on-dark); background: transparent; border-color: rgba(255, 254, 251, .72); }
+.amd-button-ghost-dark:hover { background: rgba(255, 254, 251, .10); border-color: var(--amd-on-dark); }
+.amd-button-ghost-light { color: var(--amd-ink); background: transparent; border-color: rgba(36, 36, 38, .34); }
+.amd-button-ghost-light:hover { color: var(--amd-rust); border-color: var(--amd-rust); }
+
+.amd-panel { border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-white); }
+.amd-panel-cream { background: var(--amd-cream); }
+.amd-panel-dark { color: var(--amd-on-dark); background: var(--amd-ink); border-color: var(--amd-line-dark); }
+
+.amd-field { display: grid; gap: 8px; }
+.amd-field label { font-size: 13px; font-weight: 600; }
+.amd-input { width: 100%; min-height: 52px; padding: 0 14px; border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-bg); color: var(--amd-text); font: inherit; }
+.amd-input:focus { border-color: var(--amd-rust); box-shadow: var(--amd-focus-ring); }
+
+.amd-icon-tile { border-radius: 0; background: var(--amd-fade-icon); display: grid; place-items: center; overflow: hidden; }
+.amd-icon-tile img { width: 72%; height: 72%; object-fit: contain; }
+
+.amd-grid-field { background-color: var(--amd-cream); background-image: linear-gradient(rgba(36,36,38,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(36,36,38,.06) 1px, transparent 1px), radial-gradient(circle at 22% 6%, rgba(243,206,151,.52), transparent 28rem); background-size: 56px 56px, 56px 56px, auto; }

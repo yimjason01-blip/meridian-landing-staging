@@ -3,625 +3,231 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aleron MD — Design System</title>
+<title>Aleron MD Lowercase Design System</title>
+<meta name="description" content="Lowercase Aleron MD design system reference: favicon, icon logo, wordmark, color, typography, components, and Figma source references." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=aleron-a-fade-20260601">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png?v=aleron-a-fade-20260601">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png?v=aleron-a-fade-20260601">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png?v=aleron-a-fade-20260601">
+<link rel="shortcut icon" href="../assets/favicon.ico?v=aleron-a-fade-20260601">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./components.css?v=lowercase-20260601">
 <style>
-/* ============================================================
-   ALERON MD — DESIGN SYSTEM
-   Source of truth: Figma hero + website sections
-   (figma-hero-shot.html, v2.html). Gaps filled with judgment,
-   held to the same warm-editorial / clinical-trust language.
-   ============================================================ */
-
-:root {
-  /* ---- CANVAS / SURFACE (light, warm) ---- */
-  --page-bg:      #FFFEFB;   /* primary page — warm near-white */
-  --paper:        #F6F4EE;   /* default light section surface */
-  --paper-warm:   #EFEAE0;   /* warmer section surface (cream) */
-  --bone:         #ECE5D6;   /* cooler/clinical light surface */
-  --surface-card: #FFFFFF;   /* cards / tiles on light */
-
-  /* ---- DARK SURFACES (inverted sections) ---- */
-  --ink:          #14110D;   /* warm dark — engine, CTA bands */
-  --ink-cool:     #0A0A0B;   /* cool dark — hero cold-rain only */
-  --navy:         #2C3240;   /* hero overlay panel, play button */
-  --umber-1:      #1F1813;   /* warm dark gradient top */
-  --umber-2:      #2A1F18;   /* warm dark gradient bottom */
-
-  /* ---- BRAND ACCENTS ---- */
-  --rust:         #A2653B;   /* primary warm accent — curve, eyebrow */
-  --rust-deep:    #8A5230;   /* pressed / deep rust */
-  --terracotta:   #B5622A;   /* hero block, curve start */
-  --gold:         #D4A574;   /* hover warmth, hairlines */
-  --gold-light:   #E8C99A;   /* primary button hover */
-  --gold-deep:    #B8854D;   /* eyebrow on light */
-
-  /* ---- TEXT ---- */
-  --text:         #14110D;   /* primary on light */
-  --text-muted:   #4A4A4D;   /* secondary on light */
-  --text-faint:   #8A8A8E;   /* tertiary / captions */
-  --text-on-dark: #F6F4EE;   /* primary on dark */
-  --text-on-dark-muted: rgba(246,244,238,0.74);
-
-  /* ---- LINES / BORDERS ---- */
-  --line:         rgba(20,17,13,0.12);
-  --line-soft:    rgba(20,17,13,0.06);
-  --line-strong:  rgba(20,17,13,0.22);
-  --line-on-dark: rgba(246,244,238,0.14);
-  --gold-line:    rgba(197,162,110,0.20);
-
-  /* ---- STATUS (use sparingly, meaning only) ---- */
-  --status-ok:    #3E7C54;
-  --status-warn:  #C08A2D;
-  --status-error: #A33A2A;
-  --status-info:  #3C5068;
-
-  /* ---- TYPE FAMILIES ---- */
-  --font-display: 'Inter Tight', 'PolySans', system-ui, sans-serif;
-  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif:   'Source Serif 4', Georgia, serif;   /* wordmark, pull-quotes */
-  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
-
-  /* ---- SPACING (4px grid) ---- */
-  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
-  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
-
-  /* ---- RADIUS ---- */
-  --r-xs: 2px;    /* hard editorial detail */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 24px;
-  --r-pill: 999px;
-
-  /* ---- LAYOUT ---- */
-  --max: 1200px;
-  --gutter: clamp(20px, 4vw, 64px);
-  --section-y: clamp(64px, 8vw, 112px);
-
-  /* ---- MOTION ---- */
-  --ease:      cubic-bezier(.2,.7,.2,1);
-  --ease-out:  cubic-bezier(.22,.72,.18,1);
-  --dur-fast:  160ms;
-  --dur-base:  240ms;
-  --dur-slow:  520ms;
-
-  /* ---- ELEVATION (light surfaces use soft shadow, not luminance) ---- */
-  --shadow-sm: 0 2px 8px rgba(20,17,13,0.06);
-  --shadow-md: 0 12px 32px -16px rgba(20,17,13,0.18);
-  --shadow-lg: 0 24px 60px -28px rgba(16,20,32,0.30);
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--page-bg);
-  color: var(--text);
-  font-family: var(--font-ui);
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-/* ============ DOC CHROME ============ */
-.ds-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-.ds-side {
-  position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
-  background: var(--ink); color: var(--text-on-dark);
-  padding: 32px 24px;
-}
-.ds-side .mark {
-  font-family: var(--font-serif); font-size: 26px; font-weight: 500;
-  letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px;
-}
-.ds-side .mark sup { font-size: 0.5em; font-style: italic; font-weight: 400; vertical-align: super; }
-.ds-side .sub { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-on-dark-muted); margin-bottom: 32px; }
-.ds-nav a {
-  display: block; color: var(--text-on-dark-muted); text-decoration: none;
-  font-size: 13px; padding: 7px 0; transition: color var(--dur-fast) var(--ease);
-}
-.ds-nav a:hover { color: var(--text-on-dark); }
-.ds-nav .grp { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 20px 0 6px; }
-
-.ds-main { padding: 56px var(--gutter) 120px; max-width: 1180px; }
-.ds-sec { padding: 40px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
-.ds-sec:last-child { border-bottom: 0; }
-.ds-eyebrow {
-  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-deep);
-  margin: 0 0 12px;
-}
-.ds-h {
-  font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em;
-  font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; margin: 0 0 8px;
-}
-.ds-lede { font-size: 17px; line-height: 1.6; color: var(--text-muted); max-width: 64ch; margin: 0 0 28px; }
-.ds-note { font-size: 13px; line-height: 1.6; color: var(--text-faint); max-width: 70ch; }
-.ds-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--text-faint); text-transform: uppercase; }
-
-/* ============ TYPOGRAPHY ROLES (the real scale) ============ */
-.t-display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.028em; line-height: 1.0; font-size: clamp(56px, 9vw, 132px); }
-.t-h1 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.026em; line-height: 1.02; font-size: clamp(44px, 6.8vw, 84px); }
-.t-h2 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.022em; line-height: 1.05; font-size: clamp(34px, 4.6vw, 60px); }
-.t-h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.018em; line-height: 1.12; font-size: clamp(24px, 2.6vw, 36px); }
-.t-lede { font-family: var(--font-ui); font-weight: 400; font-size: clamp(19px, 1.6vw, 22px); line-height: 1.5; color: var(--text-muted); }
-.t-body-lg { font-family: var(--font-ui); font-weight: 400; font-size: 18px; line-height: 1.6; }
-.t-body { font-family: var(--font-ui); font-weight: 400; font-size: 15px; line-height: 1.6; }
-.t-ui { font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.4; letter-spacing: -0.005em; }
-.t-caption { font-family: var(--font-ui); font-weight: 400; font-size: 13px; line-height: 1.45; color: var(--text-muted); }
-.t-eyebrow { font-family: var(--font-ui); font-weight: 500; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-deep); }
-.t-mono { font-family: var(--font-mono); font-weight: 400; font-size: 13px; letter-spacing: 0.02em; }
-.t-serif { font-family: var(--font-serif); font-weight: 400; font-style: italic; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.4; }
-
-/* ============ SWATCHES ============ */
-.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-.swatch { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--surface-card); }
-.swatch .chip { height: 76px; }
-.swatch .meta { padding: 10px 12px; }
-.swatch .nm { font-size: 13px; font-weight: 500; }
-.swatch .hex { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 2px; }
-
-/* ============ TYPE SPECIMENS ============ */
-.spec { display: flex; align-items: baseline; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line-soft); }
-.spec:last-child { border-bottom: 0; }
-.spec .key { flex: 0 0 130px; }
-.spec .sample { flex: 1; min-width: 0; }
-
-/* ============ BUTTONS (the real primitives) ============ */
-.btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-ui); font-size: 15px; font-weight: 500; letter-spacing: 0;
-  padding: 15px 28px; border-radius: var(--r-pill); border: 1px solid transparent;
-  cursor: pointer; text-decoration: none; white-space: nowrap;
-  transition: all var(--dur-base) var(--ease);
-}
-.btn .arrow { display: inline-block; transition: transform var(--dur-base) var(--ease); }
-.btn:hover .arrow { transform: translateX(4px); }
-.btn-primary { background: var(--ink); color: var(--paper); }
-.btn-primary:hover { background: var(--rust); transform: translateY(-1px); }
-.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-.btn-secondary:hover { border-color: var(--ink); background: rgba(20,17,13,0.04); }
-.btn-ghost { background: transparent; color: var(--rust); border-color: transparent; padding-left: 4px; padding-right: 4px; }
-.btn-ghost:hover { color: var(--rust-deep); }
-.btn-sm { font-size: 13px; padding: 9px 18px; }
-.btn-lg { font-size: 16px; padding: 18px 34px; }
-.btn:disabled, .btn.is-disabled { opacity: 0.4; pointer-events: none; }
-/* on-dark variants */
-.on-dark .btn-primary { background: var(--paper); color: var(--ink); }
-.on-dark .btn-primary:hover { background: var(--gold-light); }
-.on-dark .btn-secondary { color: var(--paper); border-color: rgba(246,244,238,0.4); }
-.on-dark .btn-secondary:hover { border-color: var(--paper); background: rgba(246,244,238,0.08); }
-
-/* ============ CARDS ============ */
-.card {
-  background: var(--surface-card); border: 1px solid var(--line);
-  border-radius: var(--r-lg); padding: 28px;
-}
-.card.soft { box-shadow: var(--shadow-md); border-color: var(--line-soft); }
-.card .k { margin-bottom: 14px; }
-.card h4 { font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: -0.015em; margin: 0 0 10px; }
-.card p { margin: 0; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-.card-cream { background: var(--paper-warm); border-color: transparent; }
-.card-dark { background: var(--ink); border-color: transparent; color: var(--text-on-dark); }
-.card-dark h4 { color: var(--text-on-dark); }
-.card-dark p { color: var(--text-on-dark-muted); }
-
-/* ============ BADGES / PILLS ============ */
-.badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-ui); font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
-  padding: 5px 12px; border-radius: var(--r-pill); border: 1px solid var(--line);
-  background: var(--surface-card); color: var(--text-muted);
-}
-.badge.dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.badge.rust { color: var(--rust); border-color: rgba(162,101,59,0.3); background: rgba(162,101,59,0.07); }
-.badge.ok { color: var(--status-ok); border-color: rgba(62,124,84,0.3); background: rgba(62,124,84,0.07); }
-.badge.warn { color: var(--status-warn); border-color: rgba(192,138,45,0.3); background: rgba(192,138,45,0.08); }
-.badge.crit { color: var(--status-error); border-color: rgba(163,58,42,0.3); background: rgba(163,58,42,0.07); }
-
-/* ============ INPUTS ============ */
-.field { display: flex; flex-direction: column; gap: 7px; max-width: 360px; }
-.field label { font-size: 13px; font-weight: 500; color: var(--text); }
-.input, .textarea, .select {
-  font-family: var(--font-ui); font-size: 15px; color: var(--text);
-  background: var(--surface-card); border: 1px solid var(--line-strong);
-  border-radius: var(--r-md); padding: 12px 14px; width: 100%;
-  transition: border-color var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
-}
-.input:focus, .textarea:focus, .select:focus {
-  outline: none; border-color: var(--rust);
-  box-shadow: 0 0 0 3px rgba(162,101,59,0.14);
-}
-.input::placeholder { color: var(--text-faint); }
-.textarea { min-height: 96px; resize: vertical; }
-.field .hint { font-size: 12px; color: var(--text-faint); }
-
-/* ============ TABS (underline, not pill) ============ */
-.tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--line); }
-.tab {
-  font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--text-faint);
-  padding: 0 0 14px; background: none; border: 0; cursor: pointer; position: relative;
-  transition: color var(--dur-base) var(--ease);
-}
-.tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--rust); opacity: 0; transition: opacity var(--dur-base) var(--ease); }
-.tab.is-active { color: var(--ink); }
-.tab.is-active::after { opacity: 1; }
-
-/* ============ NAV BAR specimen ============ */
-.navbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 28px; border-radius: var(--r-lg);
-  background: var(--ink); color: var(--text-on-dark);
-}
-.navbar .brand { font-family: var(--font-serif); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; color: var(--paper); }
-.navbar .brand sup { font-size: 0.5em; font-style: italic; }
-.navbar .actions { display: flex; align-items: center; gap: 10px; }
-.nav-cta {
-  display: inline-flex; align-items: center; font-size: 14px; font-weight: 500;
-  padding: 10px 18px; border-radius: var(--r-pill); text-decoration: none;
-  border: 1px solid rgba(246,244,238,0.35); color: var(--paper);
-  transition: all var(--dur-base) var(--ease);
-}
-.nav-cta.primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-.nav-cta:hover { background: var(--paper); color: var(--ink); }
-
-/* ============ GEOMETRIC BLOCK motif ============ */
-.block-demo { position: relative; height: 200px; border-radius: var(--r-lg); overflow: hidden; background: linear-gradient(135deg, #6c5848, #2c3240); }
-.block-demo .blk { position: absolute; }
-.block-demo .b1 { left: 0; top: 0; width: 120px; height: 64px; background: var(--terracotta); }
-.block-demo .b2 { left: 36px; bottom: 24px; width: 220px; height: 92px; background: var(--navy); }
-.block-demo .b3 { right: 40px; top: 70px; width: 150px; height: 40px; background: rgba(212,165,116,0.55); }
-.block-demo .lab { position: absolute; left: 14px; top: 14px; font-family: var(--font-serif); color: #fff; font-size: 18px; }
-
-/* ============ SECTION SURFACE specimens ============ */
-.surf-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; }
-.surf { height: 96px; border-radius: var(--r-md); border: 1px solid var(--line-soft); display: flex; align-items: flex-end; padding: 10px; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); }
-
-/* ============ UTILITY ROWS ============ */
-.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-.stack { display: flex; flex-direction: column; gap: 16px; }
-.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
-.pad-dark { background: var(--ink); border-radius: var(--r-lg); padding: 32px; }
-.spacer-demo { display: flex; align-items: flex-end; gap: 10px; }
-.spacer-demo .u { background: rgba(162,101,59,0.18); border: 1px solid var(--rust); border-radius: 3px; }
-.spacer-demo .u span { display:block; font-family: var(--font-mono); font-size:10px; color: var(--rust-deep); text-align:center; margin-top: 4px; }
-
-.radius-row { display: flex; gap: 16px; flex-wrap: wrap; }
-.radius-demo { width: 92px; height: 92px; background: var(--paper-warm); border: 1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
-
-.banned { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 14px; }
-.banned .x { border: 1px solid rgba(163,58,42,0.3); background: rgba(163,58,42,0.05); border-radius: var(--r-md); padding: 16px; }
-.banned .x .h { color: var(--status-error); font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-.banned .x .b { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
-@media (max-width: 860px) {
-  .ds-shell { grid-template-columns: 1fr; }
-  .ds-side { position: static; height: auto; }
-  .ds-nav { display: none; }
-}
+  .shell { min-height: 100vh; display: grid; grid-template-columns: 280px minmax(0,1fr); }
+  .side { position: sticky; top: 0; height: 100vh; padding: 30px 26px; color: var(--amd-on-dark); background: var(--amd-fade-hero), var(--amd-ink-deep); overflow: auto; }
+  .side-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 34px; }
+  .side-icon { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.24); }
+  .side-wordmark { width: 128px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.28)); }
+  .side small { display: block; margin-top: 5px; color: var(--amd-on-dark-muted); font: 12px/1.4 var(--amd-font-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .side nav { display: grid; gap: 8px; margin-top: 20px; }
+  .side nav a { color: var(--amd-on-dark-muted); text-decoration: none; font-size: 14px; }
+  .side nav a:hover { color: var(--amd-on-dark); }
+  .main { min-width: 0; }
+  .section { padding: clamp(48px, 7vw, 96px) var(--amd-gutter); border-bottom: 1px solid var(--amd-line); }
+  .section.dark { color: var(--amd-on-dark); background: var(--amd-ink-deep); }
+  .section.dark .lede, .section.dark p { color: var(--amd-on-dark-muted); }
+  .kicker { margin: 0 0 14px; font: 600 12px/1.2 var(--amd-font-body); letter-spacing: .17em; text-transform: uppercase; color: var(--amd-rust-figma); }
+  h1, h2, h3, p { margin-top: 0; }
+  h1 { max-width: 12ch; margin-bottom: 22px; }
+  h2 { margin-bottom: 14px; }
+  h3 { font-family: var(--amd-font-display); font-size: 24px; line-height: 1.12; letter-spacing: -.02em; }
+  .lede { max-width: 72ch; color: var(--amd-muted); font-size: 18px; line-height: 1.6; }
+  .note { color: var(--amd-muted); font-size: 14px; line-height: 1.55; }
+  .mono { font-family: var(--amd-font-mono); font-size: 12px; color: var(--amd-faint); }
+  .asset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 28px; }
+  .asset { min-height: 220px; padding: 22px; border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-bg); display: grid; align-content: space-between; gap: 20px; }
+  .asset.dark { background: var(--amd-ink); color: var(--amd-on-dark); border-color: var(--amd-line-dark); }
+  .asset.center { place-items: center; text-align: center; }
+  .icon-big { width: 132px; height: 132px; }
+  .icon-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .favicon-96 { width: 96px; height: 96px; image-rendering: auto; }
+  .favicon-32 { width: 32px; height: 32px; image-rendering: auto; }
+  .favicon-16 { width: 16px; height: 16px; image-rendering: auto; }
+  .apple { width: 72px; height: 72px; }
+  .wordmark-dark { max-width: 190px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.22)); }
+  .wordmark-light { max-width: 230px; }
+  .source-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 28px; }
+  .source-card { border: 1px solid var(--amd-line); background: var(--amd-bg); border-radius: 0; overflow: hidden; }
+  .source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+  .source-card .cap { padding: 16px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 26px; }
+  .swatch { border: 1px solid var(--amd-line); background: var(--amd-bg); }
+  .chip { height: 86px; border-bottom: 1px solid var(--amd-line); }
+  .meta { padding: 12px; }
+  .meta strong { display: block; font-size: 14px; }
+  .meta code { color: var(--amd-faint); font: 12px var(--amd-font-mono); }
+  .type-spec { display: grid; gap: 14px; margin-top: 28px; }
+  .type-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--amd-line-soft); }
+  .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 26px; }
+  .demo-panel { padding: 26px; border: 1px solid var(--amd-line); background: var(--amd-bg); border-radius: 0; }
+  .demo-panel.dark { color: var(--amd-on-dark); background: var(--amd-fade-hero), var(--amd-ink-deep); border-color: var(--amd-line-dark); }
+  .button-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .hero-spec { position: relative; min-height: 480px; overflow: hidden; color: var(--amd-on-dark); background: var(--amd-ink-deep); }
+  .hero-spec::before { content: ""; position: absolute; inset: 0; background: url('./assets/figma-hero-01-thumb.webp') center / cover no-repeat; opacity: .82; }
+  .hero-spec::after { content: ""; position: absolute; inset: 0; background: var(--amd-fade-hero); clip-path: polygon(0 0, 42% 0, 42% 28%, 24% 28%, 24% 100%, 0 100%); opacity: .95; }
+  .hero-spec .hero-copy { position: absolute; left: 0; bottom: 0; z-index: 2; width: min(560px, 68%); padding: 42px var(--amd-gutter); background: rgba(30,42,74,.84); }
+  .hero-spec .hero-top { position: absolute; z-index: 3; top: 34px; left: 34px; right: 34px; display: flex; align-items: center; justify-content: space-between; }
+  .square-blocks { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 52px; margin-top: 24px; border: 1px solid var(--amd-line); }
+  .sq { border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
+  .sq.rust { background: var(--amd-rust-figma); }
+  .sq.navy { background: var(--amd-navy-figma); }
+  .sq.blue { background: var(--amd-hero-blue); }
+  .sq.warm { background: rgba(243,206,151,.74); }
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; margin-top: 24px; }
+  .rule { border: 1px solid rgba(185,86,42,.28); background: rgba(185,86,42,.045); padding: 18px; }
+  .rule strong { display: block; margin-bottom: 6px; color: var(--amd-rust); }
+  @media (max-width: 860px) { .shell { grid-template-columns: 1fr; } .side { position: relative; height: auto; } .side nav { display: none; } .type-row { grid-template-columns: 1fr; } .hero-spec .hero-copy { width: 100%; } }
 </style>
 </head>
 <body>
-<div class="ds-shell">
-
-  <!-- SIDEBAR -->
-  <aside class="ds-side">
-    <div class="mark">Aleron<sup>MD</sup></div>
-    <div class="sub">Design System</div>
-    <nav class="ds-nav">
-      <div class="grp">Foundations</div>
-      <a href="#intro">Overview</a>
+<div class="shell">
+  <aside class="side">
+    <div class="side-brand">
+      <img class="side-icon" src="./assets/icon-logo-lowercase-a.png" alt="Lowercase Aleron icon logo">
+      <div>
+        <img class="side-wordmark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD wordmark">
+        <small>Lowercase system</small>
+      </div>
+    </div>
+    <p class="note" style="color:var(--amd-on-dark-muted);">Locked reference for the lowercase Aleron MD system. It pulls from the current landing, Figma hero frames, and the lowercase rust-to-navy favicon identity.</p>
+    <nav aria-label="Design system sections">
+      <a href="#identity">Identity assets</a>
+      <a href="#sources">Source references</a>
       <a href="#color">Color</a>
       <a href="#type">Typography</a>
-      <a href="#space">Spacing & Radius</a>
-      <a href="#elevation">Surfaces & Elevation</a>
-      <a href="#motion">Motion</a>
-      <div class="grp">Primitives</div>
-      <a href="#buttons">Buttons</a>
-      <a href="#inputs">Inputs</a>
-      <a href="#cards">Cards</a>
-      <a href="#badges">Badges</a>
-      <a href="#tabs">Tabs</a>
-      <a href="#nav">Navigation</a>
-      <div class="grp">Brand</div>
-      <a href="#wordmark">Wordmark</a>
-      <a href="#blocks">Geometric Blocks</a>
+      <a href="#geometry">Geometry</a>
+      <a href="#components">Components</a>
+      <a href="#icons">Icon language</a>
       <a href="#rules">Rules</a>
     </nav>
   </aside>
 
-  <!-- MAIN -->
-  <main class="ds-main">
-
-    <!-- OVERVIEW -->
-    <section class="ds-sec" id="intro">
-      <p class="ds-eyebrow">Aleron MD</p>
-      <h1 class="t-h1" style="max-width:14ch;">A warm, editorial system for premium preventive care.</h1>
-      <p class="ds-lede" style="margin-top:18px;">Extracted from the Figma hero and website sections. The language is warm-editorial with clinical trust: a light, paper-toned canvas, ink and navy for weight, rust and gold as the only chromatic accents, and a Swiss-grid block motif over warm photography. Where Figma is still incomplete, primitives below fill the gaps in the same voice. This file is the anchor — build to it.</p>
-      <div class="row" style="margin-top:8px;">
-        <span class="badge dot rust">Light / warm</span>
-        <span class="badge">Inter Tight display</span>
-        <span class="badge">Source Serif 4 wordmark</span>
-        <span class="badge">Rust + navy accents</span>
-        <span class="badge">Pill CTAs · hard-edge blocks</span>
-      </div>
-    </section>
-
-    <!-- COLOR -->
-    <section class="ds-sec" id="color">
-      <p class="ds-eyebrow">Foundations</p>
-      <h2 class="ds-h">Color</h2>
-      <p class="ds-lede">Monochrome does the work; rust and gold carry meaning. Status colors are muted and used only for state, never decoration.</p>
-
-      <p class="ds-label" style="margin:24px 0 10px;">Canvas & light surfaces</p>
-      <div class="swatch-grid">
-        <div class="swatch"><div class="chip" style="background:#FFFEFB;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Page</div><div class="hex">#FFFEFB</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#F6F4EE"></div><div class="meta"><div class="nm">Paper</div><div class="hex">#F6F4EE</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#EFEAE0"></div><div class="meta"><div class="nm">Paper warm</div><div class="hex">#EFEAE0</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#ECE5D6"></div><div class="meta"><div class="nm">Bone</div><div class="hex">#ECE5D6</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Card</div><div class="hex">#FFFFFF</div></div></div>
-      </div>
-
-      <p class="ds-label" style="margin:24px 0 10px;">Dark surfaces</p>
-      <div class="swatch-grid">
-        <div class="swatch"><div class="chip" style="background:#14110D"></div><div class="meta"><div class="nm">Ink (warm)</div><div class="hex">#14110D</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#0A0A0B"></div><div class="meta"><div class="nm">Ink (cool)</div><div class="hex">#0A0A0B</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#2C3240"></div><div class="meta"><div class="nm">Navy</div><div class="hex">#2C3240</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#1F1813"></div><div class="meta"><div class="nm">Umber 1</div><div class="hex">#1F1813</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#2A1F18"></div><div class="meta"><div class="nm">Umber 2</div><div class="hex">#2A1F18</div></div></div>
-      </div>
-
-      <p class="ds-label" style="margin:24px 0 10px;">Brand accents</p>
-      <div class="swatch-grid">
-        <div class="swatch"><div class="chip" style="background:#A2653B"></div><div class="meta"><div class="nm">Rust</div><div class="hex">#A2653B</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#8A5230"></div><div class="meta"><div class="nm">Rust deep</div><div class="hex">#8A5230</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#B5622A"></div><div class="meta"><div class="nm">Terracotta</div><div class="hex">#B5622A</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#D4A574"></div><div class="meta"><div class="nm">Gold</div><div class="hex">#D4A574</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#E8C99A"></div><div class="meta"><div class="nm">Gold light</div><div class="hex">#E8C99A</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#B8854D"></div><div class="meta"><div class="nm">Gold deep</div><div class="hex">#B8854D</div></div></div>
-      </div>
-
-      <p class="ds-label" style="margin:24px 0 10px;">Status (muted, meaning-only)</p>
-      <div class="swatch-grid">
-        <div class="swatch"><div class="chip" style="background:#3E7C54"></div><div class="meta"><div class="nm">OK</div><div class="hex">#3E7C54</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#C08A2D"></div><div class="meta"><div class="nm">Warn</div><div class="hex">#C08A2D</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#A33A2A"></div><div class="meta"><div class="nm">Error</div><div class="hex">#A33A2A</div></div></div>
-        <div class="swatch"><div class="chip" style="background:#3C5068"></div><div class="meta"><div class="nm">Info</div><div class="hex">#3C5068</div></div></div>
-      </div>
-    </section>
-
-    <!-- TYPOGRAPHY -->
-    <section class="ds-sec" id="type">
-      <p class="ds-eyebrow">Foundations</p>
-      <h2 class="ds-h">Typography</h2>
-      <p class="ds-lede">Inter Tight for display and headings, Inter for UI and body, Source Serif 4 for the wordmark and pull-quotes, JetBrains Mono for data and labels. Role-keyed — reach type through roles, never raw sizes.</p>
-
-      <div class="spec"><div class="key"><span class="ds-label">display</span></div><div class="sample"><span class="t-display">Aa</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">h1 / 84</span></div><div class="sample"><span class="t-h1">Your best days are still ahead.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">h2 / 60</span></div><div class="sample"><span class="t-h2">Plot a new trajectory.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">h3 / 36</span></div><div class="sample"><span class="t-h3">How you feel matters.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">lede / 22</span></div><div class="sample"><span class="t-lede">Physician-led longevity care, powered by AI and your genetic, lab, and wearable data.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">body-lg / 18</span></div><div class="sample"><span class="t-body-lg">Every body follows a curve. The slope between where you are and where you are headed is being written right now.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">body / 15</span></div><div class="sample"><span class="t-body">Comprehensive labs twice yearly, clinical-grade genetics read once and used for life, and a physician who actually knows you.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">ui / 14</span></div><div class="sample"><span class="t-ui">Apply for membership</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">caption / 13</span></div><div class="sample"><span class="t-caption">Read once, used for life.</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">eyebrow / 12</span></div><div class="sample"><span class="t-eyebrow">Quality of life</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">mono / 13</span></div><div class="sample"><span class="t-mono">VO2MAX · AGE 40 → 90</span></div></div>
-      <div class="spec"><div class="key"><span class="ds-label">serif quote</span></div><div class="sample"><span class="t-serif">The curve is not destiny.</span></div></div>
-    </section>
-
-    <!-- SPACING & RADIUS -->
-    <section class="ds-sec" id="space">
-      <p class="ds-eyebrow">Foundations</p>
-      <h2 class="ds-h">Spacing & Radius</h2>
-      <p class="ds-lede">4px grid for all spacing. Radii run from a hard 2px editorial detail to a fully round pill — the hero blocks stay square, the CTAs stay round.</p>
-      <p class="ds-label" style="margin-bottom:12px;">Spacing scale (4px grid)</p>
-      <div class="spacer-demo">
-        <div><div class="u" style="width:4px;height:4px;"></div><span>4</span></div>
-        <div><div class="u" style="width:8px;height:8px;"></div><span>8</span></div>
-        <div><div class="u" style="width:12px;height:12px;"></div><span>12</span></div>
-        <div><div class="u" style="width:16px;height:16px;"></div><span>16</span></div>
-        <div><div class="u" style="width:24px;height:24px;"></div><span>24</span></div>
-        <div><div class="u" style="width:32px;height:32px;"></div><span>32</span></div>
-        <div><div class="u" style="width:48px;height:48px;"></div><span>48</span></div>
-        <div><div class="u" style="width:64px;height:64px;"></div><span>64</span></div>
-        <div><div class="u" style="width:96px;height:96px;"></div><span>96</span></div>
-      </div>
-      <p class="ds-label" style="margin:28px 0 12px;">Radius</p>
-      <div class="radius-row">
-        <div class="radius-demo" style="border-radius:2px;">2</div>
-        <div class="radius-demo" style="border-radius:6px;">6</div>
-        <div class="radius-demo" style="border-radius:10px;">10</div>
-        <div class="radius-demo" style="border-radius:16px;">16</div>
-        <div class="radius-demo" style="border-radius:24px;">24</div>
-        <div class="radius-demo" style="border-radius:999px;">pill</div>
-      </div>
-    </section>
-
-    <!-- ELEVATION -->
-    <section class="ds-sec" id="elevation">
-      <p class="ds-eyebrow">Foundations</p>
-      <h2 class="ds-h">Surfaces & Elevation</h2>
-      <p class="ds-lede">On light, sections step through paper tones; cards lift with soft warm shadow (not hard drop shadows). On dark, surfaces step up in luminance. Color temperature is the through-line — warmth never leaves.</p>
-      <div class="surf-row">
-        <div class="surf" style="background:#FFFEFB;">page #FFFEFB</div>
-        <div class="surf" style="background:#F6F4EE;">paper</div>
-        <div class="surf" style="background:#EFEAE0;">paper-warm</div>
-        <div class="surf" style="background:#ECE5D6;">bone</div>
-      </div>
-      <div class="row" style="margin-top:20px;">
-        <div class="card" style="width:200px;">flat · border</div>
-        <div class="card soft" style="width:200px;">soft · shadow-md</div>
-        <div class="card card-cream" style="width:200px;">cream surface</div>
-        <div class="card card-dark" style="width:200px;">ink surface</div>
-      </div>
-    </section>
-
-    <!-- MOTION -->
-    <section class="ds-sec" id="motion">
-      <p class="ds-eyebrow">Foundations</p>
-      <h2 class="ds-h">Motion</h2>
-      <p class="ds-lede">Restrained and premium. Two eases, three durations. Arrows nudge on hover; cards lift 1px; reveals fade-and-rise. Nothing bounces.</p>
-      <div class="grid-2">
-        <div class="card"><div class="ds-label">ease</div><p style="margin-top:6px;">cubic-bezier(.2,.7,.2,1) — general UI</p></div>
-        <div class="card"><div class="ds-label">ease-out premium</div><p style="margin-top:6px;">cubic-bezier(.22,.72,.18,1) — reveals</p></div>
-        <div class="card"><div class="ds-label">durations</div><p style="margin-top:6px;">fast 160 · base 240 · slow 520 ms</p></div>
-        <div class="card"><div class="ds-label">hover idiom</div><p style="margin-top:6px;">arrow translateX 4px · card translateY −1px</p></div>
-      </div>
-    </section>
-
-    <!-- BUTTONS -->
-    <section class="ds-sec" id="buttons">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Buttons</h2>
-      <p class="ds-lede">Pill-shaped, three variants. Primary is ink (rust on hover); secondary is outline; ghost is inline rust text with a nudging arrow. On dark sections, primary inverts to paper.</p>
-      <p class="ds-label" style="margin-bottom:12px;">On light</p>
-      <div class="row">
-        <a class="btn btn-primary">Apply for Membership <span class="arrow">→</span></a>
-        <a class="btn btn-secondary">For Employers</a>
-        <a class="btn btn-ghost">See the system live <span class="arrow">→</span></a>
-        <a class="btn btn-primary is-disabled">Disabled</a>
-      </div>
-      <p class="ds-label" style="margin:20px 0 12px;">Sizes</p>
-      <div class="row">
-        <a class="btn btn-primary btn-sm">Small</a>
-        <a class="btn btn-primary">Default</a>
-        <a class="btn btn-primary btn-lg">Large</a>
-      </div>
-      <p class="ds-label" style="margin:20px 0 12px;">On dark</p>
-      <div class="pad-dark on-dark">
-        <div class="row">
-          <a class="btn btn-primary">Apply <span class="arrow">→</span></a>
-          <a class="btn btn-secondary">For Employers</a>
+  <main class="main">
+    <section class="section" id="identity">
+      <p class="kicker">Aleron MD</p>
+      <h1 class="amd-display amd-h1">Lowercase system, not the uppercase branch.</h1>
+      <p class="lede">The identity marker is the lowercase white <strong>a</strong> on a rust-to-navy fade. The design language carries that same idea outward: warm human photography, hard rectangular Figma planes, cream editorial fields, and square-edge clinical UI.</p>
+      <div class="asset-grid">
+        <div class="asset center">
+          <img class="icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Lowercase a icon logo">
+          <div><strong>Icon logo</strong><div class="mono">lowercase a, rust to navy fade</div></div>
+        </div>
+        <div class="asset center">
+          <div class="icon-row" aria-label="Favicon sizes">
+            <img class="favicon-96" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview">
+            <img class="favicon-32" src="./assets/favicon-32.png" alt="32 px favicon">
+            <img class="favicon-16" src="./assets/favicon-16.png" alt="16 px favicon">
+            <img class="apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon">
+          </div>
+          <div><strong>Favicon set</strong><div class="mono">same lowercase fade at browser sizes</div></div>
+        </div>
+        <div class="asset dark center">
+          <img class="wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark">
+          <div><strong>Primary wordmark on dark</strong><div class="mono">Figma hero asset</div></div>
+        </div>
+        <div class="asset center">
+          <img class="wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark">
+          <div><strong>Primary wordmark on light</strong><div class="mono">generated from same Figma alpha</div></div>
         </div>
       </div>
     </section>
 
-    <!-- INPUTS -->
-    <section class="ds-sec" id="inputs">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Inputs</h2>
-      <p class="ds-lede">Rust focus ring, generous padding, square-ish 10px radius to echo the editorial detail. Built for the apply and intake flows that aren't in Figma yet.</p>
-      <div class="grid-2">
-        <div class="field">
-          <label>Full name</label>
-          <input class="input" placeholder="Jane Mercer" />
-          <span class="hint">As it appears on your insurance.</span>
+    <section class="section" id="sources">
+      <p class="kicker">Reference stack</p>
+      <h2 class="amd-display amd-h2">Pull from the landing and Figma, not from memory.</h2>
+      <p class="lede">The design-system page uses these source references directly. The full Figma exports remain reference assets; the live UI should still be built in DOM and CSS.</p>
+      <div class="source-grid">
+        <figure class="source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference one"><figcaption class="cap"><strong>Figma hero</strong><div class="note">Human photography plus hard rectangular rust/navy planes.</div></figcaption></figure>
+        <figure class="source-card"><img src="./assets/figma-hero-02-thumb.webp" alt="Figma hero reference two"><figcaption class="cap"><strong>Hero variation</strong><div class="note">Same block language, alternate photo and plane balance.</div></figcaption></figure>
+        <figure class="source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve section reference"><figcaption class="cap"><strong>Curve section</strong><div class="note">Cream field, faint grid, rust-to-navy curve, square markers.</div></figcaption></figure>
+        <figure class="source-card"><img src="./assets/landing-hero-rain-thumb.webp" alt="Current landing hero photography"><figcaption class="cap"><strong>Landing photography</strong><div class="note">Warm analog, human, specific. No generic medical tech imagery.</div></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section amd-grid-field" id="color">
+      <p class="kicker">Foundations</p>
+      <h2 class="amd-display amd-h2">Color is quiet until it needs to resolve.</h2>
+      <p class="lede">The palette is cream, ink, rust, and navy. The favicon fade is the identity bridge. The curve and Figma blocks use rust-to-navy resolution, not random gradients.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:var(--amd-fade-icon)"></div><div class="meta"><strong>Icon fade</strong><code>#B9562A to #1E2A4A</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#FFFEFB"></div><div class="meta"><strong>Page</strong><code>#FFFEFB</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#EFEAE0"></div><div class="meta"><strong>Cream</strong><code>#EFEAE0</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#242426"></div><div class="meta"><strong>Ink</strong><code>#242426</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#414C6A"></div><div class="meta"><strong>Hero blue</strong><code>#414C6A</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#A2653B"></div><div class="meta"><strong>Figma rust</strong><code>#A2653B</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#2C3240"></div><div class="meta"><strong>Figma navy</strong><code>#2C3240</code></div></div>
+        <div class="swatch"><div class="chip" style="background:#F3CE97"></div><div class="meta"><strong>Warm band</strong><code>#F3CE97</code></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="type">
+      <p class="kicker">Typography</p>
+      <h2 class="amd-display amd-h2">Editorial, direct, physician-led.</h2>
+      <p class="lede">Use the wordmark asset instead of rebuilding the mark by eye. Use Inter Tight for display, Inter for body and UI, Source Serif 4 for controlled warmth, and mono only for source labels or counters.</p>
+      <div class="type-spec">
+        <div class="type-row"><div class="mono">display</div><div class="amd-display amd-h1">Your best days are still ahead.</div></div>
+        <div class="type-row"><div class="mono">section h2</div><div class="amd-display amd-h2">The curve is not destiny.</div></div>
+        <div class="type-row"><div class="mono">body</div><div class="lede">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div></div>
+        <div class="type-row"><div class="mono">serif warmth</div><div style="font: italic 32px/1.35 var(--amd-font-serif);">More of life remains open.</div></div>
+      </div>
+    </section>
+
+    <section class="section dark" id="geometry">
+      <p class="kicker">Geometry</p>
+      <h2 class="amd-display amd-h2">Square planes are structural, not decorative.</h2>
+      <p class="lede">The Figma hero uses hard rectangular planes as masks, overlays, and proof of intentional composition. CTAs inherit this square-edge language. No rounded or frosted CTA family.</p>
+      <div class="hero-spec" aria-label="Hero system specimen">
+        <div class="hero-top">
+          <img class="wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD wordmark">
+          <a class="amd-button amd-button-ghost-dark">Log In</a>
         </div>
-        <div class="field">
-          <label>Email</label>
-          <input class="input" type="email" placeholder="you@email.com" />
-        </div>
-        <div class="field">
-          <label>Reason for interest</label>
-          <textarea class="textarea" placeholder="Tell us what brought you here…"></textarea>
-        </div>
-        <div class="field">
-          <label>Membership tier</label>
-          <select class="select"><option>Individual</option><option>Couple</option><option>Employer-sponsored</option></select>
+        <div class="hero-copy">
+          <h3 class="amd-display amd-h2" style="margin-bottom:18px;">Your best days are still ahead.</h3>
+          <a class="amd-button amd-button-cream">Apply for Membership</a>
         </div>
       </div>
-    </section>
-
-    <!-- CARDS -->
-    <section class="ds-sec" id="cards">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Cards</h2>
-      <p class="ds-lede">Four surface treatments on the same shape: flat-bordered, soft-shadow, cream, and ink. Use cream for warmth in content sections, ink for emphasis or inverted bands.</p>
-      <div class="grid-2">
-        <div class="card"><span class="badge rust k">Genetics</span><h4>Read once, used for life.</h4><p>A 163-gene panel screens for variants that change care: cancer risk, cardiovascular risk, and drug metabolism.</p></div>
-        <div class="card soft"><span class="badge k">Labs</span><h4>Comprehensive, twice yearly.</h4><p>Drift shows up in the numbers long before it shows up in how you feel. We watch the trend, not the snapshot.</p></div>
-        <div class="card card-cream"><span class="badge rust k">Wearables</span><h4>Your data, in the loop.</h4><p>As you act, the wearable streams the result. New labs feed back in. The engine reruns.</p></div>
-        <div class="card card-dark"><span class="badge k" style="color:var(--gold);border-color:var(--gold-line);">Membership</span><h4>A physician who knows you.</h4><p>An hour with the doctor who'll follow your trajectory for years, not a ten-minute visit.</p></div>
+      <div class="square-blocks" aria-label="Figma block palette">
+        <div class="sq rust"></div><div class="sq navy"></div><div class="sq blue"></div><div class="sq warm"></div><div class="sq navy"></div><div class="sq rust"></div>
+        <div class="sq navy"></div><div class="sq blue"></div><div class="sq warm"></div><div class="sq rust"></div><div class="sq blue"></div><div class="sq navy"></div>
       </div>
     </section>
 
-    <!-- BADGES -->
-    <section class="ds-sec" id="badges">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Badges & Pills</h2>
-      <p class="ds-lede">Eyebrow labels and status chips. Status tones are muted to fit the editorial palette — they mark state, never decorate.</p>
-      <div class="row">
-        <span class="badge">Neutral</span>
-        <span class="badge rust">Rust</span>
-        <span class="badge dot ok">On track</span>
-        <span class="badge dot warn">Watch</span>
-        <span class="badge dot crit">Action needed</span>
+    <section class="section" id="components">
+      <p class="kicker">Components</p>
+      <h2 class="amd-display amd-h2">Primitives inherit the lowercase system.</h2>
+      <p class="lede">Buttons, inputs, panels, and tabs use square edges and controlled contrast. No pills, no frosted SaaS chrome, no top-right Apply cluster.</p>
+      <div class="component-grid">
+        <div class="demo-panel"><h3>Buttons on light</h3><div class="button-row"><a class="amd-button amd-button-primary">Apply for Membership</a><a class="amd-button amd-button-ghost-light">For Employers</a></div></div>
+        <div class="demo-panel dark"><h3>Buttons on dark</h3><div class="button-row"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">Log In</a></div></div>
+        <div class="demo-panel"><h3>Input</h3><div class="amd-field"><label>Email</label><input class="amd-input" placeholder="you@email.com"></div></div>
+        <div class="demo-panel amd-grid-field"><h3>Cream proof field</h3><p class="note">Faint grid, warm band, rust/navy figure. Keep charts editorial, not dashboard-like.</p></div>
       </div>
     </section>
 
-    <!-- TABS -->
-    <section class="ds-sec" id="tabs">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Tabs</h2>
-      <p class="ds-lede">Underline tabs with a rust active indicator. Used in the experience walkthrough and member portal.</p>
-      <div class="tabs">
-        <button class="tab is-active">Onboarding</button>
-        <button class="tab">Genetics</button>
-        <button class="tab">Bloodwork</button>
-        <button class="tab">Consult</button>
-        <button class="tab">Closure loop</button>
+    <section class="section" id="icons">
+      <p class="kicker">Icon language</p>
+      <h2 class="amd-display amd-h2">Two colors or it fails.</h2>
+      <p class="lede">Icons bridge hard computational structure with warm analog care. They should feel like modular plan symbols, cut-paper apertures, dithered marks, or hatched clinical diagrams. If an icon needs more than two colors to work, it is not part of this system.</p>
+      <div class="component-grid">
+        <div class="demo-panel"><h3>Approved</h3><p class="note">One-color or two-color pictograms, square containers, rust and ink, navy and cream, simple plan symbols.</p></div>
+        <div class="demo-panel"><h3>Rejected</h3><p class="note">HUD anatomy, transparent bodies, glowing AI networks, dark analytic mysticism, wireframe people, multi-color medical tech icons.</p></div>
       </div>
     </section>
 
-    <!-- NAV -->
-    <section class="ds-sec" id="nav">
-      <p class="ds-eyebrow">Primitives</p>
-      <h2 class="ds-h">Navigation</h2>
-      <p class="ds-lede">Serif wordmark left, pill actions right. Per Jason's rule: a single <strong>Log In</strong> in the header; <strong>Apply</strong> lives in the hero CTA. Never use "Join".</p>
-      <nav class="navbar">
-        <span class="brand">Aleron<sup>MD</sup></span>
-        <div class="actions">
-          <a class="nav-cta">Log In</a>
-        </div>
-      </nav>
-    </section>
-
-    <!-- WORDMARK -->
-    <section class="ds-sec" id="wordmark">
-      <p class="ds-eyebrow">Brand</p>
-      <h2 class="ds-h">Wordmark</h2>
-      <p class="ds-lede">Source Serif 4, tight tracking, italic superscript "MD". White on dark blocks, ink on light. Keep the MD as a quiet superscript — never a separate badge.</p>
-      <div class="row">
-        <div class="card" style="display:flex;align-items:center;justify-content:center;min-height:120px;width:280px;"><span style="font-family:var(--font-serif);font-size:42px;font-weight:500;letter-spacing:-0.03em;color:var(--ink);">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span></div>
-        <div class="card card-dark" style="display:flex;align-items:center;justify-content:center;min-height:120px;width:280px;"><span style="font-family:var(--font-serif);font-size:42px;font-weight:500;letter-spacing:-0.03em;color:var(--paper);">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span></div>
+    <section class="section" id="rules">
+      <p class="kicker">Governance</p>
+      <h2 class="amd-display amd-h2">What keeps this from drifting.</h2>
+      <div class="rules">
+        <div class="rule"><strong>No uppercase branch leakage</strong><span class="note">The black square uppercase A is not a source for this system.</span></div>
+        <div class="rule"><strong>No rounded CTAs</strong><span class="note">Buttons are square-edge. The Figma hero does not license pill buttons.</span></div>
+        <div class="rule"><strong>No invented fades</strong><span class="note">Use the favicon fade, Figma hero fade, login fade, or curve palette.</span></div>
+        <div class="rule"><strong>No Join</strong><span class="note">Use Apply for Membership in CTA slots and Log In in the header.</span></div>
+        <div class="rule"><strong>No dashboard default</strong><span class="note">Proof modules stay editorial and legible, not SaaS analytics.</span></div>
+        <div class="rule"><strong>No generic clinical imagery</strong><span class="note">Photography must feel specific, warm, and human.</span></div>
       </div>
     </section>
-
-    <!-- GEOMETRIC BLOCKS -->
-    <section class="ds-sec" id="blocks">
-      <p class="ds-eyebrow">Brand</p>
-      <h2 class="ds-h">Geometric Blocks</h2>
-      <p class="ds-lede">The hero's signature: hard-edged color blocks composited over warm photography, Swiss-grid style. Terracotta and navy slabs, the occasional translucent gold band. Blocks stay square; only CTAs and chips are round.</p>
-      <div class="block-demo">
-        <span class="lab">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span>
-        <div class="blk b1"></div>
-        <div class="blk b2"></div>
-        <div class="blk b3"></div>
-      </div>
-      <p class="ds-note" style="margin-top:12px;">Motion note: in the live hero these planes parallax at different depths on scroll — background slowest, floating blocks faster, subject and UI pinned. Keep the static composition correct before adding motion.</p>
-    </section>
-
-    <!-- RULES -->
-    <section class="ds-sec" id="rules">
-      <p class="ds-eyebrow">Governance</p>
-      <h2 class="ds-h">House Rules</h2>
-      <p class="ds-lede">Carried from how Aleron has been built so far. Break these and the system drifts.</p>
-      <div class="banned">
-        <div class="x"><div class="h">No invented gradients or glows</div><div class="b">Gradients and color fades stay Figma-locked. Don't add fades, glows, or neon the source doesn't have.</div></div>
-        <div class="x"><div class="h">No rounded-pill eyebrows</div><div class="b">Eyebrow labels are plain uppercase text, not pills. Pills are for CTAs and status chips only.</div></div>
-        <div class="x"><div class="h">No header CTA clusters</div><div class="b">A single Log In top-right. Apply belongs in the hero. Never "Join". Avoid slider-tab-looking corner clusters.</div></div>
-        <div class="x"><div class="h">Header ≥ body, always</div><div class="b">Body text is never larger or bolder than the header above it. No inverted hierarchy.</div></div>
-        <div class="x"><div class="h">Color carries meaning</div><div class="b">Monochrome is the base. Rust/gold = brand accent; status colors = state only. Never decorative color.</div></div>
-        <div class="x"><div class="h">Square blocks, round CTAs</div><div class="b">The geometric block motif is hard-edged. Don't round the slabs; don't square the buttons.</div></div>
-        <div class="x"><div class="h">Warmth never leaves</div><div class="b">Even dark sections are warm (umber/ink), not cold gray. The cool ink is reserved for the hero rain only.</div></div>
-        <div class="x"><div class="h">Real copy, no lorem</div><div class="b">Past the sketch phase, use real Aleron voice. Patient stories stay in the patient story, no melodrama.</div></div>
-      </div>
-    </section>
-
   </main>
 </div>
 </body>
