@@ -2,18 +2,31 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { margin: 0; font-family: var(--amd-font-body); font-weight: 400; color: var(--amd-text); background: var(--amd-bg); }
+body { margin: 0; font-family: var(--amd-font-body); font-weight: 400; color: var(--amd-color-text-primary); background: var(--amd-color-surface-page); }
 img, video, svg { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 :focus-visible { outline: none; box-shadow: var(--amd-focus-ring); }
-.amd-container { max-width: var(--amd-max); margin: 0 auto; padding: 0 var(--amd-gutter); }
-.amd-section { padding: var(--amd-section-y) 0; }
-.amd-section-cream { background: var(--amd-cream); }
-.amd-section-dark { color: var(--amd-on-dark); background: var(--amd-ink-deep); }
-.amd-display { font-family: var(--amd-font-display); font-weight: 500; letter-spacing: -0.035em; line-height: .96; }
-.amd-h1 { font-size: clamp(54px, 8vw, 112px); }
-.amd-h2 { font-size: clamp(36px, 5vw, 68px); }
-.amd-h3 { font-size: clamp(24px, 2.8vw, 38px); }
-.amd-lede { max-width: 62ch; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.5; color: var(--amd-muted); }
-.amd-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--amd-rust-figma); }
-.amd-mono { font-family: var(--amd-font-mono); font-size: 12px; letter-spacing: .04em; }
+::selection { background: rgba(185, 86, 42, 0.22); }
+.amd-container { max-width: var(--amd-layout-max); margin: 0 auto; padding: 0 var(--amd-layout-gutter); }
+.amd-section { padding: var(--amd-layout-section-y) 0; }
+.amd-section-tight { padding: var(--amd-layout-section-y-tight) 0; }
+.amd-section-cream { background: var(--amd-color-surface-cream); }
+.amd-section-bone { background: var(--amd-color-surface-bone); }
+.amd-section-dark { color: var(--amd-color-text-inverse); background: var(--amd-color-surface-deep); }
+.amd-grid-field { background-color: var(--amd-color-surface-cream); background-image: linear-gradient(rgba(36,36,38,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(36,36,38,.06) 1px, transparent 1px), radial-gradient(circle at 22% 6%, rgba(243,206,151,.52), transparent 28rem); background-size: 56px 56px, 56px 56px, auto; }
+.amd-display { font-family: var(--amd-font-display); font-size: var(--amd-type-display-size); line-height: var(--amd-type-display-line); letter-spacing: var(--amd-type-display-track); font-weight: 500; }
+.amd-h1 { font-family: var(--amd-font-display); font-size: var(--amd-type-h1-size); line-height: var(--amd-type-h1-line); letter-spacing: var(--amd-type-h1-track); font-weight: 500; }
+.amd-h2 { font-family: var(--amd-font-display); font-size: var(--amd-type-h2-size); line-height: var(--amd-type-h2-line); letter-spacing: var(--amd-type-h2-track); font-weight: 500; }
+.amd-h3 { font-family: var(--amd-font-display); font-size: var(--amd-type-h3-size); line-height: var(--amd-type-h3-line); letter-spacing: var(--amd-type-h3-track); font-weight: 500; }
+.amd-body-lg { font-size: var(--amd-type-body-lg-size); line-height: var(--amd-type-body-lg-line); color: var(--amd-color-text-secondary); max-width: var(--amd-layout-measure); }
+.amd-body { font-size: var(--amd-type-body-size); line-height: var(--amd-type-body-line); }
+.amd-caption { font-size: var(--amd-type-caption-size); line-height: var(--amd-type-caption-line); color: var(--amd-color-text-tertiary); }
+.amd-label { font-size: var(--amd-type-label-size); letter-spacing: var(--amd-type-label-track); text-transform: uppercase; font-weight: 600; color: var(--amd-color-rust-figma); }
+.amd-mono { font-family: var(--amd-font-mono); font-size: 12px; letter-spacing: 0.04em; }
+.amd-stack-sm { display: grid; gap: var(--amd-space-3); }
+.amd-stack-md { display: grid; gap: var(--amd-space-5); }
+.amd-stack-lg { display: grid; gap: var(--amd-space-7); }
+.amd-cluster { display: flex; flex-wrap: wrap; gap: var(--amd-space-3); align-items: center; }
+.amd-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--amd-space-5); }
+.amd-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--amd-space-5); }
+@media (max-width: 860px) { .amd-grid-2, .amd-grid-3 { grid-template-columns: 1fr; } }

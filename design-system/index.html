@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aleron MD Design System</title>
-<meta name="description" content="Aleron MD design system reference: favicon, icon logo, wordmark, color, typography, components, and Figma source references." />
+<meta name="description" content="Aleron MD design system: tokens, components, patterns, assets, and implementation snippets." />
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg?v=aleron-a-fade-20260601">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png?v=aleron-a-fade-20260601">
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png?v=aleron-a-fade-20260601">
@@ -13,185 +13,189 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./components.css?v=lowercase-20260601">
+<link rel="stylesheet" href="./patterns.css?v=kit-20260601">
 <style>
-  .shell { min-height: 100vh; display: grid; grid-template-columns: 280px minmax(0,1fr); }
-  .side { position: sticky; top: 0; height: 100vh; padding: 30px 26px; color: var(--amd-on-dark); background: var(--amd-fade-hero), var(--amd-ink-deep); overflow: auto; }
-  .side-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 34px; }
-  .side-icon { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.24); }
-  .side-wordmark { width: 128px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.28)); }
-  .side small { display: block; margin-top: 5px; color: var(--amd-on-dark-muted); font: 12px/1.4 var(--amd-font-mono); letter-spacing: .05em; text-transform: uppercase; }
-  .side nav { display: grid; gap: 8px; margin-top: 20px; }
-  .side nav a { color: var(--amd-on-dark-muted); text-decoration: none; font-size: 14px; }
-  .side nav a:hover { color: var(--amd-on-dark); }
-  .main { min-width: 0; }
-  .section { padding: clamp(48px, 7vw, 96px) var(--amd-gutter); border-bottom: 1px solid var(--amd-line); }
-  .section.dark { color: var(--amd-on-dark); background: var(--amd-ink-deep); }
-  .section.dark .lede, .section.dark p { color: var(--amd-on-dark-muted); }
-  .kicker { margin: 0 0 14px; font: 600 12px/1.2 var(--amd-font-body); letter-spacing: .17em; text-transform: uppercase; color: var(--amd-rust-figma); }
-  h1, h2, h3, p { margin-top: 0; }
-  h1 { max-width: 12ch; margin-bottom: 22px; }
-  h2 { margin-bottom: 14px; }
-  h3 { font-family: var(--amd-font-display); font-size: 24px; line-height: 1.12; letter-spacing: -.02em; }
-  .lede { max-width: 72ch; color: var(--amd-muted); font-size: 18px; line-height: 1.6; }
-  .note { color: var(--amd-muted); font-size: 14px; line-height: 1.55; }
-  .mono { font-family: var(--amd-font-mono); font-size: 12px; color: var(--amd-faint); }
-  .asset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 28px; }
-  .asset { min-height: 220px; padding: 22px; border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-bg); display: grid; align-content: space-between; gap: 20px; }
-  .asset.dark { background: var(--amd-ink); color: var(--amd-on-dark); border-color: var(--amd-line-dark); }
-  .asset.center { place-items: center; text-align: center; }
-  .icon-big { width: 132px; height: 132px; }
-  .icon-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .favicon-96 { width: 96px; height: 96px; image-rendering: auto; }
-  .favicon-32 { width: 32px; height: 32px; image-rendering: auto; }
-  .favicon-16 { width: 16px; height: 16px; image-rendering: auto; }
-  .apple { width: 72px; height: 72px; }
-  .wordmark-dark { max-width: 190px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.22)); }
-  .wordmark-light { max-width: 230px; }
-  .source-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 28px; }
-  .source-card { border: 1px solid var(--amd-line); background: var(--amd-bg); border-radius: 0; overflow: hidden; }
-  .source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
-  .source-card .cap { padding: 16px; }
-  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 26px; }
-  .swatch { border: 1px solid var(--amd-line); background: var(--amd-bg); }
-  .chip { height: 86px; border-bottom: 1px solid var(--amd-line); }
-  .meta { padding: 12px; }
-  .meta strong { display: block; font-size: 14px; }
-  .meta code { color: var(--amd-faint); font: 12px var(--amd-font-mono); }
-  .type-spec { display: grid; gap: 14px; margin-top: 28px; }
-  .type-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--amd-line-soft); }
-  .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 26px; }
-  .demo-panel { padding: 26px; border: 1px solid var(--amd-line); background: var(--amd-bg); border-radius: 0; }
-  .demo-panel.dark { color: var(--amd-on-dark); background: var(--amd-fade-hero), var(--amd-ink-deep); border-color: var(--amd-line-dark); }
-  .button-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; margin-top: 24px; }
-  .rule { border: 1px solid rgba(185,86,42,.28); background: rgba(185,86,42,.045); padding: 18px; }
-  .rule strong { display: block; margin-bottom: 6px; color: var(--amd-rust); }
-  @media (max-width: 860px) { .shell { grid-template-columns: 1fr; } .side { position: relative; height: auto; } .side nav { display: none; } .type-row { grid-template-columns: 1fr; } }
+  .ds-shell { min-height: 100vh; display: grid; grid-template-columns: 286px minmax(0, 1fr); }
+  .ds-side { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 30px 26px; color: var(--amd-color-text-inverse); background: var(--amd-hero-fade), var(--amd-color-surface-deep); }
+  .ds-brand { display: flex; align-items: center; gap: 14px; margin-bottom: var(--amd-space-7); }
+  .ds-brand-icon { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.24); }
+  .ds-brand-wordmark { width: 128px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.28)); }
+  .ds-nav { display: grid; gap: 7px; }
+  .ds-nav a { color: var(--amd-color-text-inverse-muted); text-decoration: none; font-size: 14px; padding: 2px 0; }
+  .ds-nav a:hover { color: var(--amd-color-text-inverse); }
+  .ds-main { min-width: 0; }
+  .ds-section { padding: clamp(52px, 7vw, 96px) var(--amd-layout-gutter); border-bottom: 1px solid var(--amd-color-border-default); }
+  .ds-section:last-child { border-bottom: 0; }
+  .ds-kicker { margin: 0 0 14px; font: 600 12px/1.2 var(--amd-font-body); letter-spacing: .17em; text-transform: uppercase; color: var(--amd-color-rust-figma); }
+  .ds-section h1, .ds-section h2, .ds-section h3, .ds-section p { margin-top: 0; }
+  .ds-section h1 { max-width: 11ch; margin-bottom: var(--amd-space-5); }
+  .ds-section h2 { margin-bottom: var(--amd-space-4); }
+  .ds-lede { max-width: 72ch; color: var(--amd-color-text-secondary); font-size: var(--amd-type-body-lg-size); line-height: var(--amd-type-body-lg-line); }
+  .ds-note { color: var(--amd-color-text-secondary); font-size: 14px; line-height: 1.55; }
+  .ds-mono { font-family: var(--amd-font-mono); font-size: 12px; color: var(--amd-color-text-tertiary); }
+  .ds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
+  .ds-grid-wide { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
+  .ds-spec { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-5); display: grid; gap: var(--amd-space-4); }
+  .ds-spec-dark { color: var(--amd-color-text-inverse); background: var(--amd-color-surface-dark); border-color: var(--amd-color-border-inverse); }
+  .ds-spec-dark .ds-note, .ds-spec-dark .ds-mono { color: var(--amd-color-text-inverse-muted); }
+  .ds-asset { min-height: 224px; display: grid; place-items: center; text-align: center; }
+  .ds-asset img { margin-inline: auto; }
+  .ds-icon-big { width: 132px; height: 132px; }
+  .ds-favicon-row { display: flex; align-items: center; justify-content: center; gap: var(--amd-space-4); flex-wrap: wrap; }
+  .ds-favicon-lg { width: 96px; height: 96px; }
+  .ds-favicon-md { width: 32px; height: 32px; }
+  .ds-favicon-sm { width: 16px; height: 16px; }
+  .ds-apple { width: 72px; height: 72px; }
+  .ds-wordmark-dark { width: 190px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.22)); }
+  .ds-wordmark-light { width: 230px; }
+  .ds-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
+  .ds-swatch { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); }
+  .ds-chip { height: 86px; border-bottom: 1px solid var(--amd-color-border-default); }
+  .ds-meta { padding: var(--amd-space-3); display: grid; gap: 3px; }
+  .ds-meta strong { font-size: 14px; }
+  .ds-meta code { font: 12px var(--amd-font-mono); color: var(--amd-color-text-tertiary); }
+  .ds-type-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: var(--amd-space-5); align-items: baseline; padding: var(--amd-space-5) 0; border-bottom: 1px solid var(--amd-color-border-subtle); }
+  .ds-token-row { display: grid; grid-template-columns: 210px minmax(0, 1fr) 110px; gap: var(--amd-space-4); padding: 10px 0; border-bottom: 1px solid var(--amd-color-border-subtle); align-items: baseline; }
+  .ds-token-row code { font: 12px var(--amd-font-mono); }
+  .ds-token-row span { color: var(--amd-color-text-secondary); font-size: 14px; }
+  .ds-source-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
+  .ds-source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
+  .ds-source-card figcaption { padding: var(--amd-space-4); }
+  .ds-demo-label { font: 600 12px/1 var(--amd-font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--amd-color-rust-figma); }
+  .ds-state-row { display: flex; gap: var(--amd-space-3); flex-wrap: wrap; align-items: center; }
+  .ds-snippet { margin-top: var(--amd-space-4); }
+  .ds-divider { height: 1px; background: var(--amd-color-border-subtle); margin: var(--amd-space-5) 0; }
+  @media (max-width: 900px) { .ds-shell { grid-template-columns: 1fr; } .ds-side { position: relative; height: auto; } .ds-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-type-row, .ds-token-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="shell">
-  <aside class="side">
-    <div class="side-brand">
-      <img class="side-icon" src="./assets/icon-logo-lowercase-a.png" alt="Lowercase Aleron icon logo">
-      <div>
-        <img class="side-wordmark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD wordmark">
-      </div>
+<div class="ds-shell">
+  <aside class="ds-side">
+    <div class="ds-brand">
+      <img class="ds-brand-icon" src="./assets/icon-logo-lowercase-a.png" alt="Aleron icon logo">
+      <img class="ds-brand-wordmark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD wordmark">
     </div>
-    <nav aria-label="Design system sections">
-      <a href="#identity">Identity assets</a>
-      <a href="#sources">Source references</a>
-      <a href="#color">Color</a>
+    <nav class="ds-nav" aria-label="Design system sections">
+      <a href="#overview">Overview</a>
+      <a href="#assets">Assets</a>
+      <a href="#foundations">Foundations</a>
       <a href="#type">Typography</a>
       <a href="#components">Components</a>
-      <a href="#icons">Icon language</a>
-      <a href="#rules">Rules</a>
+      <a href="#forms">Forms</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#implementation">Implementation</a>
     </nav>
   </aside>
 
-  <main class="main">
-    <section class="section" id="identity">
-      <p class="kicker">Aleron MD</p>
-      <h1 class="amd-display amd-h1">Aleron MD</h1>
-      <p class="lede">Premium preventive care with a warm editorial surface: human photography, cream fields, rust-to-navy identity, and square-edge UI.</p>
-      <div class="asset-grid">
-        <div class="asset center">
-          <img class="icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Lowercase a icon logo">
-          <div><strong>Icon logo</strong><div class="mono">white a, rust-to-navy fade</div></div>
-        </div>
-        <div class="asset center">
-          <div class="icon-row" aria-label="Favicon sizes">
-            <img class="favicon-96" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview">
-            <img class="favicon-32" src="./assets/favicon-32.png" alt="32 px favicon">
-            <img class="favicon-16" src="./assets/favicon-16.png" alt="16 px favicon">
-            <img class="apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon">
-          </div>
-          <div><strong>Favicon set</strong><div class="mono">same mark at browser sizes</div></div>
-        </div>
-        <div class="asset dark center">
-          <img class="wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark">
-          <div><strong>Primary wordmark on dark</strong><div class="mono">Figma hero asset</div></div>
-        </div>
-        <div class="asset center">
-          <img class="wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark">
-          <div><strong>Primary wordmark on light</strong><div class="mono">generated from same Figma alpha</div></div>
-        </div>
+  <main class="ds-main">
+    <section class="ds-section" id="overview">
+      <p class="ds-kicker">Aleron MD</p>
+      <h1 class="amd-h1">Design system</h1>
+      <p class="ds-lede">A production kit for building Aleron surfaces quickly: semantic tokens, shared components, page patterns, source assets, and copyable snippets.</p>
+      <div class="ds-grid">
+        <div class="ds-spec"><strong>1. Foundations</strong><p class="ds-note">Use semantic color, type, spacing, layout, shape, and motion tokens before writing page CSS.</p></div>
+        <div class="ds-spec"><strong>2. Components</strong><p class="ds-note">Build with the shared header, buttons, forms, cards, tabs, alerts, and modal shell.</p></div>
+        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Compose pages from hero, proof, form, login, and CTA patterns before inventing new sections.</p></div>
       </div>
     </section>
 
-    <section class="section" id="sources">
-      <p class="kicker">Reference stack</p>
-      <h2 class="amd-display amd-h2">Source references</h2>
-      <p class="lede">Current landing assets, Figma hero exports, and the curve section define the reusable visual language.</p>
-      <div class="source-grid">
-        <figure class="source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference one"><figcaption class="cap"><strong>Figma hero</strong><div class="note">Human photography plus hard rectangular rust/navy planes.</div></figcaption></figure>
-        <figure class="source-card"><img src="./assets/figma-hero-02-thumb.webp" alt="Figma hero reference two"><figcaption class="cap"><strong>Hero variation</strong><div class="note">Same block language, alternate photo and plane balance.</div></figcaption></figure>
-        <figure class="source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve section reference"><figcaption class="cap"><strong>Curve section</strong><div class="note">Cream field, faint grid, rust-to-navy curve, square markers.</div></figcaption></figure>
-        <figure class="source-card"><img src="./assets/landing-hero-rain-thumb.webp" alt="Current landing hero photography"><figcaption class="cap"><strong>Landing photography</strong><div class="note">Warm analog, human, specific. No generic medical tech imagery.</div></figcaption></figure>
+    <section class="ds-section" id="assets">
+      <p class="ds-kicker">Brand</p>
+      <h2 class="amd-h2">Assets</h2>
+      <div class="ds-grid">
+        <div class="ds-spec ds-asset"><img class="ds-icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Aleron icon logo"><div><strong>Icon logo</strong><div class="ds-mono">rust-to-navy fade</div></div></div>
+        <div class="ds-spec ds-asset"><div class="ds-favicon-row"><img class="ds-favicon-lg" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview"><img class="ds-favicon-md" src="./assets/favicon-32.png" alt="32 px favicon"><img class="ds-favicon-sm" src="./assets/favicon-16.png" alt="16 px favicon"><img class="ds-apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon"></div><div><strong>Favicon set</strong><div class="ds-mono">SVG, ICO, PNG, Apple touch</div></div></div>
+        <div class="ds-spec ds-spec-dark ds-asset"><img class="ds-wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark"><div><strong>Wordmark on dark</strong><div class="ds-mono">Figma hero asset</div></div></div>
+        <div class="ds-spec ds-asset"><img class="ds-wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark"><div><strong>Wordmark on light</strong><div class="ds-mono">same alpha, ink fill</div></div></div>
+      </div>
+      <div class="ds-grid-wide">
+        <figure class="ds-source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference"><figcaption><strong>Hero reference</strong><p class="ds-note">Human photography, rust/navy planes, white wordmark, square CTA language.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve reference"><figcaption><strong>Curve reference</strong><p class="ds-note">Cream field, faint grid, rust-to-navy curve, square markers.</p></figcaption></figure>
       </div>
     </section>
 
-    <section class="section amd-grid-field" id="color">
-      <p class="kicker">Foundations</p>
-      <h2 class="amd-display amd-h2">Color</h2>
-      <p class="lede">Cream, ink, rust, and navy form the base. Fades come from approved assets and Figma references.</p>
-      <div class="swatches">
-        <div class="swatch"><div class="chip" style="background:var(--amd-fade-icon)"></div><div class="meta"><strong>Icon fade</strong><code>#B9562A to #1E2A4A</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#FFFEFB"></div><div class="meta"><strong>Page</strong><code>#FFFEFB</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#EFEAE0"></div><div class="meta"><strong>Cream</strong><code>#EFEAE0</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#242426"></div><div class="meta"><strong>Ink</strong><code>#242426</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#414C6A"></div><div class="meta"><strong>Hero blue</strong><code>#414C6A</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#A2653B"></div><div class="meta"><strong>Figma rust</strong><code>#A2653B</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#2C3240"></div><div class="meta"><strong>Figma navy</strong><code>#2C3240</code></div></div>
-        <div class="swatch"><div class="chip" style="background:#F3CE97"></div><div class="meta"><strong>Warm band</strong><code>#F3CE97</code></div></div>
+    <section class="ds-section amd-grid-field" id="foundations">
+      <p class="ds-kicker">Foundations</p>
+      <h2 class="amd-h2">Tokens</h2>
+      <p class="ds-lede">Use semantic roles. Avoid page-specific hex values outside these tokens.</p>
+      <div class="ds-swatch-grid">
+        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-logo-icon-fade)"></div><div class="ds-meta"><strong>Logo fade</strong><code>--amd-logo-icon-fade</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><strong>Page</strong><code>--amd-color-surface-page</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><strong>Ink</strong><code>--amd-color-surface-dark</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#B9562A"></div><div class="ds-meta"><strong>Rust</strong><code>--amd-color-rust</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#1E2A4A"></div><div class="ds-meta"><strong>Navy</strong><code>--amd-color-navy</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#414C6A"></div><div class="ds-meta"><strong>Hero blue</strong><code>--amd-color-hero-blue</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#F3CE97"></div><div class="ds-meta"><strong>Warm band</strong><code>--amd-color-warm-band</code></div></div>
+      </div>
+      <div class="ds-grid-wide">
+        <div class="ds-spec"><h3>Spacing</h3><div class="ds-token-row"><code>--amd-space-1</code><span>4 px</span><strong>Detail</strong></div><div class="ds-token-row"><code>--amd-space-4</code><span>16 px</span><strong>Inline</strong></div><div class="ds-token-row"><code>--amd-space-6</code><span>32 px</span><strong>Panel</strong></div><div class="ds-token-row"><code>--amd-space-8</code><span>64 px</span><strong>Section</strong></div><div class="ds-token-row"><code>--amd-space-10</code><span>128 px</span><strong>Hero</strong></div></div>
+        <div class="ds-spec"><h3>Layout</h3><div class="ds-token-row"><code>--amd-layout-max</code><span>1240 px</span><strong>Page</strong></div><div class="ds-token-row"><code>--amd-layout-gutter</code><span>20 to 64 px</span><strong>Edges</strong></div><div class="ds-token-row"><code>--amd-layout-section-y</code><span>72 to 132 px</span><strong>Sections</strong></div><div class="ds-token-row"><code>--amd-break-tablet</code><span>980 px</span><strong>Breakpoint</strong></div><div class="ds-token-row"><code>--amd-radius-none</code><span>0 px</span><strong>Shape</strong></div></div>
       </div>
     </section>
 
-    <section class="section" id="type">
-      <p class="kicker">Typography</p>
-      <h2 class="amd-display amd-h2">Typography</h2>
-      <p class="lede">Inter Tight carries display, Inter carries body and UI, Source Serif 4 adds controlled editorial warmth, and mono is reserved for labels and counters.</p>
-      <div class="type-spec">
-        <div class="type-row"><div class="mono">display</div><div class="amd-display amd-h1">Your best days are still ahead.</div></div>
-        <div class="type-row"><div class="mono">section h2</div><div class="amd-display amd-h2">The curve is not destiny.</div></div>
-        <div class="type-row"><div class="mono">body</div><div class="lede">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div></div>
-        <div class="type-row"><div class="mono">serif warmth</div><div style="font: italic 32px/1.35 var(--amd-font-serif);">More of life remains open.</div></div>
+    <section class="ds-section" id="type">
+      <p class="ds-kicker">Typography</p>
+      <h2 class="amd-h2">Type scale</h2>
+      <div class="ds-type-row"><div class="ds-mono">display</div><div class="amd-display">Aa</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h1</div><div class="amd-h1">Your best days are still ahead.</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h2</div><div class="amd-h2">The curve is not destiny.</div></div>
+      <div class="ds-type-row"><div class="ds-mono">h3</div><div class="amd-h3">A physician who knows you.</div></div>
+      <div class="ds-type-row"><div class="ds-mono">body large</div><div class="amd-body-lg">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div></div>
+      <div class="ds-type-row"><div class="ds-mono">serif</div><div style="font: italic 32px/1.35 var(--amd-font-serif);">More of life remains open.</div></div>
+    </section>
+
+    <section class="ds-section" id="components">
+      <p class="ds-kicker">Components</p>
+      <h2 class="amd-h2">Buttons, cards, navigation, alerts</h2>
+      <div class="ds-grid-wide">
+        <div class="ds-spec"><div class="ds-demo-label">Buttons</div><div class="ds-state-row"><a class="amd-button amd-button-primary">Apply for Membership</a><a class="amd-button amd-button-primary is-hover">Hover</a><a class="amd-button amd-button-primary is-disabled">Disabled</a><a class="amd-button amd-button-primary is-loading">Loading</a></div><pre class="amd-code ds-snippet">&lt;a class="amd-button amd-button-primary"&gt;Apply for Membership&lt;/a&gt;</pre></div>
+        <div class="ds-spec ds-spec-dark"><div class="ds-demo-label">On dark</div><div class="ds-state-row"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">Log In</a></div><pre class="amd-code ds-snippet">&lt;a class="amd-button amd-button-cream"&gt;Apply for Membership&lt;/a&gt;</pre></div>
+        <div class="ds-spec"><div class="ds-demo-label">Header</div><header class="amd-header" style="padding:16px;"><span class="amd-wordmark"><img src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD"></span><div class="amd-header-actions"><a class="amd-button amd-button-ghost-dark amd-button-sm">Log In</a></div></header></div>
+        <div class="ds-spec"><div class="ds-demo-label">Cards</div><div class="amd-card"><h3 class="amd-h3">Clinical-grade genetics</h3><p>A 163-gene panel screens for variants that can change care.</p></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Tabs</div><div class="amd-tabs"><button class="amd-tab" aria-selected="true">Onboarding</button><button class="amd-tab">Genetics</button><button class="amd-tab">Labs</button><button class="amd-tab">Consult</button></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Alerts</div><div class="amd-alert amd-alert-success"><strong>Application saved</strong><p>We received the intake and will follow up by email.</p></div><div style="height:12px"></div><div class="amd-alert amd-alert-danger"><strong>Missing email</strong><p>Add an email address before submitting.</p></div></div>
       </div>
     </section>
 
-    <section class="section" id="components">
-      <p class="kicker">Components</p>
-      <h2 class="amd-display amd-h2">Components</h2>
-      <p class="lede">Buttons, inputs, panels, and tabs use square edges, controlled contrast, and restrained motion.</p>
-      <div class="component-grid">
-        <div class="demo-panel"><h3>Buttons on light</h3><div class="button-row"><a class="amd-button amd-button-primary">Apply for Membership</a><a class="amd-button amd-button-ghost-light">For Employers</a></div></div>
-        <div class="demo-panel dark"><h3>Buttons on dark</h3><div class="button-row"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">Log In</a></div></div>
-        <div class="demo-panel"><h3>Input</h3><div class="amd-field"><label>Email</label><input class="amd-input" placeholder="you@email.com"></div></div>
-        <div class="demo-panel amd-grid-field"><h3>Cream proof field</h3><p class="note">Faint grid, warm band, rust/navy figure. Keep charts editorial, not dashboard-like.</p></div>
+    <section class="ds-section" id="forms">
+      <p class="ds-kicker">Forms</p>
+      <h2 class="amd-h2">Inputs and validation</h2>
+      <div class="ds-grid-wide">
+        <div class="ds-spec"><div class="amd-field"><label>Full name</label><input class="amd-input" placeholder="Jane Mercer"><span class="amd-help">Use legal name for membership review.</span></div></div>
+        <div class="ds-spec"><div class="amd-field is-error"><label>Email</label><input class="amd-input" value="jane"><span class="amd-help">Enter a valid email address.</span></div></div>
+        <div class="ds-spec"><div class="amd-field is-success"><label>Phone</label><input class="amd-input" value="(555) 123-0198"><span class="amd-help">Looks good.</span></div></div>
+        <div class="ds-spec"><div class="amd-field"><label>Reason for interest</label><textarea class="amd-textarea" placeholder="Tell us what brought you here."></textarea></div></div>
+        <div class="ds-spec"><div class="amd-field"><label>Membership path</label><select class="amd-select"><option>Individual</option><option>Couple</option><option>Employer-sponsored</option></select></div></div>
+        <div class="ds-spec"><div class="amd-field"><label>Disabled</label><input class="amd-input" disabled value="Not editable"></div></div>
+      </div>
+      <pre class="amd-code ds-snippet">&lt;div class="amd-field is-error"&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input class="amd-input" type="email"&gt;
+  &lt;span class="amd-help"&gt;Enter a valid email address.&lt;/span&gt;
+&lt;/div&gt;</pre>
+    </section>
+
+    <section class="ds-section" id="patterns">
+      <p class="ds-kicker">Patterns</p>
+      <h2 class="amd-h2">Page sections</h2>
+      <div class="ds-grid-wide">
+        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Landing hero</div><section class="amd-pattern-hero"><div class="amd-pattern-hero-inner"><div class="amd-pattern-hero-copy"><h2>Your best days are still ahead.</h2><p>Physician-led preventive care powered by clinical judgment and the data that actually changes your trajectory.</p><a class="amd-button amd-button-cream">Apply for Membership</a></div></div></section></div>
+        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Curve proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Curve reference"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern when proof needs a visual field but should not become a dashboard.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>
+        <div class="ds-spec"><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">See a demo</a></div></div></div>
       </div>
     </section>
 
-    <section class="section" id="icons">
-      <p class="kicker">Icon language</p>
-      <h2 class="amd-display amd-h2">Icons</h2>
-      <p class="lede">Use one-color or two-color marks. Favor modular plan symbols, cut-paper apertures, dither, and hatching.</p>
-      <div class="component-grid">
-        <div class="demo-panel"><h3>Approved</h3><p class="note">One-color or two-color pictograms, square containers, rust and ink, navy and cream, simple plan symbols.</p></div>
-        <div class="demo-panel"><h3>Rejected</h3><p class="note">HUD anatomy, transparent bodies, glowing AI networks, dark analytic mysticism, wireframe people, multi-color medical tech icons.</p></div>
-      </div>
-    </section>
-
-    <section class="section" id="rules">
-      <p class="kicker">Governance</p>
-      <h2 class="amd-display amd-h2">Rules</h2>
-      <div class="rules">
-        <div class="rule"><strong>Use approved brand assets</strong><span class="note">Use the favicon, icon logo, and wordmark shown here.</span></div>
-        <div class="rule"><strong>Square CTAs</strong><span class="note">Buttons use square corners across landing, login, and application flows.</span></div>
-        <div class="rule"><strong>Approved fades only</strong><span class="note">Use the favicon fade, Figma hero fade, login fade, or curve palette.</span></div>
-        <div class="rule"><strong>CTA language</strong><span class="note">Use Apply for Membership in acquisition slots and Log In in the header.</span></div>
-        <div class="rule"><strong>Editorial proof</strong><span class="note">Proof modules stay legible and narrative, not dashboard-like.</span></div>
-        <div class="rule"><strong>Human photography</strong><span class="note">Use specific, warm, human scenes over generic clinical stock.</span></div>
+    <section class="ds-section" id="implementation">
+      <p class="ds-kicker">Implementation</p>
+      <h2 class="amd-h2">Use this order</h2>
+      <div class="ds-grid-wide">
+        <div class="ds-spec"><h3>Imports</h3><pre class="amd-code">&lt;link rel="stylesheet" href="design-system/patterns.css"&gt;</pre><p class="ds-note">`patterns.css` imports components, base, and tokens. Use it for page work.</p></div>
+        <div class="ds-spec"><h3>File map</h3><div class="ds-token-row"><code>tokens.css</code><span>semantic roles</span><strong>foundation</strong></div><div class="ds-token-row"><code>components.css</code><span>shared UI</span><strong>primitives</strong></div><div class="ds-token-row"><code>patterns.css</code><span>page sections</span><strong>composition</strong></div><div class="ds-token-row"><code>DESIGN_SYSTEM.md</code><span>build rules</span><strong>docs</strong></div></div>
+        <div class="ds-spec"><h3>Additions rule</h3><p class="ds-note">If a page needs a new visual decision, add the token, component, or pattern here first. Then use it in the page.</p></div>
+        <div class="ds-spec"><h3>Verification</h3><p class="ds-note">Before shipping a page, check asset paths, button radius, token usage, mobile layout, focus states, and image loading.</p></div>
       </div>
     </section>
   </main>
