@@ -1,889 +1,628 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aleron MD Marketing Design System v1</title>
-<meta name="description" content="Aleron MD marketing design system baseline for public and member-facing surfaces." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aleron MD — Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./components.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  body {
-    background: var(--amd-paper);
-  }
-
-  .board-shell {
-    min-height: 100vh;
-    color: var(--amd-text);
-    background:
-      linear-gradient(rgba(10, 10, 11, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(10, 10, 11, 0.025) 1px, transparent 1px),
-      var(--amd-paper);
-    background-size: 32px 32px;
-  }
-
-  .board-nav {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    display: grid;
-    grid-template-columns: 220px 1fr auto;
-    gap: 24px;
-    align-items: center;
-    padding: 16px var(--amd-gutter);
-    color: var(--amd-paper);
-    background: rgba(10, 10, 11, 0.9);
-    border-bottom: 1px solid var(--amd-line-dark);
-    backdrop-filter: blur(16px) saturate(120%);
-    -webkit-backdrop-filter: blur(16px) saturate(120%);
-  }
-
-  .brand-lockup {
-    font-family: var(--amd-font-display);
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-  }
-
-  .board-tabs {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: rgba(246, 244, 238, 0.72);
-  }
-
-  .research-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .research-card {
-    min-height: 240px;
-    grid-column: span 2;
-    padding: 24px;
-    background: var(--amd-paper);
-  }
-
-  .research-card h3 {
-    margin: 0 0 12px;
-    font-family: var(--amd-font-display);
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.024em;
-  }
-
-  .research-card p {
-    margin: 0;
-    color: var(--amd-text-muted);
-    line-height: 1.55;
-  }
-
-  .research-card a {
-    display: inline-block;
-    margin-top: 18px;
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--amd-gold-deep);
-    text-decoration: none;
-  }
-
-  .board-tabs a {
-    text-decoration: none;
-  }
-
-  .board-version {
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(246, 244, 238, 0.62);
-  }
-
-  .board-hero {
-    padding: clamp(72px, 9vw, 128px) var(--amd-gutter) clamp(48px, 7vw, 88px);
-    color: var(--amd-paper);
-    background:
-      linear-gradient(90deg, rgba(10, 10, 11, 0.92) 0%, rgba(10, 10, 11, 0.72) 46%, rgba(10, 10, 11, 0.28) 100%),
-      url("../assets/hero-rain.jpg") center right / cover no-repeat;
-  }
-
-  .board-hero-inner {
-    max-width: var(--amd-max);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.65fr);
-    gap: clamp(36px, 6vw, 88px);
-    align-items: end;
-  }
-
-  .system-label {
-    margin: 0 0 22px;
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--amd-gold-light);
-  }
-
-  .board-title {
-    max-width: 11ch;
-    margin: 0;
-    font-family: var(--amd-font-display);
-    font-size: clamp(58px, 8vw, 124px);
-    font-weight: 500;
-    line-height: 0.96;
-    letter-spacing: -0.04em;
-  }
-
-  .board-title em {
-    font-family: var(--amd-font-serif-display);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--amd-gold-light);
-  }
-
-  .board-summary {
-    padding: 28px;
-    border-left: 2px solid var(--amd-gold);
-    background: rgba(246, 244, 238, 0.07);
-  }
-
-  .board-summary p {
-    margin: 0;
-    color: rgba(246, 244, 238, 0.84);
-    font-size: 18px;
-    line-height: 1.55;
-  }
-
-  .board-section {
-    padding: clamp(56px, 7vw, 104px) var(--amd-gutter);
-  }
-
-  .board-section.dark {
-    color: var(--amd-paper);
-    background: var(--amd-ink-warm);
-  }
-
-  .board-section.warm {
-    background: var(--amd-paper-warm);
-  }
-
-  .board-inner {
-    max-width: var(--amd-max);
-    margin: 0 auto;
-  }
-
-  .section-head {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
-    gap: clamp(28px, 5vw, 72px);
-    align-items: end;
-    margin-bottom: 36px;
-  }
-
-  .section-head h2 {
-    margin: 0;
-    font-family: var(--amd-font-display);
-    font-size: clamp(42px, 5.4vw, 78px);
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.034em;
-  }
-
-  .section-head p {
-    margin: 0;
-    color: var(--amd-text-muted);
-    font-size: 18px;
-    line-height: 1.55;
-  }
-
-  .dark .section-head p {
-    color: var(--amd-text-on-dark-muted);
-  }
-
-  .spec-grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .spec-card {
-    min-height: 220px;
-    padding: 24px;
-    background: var(--amd-paper);
-  }
-
-  .spec-card.span-3 {
-    grid-column: span 3;
-  }
-
-  .spec-card.span-4 {
-    grid-column: span 4;
-  }
-
-  .spec-card.span-6 {
-    grid-column: span 6;
-  }
-
-  .spec-card.span-8 {
-    grid-column: span 8;
-  }
-
-  .spec-card.span-12 {
-    grid-column: span 12;
-  }
-
-  .spec-kicker {
-    margin: 0 0 16px;
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--amd-gold-deep);
-  }
-
-  .spec-card h3 {
-    margin: 0 0 12px;
-    font-family: var(--amd-font-display);
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-  }
-
-  .spec-card p {
-    margin: 0;
-    color: var(--amd-text-muted);
-    line-height: 1.55;
-  }
-
-  .swatch-card {
-    min-height: 190px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    line-height: 1.5;
-  }
-
-  .on-dark {
-    color: var(--amd-paper);
-  }
-
-  .type-spec {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 32px;
-    padding: 26px 0;
-    border-top: 1px solid var(--amd-line);
-  }
-
-  .type-spec:first-child {
-    border-top: 0;
-  }
-
-  .type-name {
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--amd-gold-deep);
-  }
-
-  .display-sample {
-    font-family: var(--amd-font-display);
-    font-size: clamp(48px, 5.8vw, 86px);
-    font-weight: 500;
-    line-height: 0.98;
-    letter-spacing: -0.034em;
-  }
-
-  .lede-sample {
-    max-width: 62ch;
-    font-size: 21px;
-    line-height: 1.5;
-    color: var(--amd-text-muted);
-  }
-
-  .quote-sample {
-    max-width: 58ch;
-    font-family: var(--amd-font-serif);
-    font-size: clamp(28px, 3vw, 40px);
-    font-style: italic;
-    line-height: 1.32;
-  }
-
-  .module-strip {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .module {
-    min-height: 360px;
-    padding: 28px;
-    background: var(--amd-paper);
-  }
-
-  .module.dark {
-    color: var(--amd-paper);
-    background: var(--amd-ink);
-  }
-
-  .module.warm {
-    background: var(--amd-paper-warm);
-  }
-
-  .module h3 {
-    max-width: 9ch;
-    margin: 0 0 18px;
-    font-family: var(--amd-font-display);
-    font-size: 38px;
-    font-weight: 500;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-  }
-
-  .module p {
-    max-width: 36ch;
-    margin: 0;
-    color: var(--amd-text-muted);
-  }
-
-  .module.dark p {
-    color: var(--amd-text-on-dark-muted);
-  }
-
-  .button-spec {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    align-items: center;
-    margin-top: 28px;
-  }
-
-  .proof-module {
-    color: var(--amd-paper);
-    background:
-      radial-gradient(ellipse 70% 58% at 78% 30%, rgba(212, 165, 116, 0.18), transparent 62%),
-      linear-gradient(180deg, var(--amd-umber-top), var(--amd-umber-bottom));
-  }
-
-  .proof-spec {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.55fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: end;
-  }
-
-  .proof-spec h2 {
-    margin: 0;
-    font-family: var(--amd-font-display);
-    font-size: clamp(44px, 5.6vw, 86px);
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.034em;
-  }
-
-  .proof-spec p {
-    max-width: 62ch;
-    color: var(--amd-text-on-dark-muted);
-  }
-
-  .proof-stat {
-    padding: 30px;
-    border-left: 2px solid var(--amd-gold);
-    background: rgba(246, 244, 238, 0.06);
-  }
-
-  .proof-stat strong {
-    display: block;
-    font-family: var(--amd-font-serif-display);
-    font-size: clamp(76px, 7vw, 116px);
-    font-style: italic;
-    font-weight: 400;
-    line-height: 0.9;
-    color: var(--amd-gold-light);
-  }
-
-  .image-rule-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .image-example {
-    min-height: 520px;
-    background: url("../assets/photos/exp-04-consult.jpg") center / cover no-repeat;
-  }
-
-  .image-notes {
-    padding: 36px;
-    background: var(--amd-paper);
-  }
-
-  .image-notes ul,
-  .guardrail-list {
-    list-style: none;
-    margin: 24px 0 0;
-    padding: 0;
-  }
-
-  .image-notes li,
-  .guardrail-list li {
-    padding: 15px 0;
-    border-top: 1px solid var(--amd-line);
-    color: var(--amd-text-muted);
-  }
-
-  .drift-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .drift-card {
-    padding: 32px;
-    background: var(--amd-paper);
-  }
-
-  .drift-card.bad {
-    background: #f2f0ff;
-  }
-
-  .drift-card.good {
-    background: var(--amd-paper-warm);
-  }
-
-  .drift-label {
-    margin: 0 0 18px;
-    font-family: var(--amd-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .drift-card.bad .drift-label {
-    color: #4b3fc2;
-  }
-
-  .drift-card.good .drift-label {
-    color: var(--amd-gold-deep);
-  }
-
-  .fake-saas {
-    min-height: 220px;
-    padding: 24px;
-    color: #fff;
-    border-radius: 24px;
-    background: linear-gradient(135deg, #4b3fc2, #12d7c4);
-  }
-
-  .fake-saas h3 {
-    margin: 0 0 12px;
-    font-family: Arial, sans-serif;
-    font-size: 34px;
-  }
-
-  .fake-saas span {
-    display: inline-block;
-    margin: 0 0 18px;
-    padding: 7px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.2);
-    font-size: 12px;
-    text-transform: uppercase;
-  }
-
-  .good-example {
-    min-height: 220px;
-    padding: 28px;
-    border-left: 2px solid var(--amd-gold);
-    background: var(--amd-paper);
-  }
-
-  .good-example h3 {
-    max-width: 11ch;
-    margin: 0 0 16px;
-    font-family: var(--amd-font-display);
-    font-size: 42px;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.032em;
-  }
-
-  .good-example p {
-    max-width: 42ch;
-    color: var(--amd-text-muted);
-  }
-
-  .token-table {
-    display: grid;
-    gap: 1px;
-    border: 1px solid var(--amd-line);
-    background: var(--amd-line);
-  }
-
-  .token-row {
-    display: grid;
-    grid-template-columns: 240px 1fr 1fr;
-    gap: 24px;
-    padding: 18px 22px;
-    background: var(--amd-paper);
-    font-family: var(--amd-font-mono);
-    font-size: 12px;
-  }
-
-  .token-row span:nth-child(2),
-  .token-row span:nth-child(3) {
-    color: var(--amd-text-muted);
-  }
-
-  @media (max-width: 980px) {
-    .board-nav,
-    .board-hero-inner,
-    .section-head,
-    .proof-spec,
-    .image-rule-grid,
-    .drift-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .board-tabs {
-      display: none;
-    }
-
-    .spec-card.span-3,
-    .spec-card.span-4,
-    .spec-card.span-6,
-    .spec-card.span-8,
-    .research-card {
-      grid-column: span 12;
-    }
-
-    .module-strip {
-      grid-template-columns: 1fr;
-    }
-
-    .type-spec,
-    .token-row {
-      grid-template-columns: 1fr;
-    }
-  }
+/* ============================================================
+   ALERON MD — DESIGN SYSTEM
+   Source of truth: Figma hero + website sections
+   (figma-hero-shot.html, v2.html). Gaps filled with judgment,
+   held to the same warm-editorial / clinical-trust language.
+   ============================================================ */
+
+:root {
+  /* ---- CANVAS / SURFACE (light, warm) ---- */
+  --page-bg:      #FFFEFB;   /* primary page — warm near-white */
+  --paper:        #F6F4EE;   /* default light section surface */
+  --paper-warm:   #EFEAE0;   /* warmer section surface (cream) */
+  --bone:         #ECE5D6;   /* cooler/clinical light surface */
+  --surface-card: #FFFFFF;   /* cards / tiles on light */
+
+  /* ---- DARK SURFACES (inverted sections) ---- */
+  --ink:          #14110D;   /* warm dark — engine, CTA bands */
+  --ink-cool:     #0A0A0B;   /* cool dark — hero cold-rain only */
+  --navy:         #2C3240;   /* hero overlay panel, play button */
+  --umber-1:      #1F1813;   /* warm dark gradient top */
+  --umber-2:      #2A1F18;   /* warm dark gradient bottom */
+
+  /* ---- BRAND ACCENTS ---- */
+  --rust:         #A2653B;   /* primary warm accent — curve, eyebrow */
+  --rust-deep:    #8A5230;   /* pressed / deep rust */
+  --terracotta:   #B5622A;   /* hero block, curve start */
+  --gold:         #D4A574;   /* hover warmth, hairlines */
+  --gold-light:   #E8C99A;   /* primary button hover */
+  --gold-deep:    #B8854D;   /* eyebrow on light */
+
+  /* ---- TEXT ---- */
+  --text:         #14110D;   /* primary on light */
+  --text-muted:   #4A4A4D;   /* secondary on light */
+  --text-faint:   #8A8A8E;   /* tertiary / captions */
+  --text-on-dark: #F6F4EE;   /* primary on dark */
+  --text-on-dark-muted: rgba(246,244,238,0.74);
+
+  /* ---- LINES / BORDERS ---- */
+  --line:         rgba(20,17,13,0.12);
+  --line-soft:    rgba(20,17,13,0.06);
+  --line-strong:  rgba(20,17,13,0.22);
+  --line-on-dark: rgba(246,244,238,0.14);
+  --gold-line:    rgba(197,162,110,0.20);
+
+  /* ---- STATUS (use sparingly, meaning only) ---- */
+  --status-ok:    #3E7C54;
+  --status-warn:  #C08A2D;
+  --status-error: #A33A2A;
+  --status-info:  #3C5068;
+
+  /* ---- TYPE FAMILIES ---- */
+  --font-display: 'Inter Tight', 'PolySans', system-ui, sans-serif;
+  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif:   'Source Serif 4', Georgia, serif;   /* wordmark, pull-quotes */
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---- SPACING (4px grid) ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+
+  /* ---- RADIUS ---- */
+  --r-xs: 2px;    /* hard editorial detail */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* ---- LAYOUT ---- */
+  --max: 1200px;
+  --gutter: clamp(20px, 4vw, 64px);
+  --section-y: clamp(64px, 8vw, 112px);
+
+  /* ---- MOTION ---- */
+  --ease:      cubic-bezier(.2,.7,.2,1);
+  --ease-out:  cubic-bezier(.22,.72,.18,1);
+  --dur-fast:  160ms;
+  --dur-base:  240ms;
+  --dur-slow:  520ms;
+
+  /* ---- ELEVATION (light surfaces use soft shadow, not luminance) ---- */
+  --shadow-sm: 0 2px 8px rgba(20,17,13,0.06);
+  --shadow-md: 0 12px 32px -16px rgba(20,17,13,0.18);
+  --shadow-lg: 0 24px 60px -28px rgba(16,20,32,0.30);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============ DOC CHROME ============ */
+.ds-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.ds-side {
+  position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+  background: var(--ink); color: var(--text-on-dark);
+  padding: 32px 24px;
+}
+.ds-side .mark {
+  font-family: var(--font-serif); font-size: 26px; font-weight: 500;
+  letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px;
+}
+.ds-side .mark sup { font-size: 0.5em; font-style: italic; font-weight: 400; vertical-align: super; }
+.ds-side .sub { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-on-dark-muted); margin-bottom: 32px; }
+.ds-nav a {
+  display: block; color: var(--text-on-dark-muted); text-decoration: none;
+  font-size: 13px; padding: 7px 0; transition: color var(--dur-fast) var(--ease);
+}
+.ds-nav a:hover { color: var(--text-on-dark); }
+.ds-nav .grp { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 20px 0 6px; }
+
+.ds-main { padding: 56px var(--gutter) 120px; max-width: 1180px; }
+.ds-sec { padding: 40px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+.ds-sec:last-child { border-bottom: 0; }
+.ds-eyebrow {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-deep);
+  margin: 0 0 12px;
+}
+.ds-h {
+  font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em;
+  font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; margin: 0 0 8px;
+}
+.ds-lede { font-size: 17px; line-height: 1.6; color: var(--text-muted); max-width: 64ch; margin: 0 0 28px; }
+.ds-note { font-size: 13px; line-height: 1.6; color: var(--text-faint); max-width: 70ch; }
+.ds-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--text-faint); text-transform: uppercase; }
+
+/* ============ TYPOGRAPHY ROLES (the real scale) ============ */
+.t-display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.028em; line-height: 1.0; font-size: clamp(56px, 9vw, 132px); }
+.t-h1 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.026em; line-height: 1.02; font-size: clamp(44px, 6.8vw, 84px); }
+.t-h2 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.022em; line-height: 1.05; font-size: clamp(34px, 4.6vw, 60px); }
+.t-h3 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.018em; line-height: 1.12; font-size: clamp(24px, 2.6vw, 36px); }
+.t-lede { font-family: var(--font-ui); font-weight: 400; font-size: clamp(19px, 1.6vw, 22px); line-height: 1.5; color: var(--text-muted); }
+.t-body-lg { font-family: var(--font-ui); font-weight: 400; font-size: 18px; line-height: 1.6; }
+.t-body { font-family: var(--font-ui); font-weight: 400; font-size: 15px; line-height: 1.6; }
+.t-ui { font-family: var(--font-ui); font-weight: 500; font-size: 14px; line-height: 1.4; letter-spacing: -0.005em; }
+.t-caption { font-family: var(--font-ui); font-weight: 400; font-size: 13px; line-height: 1.45; color: var(--text-muted); }
+.t-eyebrow { font-family: var(--font-ui); font-weight: 500; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-deep); }
+.t-mono { font-family: var(--font-mono); font-weight: 400; font-size: 13px; letter-spacing: 0.02em; }
+.t-serif { font-family: var(--font-serif); font-weight: 400; font-style: italic; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.4; }
+
+/* ============ SWATCHES ============ */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.swatch { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--surface-card); }
+.swatch .chip { height: 76px; }
+.swatch .meta { padding: 10px 12px; }
+.swatch .nm { font-size: 13px; font-weight: 500; }
+.swatch .hex { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); margin-top: 2px; }
+
+/* ============ TYPE SPECIMENS ============ */
+.spec { display: flex; align-items: baseline; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line-soft); }
+.spec:last-child { border-bottom: 0; }
+.spec .key { flex: 0 0 130px; }
+.spec .sample { flex: 1; min-width: 0; }
+
+/* ============ BUTTONS (the real primitives) ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-ui); font-size: 15px; font-weight: 500; letter-spacing: 0;
+  padding: 15px 28px; border-radius: var(--r-pill); border: 1px solid transparent;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: all var(--dur-base) var(--ease);
+}
+.btn .arrow { display: inline-block; transition: transform var(--dur-base) var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--rust); transform: translateY(-1px); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-secondary:hover { border-color: var(--ink); background: rgba(20,17,13,0.04); }
+.btn-ghost { background: transparent; color: var(--rust); border-color: transparent; padding-left: 4px; padding-right: 4px; }
+.btn-ghost:hover { color: var(--rust-deep); }
+.btn-sm { font-size: 13px; padding: 9px 18px; }
+.btn-lg { font-size: 16px; padding: 18px 34px; }
+.btn:disabled, .btn.is-disabled { opacity: 0.4; pointer-events: none; }
+/* on-dark variants */
+.on-dark .btn-primary { background: var(--paper); color: var(--ink); }
+.on-dark .btn-primary:hover { background: var(--gold-light); }
+.on-dark .btn-secondary { color: var(--paper); border-color: rgba(246,244,238,0.4); }
+.on-dark .btn-secondary:hover { border-color: var(--paper); background: rgba(246,244,238,0.08); }
+
+/* ============ CARDS ============ */
+.card {
+  background: var(--surface-card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 28px;
+}
+.card.soft { box-shadow: var(--shadow-md); border-color: var(--line-soft); }
+.card .k { margin-bottom: 14px; }
+.card h4 { font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: -0.015em; margin: 0 0 10px; }
+.card p { margin: 0; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+.card-cream { background: var(--paper-warm); border-color: transparent; }
+.card-dark { background: var(--ink); border-color: transparent; color: var(--text-on-dark); }
+.card-dark h4 { color: var(--text-on-dark); }
+.card-dark p { color: var(--text-on-dark-muted); }
+
+/* ============ BADGES / PILLS ============ */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+  padding: 5px 12px; border-radius: var(--r-pill); border: 1px solid var(--line);
+  background: var(--surface-card); color: var(--text-muted);
+}
+.badge.dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge.rust { color: var(--rust); border-color: rgba(162,101,59,0.3); background: rgba(162,101,59,0.07); }
+.badge.ok { color: var(--status-ok); border-color: rgba(62,124,84,0.3); background: rgba(62,124,84,0.07); }
+.badge.warn { color: var(--status-warn); border-color: rgba(192,138,45,0.3); background: rgba(192,138,45,0.08); }
+.badge.crit { color: var(--status-error); border-color: rgba(163,58,42,0.3); background: rgba(163,58,42,0.07); }
+
+/* ============ INPUTS ============ */
+.field { display: flex; flex-direction: column; gap: 7px; max-width: 360px; }
+.field label { font-size: 13px; font-weight: 500; color: var(--text); }
+.input, .textarea, .select {
+  font-family: var(--font-ui); font-size: 15px; color: var(--text);
+  background: var(--surface-card); border: 1px solid var(--line-strong);
+  border-radius: var(--r-md); padding: 12px 14px; width: 100%;
+  transition: border-color var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
+}
+.input:focus, .textarea:focus, .select:focus {
+  outline: none; border-color: var(--rust);
+  box-shadow: 0 0 0 3px rgba(162,101,59,0.14);
+}
+.input::placeholder { color: var(--text-faint); }
+.textarea { min-height: 96px; resize: vertical; }
+.field .hint { font-size: 12px; color: var(--text-faint); }
+
+/* ============ TABS (underline, not pill) ============ */
+.tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--line); }
+.tab {
+  font-family: var(--font-ui); font-size: 14px; font-weight: 500; color: var(--text-faint);
+  padding: 0 0 14px; background: none; border: 0; cursor: pointer; position: relative;
+  transition: color var(--dur-base) var(--ease);
+}
+.tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--rust); opacity: 0; transition: opacity var(--dur-base) var(--ease); }
+.tab.is-active { color: var(--ink); }
+.tab.is-active::after { opacity: 1; }
+
+/* ============ NAV BAR specimen ============ */
+.navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 28px; border-radius: var(--r-lg);
+  background: var(--ink); color: var(--text-on-dark);
+}
+.navbar .brand { font-family: var(--font-serif); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; color: var(--paper); }
+.navbar .brand sup { font-size: 0.5em; font-style: italic; }
+.navbar .actions { display: flex; align-items: center; gap: 10px; }
+.nav-cta {
+  display: inline-flex; align-items: center; font-size: 14px; font-weight: 500;
+  padding: 10px 18px; border-radius: var(--r-pill); text-decoration: none;
+  border: 1px solid rgba(246,244,238,0.35); color: var(--paper);
+  transition: all var(--dur-base) var(--ease);
+}
+.nav-cta.primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.nav-cta:hover { background: var(--paper); color: var(--ink); }
+
+/* ============ GEOMETRIC BLOCK motif ============ */
+.block-demo { position: relative; height: 200px; border-radius: var(--r-lg); overflow: hidden; background: linear-gradient(135deg, #6c5848, #2c3240); }
+.block-demo .blk { position: absolute; }
+.block-demo .b1 { left: 0; top: 0; width: 120px; height: 64px; background: var(--terracotta); }
+.block-demo .b2 { left: 36px; bottom: 24px; width: 220px; height: 92px; background: var(--navy); }
+.block-demo .b3 { right: 40px; top: 70px; width: 150px; height: 40px; background: rgba(212,165,116,0.55); }
+.block-demo .lab { position: absolute; left: 14px; top: 14px; font-family: var(--font-serif); color: #fff; font-size: 18px; }
+
+/* ============ SECTION SURFACE specimens ============ */
+.surf-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; }
+.surf { height: 96px; border-radius: var(--r-md); border: 1px solid var(--line-soft); display: flex; align-items: flex-end; padding: 10px; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); }
+
+/* ============ UTILITY ROWS ============ */
+.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+.pad-dark { background: var(--ink); border-radius: var(--r-lg); padding: 32px; }
+.spacer-demo { display: flex; align-items: flex-end; gap: 10px; }
+.spacer-demo .u { background: rgba(162,101,59,0.18); border: 1px solid var(--rust); border-radius: 3px; }
+.spacer-demo .u span { display:block; font-family: var(--font-mono); font-size:10px; color: var(--rust-deep); text-align:center; margin-top: 4px; }
+
+.radius-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.radius-demo { width: 92px; height: 92px; background: var(--paper-warm); border: 1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+.banned { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 14px; }
+.banned .x { border: 1px solid rgba(163,58,42,0.3); background: rgba(163,58,42,0.05); border-radius: var(--r-md); padding: 16px; }
+.banned .x .h { color: var(--status-error); font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.banned .x .b { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+@media (max-width: 860px) {
+  .ds-shell { grid-template-columns: 1fr; }
+  .ds-side { position: static; height: auto; }
+  .ds-nav { display: none; }
+}
 </style>
 </head>
 <body>
-  <div class="board-shell">
-    <header class="board-nav">
-      <div class="brand-lockup">Aleron MD</div>
-      <nav class="board-tabs" aria-label="Design system sections">
-        <a href="#principles">Principles</a>
-        <a href="#tokens">Tokens</a>
-        <a href="#type">Type</a>
-        <a href="#modules">Modules</a>
-        <a href="#drift">Drift checks</a>
+<div class="ds-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="ds-side">
+    <div class="mark">Aleron<sup>MD</sup></div>
+    <div class="sub">Design System</div>
+    <nav class="ds-nav">
+      <div class="grp">Foundations</div>
+      <a href="#intro">Overview</a>
+      <a href="#color">Color</a>
+      <a href="#type">Typography</a>
+      <a href="#space">Spacing & Radius</a>
+      <a href="#elevation">Surfaces & Elevation</a>
+      <a href="#motion">Motion</a>
+      <div class="grp">Primitives</div>
+      <a href="#buttons">Buttons</a>
+      <a href="#inputs">Inputs</a>
+      <a href="#cards">Cards</a>
+      <a href="#badges">Badges</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#nav">Navigation</a>
+      <div class="grp">Brand</div>
+      <a href="#wordmark">Wordmark</a>
+      <a href="#blocks">Geometric Blocks</a>
+      <a href="#rules">Rules</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="ds-main">
+
+    <!-- OVERVIEW -->
+    <section class="ds-sec" id="intro">
+      <p class="ds-eyebrow">Aleron MD</p>
+      <h1 class="t-h1" style="max-width:14ch;">A warm, editorial system for premium preventive care.</h1>
+      <p class="ds-lede" style="margin-top:18px;">Extracted from the Figma hero and website sections. The language is warm-editorial with clinical trust: a light, paper-toned canvas, ink and navy for weight, rust and gold as the only chromatic accents, and a Swiss-grid block motif over warm photography. Where Figma is still incomplete, primitives below fill the gaps in the same voice. This file is the anchor — build to it.</p>
+      <div class="row" style="margin-top:8px;">
+        <span class="badge dot rust">Light / warm</span>
+        <span class="badge">Inter Tight display</span>
+        <span class="badge">Source Serif 4 wordmark</span>
+        <span class="badge">Rust + navy accents</span>
+        <span class="badge">Pill CTAs · hard-edge blocks</span>
+      </div>
+    </section>
+
+    <!-- COLOR -->
+    <section class="ds-sec" id="color">
+      <p class="ds-eyebrow">Foundations</p>
+      <h2 class="ds-h">Color</h2>
+      <p class="ds-lede">Monochrome does the work; rust and gold carry meaning. Status colors are muted and used only for state, never decoration.</p>
+
+      <p class="ds-label" style="margin:24px 0 10px;">Canvas & light surfaces</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="chip" style="background:#FFFEFB;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Page</div><div class="hex">#FFFEFB</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F6F4EE"></div><div class="meta"><div class="nm">Paper</div><div class="hex">#F6F4EE</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#EFEAE0"></div><div class="meta"><div class="nm">Paper warm</div><div class="hex">#EFEAE0</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#ECE5D6"></div><div class="meta"><div class="nm">Bone</div><div class="hex">#ECE5D6</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Card</div><div class="hex">#FFFFFF</div></div></div>
+      </div>
+
+      <p class="ds-label" style="margin:24px 0 10px;">Dark surfaces</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="chip" style="background:#14110D"></div><div class="meta"><div class="nm">Ink (warm)</div><div class="hex">#14110D</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#0A0A0B"></div><div class="meta"><div class="nm">Ink (cool)</div><div class="hex">#0A0A0B</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#2C3240"></div><div class="meta"><div class="nm">Navy</div><div class="hex">#2C3240</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#1F1813"></div><div class="meta"><div class="nm">Umber 1</div><div class="hex">#1F1813</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#2A1F18"></div><div class="meta"><div class="nm">Umber 2</div><div class="hex">#2A1F18</div></div></div>
+      </div>
+
+      <p class="ds-label" style="margin:24px 0 10px;">Brand accents</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="chip" style="background:#A2653B"></div><div class="meta"><div class="nm">Rust</div><div class="hex">#A2653B</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#8A5230"></div><div class="meta"><div class="nm">Rust deep</div><div class="hex">#8A5230</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#B5622A"></div><div class="meta"><div class="nm">Terracotta</div><div class="hex">#B5622A</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#D4A574"></div><div class="meta"><div class="nm">Gold</div><div class="hex">#D4A574</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#E8C99A"></div><div class="meta"><div class="nm">Gold light</div><div class="hex">#E8C99A</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#B8854D"></div><div class="meta"><div class="nm">Gold deep</div><div class="hex">#B8854D</div></div></div>
+      </div>
+
+      <p class="ds-label" style="margin:24px 0 10px;">Status (muted, meaning-only)</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="chip" style="background:#3E7C54"></div><div class="meta"><div class="nm">OK</div><div class="hex">#3E7C54</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#C08A2D"></div><div class="meta"><div class="nm">Warn</div><div class="hex">#C08A2D</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#A33A2A"></div><div class="meta"><div class="nm">Error</div><div class="hex">#A33A2A</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#3C5068"></div><div class="meta"><div class="nm">Info</div><div class="hex">#3C5068</div></div></div>
+      </div>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <section class="ds-sec" id="type">
+      <p class="ds-eyebrow">Foundations</p>
+      <h2 class="ds-h">Typography</h2>
+      <p class="ds-lede">Inter Tight for display and headings, Inter for UI and body, Source Serif 4 for the wordmark and pull-quotes, JetBrains Mono for data and labels. Role-keyed — reach type through roles, never raw sizes.</p>
+
+      <div class="spec"><div class="key"><span class="ds-label">display</span></div><div class="sample"><span class="t-display">Aa</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">h1 / 84</span></div><div class="sample"><span class="t-h1">Your best days are still ahead.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">h2 / 60</span></div><div class="sample"><span class="t-h2">Plot a new trajectory.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">h3 / 36</span></div><div class="sample"><span class="t-h3">How you feel matters.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">lede / 22</span></div><div class="sample"><span class="t-lede">Physician-led longevity care, powered by AI and your genetic, lab, and wearable data.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">body-lg / 18</span></div><div class="sample"><span class="t-body-lg">Every body follows a curve. The slope between where you are and where you are headed is being written right now.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">body / 15</span></div><div class="sample"><span class="t-body">Comprehensive labs twice yearly, clinical-grade genetics read once and used for life, and a physician who actually knows you.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">ui / 14</span></div><div class="sample"><span class="t-ui">Apply for membership</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">caption / 13</span></div><div class="sample"><span class="t-caption">Read once, used for life.</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">eyebrow / 12</span></div><div class="sample"><span class="t-eyebrow">Quality of life</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">mono / 13</span></div><div class="sample"><span class="t-mono">VO2MAX · AGE 40 → 90</span></div></div>
+      <div class="spec"><div class="key"><span class="ds-label">serif quote</span></div><div class="sample"><span class="t-serif">The curve is not destiny.</span></div></div>
+    </section>
+
+    <!-- SPACING & RADIUS -->
+    <section class="ds-sec" id="space">
+      <p class="ds-eyebrow">Foundations</p>
+      <h2 class="ds-h">Spacing & Radius</h2>
+      <p class="ds-lede">4px grid for all spacing. Radii run from a hard 2px editorial detail to a fully round pill — the hero blocks stay square, the CTAs stay round.</p>
+      <p class="ds-label" style="margin-bottom:12px;">Spacing scale (4px grid)</p>
+      <div class="spacer-demo">
+        <div><div class="u" style="width:4px;height:4px;"></div><span>4</span></div>
+        <div><div class="u" style="width:8px;height:8px;"></div><span>8</span></div>
+        <div><div class="u" style="width:12px;height:12px;"></div><span>12</span></div>
+        <div><div class="u" style="width:16px;height:16px;"></div><span>16</span></div>
+        <div><div class="u" style="width:24px;height:24px;"></div><span>24</span></div>
+        <div><div class="u" style="width:32px;height:32px;"></div><span>32</span></div>
+        <div><div class="u" style="width:48px;height:48px;"></div><span>48</span></div>
+        <div><div class="u" style="width:64px;height:64px;"></div><span>64</span></div>
+        <div><div class="u" style="width:96px;height:96px;"></div><span>96</span></div>
+      </div>
+      <p class="ds-label" style="margin:28px 0 12px;">Radius</p>
+      <div class="radius-row">
+        <div class="radius-demo" style="border-radius:2px;">2</div>
+        <div class="radius-demo" style="border-radius:6px;">6</div>
+        <div class="radius-demo" style="border-radius:10px;">10</div>
+        <div class="radius-demo" style="border-radius:16px;">16</div>
+        <div class="radius-demo" style="border-radius:24px;">24</div>
+        <div class="radius-demo" style="border-radius:999px;">pill</div>
+      </div>
+    </section>
+
+    <!-- ELEVATION -->
+    <section class="ds-sec" id="elevation">
+      <p class="ds-eyebrow">Foundations</p>
+      <h2 class="ds-h">Surfaces & Elevation</h2>
+      <p class="ds-lede">On light, sections step through paper tones; cards lift with soft warm shadow (not hard drop shadows). On dark, surfaces step up in luminance. Color temperature is the through-line — warmth never leaves.</p>
+      <div class="surf-row">
+        <div class="surf" style="background:#FFFEFB;">page #FFFEFB</div>
+        <div class="surf" style="background:#F6F4EE;">paper</div>
+        <div class="surf" style="background:#EFEAE0;">paper-warm</div>
+        <div class="surf" style="background:#ECE5D6;">bone</div>
+      </div>
+      <div class="row" style="margin-top:20px;">
+        <div class="card" style="width:200px;">flat · border</div>
+        <div class="card soft" style="width:200px;">soft · shadow-md</div>
+        <div class="card card-cream" style="width:200px;">cream surface</div>
+        <div class="card card-dark" style="width:200px;">ink surface</div>
+      </div>
+    </section>
+
+    <!-- MOTION -->
+    <section class="ds-sec" id="motion">
+      <p class="ds-eyebrow">Foundations</p>
+      <h2 class="ds-h">Motion</h2>
+      <p class="ds-lede">Restrained and premium. Two eases, three durations. Arrows nudge on hover; cards lift 1px; reveals fade-and-rise. Nothing bounces.</p>
+      <div class="grid-2">
+        <div class="card"><div class="ds-label">ease</div><p style="margin-top:6px;">cubic-bezier(.2,.7,.2,1) — general UI</p></div>
+        <div class="card"><div class="ds-label">ease-out premium</div><p style="margin-top:6px;">cubic-bezier(.22,.72,.18,1) — reveals</p></div>
+        <div class="card"><div class="ds-label">durations</div><p style="margin-top:6px;">fast 160 · base 240 · slow 520 ms</p></div>
+        <div class="card"><div class="ds-label">hover idiom</div><p style="margin-top:6px;">arrow translateX 4px · card translateY −1px</p></div>
+      </div>
+    </section>
+
+    <!-- BUTTONS -->
+    <section class="ds-sec" id="buttons">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Buttons</h2>
+      <p class="ds-lede">Pill-shaped, three variants. Primary is ink (rust on hover); secondary is outline; ghost is inline rust text with a nudging arrow. On dark sections, primary inverts to paper.</p>
+      <p class="ds-label" style="margin-bottom:12px;">On light</p>
+      <div class="row">
+        <a class="btn btn-primary">Apply for Membership <span class="arrow">→</span></a>
+        <a class="btn btn-secondary">For Employers</a>
+        <a class="btn btn-ghost">See the system live <span class="arrow">→</span></a>
+        <a class="btn btn-primary is-disabled">Disabled</a>
+      </div>
+      <p class="ds-label" style="margin:20px 0 12px;">Sizes</p>
+      <div class="row">
+        <a class="btn btn-primary btn-sm">Small</a>
+        <a class="btn btn-primary">Default</a>
+        <a class="btn btn-primary btn-lg">Large</a>
+      </div>
+      <p class="ds-label" style="margin:20px 0 12px;">On dark</p>
+      <div class="pad-dark on-dark">
+        <div class="row">
+          <a class="btn btn-primary">Apply <span class="arrow">→</span></a>
+          <a class="btn btn-secondary">For Employers</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INPUTS -->
+    <section class="ds-sec" id="inputs">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Inputs</h2>
+      <p class="ds-lede">Rust focus ring, generous padding, square-ish 10px radius to echo the editorial detail. Built for the apply and intake flows that aren't in Figma yet.</p>
+      <div class="grid-2">
+        <div class="field">
+          <label>Full name</label>
+          <input class="input" placeholder="Jane Mercer" />
+          <span class="hint">As it appears on your insurance.</span>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input class="input" type="email" placeholder="you@email.com" />
+        </div>
+        <div class="field">
+          <label>Reason for interest</label>
+          <textarea class="textarea" placeholder="Tell us what brought you here…"></textarea>
+        </div>
+        <div class="field">
+          <label>Membership tier</label>
+          <select class="select"><option>Individual</option><option>Couple</option><option>Employer-sponsored</option></select>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARDS -->
+    <section class="ds-sec" id="cards">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Cards</h2>
+      <p class="ds-lede">Four surface treatments on the same shape: flat-bordered, soft-shadow, cream, and ink. Use cream for warmth in content sections, ink for emphasis or inverted bands.</p>
+      <div class="grid-2">
+        <div class="card"><span class="badge rust k">Genetics</span><h4>Read once, used for life.</h4><p>A 163-gene panel screens for variants that change care: cancer risk, cardiovascular risk, and drug metabolism.</p></div>
+        <div class="card soft"><span class="badge k">Labs</span><h4>Comprehensive, twice yearly.</h4><p>Drift shows up in the numbers long before it shows up in how you feel. We watch the trend, not the snapshot.</p></div>
+        <div class="card card-cream"><span class="badge rust k">Wearables</span><h4>Your data, in the loop.</h4><p>As you act, the wearable streams the result. New labs feed back in. The engine reruns.</p></div>
+        <div class="card card-dark"><span class="badge k" style="color:var(--gold);border-color:var(--gold-line);">Membership</span><h4>A physician who knows you.</h4><p>An hour with the doctor who'll follow your trajectory for years, not a ten-minute visit.</p></div>
+      </div>
+    </section>
+
+    <!-- BADGES -->
+    <section class="ds-sec" id="badges">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Badges & Pills</h2>
+      <p class="ds-lede">Eyebrow labels and status chips. Status tones are muted to fit the editorial palette — they mark state, never decorate.</p>
+      <div class="row">
+        <span class="badge">Neutral</span>
+        <span class="badge rust">Rust</span>
+        <span class="badge dot ok">On track</span>
+        <span class="badge dot warn">Watch</span>
+        <span class="badge dot crit">Action needed</span>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <section class="ds-sec" id="tabs">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Tabs</h2>
+      <p class="ds-lede">Underline tabs with a rust active indicator. Used in the experience walkthrough and member portal.</p>
+      <div class="tabs">
+        <button class="tab is-active">Onboarding</button>
+        <button class="tab">Genetics</button>
+        <button class="tab">Bloodwork</button>
+        <button class="tab">Consult</button>
+        <button class="tab">Closure loop</button>
+      </div>
+    </section>
+
+    <!-- NAV -->
+    <section class="ds-sec" id="nav">
+      <p class="ds-eyebrow">Primitives</p>
+      <h2 class="ds-h">Navigation</h2>
+      <p class="ds-lede">Serif wordmark left, pill actions right. Per Jason's rule: a single <strong>Log In</strong> in the header; <strong>Apply</strong> lives in the hero CTA. Never use "Join".</p>
+      <nav class="navbar">
+        <span class="brand">Aleron<sup>MD</sup></span>
+        <div class="actions">
+          <a class="nav-cta">Log In</a>
+        </div>
       </nav>
-      <div class="board-version">Marketing DS v1</div>
-    </header>
+    </section>
 
-    <main>
-      <section class="board-hero">
-        <div class="board-hero-inner">
-          <div>
-            <p class="system-label">Design system baseline</p>
-            <h1 class="board-title">Do not drift from <em>future capacity.</em></h1>
-          </div>
-          <aside class="board-summary">
-            <p>This is the working board for Aleron MD marketing. It defines what new explorations should reuse: visual temperature, typography, proof posture, modules, and the lines we do not cross.</p>
-          </aside>
-        </div>
-      </section>
+    <!-- WORDMARK -->
+    <section class="ds-sec" id="wordmark">
+      <p class="ds-eyebrow">Brand</p>
+      <h2 class="ds-h">Wordmark</h2>
+      <p class="ds-lede">Source Serif 4, tight tracking, italic superscript "MD". White on dark blocks, ink on light. Keep the MD as a quiet superscript — never a separate badge.</p>
+      <div class="row">
+        <div class="card" style="display:flex;align-items:center;justify-content:center;min-height:120px;width:280px;"><span style="font-family:var(--font-serif);font-size:42px;font-weight:500;letter-spacing:-0.03em;color:var(--ink);">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span></div>
+        <div class="card card-dark" style="display:flex;align-items:center;justify-content:center;min-height:120px;width:280px;"><span style="font-family:var(--font-serif);font-size:42px;font-weight:500;letter-spacing:-0.03em;color:var(--paper);">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span></div>
+      </div>
+    </section>
 
-      <section class="board-section warm" id="principles">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Brand rules before components.</h2>
-            <p>The goal is not to make another page. The goal is to give future pages a shared center of gravity.</p>
-          </div>
-          <div class="spec-grid">
-            <article class="spec-card span-4">
-              <p class="spec-kicker">Rule 01</p>
-              <h3>Human outcome first.</h3>
-              <p>Start with the life someone wants to keep available. Use data and product details only after the stakes are clear.</p>
-            </article>
-            <article class="spec-card span-4">
-              <p class="spec-kicker">Rule 02</p>
-              <h3>Physician led.</h3>
-              <p>AI is leverage for medical judgment. It should never become the hero or the accountable actor.</p>
-            </article>
-            <article class="spec-card span-4">
-              <p class="spec-kicker">Rule 03</p>
-              <h3>Warm proof.</h3>
-              <p>Evidence should be precise and understandable, with units and boundaries. No vague longevity fog.</p>
-            </article>
-          </div>
-        </div>
-      </section>
+    <!-- GEOMETRIC BLOCKS -->
+    <section class="ds-sec" id="blocks">
+      <p class="ds-eyebrow">Brand</p>
+      <h2 class="ds-h">Geometric Blocks</h2>
+      <p class="ds-lede">The hero's signature: hard-edged color blocks composited over warm photography, Swiss-grid style. Terracotta and navy slabs, the occasional translucent gold band. Blocks stay square; only CTAs and chips are round.</p>
+      <div class="block-demo">
+        <span class="lab">Aleron<sup style="font-size:0.5em;font-style:italic;">MD</sup></span>
+        <div class="blk b1"></div>
+        <div class="blk b2"></div>
+        <div class="blk b3"></div>
+      </div>
+      <p class="ds-note" style="margin-top:12px;">Motion note: in the live hero these planes parallax at different depths on scroll — background slowest, floating blocks faster, subject and UI pinned. Keep the static composition correct before adding motion.</p>
+    </section>
 
-      <section class="board-section">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>What stronger systems taught us.</h2>
-            <p>The useful pattern is not more decoration. It is decision logic, reusable foundations, content rules, and clear examples of what does not belong.</p>
-          </div>
-          <div class="research-grid">
-            <article class="research-card">
-              <p class="spec-kicker">Dropbox</p>
-              <h3>Identity as a toolkit.</h3>
-              <p>Brand guidance should give people enough structure to make new work that still feels native.</p>
-              <a href="https://www.dropboxbrand.com/">Reference</a>
-            </article>
-            <article class="research-card">
-              <p class="spec-kicker">Atlassian</p>
-              <h3>Foundations first.</h3>
-              <p>Tokens, spacing, grid, color, typography, iconography, and content guidance need a clear place in the system.</p>
-              <a href="https://atlassian.design/foundations/">Reference</a>
-            </article>
-            <article class="research-card">
-              <p class="spec-kicker">IBM</p>
-              <h3>Rules for restraint.</h3>
-              <p>Color systems need approved combinations, accessibility checks, and explicit examples of what to avoid.</p>
-              <a href="https://www.ibm.com/design/language/color/">Reference</a>
-            </article>
-            <article class="research-card">
-              <p class="spec-kicker">Mailchimp</p>
-              <h3>Voice is not tone.</h3>
-              <p>The voice should stay consistent while tone adapts to context. Aleron needs this for emotional hero copy versus clinical proof.</p>
-              <a href="https://styleguide.mailchimp.com/voice-and-tone/">Reference</a>
-            </article>
-            <article class="research-card">
-              <p class="spec-kicker">Apple</p>
-              <h3>Hierarchy and harmony.</h3>
-              <p>Premium systems define hierarchy, consistency, layout, color, motion, and accessibility as part of one experience.</p>
-              <a href="https://developer.apple.com/design/human-interface-guidelines">Reference</a>
-            </article>
-            <article class="research-card">
-              <p class="spec-kicker">Shopify Polaris</p>
-              <h3>Semantic tokens scale.</h3>
-              <p>Tokens should describe intent, not just hex values. Aleron needs roles like cinematic dark, editorial warmth, and clinical surface.</p>
-              <a href="https://polaris-react.shopify.com/design/colors/color-tokens">Reference</a>
-            </article>
-          </div>
-        </div>
-      </section>
+    <!-- RULES -->
+    <section class="ds-sec" id="rules">
+      <p class="ds-eyebrow">Governance</p>
+      <h2 class="ds-h">House Rules</h2>
+      <p class="ds-lede">Carried from how Aleron has been built so far. Break these and the system drifts.</p>
+      <div class="banned">
+        <div class="x"><div class="h">No invented gradients or glows</div><div class="b">Gradients and color fades stay Figma-locked. Don't add fades, glows, or neon the source doesn't have.</div></div>
+        <div class="x"><div class="h">No rounded-pill eyebrows</div><div class="b">Eyebrow labels are plain uppercase text, not pills. Pills are for CTAs and status chips only.</div></div>
+        <div class="x"><div class="h">No header CTA clusters</div><div class="b">A single Log In top-right. Apply belongs in the hero. Never "Join". Avoid slider-tab-looking corner clusters.</div></div>
+        <div class="x"><div class="h">Header ≥ body, always</div><div class="b">Body text is never larger or bolder than the header above it. No inverted hierarchy.</div></div>
+        <div class="x"><div class="h">Color carries meaning</div><div class="b">Monochrome is the base. Rust/gold = brand accent; status colors = state only. Never decorative color.</div></div>
+        <div class="x"><div class="h">Square blocks, round CTAs</div><div class="b">The geometric block motif is hard-edged. Don't round the slabs; don't square the buttons.</div></div>
+        <div class="x"><div class="h">Warmth never leaves</div><div class="b">Even dark sections are warm (umber/ink), not cold gray. The cool ink is reserved for the hero rain only.</div></div>
+        <div class="x"><div class="h">Real copy, no lorem</div><div class="b">Past the sketch phase, use real Aleron voice. Patient stories stay in the patient story, no melodrama.</div></div>
+      </div>
+    </section>
 
-      <section class="board-section" id="tokens">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Core visual tokens.</h2>
-            <p>These are the brand rails. New work should extend from these before inventing new color, surface, or type behavior.</p>
-          </div>
-          <div class="spec-grid">
-            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-ink);">
-              <span>--amd-ink<br>#0A0A0B</span>
-              <span>Cool cinematic dark</span>
-            </div>
-            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-ink-warm);">
-              <span>--amd-ink-warm<br>#14110D</span>
-              <span>Warm premium dark</span>
-            </div>
-            <div class="spec-card span-3 swatch-card" style="background: var(--amd-paper);">
-              <span>--amd-paper<br>#F6F4EE</span>
-              <span>Default light surface</span>
-            </div>
-            <div class="spec-card span-3 swatch-card" style="background: var(--amd-paper-warm);">
-              <span>--amd-paper-warm<br>#EFEAE0</span>
-              <span>Editorial warmth</span>
-            </div>
-            <div class="spec-card span-3 swatch-card" style="background: var(--amd-bone);">
-              <span>--amd-bone<br>#ECE5D6</span>
-              <span>Clinical light surface</span>
-            </div>
-            <div class="spec-card span-3 swatch-card" style="background: var(--amd-gold);">
-              <span>--amd-gold<br>#D4A574</span>
-              <span>Signal and emphasis</span>
-            </div>
-            <div class="spec-card span-3 swatch-card" style="background: var(--amd-gold-light);">
-              <span>--amd-gold-light<br>#E8C99A</span>
-              <span>Human warmth</span>
-            </div>
-            <div class="spec-card span-3 swatch-card on-dark" style="background: var(--amd-gold-deep);">
-              <span>--amd-gold-deep<br>#B8854D</span>
-              <span>Labels and anchors</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="board-section warm" id="type">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Typography specimens.</h2>
-            <p>Display type carries confidence. Body type carries trust. Serif emphasis is rare and reserved for warmth.</p>
-          </div>
-          <div class="spec-card span-12">
-            <div class="type-spec">
-              <div class="type-name">Display</div>
-              <div class="display-sample">Some of your best days are still ahead.</div>
-            </div>
-            <div class="type-spec">
-              <div class="type-name">Lede</div>
-              <div class="lede-sample">Your physician can only change what they can see. Aleron MD gives them the whole picture: genetics, labs, wearables, medical history, and the goals that make the work matter.</div>
-            </div>
-            <div class="type-spec">
-              <div class="type-name">Editorial</div>
-              <div class="quote-sample">The product is not more information. It is clearer judgment about what matters next.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="board-section" id="modules">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Reusable marketing modules.</h2>
-            <p>These are specimens, not a finished site. They show how sections should behave when a new page needs proof, action, narrative, or contrast.</p>
-          </div>
-          <div class="module-strip">
-            <article class="module warm">
-              <p class="spec-kicker">Narrative band</p>
-              <h3>Life before interface.</h3>
-              <p>Use warm paper for story, journey, and experience sections. Keep the composition open.</p>
-            </article>
-            <article class="module">
-              <p class="spec-kicker">Action panel</p>
-              <h3>One next step.</h3>
-              <p>Aleron CTAs should feel selective and calm. Avoid aggressive conversion clusters.</p>
-              <div class="button-spec">
-                <a class="amd-button amd-button-primary" href="#">Apply</a>
-                <a class="amd-button" style="border-color: var(--amd-line); color: var(--amd-ink);" href="#">See the model</a>
-              </div>
-            </article>
-            <article class="module dark">
-              <p class="spec-kicker" style="color: var(--amd-gold-light);">Cinematic band</p>
-              <h3>Depth without dashboard chrome.</h3>
-              <p>Dark sections should feel like atmosphere and consequence, not enterprise software.</p>
-              <div class="button-spec">
-                <a class="amd-button amd-button-primary" href="#">Apply</a>
-                <a class="amd-button amd-button-ghost-dark" href="#">Demo</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="board-section proof-module">
-        <div class="board-inner proof-spec">
-          <div>
-            <p class="system-label">Proof module</p>
-            <h2>Clinical evidence supports the reroute.</h2>
-            <p>Use evidence to explain why a different care plan emerges. Claims need units, source posture, and a clear note when drivers overlap.</p>
-          </div>
-          <aside class="proof-stat">
-            <strong>~60%</strong>
-            <p>Composite claims must explain that the drivers are overlapping, not additive.</p>
-          </aside>
-        </div>
-      </section>
-
-      <section class="board-section warm">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Image treatment rules.</h2>
-            <p>Photography should feel specific, human, and lived-in. Product shots should clarify the care loop, not become generic app marketing.</p>
-          </div>
-          <div class="image-rule-grid">
-            <div class="image-example" role="img" aria-label="Aleron physician consult reference image"></div>
-            <div class="image-notes">
-              <p class="spec-kicker">Use imagery that</p>
-              <ul>
-                <li>Feels like an actual person, place, or care moment.</li>
-                <li>Supports future capacity, family, movement, recovery, or physician trust.</li>
-                <li>Has natural light, restrained contrast, and enough negative space for editorial layouts.</li>
-                <li>Avoids abstract AI brains, glowing networks, and generic wellness stock.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="board-section" id="drift">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Drift checks.</h2>
-            <p>This is the useful part: a visual test for whether new concepts still belong to Aleron MD.</p>
-          </div>
-          <div class="drift-grid">
-            <article class="drift-card bad">
-              <p class="drift-label">Do not</p>
-              <div class="fake-saas">
-                <span>AI longevity platform</span>
-                <h3>Optimize your healthspan with real-time insights</h3>
-                <p>Neon gradients, pills, fake dashboards, and generic optimization language move the brand sideways.</p>
-              </div>
-            </article>
-            <article class="drift-card good">
-              <p class="drift-label">Do</p>
-              <div class="good-example">
-                <h3>Keep more of life available.</h3>
-                <p>Use quiet surfaces, human stakes, physician judgment, and proof that explains why the decision changes.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="board-section warm">
-        <div class="board-inner">
-          <div class="section-head">
-            <h2>Implementation map.</h2>
-            <p>The files are intentionally small. They give new work a reusable baseline without pretending we have a full library yet.</p>
-          </div>
-          <div class="token-table">
-            <div class="token-row">
-              <strong>tokens.css</strong>
-              <span>Color, layout, type, motion, and effects</span>
-              <span>Use for all new marketing CSS</span>
-            </div>
-            <div class="token-row">
-              <strong>base.css</strong>
-              <span>Typography, containers, base sections</span>
-              <span>Use when a new static page begins</span>
-            </div>
-            <div class="token-row">
-              <strong>components.css</strong>
-              <span>Hero, nav, buttons, section primitives</span>
-              <span>Extract from here before inventing new pieces</span>
-            </div>
-            <div class="token-row">
-              <strong>MARKETING_DESIGN_SYSTEM.md</strong>
-              <span>Voice, visual principles, proof posture, image guidance</span>
-              <span>Read before new marketing explorations</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+  </main>
+</div>
 </body>
 </html>
