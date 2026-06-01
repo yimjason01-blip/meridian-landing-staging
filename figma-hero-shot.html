@@ -614,10 +614,7 @@
     }
 
     .section-gap {
-      width: 100vw;
-      height: calc(100vw * 64 / 1728);
-      margin-top: -1px;
-      background: linear-gradient(180deg, rgba(65, 76, 106, 0.85) 0%, rgba(239, 234, 224, 0.5) 42%, var(--page-bg) 100%);
+      display: none;
     }
 
     .curve-section {
@@ -728,14 +725,61 @@
       color: var(--white);
     }
 
+    .curve-plot {
+      z-index: 3;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .curve-line {
+      fill: none;
+      stroke: url(#curveGrad);
+      stroke-width: 3;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .curve-marker {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .curve-marker.start { fill: var(--rust); }
+    .curve-marker.end { fill: var(--navy); }
+
+    .curve-agecard rect {
+      fill: #fefdfc;
+      stroke: rgba(36, 36, 38, 0.12);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .curve-agecard .age-kicker {
+      fill: rgba(36, 36, 38, 0.5);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .curve-agecard .age-num {
+      fill: var(--ink);
+      font-size: 46px;
+      font-weight: 600;
+    }
+
     .curve-title,
     .capability-band,
+    .curve-plot,
     .curve-indicators {
       transition: opacity 620ms var(--ease-out-premium), transform 620ms var(--ease-out-premium);
     }
 
     .curve-section:not(.is-in-view) .curve-title,
     .curve-section:not(.is-in-view) .capability-band,
+    .curve-section:not(.is-in-view) .curve-plot,
     .curve-section:not(.is-in-view) .curve-indicators {
       opacity: 0;
       transform: translateY(16px);
@@ -744,7 +788,8 @@
     .curve-section.is-in-view .curve-title { transition-delay: 80ms; }
     .curve-section.is-in-view .capability-band.high { transition-delay: 180ms; }
     .curve-section.is-in-view .capability-band.low { transition-delay: 260ms; }
-    .curve-section.is-in-view .curve-indicators { transition-delay: 320ms; }
+    .curve-section.is-in-view .curve-plot { transition-delay: 300ms; }
+    .curve-section.is-in-view .curve-indicators { transition-delay: 360ms; }
 
     .brand-logo,
     .header-actions,
@@ -1040,6 +1085,28 @@
     <div class="capability-band low" data-figma-node="694:49980" aria-label="Dependent on others">
       <span>Dependent on others</span>
     </div>
+
+    <svg class="curve-plot" viewBox="0 0 1728 786" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="curveGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#a2653b" />
+          <stop offset="1" stop-color="#2c3240" />
+        </linearGradient>
+      </defs>
+      <path class="curve-line" d="M 250 470 C 540 470, 720 480, 951 595 C 1180 710, 1330 720, 1480 720" />
+      <rect class="curve-marker start" x="242" y="462" width="16" height="16" />
+      <rect class="curve-marker end" x="1472" y="712" width="16" height="16" />
+      <g class="curve-agecard">
+        <rect x="182" y="356" width="96" height="108" rx="8" />
+        <text class="age-kicker" x="200" y="392">Age</text>
+        <text class="age-num" x="198" y="438">40</text>
+      </g>
+      <g class="curve-agecard">
+        <rect x="1502" y="640" width="96" height="108" rx="8" />
+        <text class="age-kicker" x="1520" y="676">Age</text>
+        <text class="age-num" x="1518" y="722">90</text>
+      </g>
+    </svg>
 
     <nav class="curve-indicators" data-figma-node="694:49983" aria-label="Quality of life curve stages">
       <span>Intro</span>
