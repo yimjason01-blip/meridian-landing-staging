@@ -18,11 +18,16 @@
   --amd-color-surface-burgundy: #2C1F29; /* source: figma-reference / Color Palette */
   --amd-color-surface-deep: #232426; /* source: login + figma-reference */
   --amd-color-surface-card: #FFFFFF;
-  --amd-color-text-primary: #242426;
-  --amd-color-text-secondary: #606165;
-  --amd-color-text-tertiary: #8A8A8E;
+  /* Semantic TEXT roles. All meet WCAG AAA (>=7:1 normal, >=4.5:1 large)
+     on the lightest surface they are allowed to render on. These are the
+     only colors text may use. Raw reference pigments below are swatch-only. */
+  --amd-color-text-primary: #242426;          /* >=15:1 on page/card/cream */
+  --amd-color-text-secondary: #565659;        /* 7.25 page / 7.31 card / 6.10 cream (light surfaces only) */
+  --amd-color-text-tertiary: #6E6E72;          /* large text only (>=18px or >=14px bold): 5.03 page */
+  --amd-color-text-accent: #6E3D1C;            /* rust for labels/badges/code on light: 7.46 cream, 8.87 page */
+  --amd-color-text-accent-on-dark: #D9A765;    /* gold for labels/badges on charcoal: 7.13 on #242426 */
   --amd-color-text-inverse: #FFFEFB;
-  --amd-color-text-inverse-muted: rgba(255, 254, 251, 0.72);
+  --amd-color-text-inverse-muted: rgba(255, 254, 251, 0.78); /* 8.0:1 on #232426 */
   --amd-color-border-default: rgba(36, 36, 38, 0.14);
   --amd-color-border-subtle: rgba(36, 36, 38, 0.08);
   --amd-color-border-inverse: rgba(255, 254, 251, 0.22);
@@ -37,13 +42,13 @@
   --amd-color-grid: #DED8CC;
   --amd-color-success: #3E7C54;
   --amd-color-warning: #B8792E;
-  --amd-color-danger: #A33A2A;
+  --amd-color-danger: #922E20; /* 7.97:1 on white, AAA as error text and border */
   --amd-color-info: #3C5068;
 
   /* Interactive roles */
   --amd-action-primary-bg: var(--amd-color-surface-dark);
   --amd-action-primary-text: var(--amd-color-text-inverse);
-  --amd-action-primary-hover-bg: var(--amd-color-rust);
+  --amd-action-primary-hover-bg: #8E3F1E; /* deep rust, 7.29:1 with white text, AAA */
   --amd-action-secondary-bg: transparent;
   --amd-action-secondary-text: var(--amd-color-text-primary);
   --amd-action-secondary-border: rgba(36, 36, 38, 0.34);
