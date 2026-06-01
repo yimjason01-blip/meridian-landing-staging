@@ -16,11 +16,27 @@ Current executed landing hero.
 
 ### figma-reference
 
-Reference exports used for comparison and visual anchoring.
+Primary visual-language source allocated by the designer.
 
-- Files: `assets/figma-reference/*.png`
-- Belongs here: reference thumbnails, curve reference, visual checks.
-- Does not become production code unless copied into a pattern intentionally.
+- Figma page: `Reference` (`785:6560`).
+- Design-system copies: `design-system/assets/reference-page/*.png`.
+- Belongs here: hero treatments, trajectory frames, illustration systems, texture/moment screens, and palette.
+- This is primary for initial design-system language. The live Website page is implementation evidence, not the source of visual vocabulary.
+
+### figma-trajectory
+
+Trajectory and curve grammar from the Reference page.
+
+- Figma frames: `2` (`785:7272`), `3` (`785:7322`), `4` (`785:7169`).
+- Belongs here: cream grid fields, PolySans narrative headlines, Space Mono axes and section indicators, gradient curve strokes, square data markers, dashed counterfactuals, and small annotation cards.
+- Excludes: `assets/curve.jpg` dark gold render and the old `figma-curve-thumb.webp` screenshot as canonical references.
+
+### figma-illustration
+
+Illustration and icon grammar from the Reference page texture frames.
+
+- Figma frames: `Texture` frames under the `Icon Set A (Isometric)` and `Icon Set B (Flat Outlined)` labels.
+- Belongs here: warm-brown isometric object illustrations with dark strokes, flat outlined document/order icons with registration-corner marks, sparse mobile moment screens, and bottom-anchored single CTAs.
 
 ### identity-favicon
 
@@ -66,6 +82,8 @@ Do not import these into the current design system.
 
 - Reverted pitch deck aesthetic pass.
 - Synthetic hero mock from the first production-kit draft.
+- Old `figma-curve-thumb.webp` curve screenshot as a canonical reference.
+- Dark gold `assets/curve.jpg` render for the light Aleron system.
 - Unverified black/gold/tan historical marketing tokens.
 - Any generated visual that is not in the live landing, Figma source, favicon assets, login, or member surface.
 
@@ -73,16 +91,22 @@ Do not import these into the current design system.
 
 - `--amd-logo-icon-fade`: identity-favicon.
 - `--amd-login-fade`: login.
-- `--amd-color-surface-page`: live-hero / landing-surface.
+- `--amd-reference-main-fade`: figma-reference / Color Palette.
+- `--amd-reference-warm-fade`: figma-reference / Color Palette.
+- `--amd-color-surface-page`: figma-reference / live-hero / landing-surface.
 - `--amd-color-surface-paper`: landing-surface.
-- `--amd-color-surface-cream`: live-hero / landing-surface / login.
+- `--amd-color-surface-cream`: figma-reference / live-hero / landing-surface / login.
 - `--amd-color-surface-bone`: landing-surface.
-- `--amd-color-surface-dark`: live-hero / login.
-- `--amd-color-surface-deep`: login.
+- `--amd-color-surface-dark`: figma-reference / live-hero / login.
+- `--amd-color-surface-burgundy`: figma-reference / Color Palette.
+- `--amd-color-surface-deep`: login / figma-reference.
 - `--amd-color-rust`: identity-favicon.
-- `--amd-color-rust-figma`: live-hero.
+- `--amd-color-rust-figma`: figma-trajectory.
+- `--amd-color-rust-reference`: figma-reference / Color Palette.
+- `--amd-color-gold-reference`: figma-reference / Color Palette.
 - `--amd-color-navy`: identity-favicon.
-- `--amd-color-navy-figma`: live-hero.
+- `--amd-color-navy-figma`: figma-trajectory.
+- `--amd-color-reference-blue`: figma-reference / Color Palette.
 - `--amd-color-hero-blue`: live-hero.
 - Status colors: component-derived pending stronger product source.
 

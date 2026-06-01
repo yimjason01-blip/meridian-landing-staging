@@ -2,7 +2,7 @@
 title: Aleron MD Design System
 status: production kit draft
 updated: 2026-06-01
-source: live landing, Figma hero frames, current brand assets
+source: Figma Reference page, live landing, current brand assets
 ---
 
 # Aleron MD Design System
@@ -15,15 +15,16 @@ Help a builder create Aleron public, login, application, and member-facing surfa
 
 See `PROVENANCE.md` for source-lane ownership. Do not add a token, asset, component, or pattern without a source lane.
 
-1. Brand assets in `design-system/assets/`
-2. Semantic tokens in `tokens.css`
-3. Shared primitives in `components.css`
-4. Page patterns in `patterns.css`
-5. Current landing and Figma hero references
+1. Figma `Reference` page exports in `design-system/assets/reference-page/`
+2. Brand assets in `design-system/assets/`
+3. Semantic tokens in `tokens.css`
+4. Shared primitives in `components.css`
+5. Page patterns in `patterns.css`
+6. Live landing implementation for behavior and layer mechanics
 
 ## Provenance
 
-Every item belongs to one of these lanes: `live-hero`, `figma-reference`, `identity-favicon`, `wordmark`, `login`, `landing-surface`, `component-derived`, or `excluded`.
+Every item belongs to one of these lanes: `figma-reference`, `figma-trajectory`, `figma-illustration`, `live-hero`, `identity-favicon`, `wordmark`, `login`, `landing-surface`, `component-derived`, or `excluded`.
 
 ## Build order
 
@@ -57,9 +58,11 @@ Every item belongs to one of these lanes: `live-hero`, `figma-reference`, `ident
 
 ## Patterns
 
+- Reference page overview
 - Landing hero
 - Landing hero reference from `figma-hero-shot.html`
-- Cream proof or curve section
+- Trajectory proof from the Reference page frames
+- Texture/moment screen references
 - Application form section
 - Login shell
 - CTA/footer section
@@ -72,5 +75,8 @@ Every item belongs to one of these lanes: `live-hero`, `figma-reference`, `ident
 - Do not use `Join`.
 - Use square CTAs.
 - Use approved fades and color roles only.
+- Use the Figma Reference page for hero, trajectory, illustration, texture, and palette decisions before using live-page leftovers.
 - Use human photography and editorial proof modules.
+- Use isometric warm-brown objects or flat outlined registration-corner icons for moment illustrations.
+- Do not use the old curve thumbnail or dark gold curve render as canonical design-system references.
 - Clinical values must include units every time.
