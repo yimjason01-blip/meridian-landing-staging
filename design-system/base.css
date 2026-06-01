@@ -1,4 +1,4 @@
-@import url("./tokens.css");
+@import url("./tokens.css?v=kit-20260601c");
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -21,7 +21,8 @@ a { color: inherit; }
 .amd-body-lg { font-size: var(--amd-type-body-lg-size); line-height: var(--amd-type-body-lg-line); color: var(--amd-color-text-secondary); max-width: var(--amd-layout-measure); }
 .amd-body { font-size: var(--amd-type-body-size); line-height: var(--amd-type-body-line); }
 .amd-caption { font-size: var(--amd-type-caption-size); line-height: var(--amd-type-caption-line); color: var(--amd-color-text-tertiary); }
-.amd-label { font-size: var(--amd-type-label-size); letter-spacing: var(--amd-type-label-track); text-transform: uppercase; font-weight: 600; color: var(--amd-color-rust-figma); }
+.amd-label { font-size: var(--amd-type-label-size); letter-spacing: var(--amd-type-label-track); text-transform: uppercase; font-weight: 600; color: var(--amd-color-text-accent); }
+.amd-section-dark .amd-label, .amd-panel-dark .amd-label { color: var(--amd-color-text-accent-on-dark); }
 .amd-mono { font-family: var(--amd-font-mono); font-size: 12px; letter-spacing: 0.04em; }
 .amd-stack-sm { display: grid; gap: var(--amd-space-3); }
 .amd-stack-md { display: grid; gap: var(--amd-space-5); }

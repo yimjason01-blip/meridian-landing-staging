@@ -1,4 +1,4 @@
-@import url("./base.css");
+@import url("./base.css?v=kit-20260601c");
 
 .amd-wordmark { display: inline-flex; align-items: center; height: 32px; }
 .amd-wordmark img { width: 128px; height: auto; }
@@ -40,14 +40,14 @@
 .amd-input, .amd-textarea, .amd-select { width: 100%; min-height: 52px; padding: 0 14px; border: var(--amd-border-width) solid var(--amd-color-border-default); border-radius: 0; background: var(--amd-color-surface-page); color: var(--amd-color-text-primary); font: inherit; transition: border-color var(--amd-duration-fast) var(--amd-ease-standard), box-shadow var(--amd-duration-fast) var(--amd-ease-standard), background var(--amd-duration-fast) var(--amd-ease-standard); }
 .amd-textarea { min-height: 112px; padding-top: 14px; resize: vertical; }
 .amd-input:focus, .amd-textarea:focus, .amd-select:focus { border-color: var(--amd-color-rust); box-shadow: var(--amd-focus-ring); outline: none; }
-.amd-field .amd-help { font-size: 12px; color: var(--amd-color-text-tertiary); }
+.amd-field .amd-help { font-size: 12px; color: var(--amd-color-text-secondary); }
 .amd-field.is-error .amd-input, .amd-field.is-error .amd-textarea, .amd-field.is-error .amd-select { border-color: var(--amd-color-danger); background: rgba(163, 58, 42, .045); }
 .amd-field.is-error .amd-help { color: var(--amd-color-danger); }
 .amd-field.is-success .amd-input { border-color: var(--amd-color-success); }
 .amd-input[disabled], .amd-textarea[disabled], .amd-select[disabled] { opacity: .55; cursor: not-allowed; }
 
 .amd-tabs { display: flex; gap: var(--amd-space-5); border-bottom: 1px solid var(--amd-color-border-default); overflow-x: auto; }
-.amd-tab { appearance: none; background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 0 0 var(--amd-space-3); color: var(--amd-color-text-tertiary); font: 600 14px var(--amd-font-body); cursor: pointer; white-space: nowrap; }
+.amd-tab { appearance: none; background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 0 0 var(--amd-space-3); color: var(--amd-color-text-secondary); font: 600 14px var(--amd-font-body); cursor: pointer; white-space: nowrap; }
 .amd-tab[aria-selected="true"], .amd-tab.is-active { color: var(--amd-color-text-primary); border-bottom-color: var(--amd-color-rust); }
 
 .amd-alert { border: 1px solid var(--amd-color-border-default); border-left: 4px solid var(--amd-color-info); padding: var(--amd-space-4); background: var(--amd-color-surface-card); display: grid; gap: var(--amd-space-2); }
