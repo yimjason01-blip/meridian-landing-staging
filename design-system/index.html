@@ -61,6 +61,21 @@
   .ds-source-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
   .ds-source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
   .ds-source-card figcaption { padding: var(--amd-space-4); }
+  .ds-reference-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
+  .ds-reference-gallery .ds-source-card img { aspect-ratio: 16 / 10; object-fit: cover; }
+  .ds-reference-gallery .ds-source-card.is-mobile img { aspect-ratio: 9 / 16; object-fit: cover; object-position: top center; background: var(--amd-color-surface-cream); }
+  .ds-lane-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
+  .ds-lane-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-5); display: grid; gap: var(--amd-space-3); }
+  .ds-lane-card ul { margin: 0; padding-left: 18px; color: var(--amd-color-text-secondary); line-height: 1.5; }
+  .ds-do-dont { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-5); }
+  .ds-do-dont div { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-4); }
+  .ds-file-map { display: grid; gap: 0; }
+  .ds-file-map-row { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 1.15fr); gap: var(--amd-space-4); padding: 12px 0; border-bottom: 1px solid var(--amd-color-border-subtle); align-items: start; }
+  .ds-file-map-row:last-child { border-bottom: 0; }
+  .ds-file-map-row code { font: 12px var(--amd-font-mono); }
+  .ds-file-map-meta { display: grid; gap: 4px; min-width: 0; }
+  .ds-file-map-meta strong { font-size: 13px; line-height: 1.2; }
+  .ds-file-map-meta span { color: var(--amd-color-text-secondary); font-size: 14px; line-height: 1.35; }
   .ds-hero-reference { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
   .ds-hero-reference iframe { width: 100%; height: min(720px, 78vh); border: 0; display: block; background: var(--amd-color-surface-deep); }
   .ds-layer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-5); }
@@ -75,7 +90,7 @@
   .ds-state-row { display: flex; gap: var(--amd-space-3); flex-wrap: wrap; align-items: center; }
   .ds-snippet { margin-top: var(--amd-space-4); }
   .ds-divider { height: 1px; background: var(--amd-color-border-subtle); margin: var(--amd-space-5) 0; }
-  @media (max-width: 900px) { .ds-shell { grid-template-columns: 1fr; } .ds-side { position: relative; height: auto; } .ds-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-type-row, .ds-token-row { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .ds-shell { grid-template-columns: 1fr; } .ds-side { position: relative; height: auto; } .ds-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-type-row, .ds-token-row, .ds-file-map-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -88,6 +103,7 @@
     <nav class="ds-nav" aria-label="Design system sections">
       <a href="#overview">Overview</a>
       <a href="#assets">Assets</a>
+      <a href="#reference-page">Reference page</a>
       <a href="#provenance">Provenance</a>
       <a href="#foundations">Foundations</a>
       <a href="#type">Typography</a>
@@ -104,9 +120,9 @@
       <h1 class="amd-h1">Design system</h1>
       <p class="ds-lede">A production kit for building Aleron surfaces quickly: semantic tokens, shared components, page patterns, source assets, and copyable snippets.</p>
       <div class="ds-grid">
-        <div class="ds-spec"><strong>1. Foundations</strong><p class="ds-note">Use semantic color, type, spacing, layout, shape, and motion tokens before writing page CSS.</p></div>
-        <div class="ds-spec"><strong>2. Components</strong><p class="ds-note">Build with the shared header, buttons, forms, cards, tabs, alerts, and modal shell.</p></div>
-        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Use the actual landing hero as the reference. Compose other pages from proof, form, login, and CTA patterns.</p></div>
+        <div class="ds-spec"><strong>1. Reference page</strong><p class="ds-note">Start from the Figma `Reference` page: heroes, trajectory frames, illustration systems, texture frames, and palette.</p></div>
+        <div class="ds-spec"><strong>2. Foundations</strong><p class="ds-note">Translate the reference into semantic color, type, spacing, layout, shape, and motion tokens before writing page CSS.</p></div>
+        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Use the live hero as implementation evidence, but the Reference page as the visual-language source.</p></div>
       </div>
     </section>
 
@@ -120,8 +136,34 @@
         <div class="ds-spec ds-asset"><span class="ds-source-badge">wordmark</span><img class="ds-wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark"><div><strong>Wordmark on light</strong><div class="ds-mono">same alpha, ink fill</div></div></div>
       </div>
       <div class="ds-grid-wide">
-        <figure class="ds-source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Hero reference</strong><p class="ds-note">Human photography, rust/navy planes, white wordmark, square CTA language.</p></figcaption></figure>
-        <figure class="ds-source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve reference"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Curve reference</strong><p class="ds-note">Cream field, faint grid, rust-to-navy curve, square markers.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/hero-1.png" alt="Figma Reference page hero treatment"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Reference hero treatment</strong><p class="ds-note">Full-bleed human photography, warm-to-navy field, hard rectangular mosaic blocks, white wordmark, square ghost actions.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/palette.png" alt="Figma Reference page color palette"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Reference palette</strong><p class="ds-note">Charcoal, burgundy, slate blue, rust, gold, cream, page white, and two approved gradients.</p></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ds-section" id="reference-page">
+      <p class="ds-kicker">Figma source</p>
+      <h2 class="amd-h2">Reference page</h2>
+      <p class="ds-lede">This page is the primary visual-language source. Website and live pages are implementation evidence; the Reference page defines the initial system lanes.</p>
+      <div class="ds-lane-grid">
+        <div class="ds-lane-card"><span class="ds-source-badge">figma-reference</span><strong>Hero treatment</strong><ul><li>Full-bleed aspirational photography.</li><li>Warm rust/orange into navy/purple gradients.</li><li>Axis-aligned rectangular mosaic blocks only.</li><li>White lowercase wordmark and square ghost actions.</li></ul></div>
+        <div class="ds-lane-card"><span class="ds-source-badge">figma-reference</span><strong>Trajectory language</strong><ul><li>Cream grid field, not dark cinematic render.</li><li>PolySans narrative headline over chart.</li><li>Space Mono axis and section nav labels.</li><li>Gradient curve, square markers, dashed counterfactual.</li></ul></div>
+        <div class="ds-lane-card"><span class="ds-source-badge">figma-reference</span><strong>Illustration systems</strong><ul><li>Set A: isometric warm-brown object illustrations with dark stroke.</li><li>Set B: flat outlined icons with registration/crop-mark corners.</li><li>Icons explain status moments, not decorative chrome.</li></ul></div>
+        <div class="ds-lane-card"><span class="ds-source-badge">figma-reference</span><strong>Texture moments</strong><ul><li>Mobile status/interstitial screens.</li><li>Single centered illustration or icon.</li><li>One bottom-anchored CTA.</li><li>Warm texture or approved Reference gradient as full-bleed surface.</li></ul></div>
+      </div>
+      <div class="ds-reference-gallery">
+        <figure class="ds-source-card"><img src="./assets/reference-page/hero-1.png" alt="Reference hero with family photography"><figcaption><span class="ds-source-badge">hero</span><strong>Human proof hero</strong><p class="ds-note">Photo leads. Blocks frame and fragment the image without becoming UI cards.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/hero-2.png" alt="Reference hero with runner photography"><figcaption><span class="ds-source-badge">hero</span><strong>Motion hero</strong><p class="ds-note">Same field rules with active older-demographic photography.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/trajectory-future.png" alt="Reference trajectory future chart"><figcaption><span class="ds-source-badge">trajectory</span><strong>Future trajectory</strong><p class="ds-note">Use this family for curve/proof references. Do not use the old thumbnail or dark gold render.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/trajectory-hazards.png" alt="Reference hazards trajectory chart"><figcaption><span class="ds-source-badge">trajectory</span><strong>Hazard event</strong><p class="ds-note">Square event markers plus dashed counterfactual line define the chart grammar.</p></figcaption></figure>
+        <figure class="ds-source-card is-mobile"><img src="./assets/reference-page/moment-isometric-truck-texture.png" alt="Reference isometric genetics kit status screen"><figcaption><span class="ds-source-badge">illustration-a</span><strong>Isometric moment</strong><p class="ds-note">Warm 2.5D object illustration, bold dark outline, sparse mobile status layout.</p></figcaption></figure>
+        <figure class="ds-source-card is-mobile"><img src="./assets/reference-page/moment-outline-lab.png" alt="Reference flat outlined lab order status screen"><figcaption><span class="ds-source-badge">illustration-b</span><strong>Flat outlined moment</strong><p class="ds-note">Stroke-only document icon with registration-corner grammar and bottom action bar.</p></figcaption></figure>
+        <figure class="ds-source-card is-mobile"><img src="./assets/reference-page/moment-outline-lab-gradient.png" alt="Reference gradient lab order status screen"><figcaption><span class="ds-source-badge">texture</span><strong>Gradient moment</strong><p class="ds-note">Approved warm-to-navy gradient variant with cream icon, headline, and CTA inversion.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/reference-page/palette.png" alt="Reference page palette"><figcaption><span class="ds-source-badge">palette</span><strong>Palette source</strong><p class="ds-note">Swatches and gradient tokens should come from this palette before invented additions.</p></figcaption></figure>
+      </div>
+      <div class="ds-do-dont">
+        <div><strong>Use</strong><p class="ds-note">Reference-page exports, exact node colors where available, square geometry, warm/cool gradients, cream grid fields, isometric and outlined icon lanes.</p></div>
+        <div><strong>Do not use</strong><p class="ds-note">The old curve thumbnail as canonical, dark gold `curve.jpg`, rounded/frosted CTA families, generic health-tech HUDs, or unlabeled screenshot artifacts.</p></div>
       </div>
     </section>
 
@@ -131,7 +173,9 @@
       <p class="ds-lede">Every design-system item is labeled by source lane. If a new style cannot be traced to a lane, it does not enter the system.</p>
       <div class="ds-provenance-grid">
         <div class="ds-provenance-card"><span class="ds-source-badge">live-hero</span><strong>Current executed landing hero</strong><ul><li>`figma-hero-shot.html`</li><li>`figma-layer-manifest.md`</li><li>`assets/figma-hero-layers/`</li></ul></div>
-        <div class="ds-provenance-card"><span class="ds-source-badge">figma-reference</span><strong>Reference exports</strong><ul><li>Hero and curve thumbnails</li><li>Comparison only unless explicitly promoted</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">figma-reference</span><strong>Primary Reference page</strong><ul><li>Figma page `Reference` / `785:6560`</li><li>Heroes, trajectory frames, illustration sets, texture frames, palette</li><li>Primary source for initial design-system language</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">figma-trajectory</span><strong>Trajectory grammar</strong><ul><li>Frames `2`, `3`, `4`</li><li>Cream grid, PolySans headline, Space Mono axes</li><li>Gradient curves, square markers, dashed counterfactuals</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">figma-illustration</span><strong>Illustration grammar</strong><ul><li>Texture frames under Icon Set A and B</li><li>Isometric warm object illustrations</li><li>Flat outlined icons with registration corners</li></ul></div>
         <div class="ds-provenance-card"><span class="ds-source-badge">identity-favicon</span><strong>Icon and favicon identity</strong><ul><li>favicon SVG and PNGs</li><li>Apple touch icon</li><li>logo fade token</li></ul></div>
         <div class="ds-provenance-card"><span class="ds-source-badge">wordmark</span><strong>Brand lockups</strong><ul><li>`logo_4x.png`</li><li>white and ink derived assets</li></ul></div>
         <div class="ds-provenance-card"><span class="ds-source-badge">login</span><strong>Login surface</strong><ul><li>`login.html` gradient</li><li>square panel and form treatment</li></ul></div>
@@ -148,10 +192,14 @@
         <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-logo-icon-fade)"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Logo fade</strong><code>--amd-logo-icon-fade</code></div></div>
         <div class="ds-swatch"><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Page</strong><code>--amd-color-surface-page</code></div></div>
         <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><span class="ds-source-badge">live-hero</span><strong>Ink</strong><code>--amd-color-surface-dark</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#B9562A"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Rust</strong><code>--amd-color-rust</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#1E2A4A"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Navy</strong><code>--amd-color-navy</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#414C6A"></div><div class="ds-meta"><span class="ds-source-badge">live-hero</span><strong>Hero blue</strong><code>--amd-color-hero-blue</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Charcoal</strong><code>--amd-color-surface-dark</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#2C1F29"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Burgundy black</strong><code>--amd-color-surface-burgundy</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#3C4662"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Slate blue</strong><code>--amd-color-reference-blue</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#A35520"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference rust</strong><code>--amd-color-rust-reference</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#CD9453"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Reference gold</strong><code>--amd-color-gold-reference</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-reference-warm-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Warm fade</strong><code>--amd-reference-warm-fade</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-reference-main-fade)"></div><div class="ds-meta"><span class="ds-source-badge">figma-reference</span><strong>Main fade</strong><code>--amd-reference-main-fade</code></div></div>
       </div>
       <div class="ds-grid-wide">
         <div class="ds-spec"><h3>Spacing</h3><div class="ds-token-row"><code>--amd-space-1</code><span>4 px</span><strong>Detail</strong></div><div class="ds-token-row"><code>--amd-space-4</code><span>16 px</span><strong>Inline</strong></div><div class="ds-token-row"><code>--amd-space-6</code><span>32 px</span><strong>Panel</strong></div><div class="ds-token-row"><code>--amd-space-8</code><span>64 px</span><strong>Section</strong></div><div class="ds-token-row"><code>--amd-space-10</code><span>128 px</span><strong>Hero</strong></div></div>
@@ -228,7 +276,7 @@
 .hero-subject-plane  { z-index: 3; transform: translate3d(var(--slide-image-shift), 0, 0); }
 .hero-anchor-block-plane { z-index: 4; transform: none; }</pre>
         </div>
-        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">figma-reference</span><div class="ds-demo-label">Curve proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Curve reference"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern when proof needs a visual field but should not become a dashboard.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">figma-trajectory</span><div class="ds-demo-label">Trajectory proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Reference page trajectory frame"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern only from the Reference page trajectory family: cream grid, semantic gradient curve, square markers, and dashed counterfactual where needed.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
         <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
         <div class="ds-spec"><span class="ds-source-badge">login</span><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>
         <div class="ds-spec"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">See a demo</a></div></div></div>
@@ -240,7 +288,7 @@
       <h2 class="amd-h2">Use this order</h2>
       <div class="ds-grid-wide">
         <div class="ds-spec"><h3>Imports</h3><pre class="amd-code">&lt;link rel="stylesheet" href="design-system/patterns.css"&gt;</pre><p class="ds-note">`patterns.css` imports components, base, and tokens. Use it for page work.</p></div>
-        <div class="ds-spec"><h3>File map</h3><div class="ds-token-row"><code>tokens.css</code><span>semantic roles</span><strong>foundation</strong></div><div class="ds-token-row"><code>components.css</code><span>shared UI</span><strong>primitives</strong></div><div class="ds-token-row"><code>patterns.css</code><span>page sections</span><strong>composition</strong></div><div class="ds-token-row"><code>DESIGN_SYSTEM.md</code><span>build rules</span><strong>docs</strong></div></div>
+        <div class="ds-spec"><h3>File map</h3><div class="ds-file-map"><div class="ds-file-map-row"><code>tokens.css</code><div class="ds-file-map-meta"><strong>Foundation</strong><span>Semantic roles and Reference-page palette tokens.</span></div></div><div class="ds-file-map-row"><code>components.css</code><div class="ds-file-map-meta"><strong>Primitives</strong><span>Shared UI components and states.</span></div></div><div class="ds-file-map-row"><code>patterns.css</code><div class="ds-file-map-meta"><strong>Composition</strong><span>Page sections, trajectory proof, login, form, and CTA patterns.</span></div></div><div class="ds-file-map-row"><code>DESIGN_SYSTEM.md</code><div class="ds-file-map-meta"><strong>Docs</strong><span>Build rules and source-lane guardrails.</span></div></div></div></div>
         <div class="ds-spec"><h3>Additions rule</h3><p class="ds-note">If a page needs a new visual decision, add the token, component, or pattern here first. Then use it in the page.</p></div>
         <div class="ds-spec"><h3>Verification</h3><p class="ds-note">Before shipping a page, check asset paths, button radius, token usage, mobile layout, focus states, and image loading.</p></div>
       </div>
