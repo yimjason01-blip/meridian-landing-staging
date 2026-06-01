@@ -623,26 +623,43 @@
     .curve-section {
       position: relative;
       width: 100vw;
-      aspect-ratio: 1728 / 861;
+      aspect-ratio: 1728 / 786;
       overflow: hidden;
-      background: var(--page-bg);
+      background: #fefdfc;
       isolation: isolate;
     }
 
-    .curve-bg-grid {
+    .curve-section::before {
+      content: "";
+      position: absolute;
       z-index: 1;
       left: 0;
-      top: 0;
+      top: calc(100vw * 49 / 1728);
       width: 100%;
-      height: 85.598142%;
-      object-fit: fill;
+      height: calc(100vw * 984 / 1728);
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent calc((100vw * 247 / 1728) - 1px),
+          rgba(255, 255, 255, 0.82) calc((100vw * 247 / 1728) - 1px),
+          rgba(255, 255, 255, 0.82) calc(100vw * 247 / 1728)
+        ),
+        repeating-linear-gradient(
+          180deg,
+          transparent 0,
+          transparent calc((100vw * 123 / 1728) - 1px),
+          rgba(255, 255, 255, 0.82) calc((100vw * 123 / 1728) - 1px),
+          rgba(255, 255, 255, 0.82) calc(100vw * 123 / 1728)
+        ),
+        linear-gradient(180deg, #fefdfc 0%, #dedede 100%);
     }
 
     .curve-title {
-      z-index: 3;
+      z-index: 4;
       position: absolute;
       left: 29.918981%;
-      top: 7.897793%;
+      top: 26.590331%;
       width: 40.162037%;
       margin: 0;
       color: var(--ink);
@@ -654,182 +671,80 @@
       text-wrap: balance;
     }
 
-    .play-video {
-      z-index: 4;
+    .capability-band {
+      z-index: 2;
       position: absolute;
-      left: 45.138889%;
-      top: 25.087108%;
-      width: 7.928241%;
-      height: 6.852497%;
+      left: 0;
+      width: 100%;
+      height: calc(100vw * 122 / 1728);
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 4px;
+      background: radial-gradient(ellipse 50% 500% at 50% 50%, rgba(162, 101, 59, 0.10) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .capability-band.high {
+      top: calc(100vw * 417 / 1728);
+    }
+
+    .capability-band.low {
+      top: calc(100vw * 664 / 1728);
+    }
+
+    .capability-band span {
+      color: var(--rust);
+      font-weight: 600;
+      font-size: clamp(10px, 0.694444vw, 12px);
+      line-height: 1;
+      text-align: center;
+    }
+
+    .curve-indicators {
+      z-index: 5;
+      position: absolute;
+      right: 2.777778%;
+      top: 56.615776%;
+      display: grid;
+      gap: calc(100vw * 27 / 1728);
+      justify-items: end;
+      font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: clamp(10px, 0.810185vw, 14px);
+      line-height: 1;
+    }
+
+    .curve-indicators span {
+      display: block;
+      color: var(--navy);
+      font-weight: 400;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .curve-indicators .is-active {
+      padding: 0 calc(100vw * 8 / 1728);
       background: var(--navy);
       color: var(--white);
-      border: 1px solid var(--navy);
-      border-radius: 0;
-      font: inherit;
-      font-size: clamp(12px, 0.925926vw, 16px);
-      line-height: 1.2;
-      letter-spacing: clamp(-0.16px, -0.009259vw, -0.08px);
-      text-decoration: none;
-      cursor: pointer;
-      transition: background var(--duration-base) ease, transform var(--duration-base) var(--ease-out-premium), box-shadow var(--duration-base) ease;
     }
-
-    .play-video:hover {
-      background: #1f2531;
-    }
-
-    .curve-line {
-      z-index: 2;
-      left: 14.351852%;
-      top: 28.687573%;
-      width: 71.469907%;
-      height: 56.794425%;
-      object-fit: fill;
-    }
-
-    .age-card {
-      z-index: 5;
-      position: absolute;
-      width: 5.266204%;
-      height: 12.23981%;
-      background: var(--white);
-      border: 1px solid var(--gold-line);
-      color: var(--navy);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: calc(100vw * 20 / 1728);
-    }
-
-    .age-card.left {
-      left: 11.631944%;
-      top: 35.307782%;
-    }
-
-    .age-card.right {
-      left: 83.101852%;
-      top: 66.666667%;
-    }
-
-    .age-card::after {
-      content: "";
-      position: absolute;
-      left: 37.35%;
-      top: 80.93%;
-      width: 27.51%;
-      height: 19.07%;
-      background: #d9d9d9;
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-    }
-
-    .age-label {
-      position: relative;
-      z-index: 1;
-      color: var(--navy);
-      font-weight: 600;
-      font-size: clamp(12px, 0.694444vw, 12px);
-      line-height: 1.23;
-      text-align: center;
-    }
-
-    .age-number {
-      position: relative;
-      z-index: 1;
-      color: var(--navy);
-      font-weight: 400;
-      font-size: clamp(20px, 1.851852vw, 32px);
-      line-height: 1.23;
-      letter-spacing: clamp(-1.92px, -0.111111vw, -0.96px);
-      text-align: center;
-      margin-top: calc(100vw * 3 / 1728);
-    }
-
-    .curve-marker {
-      z-index: 5;
-      position: absolute;
-      width: 0.983796%;
-      height: 1.974448%;
-    }
-
-    .curve-marker.start {
-      left: 13.831019%;
-      top: 49.012776%;
-      background: var(--rust);
-      border: 1px solid var(--rust);
-    }
-
-    .curve-marker.end {
-      left: 85.300926%;
-      top: 80.487805%;
-      background: var(--navy);
-      border: 1px solid var(--navy);
-    }
-
-    .axis-label {
-      z-index: 5;
-      position: absolute;
-      margin: 0;
-      color: var(--navy);
-      font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: clamp(12px, 0.810185vw, 14px);
-      line-height: 1;
-      font-weight: 400;
-      text-align: center;
-      width: 1.194408%;
-      height: 1.626016%;
-    }
-
-    .axis-40 { left: 14.178241%; top: 87.921022%; }
-    .axis-50 { left: 28.472222%; top: 87.921022%; }
-    .axis-60 { left: 42.766204%; top: 87.921022%; }
-    .axis-70 { left: 57.060185%; top: 87.921022%; }
-    .axis-80 { left: 71.296296%; top: 87.921022%; }
-    .axis-90 { left: 86.747685%; top: 87.921022%; }
-
-
 
     .curve-title,
-    .play-video,
-    .curve-line,
-    .age-card,
-    .curve-marker,
-    .axis-label {
-      transition: opacity 620ms var(--ease-out-premium), transform 620ms var(--ease-out-premium), clip-path 980ms var(--ease-soft);
+    .capability-band,
+    .curve-indicators {
+      transition: opacity 620ms var(--ease-out-premium), transform 620ms var(--ease-out-premium);
     }
 
     .curve-section:not(.is-in-view) .curve-title,
-    .curve-section:not(.is-in-view) .play-video,
-    .curve-section:not(.is-in-view) .age-card,
-    .curve-section:not(.is-in-view) .axis-label {
+    .curve-section:not(.is-in-view) .capability-band,
+    .curve-section:not(.is-in-view) .curve-indicators {
       opacity: 0;
       transform: translateY(16px);
     }
 
-    .curve-section:not(.is-in-view) .curve-line {
-      clip-path: inset(0 100% 0 0);
-    }
-
-    .curve-section:not(.is-in-view) .curve-marker {
-      opacity: 0;
-      transform: scale(0.6);
-    }
-
-    .curve-section.is-in-view .curve-line {
-      clip-path: inset(0 0 0 0);
-    }
-
     .curve-section.is-in-view .curve-title { transition-delay: 80ms; }
-    .curve-section.is-in-view .play-video { transition-delay: 180ms; }
-    .curve-section.is-in-view .curve-line { transition-delay: 220ms; }
-    .curve-section.is-in-view .age-card.left,
-    .curve-section.is-in-view .curve-marker.start { transition-delay: 560ms; }
-    .curve-section.is-in-view .age-card.right,
-    .curve-section.is-in-view .curve-marker.end { transition-delay: 900ms; }
-    .curve-section.is-in-view .axis-label { transition-delay: 720ms; }
+    .curve-section.is-in-view .capability-band.high { transition-delay: 180ms; }
+    .curve-section.is-in-view .capability-band.low { transition-delay: 260ms; }
+    .curve-section.is-in-view .curve-indicators { transition-delay: 320ms; }
 
     .brand-logo,
     .header-actions,
@@ -1115,32 +1030,23 @@
 
   <div class="section-gap" aria-hidden="true"></div>
 
-  <section class="curve-section" aria-label="Aleron MD future curve section">
-    <img class="layer curve-bg-grid" data-figma-node="674:41521" src="assets/figma-hero-layers/section2_bg_grid.png?v=layered-20260529" alt="" aria-hidden="true" />
+  <section class="curve-section" aria-label="Aleron MD quality of life curve section" data-figma-node="694:49961">
+    <h2 class="curve-title" data-figma-node="694:49982">Your future is written on top of this curve.</h2>
 
-    <h2 class="curve-title" data-figma-node="674:41545">The story of your future is written on top of this curve.</h2>
-    <a class="play-video" data-figma-node="674:41546" href="#play-video">Play Video</a>
-
-    <img class="layer curve-line" data-figma-node="674:41538" src="assets/figma-hero-layers/section2_chart.png?v=layered-20260529" alt="" aria-hidden="true" />
-
-    <div class="age-card left" data-figma-node="674:41564" aria-label="Age 40">
-      <span class="age-label">Age</span>
-      <span class="age-number">40</span>
-    </div>
-    <div class="age-card right" data-figma-node="674:41547" aria-label="Age 90">
-      <span class="age-label">Age</span>
-      <span class="age-number">90</span>
+    <div class="capability-band high" data-figma-node="694:49978" aria-label="Do anything you want">
+      <span>Do anything you want</span>
     </div>
 
-    <div class="curve-marker start" data-figma-node="674:41562" aria-hidden="true"></div>
-    <div class="curve-marker end" data-figma-node="674:41563" aria-hidden="true"></div>
+    <div class="capability-band low" data-figma-node="694:49980" aria-label="Dependent on others">
+      <span>Dependent on others</span>
+    </div>
 
-    <p class="axis-label axis-40" data-figma-node="674:41559">40</p>
-    <p class="axis-label axis-50" data-figma-node="674:41556">50</p>
-    <p class="axis-label axis-60" data-figma-node="674:41557">60</p>
-    <p class="axis-label axis-70" data-figma-node="674:41558">70</p>
-    <p class="axis-label axis-80" data-figma-node="674:41560">80</p>
-    <p class="axis-label axis-90" data-figma-node="674:41561">90</p>
+    <nav class="curve-indicators" data-figma-node="694:49983" aria-label="Quality of life curve stages">
+      <span>Intro</span>
+      <span class="is-active">Capability</span>
+      <span>Hazards</span>
+      <span>Future</span>
+    </nav>
   </section>
 
 
