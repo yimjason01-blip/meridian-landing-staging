@@ -845,14 +845,12 @@
     /* ============ TRAJECTORY SCROLLYTELLING (ported from previous landing, recolored) ============ */
     .scrolly-section {
       padding: 0;
-      background: linear-gradient(180deg, #fafaf8 0%, #f7f5f0 60%, #f4f1ea 100%);
+      background: var(--page-bg);
       --traj-rust-text: #a2653b;
       --traj-rust-deep: #8a5230;
       --traj-axis: #2c3240;
       --traj-axis-muted: #4b5163;
-      --traj-line: #cabfad;
-      --traj-grid: #e8e4dc;
-      --traj-grid-soft: #efebe3;
+      --traj-line: #b8a98f;
       --traj-max: 1200px;
       --traj-gutter: clamp(20px, 5vw, 64px);
       --traj-ease: cubic-bezier(.22, .72, .18, 1);
@@ -938,7 +936,7 @@
     /* SVG state machine */
     .scrolly-svg { width: 100%; height: auto; display: block; max-width: 100%; }
     .scrolly-svg .baseline-path {
-      stroke: url(#baselineFade);
+      stroke: var(--traj-line);
       stroke-width: 5;
       stroke-dasharray: 6 14;
       fill: none;
@@ -968,7 +966,7 @@
       transition: opacity 0.6s var(--traj-ease);
     }
     .scrolly-svg .highlight-band {
-      fill: rgba(162, 101, 59, 0.06);
+      fill: rgba(162, 101, 59, 0.13);
       opacity: 0;
       transition: opacity 0.6s var(--traj-ease);
     }
@@ -1011,9 +1009,9 @@
       stroke-linejoin: round;
     }
     .scrolly-svg[data-state="2"] .hazard-fork { opacity: 1; }
-    .scrolly-svg[data-state="2"] .baseline-path { stroke-width: 5.5; }
+    .scrolly-svg[data-state="2"] .baseline-path { stroke: var(--traj-axis); }
     .scrolly-svg[data-state="3"] .vitality-path { opacity: 1; }
-    .scrolly-svg[data-state="4"] .baseline-path { opacity: 0.55; stroke-width: 4; }
+    .scrolly-svg[data-state="4"] .baseline-path { opacity: 0.82; stroke: var(--traj-axis); stroke-width: 4.5; }
     .scrolly-svg[data-state="4"] .best-path { opacity: 1; stroke-dashoffset: 0; stroke-width: 10; }
     .scrolly-svg[data-state="4"] .trajectory-label { opacity: 1; }
 
@@ -1102,7 +1100,7 @@
       }
       .mobile-mini-curve { width: 100%; height: 142px; margin-top: 8px; display: block; }
       .mobile-mini-axis { stroke: rgba(36, 36, 38, 0.22); stroke-width: 1; }
-      .mobile-mini-base { fill: none; stroke: url(#mobileRustNavy); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 5 8; }
+      .mobile-mini-base { fill: none; stroke: var(--traj-axis); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 5 8; }
       .mobile-mini-green { fill: none; stroke: url(#mobileRustNavy); stroke-width: 7; stroke-linecap: round; }
       .mobile-mini-red { fill: none; stroke: #a33a2a; stroke-width: 4; stroke-linecap: round; }
     }
@@ -1172,11 +1170,6 @@
       <div class="scrolly-graphic-col" data-state="0">
         <svg class="scrolly-svg" id="scrollySvg" data-state="0" viewBox="0 0 1100 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <linearGradient id="baselineFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="1040" y2="0">
-              <stop offset="0%" stop-color="#b5622a"/>
-              <stop offset="52%" stop-color="#7a4a3a"/>
-              <stop offset="100%" stop-color="#2c3347"/>
-            </linearGradient>
             <linearGradient id="vitalityFade" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="1040" y2="0">
               <stop offset="0%" stop-color="#a2653b" stop-opacity="1"/>
               <stop offset="42%" stop-color="#a2653b" stop-opacity="0.7"/>
@@ -1198,11 +1191,11 @@
           </defs>
 
           <!-- grid -->
-          <line x1="80" y1="460" x2="1060" y2="460" stroke="#ddd6c9" stroke-width="1.5"/>
-          <line x1="80" y1="120" x2="80" y2="460" stroke="#ddd6c9" stroke-width="1.5"/>
-          <line x1="76" y1="160" x2="80" y2="160" stroke="#cfc7b6" stroke-width="1.5"/>
-          <line x1="76" y1="300" x2="80" y2="300" stroke="#cfc7b6" stroke-width="1.5"/>
-          <line x1="76" y1="460" x2="80" y2="460" stroke="#cfc7b6" stroke-width="1.5"/>
+          <line x1="80" y1="460" x2="1060" y2="460" stroke="#c8bca8" stroke-width="1.5"/>
+          <line x1="80" y1="120" x2="80" y2="460" stroke="#c8bca8" stroke-width="1.5"/>
+          <line x1="76" y1="160" x2="80" y2="160" stroke="#b8a98f" stroke-width="1.5"/>
+          <line x1="76" y1="300" x2="80" y2="300" stroke="#b8a98f" stroke-width="1.5"/>
+          <line x1="76" y1="460" x2="80" y2="460" stroke="#b8a98f" stroke-width="1.5"/>
 
           <!-- highlight bands -->
           <rect class="highlight-band band-early" x="80" y="120" width="980" height="105"/>
