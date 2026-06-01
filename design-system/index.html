@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="./patterns.css?v=kit-20260601">
 <style>
   .ds-shell { min-height: 100vh; display: grid; grid-template-columns: 286px minmax(0, 1fr); }
-  .ds-side { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 30px 26px; color: var(--amd-color-text-inverse); background: var(--amd-hero-fade), var(--amd-color-surface-deep); }
+  .ds-side { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 30px 26px; color: var(--amd-color-text-inverse); background: var(--amd-login-fade), var(--amd-color-surface-deep); }
   .ds-brand { display: flex; align-items: center; gap: 14px; margin-bottom: var(--amd-space-7); }
   .ds-brand-icon { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.24); }
   .ds-brand-wordmark { width: 128px; filter: drop-shadow(0 1px 8px rgba(0,0,0,.28)); }
@@ -61,6 +61,11 @@
   .ds-source-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
   .ds-source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
   .ds-source-card figcaption { padding: var(--amd-space-4); }
+  .ds-hero-reference { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
+  .ds-hero-reference iframe { width: 100%; height: min(720px, 78vh); border: 0; display: block; background: var(--amd-color-surface-deep); }
+  .ds-layer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-5); }
+  .ds-layer-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-4); display: grid; gap: var(--amd-space-2); }
+  .ds-layer-card code { font: 12px var(--amd-font-mono); color: var(--amd-color-rust-figma); }
   .ds-demo-label { font: 600 12px/1 var(--amd-font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--amd-color-rust-figma); }
   .ds-state-row { display: flex; gap: var(--amd-space-3); flex-wrap: wrap; align-items: center; }
   .ds-snippet { margin-top: var(--amd-space-4); }
@@ -95,7 +100,7 @@
       <div class="ds-grid">
         <div class="ds-spec"><strong>1. Foundations</strong><p class="ds-note">Use semantic color, type, spacing, layout, shape, and motion tokens before writing page CSS.</p></div>
         <div class="ds-spec"><strong>2. Components</strong><p class="ds-note">Build with the shared header, buttons, forms, cards, tabs, alerts, and modal shell.</p></div>
-        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Compose pages from hero, proof, form, login, and CTA patterns before inventing new sections.</p></div>
+        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Use the actual landing hero as the reference. Compose other pages from proof, form, login, and CTA patterns.</p></div>
       </div>
     </section>
 
@@ -126,7 +131,6 @@
         <div class="ds-swatch"><div class="ds-chip" style="background:#B9562A"></div><div class="ds-meta"><strong>Rust</strong><code>--amd-color-rust</code></div></div>
         <div class="ds-swatch"><div class="ds-chip" style="background:#1E2A4A"></div><div class="ds-meta"><strong>Navy</strong><code>--amd-color-navy</code></div></div>
         <div class="ds-swatch"><div class="ds-chip" style="background:#414C6A"></div><div class="ds-meta"><strong>Hero blue</strong><code>--amd-color-hero-blue</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#F3CE97"></div><div class="ds-meta"><strong>Warm band</strong><code>--amd-color-warm-band</code></div></div>
       </div>
       <div class="ds-grid-wide">
         <div class="ds-spec"><h3>Spacing</h3><div class="ds-token-row"><code>--amd-space-1</code><span>4 px</span><strong>Detail</strong></div><div class="ds-token-row"><code>--amd-space-4</code><span>16 px</span><strong>Inline</strong></div><div class="ds-token-row"><code>--amd-space-6</code><span>32 px</span><strong>Panel</strong></div><div class="ds-token-row"><code>--amd-space-8</code><span>64 px</span><strong>Section</strong></div><div class="ds-token-row"><code>--amd-space-10</code><span>128 px</span><strong>Hero</strong></div></div>
@@ -180,7 +184,29 @@
       <p class="ds-kicker">Patterns</p>
       <h2 class="amd-h2">Page sections</h2>
       <div class="ds-grid-wide">
-        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Landing hero</div><section class="amd-pattern-hero"><div class="amd-pattern-hero-inner"><div class="amd-pattern-hero-copy"><h2>Your best days are still ahead.</h2><p>Physician-led preventive care powered by clinical judgment and the data that actually changes your trajectory.</p><a class="amd-button amd-button-cream">Apply for Membership</a></div></div></section></div>
+        <div class="ds-spec" style="grid-column:1/-1">
+          <div class="ds-demo-label">Landing hero reference</div>
+          <div class="ds-hero-reference">
+            <iframe title="Live Aleron landing hero" src="../figma-hero-shot.html?design-system-reference=1"></iframe>
+          </div>
+          <div class="ds-layer-grid" aria-label="Landing hero layer stack">
+            <div class="ds-layer-card"><code>z 1</code><strong>Background plane</strong><span class="ds-note">Photo base and broad background color/image crop. Uses `--slide-image-shift` during carousel transitions.</span></div>
+            <div class="ds-layer-card"><code>z 2</code><strong>Mid-blocks plane</strong><span class="ds-note">Figma color blocks and grid masses. Uses `--slide-float-shift` plus scroll parallax.</span></div>
+            <div class="ds-layer-card"><code>z 3</code><strong>Subject plane</strong><span class="ds-note">Foreground person or scene cutout. Travels with the image shift, not the floating-block shift.</span></div>
+            <div class="ds-layer-card"><code>z 4</code><strong>Anchor block plane</strong><span class="ds-note">Static Figma anchor shapes. Transform stays `none` so the frame does not drift.</span></div>
+            <div class="ds-layer-card"><code>z 8 to 9</code><strong>DOM chrome</strong><span class="ds-note">Logo, Log In, headline, CTA, counters, and dots are real DOM above the artwork.</span></div>
+          </div>
+          <div class="ds-grid-wide" style="margin-top:var(--amd-space-5);">
+            <div class="ds-spec"><h3>Carousel mechanics</h3><p class="ds-note">Inactive slides start at `--slide-image-shift: 112vw` and `--slide-float-shift: 230vw`. Active slides set both to `0px`. Exiting slides move to `-58vw` image shift and `-170vw` float shift.</p></div>
+            <div class="ds-spec"><h3>Scroll parallax</h3><p class="ds-note">On scroll, only the mid-blocks plane receives `--hero-floating-block-shift`. Formula: progress equals `scrollY / heroHeight`, clamped 0 to 1. Max shift is `min(10vw, 150px)`, applied left as a negative translate.</p></div>
+            <div class="ds-spec"><h3>Motion guard</h3><p class="ds-note">`prefers-reduced-motion: reduce` disables the floating block transform and shortens animation durations. Updates are throttled through `requestAnimationFrame`.</p></div>
+            <div class="ds-spec"><h3>Source files</h3><p class="ds-note">Implementation lives in `figma-hero-shot.html`; layer inventory lives in `figma-layer-manifest.md`; image planes live under `assets/figma-hero-layers/`.</p></div>
+          </div>
+          <pre class="amd-code ds-snippet">.hero-bg-plane       { z-index: 1; transform: translate3d(var(--slide-image-shift), 0, 0); }
+.hero-mid-blocks-plane { z-index: 2; transform: translate3d(calc(var(--slide-float-shift) + var(--hero-floating-block-shift, 0px)), 0, 0); }
+.hero-subject-plane  { z-index: 3; transform: translate3d(var(--slide-image-shift), 0, 0); }
+.hero-anchor-block-plane { z-index: 4; transform: none; }</pre>
+        </div>
         <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Curve proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Curve reference"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern when proof needs a visual field but should not become a dashboard.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
         <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
         <div class="ds-spec"><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>

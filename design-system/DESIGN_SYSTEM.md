@@ -28,7 +28,7 @@ Help a builder create Aleron public, login, application, and member-facing surfa
 
 ## Foundations
 
-- Surfaces: page, paper, cream, bone, card, dark, deep.
+- Surfaces: page, paper, cream, bone, card, dark, and sourced login dark.
 - Text: primary, secondary, tertiary, inverse, inverse muted.
 - Actions: primary, secondary, on-dark, hover, focus.
 - Type: display, h1, h2, h3, body large, body, caption, label.
@@ -52,6 +52,7 @@ Help a builder create Aleron public, login, application, and member-facing surfa
 ## Patterns
 
 - Landing hero
+- Landing hero reference from `figma-hero-shot.html`
 - Cream proof or curve section
 - Application form section
 - Login shell
