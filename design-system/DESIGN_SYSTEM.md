@@ -75,7 +75,8 @@ Every item belongs to one of these lanes: `figma-reference`, `figma-trajectory`,
 - Do not use `Join`.
 - Use square CTAs.
 - Use approved fades and color roles only.
-- Use the Figma Reference page for hero, trajectory, illustration, texture, and palette decisions before using live-page leftovers.
+- Use the Figma Reference page for hero visual language, trajectory, illustration, texture, and palette decisions before using live-page leftovers.
+- Do not inherit raw `Demo` CTA copy or rust Login tiles from Reference hero screenshots.
 - Use human photography and editorial proof modules.
 - Use isometric warm-brown objects or flat outlined registration-corner icons for moment illustrations.
 - Do not use the old curve thumbnail or dark gold curve render as canonical design-system references.

@@ -20,7 +20,8 @@ Primary visual-language source allocated by the designer.
 
 - Figma page: `Reference` (`785:6560`).
 - Design-system copies: `design-system/assets/reference-page/*.png`.
-- Belongs here: hero treatments, trajectory frames, illustration systems, texture/moment screens, and palette.
+- Belongs here: hero visual treatments, trajectory frames, illustration systems, texture/moment screens, and palette.
+- Hero screenshots provide visual language only. Production CTA copy, acquisition CTA placement, and header behavior come from the live hero contract and current product rules.
 - This is primary for initial design-system language. The live Website page is implementation evidence, not the source of visual vocabulary.
 
 ### figma-trajectory
@@ -84,6 +85,7 @@ Do not import these into the current design system.
 - Synthetic hero mock from the first production-kit draft.
 - Old `figma-curve-thumb.webp` curve screenshot as a canonical reference.
 - Dark gold `assets/curve.jpg` render for the light Aleron system.
+- Raw `Demo` CTA copy and rust Login tiles visible inside Reference hero screenshots.
 - Unverified black/gold/tan historical marketing tokens.
 - Any generated visual that is not in the live landing, Figma source, favicon assets, login, or member surface.
 
