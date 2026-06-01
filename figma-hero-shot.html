@@ -656,7 +656,7 @@
       z-index: 4;
       position: absolute;
       left: 29.918981%;
-      top: 26.590331%;
+      top: 14%;
       width: 40.162037%;
       margin: 0;
       color: var(--ink);
@@ -683,11 +683,11 @@
     }
 
     .capability-band.high {
-      top: calc(100vw * 417 / 1728);
+      top: calc(100vw * 250 / 1728);
     }
 
     .capability-band.low {
-      top: calc(100vw * 664 / 1728);
+      top: calc(100vw * 510 / 1728);
     }
 
     .capability-band span {
@@ -749,26 +749,6 @@
 
     .curve-marker.start { fill: var(--rust); }
     .curve-marker.end { fill: var(--navy); }
-
-    .curve-agecard rect {
-      fill: #fefdfc;
-      stroke: rgba(36, 36, 38, 0.12);
-      stroke-width: 1;
-      vector-effect: non-scaling-stroke;
-    }
-
-    .curve-agecard .age-kicker {
-      fill: rgba(36, 36, 38, 0.5);
-      font-size: 18px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .curve-agecard .age-num {
-      fill: var(--ink);
-      font-size: 46px;
-      font-weight: 600;
-    }
 
     .curve-title,
     .capability-band,
@@ -1093,19 +1073,9 @@
           <stop offset="1" stop-color="#2c3240" />
         </linearGradient>
       </defs>
-      <path class="curve-line" d="M 250 470 C 540 470, 720 480, 951 595 C 1180 710, 1330 720, 1480 720" />
-      <rect class="curve-marker start" x="242" y="462" width="16" height="16" />
-      <rect class="curve-marker end" x="1472" y="712" width="16" height="16" />
-      <g class="curve-agecard">
-        <rect x="182" y="356" width="96" height="108" rx="8" />
-        <text class="age-kicker" x="200" y="392">Age</text>
-        <text class="age-num" x="198" y="438">40</text>
-      </g>
-      <g class="curve-agecard">
-        <rect x="1502" y="640" width="96" height="108" rx="8" />
-        <text class="age-kicker" x="1520" y="676">Age</text>
-        <text class="age-num" x="1518" y="722">90</text>
-      </g>
+      <path class="curve-line" d="M 250 286 C 470 286, 640 290, 800 306 C 1000 328, 1130 392, 1270 474 C 1380 538, 1440 564, 1500 576" />
+      <rect class="curve-marker start" x="242" y="278" width="16" height="16" />
+      <rect class="curve-marker end" x="1492" y="568" width="16" height="16" />
     </svg>
 
     <nav class="curve-indicators" data-figma-node="694:49983" aria-label="Quality of life curve stages">
