@@ -699,11 +699,11 @@
     }
 
     .curve-indicators {
+      display: none;
       z-index: 5;
       position: absolute;
       right: 2.777778%;
       top: 56.615776%;
-      display: grid;
       gap: calc(100vw * 27 / 1728);
       justify-items: end;
       font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -1078,7 +1078,7 @@
       <rect class="curve-marker end" x="1492" y="568" width="16" height="16" />
     </svg>
 
-    <nav class="curve-indicators" data-figma-node="694:49983" aria-label="Quality of life curve stages">
+    <nav class="curve-indicators" data-figma-node="694:49983" aria-label="Quality of life curve stages" hidden>
       <span>Intro</span>
       <span class="is-active">Capability</span>
       <span>Hazards</span>
