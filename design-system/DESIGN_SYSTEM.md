@@ -13,11 +13,17 @@ Help a builder create Aleron public, login, application, and member-facing surfa
 
 ## Source of truth
 
+See `PROVENANCE.md` for source-lane ownership. Do not add a token, asset, component, or pattern without a source lane.
+
 1. Brand assets in `design-system/assets/`
 2. Semantic tokens in `tokens.css`
 3. Shared primitives in `components.css`
 4. Page patterns in `patterns.css`
 5. Current landing and Figma hero references
+
+## Provenance
+
+Every item belongs to one of these lanes: `live-hero`, `figma-reference`, `identity-favicon`, `wordmark`, `login`, `landing-surface`, `component-derived`, or `excluded`.
 
 ## Build order
 

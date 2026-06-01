@@ -67,6 +67,11 @@
   .ds-layer-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-4); display: grid; gap: var(--amd-space-2); }
   .ds-layer-card code { font: 12px var(--amd-font-mono); color: var(--amd-color-rust-figma); }
   .ds-demo-label { font: 600 12px/1 var(--amd-font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--amd-color-rust-figma); }
+  .ds-source-badge { display: inline-flex; width: fit-content; align-items: center; border: 1px solid var(--amd-color-border-default); padding: 4px 8px; font: 600 11px/1 var(--amd-font-mono); letter-spacing: .04em; color: var(--amd-color-rust-figma); background: var(--amd-color-surface-page); }
+  .ds-source-badge.inverse { border-color: var(--amd-color-border-inverse); color: var(--amd-color-text-inverse); background: rgba(255,254,251,.08); }
+  .ds-provenance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
+  .ds-provenance-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-5); display: grid; gap: var(--amd-space-3); }
+  .ds-provenance-card ul { margin: 0; padding-left: 18px; color: var(--amd-color-text-secondary); line-height: 1.5; }
   .ds-state-row { display: flex; gap: var(--amd-space-3); flex-wrap: wrap; align-items: center; }
   .ds-snippet { margin-top: var(--amd-space-4); }
   .ds-divider { height: 1px; background: var(--amd-color-border-subtle); margin: var(--amd-space-5) 0; }
@@ -83,6 +88,7 @@
     <nav class="ds-nav" aria-label="Design system sections">
       <a href="#overview">Overview</a>
       <a href="#assets">Assets</a>
+      <a href="#provenance">Provenance</a>
       <a href="#foundations">Foundations</a>
       <a href="#type">Typography</a>
       <a href="#components">Components</a>
@@ -108,14 +114,29 @@
       <p class="ds-kicker">Brand</p>
       <h2 class="amd-h2">Assets</h2>
       <div class="ds-grid">
-        <div class="ds-spec ds-asset"><img class="ds-icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Aleron icon logo"><div><strong>Icon logo</strong><div class="ds-mono">rust-to-navy fade</div></div></div>
-        <div class="ds-spec ds-asset"><div class="ds-favicon-row"><img class="ds-favicon-lg" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview"><img class="ds-favicon-md" src="./assets/favicon-32.png" alt="32 px favicon"><img class="ds-favicon-sm" src="./assets/favicon-16.png" alt="16 px favicon"><img class="ds-apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon"></div><div><strong>Favicon set</strong><div class="ds-mono">SVG, ICO, PNG, Apple touch</div></div></div>
-        <div class="ds-spec ds-spec-dark ds-asset"><img class="ds-wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark"><div><strong>Wordmark on dark</strong><div class="ds-mono">Figma hero asset</div></div></div>
-        <div class="ds-spec ds-asset"><img class="ds-wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark"><div><strong>Wordmark on light</strong><div class="ds-mono">same alpha, ink fill</div></div></div>
+        <div class="ds-spec ds-asset"><span class="ds-source-badge">identity-favicon</span><img class="ds-icon-big" src="./assets/icon-logo-lowercase-a.png" alt="Aleron icon logo"><div><strong>Icon logo</strong><div class="ds-mono">rust-to-navy fade</div></div></div>
+        <div class="ds-spec ds-asset"><span class="ds-source-badge">identity-favicon</span><div class="ds-favicon-row"><img class="ds-favicon-lg" src="./assets/icon-logo-lowercase-a.png" alt="Large favicon preview"><img class="ds-favicon-md" src="./assets/favicon-32.png" alt="32 px favicon"><img class="ds-favicon-sm" src="./assets/favicon-16.png" alt="16 px favicon"><img class="ds-apple" src="./assets/apple-touch-icon.png" alt="Apple touch icon"></div><div><strong>Favicon set</strong><div class="ds-mono">SVG, ICO, PNG, Apple touch</div></div></div>
+        <div class="ds-spec ds-spec-dark ds-asset"><span class="ds-source-badge inverse">wordmark</span><img class="ds-wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD white wordmark"><div><strong>Wordmark on dark</strong><div class="ds-mono">Figma hero asset</div></div></div>
+        <div class="ds-spec ds-asset"><span class="ds-source-badge">wordmark</span><img class="ds-wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark"><div><strong>Wordmark on light</strong><div class="ds-mono">same alpha, ink fill</div></div></div>
       </div>
       <div class="ds-grid-wide">
-        <figure class="ds-source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference"><figcaption><strong>Hero reference</strong><p class="ds-note">Human photography, rust/navy planes, white wordmark, square CTA language.</p></figcaption></figure>
-        <figure class="ds-source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve reference"><figcaption><strong>Curve reference</strong><p class="ds-note">Cream field, faint grid, rust-to-navy curve, square markers.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/figma-hero-01-thumb.webp" alt="Figma hero reference"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Hero reference</strong><p class="ds-note">Human photography, rust/navy planes, white wordmark, square CTA language.</p></figcaption></figure>
+        <figure class="ds-source-card"><img src="./assets/figma-curve-thumb.webp" alt="Figma curve reference"><figcaption><span class="ds-source-badge">figma-reference</span><strong>Curve reference</strong><p class="ds-note">Cream field, faint grid, rust-to-navy curve, square markers.</p></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ds-section" id="provenance">
+      <p class="ds-kicker">Source lanes</p>
+      <h2 class="amd-h2">Provenance</h2>
+      <p class="ds-lede">Every design-system item is labeled by source lane. If a new style cannot be traced to a lane, it does not enter the system.</p>
+      <div class="ds-provenance-grid">
+        <div class="ds-provenance-card"><span class="ds-source-badge">live-hero</span><strong>Current executed landing hero</strong><ul><li>`figma-hero-shot.html`</li><li>`figma-layer-manifest.md`</li><li>`assets/figma-hero-layers/`</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">figma-reference</span><strong>Reference exports</strong><ul><li>Hero and curve thumbnails</li><li>Comparison only unless explicitly promoted</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">identity-favicon</span><strong>Icon and favicon identity</strong><ul><li>favicon SVG and PNGs</li><li>Apple touch icon</li><li>logo fade token</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">wordmark</span><strong>Brand lockups</strong><ul><li>`logo_4x.png`</li><li>white and ink derived assets</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">login</span><strong>Login surface</strong><ul><li>`login.html` gradient</li><li>square panel and form treatment</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">component-derived</span><strong>Build primitives</strong><ul><li>buttons, fields, cards, tabs, alerts</li><li>must use sourced tokens</li></ul></div>
+        <div class="ds-provenance-card"><span class="ds-source-badge">excluded</span><strong>Do not import</strong><ul><li>reverted pitch deck aesthetic</li><li>synthetic hero mock</li><li>unverified black/gold/tan tokens</li></ul></div>
       </div>
     </section>
 
@@ -124,13 +145,13 @@
       <h2 class="amd-h2">Tokens</h2>
       <p class="ds-lede">Use semantic roles. Avoid page-specific hex values outside these tokens.</p>
       <div class="ds-swatch-grid">
-        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-logo-icon-fade)"></div><div class="ds-meta"><strong>Logo fade</strong><code>--amd-logo-icon-fade</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><strong>Page</strong><code>--amd-color-surface-page</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><strong>Ink</strong><code>--amd-color-surface-dark</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#B9562A"></div><div class="ds-meta"><strong>Rust</strong><code>--amd-color-rust</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#1E2A4A"></div><div class="ds-meta"><strong>Navy</strong><code>--amd-color-navy</code></div></div>
-        <div class="ds-swatch"><div class="ds-chip" style="background:#414C6A"></div><div class="ds-meta"><strong>Hero blue</strong><code>--amd-color-hero-blue</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:var(--amd-logo-icon-fade)"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Logo fade</strong><code>--amd-logo-icon-fade</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#FFFEFB"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Page</strong><code>--amd-color-surface-page</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#EFEAE0"></div><div class="ds-meta"><span class="ds-source-badge">landing-surface</span><strong>Cream</strong><code>--amd-color-surface-cream</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#242426"></div><div class="ds-meta"><span class="ds-source-badge">live-hero</span><strong>Ink</strong><code>--amd-color-surface-dark</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#B9562A"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Rust</strong><code>--amd-color-rust</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#1E2A4A"></div><div class="ds-meta"><span class="ds-source-badge">identity-favicon</span><strong>Navy</strong><code>--amd-color-navy</code></div></div>
+        <div class="ds-swatch"><div class="ds-chip" style="background:#414C6A"></div><div class="ds-meta"><span class="ds-source-badge">live-hero</span><strong>Hero blue</strong><code>--amd-color-hero-blue</code></div></div>
       </div>
       <div class="ds-grid-wide">
         <div class="ds-spec"><h3>Spacing</h3><div class="ds-token-row"><code>--amd-space-1</code><span>4 px</span><strong>Detail</strong></div><div class="ds-token-row"><code>--amd-space-4</code><span>16 px</span><strong>Inline</strong></div><div class="ds-token-row"><code>--amd-space-6</code><span>32 px</span><strong>Panel</strong></div><div class="ds-token-row"><code>--amd-space-8</code><span>64 px</span><strong>Section</strong></div><div class="ds-token-row"><code>--amd-space-10</code><span>128 px</span><strong>Hero</strong></div></div>
@@ -185,7 +206,7 @@
       <h2 class="amd-h2">Page sections</h2>
       <div class="ds-grid-wide">
         <div class="ds-spec" style="grid-column:1/-1">
-          <div class="ds-demo-label">Landing hero reference</div>
+          <span class="ds-source-badge">live-hero</span><div class="ds-demo-label">Landing hero reference</div>
           <div class="ds-hero-reference">
             <iframe title="Live Aleron landing hero" src="../figma-hero-shot.html?design-system-reference=1"></iframe>
           </div>
@@ -207,10 +228,10 @@
 .hero-subject-plane  { z-index: 3; transform: translate3d(var(--slide-image-shift), 0, 0); }
 .hero-anchor-block-plane { z-index: 4; transform: none; }</pre>
         </div>
-        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Curve proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Curve reference"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern when proof needs a visual field but should not become a dashboard.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
-        <div class="ds-spec" style="grid-column:1/-1"><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
-        <div class="ds-spec"><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>
-        <div class="ds-spec"><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">See a demo</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">figma-reference</span><div class="ds-demo-label">Curve proof</div><div class="amd-pattern-proof"><div class="amd-pattern-proof-figure" aria-label="Curve reference"></div><div class="amd-pattern-proof-copy"><h3 class="amd-h3">The curve is not destiny.</h3><p class="ds-note">Use this pattern when proof needs a visual field but should not become a dashboard.</p><a class="amd-button amd-button-primary">See the model</a></div></div></div>
+        <div class="ds-spec" style="grid-column:1/-1"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">Application form</div><div class="amd-pattern-form"><div><h3 class="amd-h3">Apply for membership.</h3><p class="ds-note">Keep the form calm and selective. Ask for only what changes follow-up.</p></div><form><div class="amd-field"><label>Name</label><input class="amd-input"></div><div class="amd-field"><label>Email</label><input class="amd-input"></div><button class="amd-button amd-button-primary" type="button">Submit application</button></form></div></div>
+        <div class="ds-spec"><span class="ds-source-badge">login</span><div class="ds-demo-label">Login shell</div><div class="amd-pattern-login"><div class="amd-pattern-login-card"><img src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD" style="width:150px"><div class="amd-field"><label>Email</label><input class="amd-input"></div><a class="amd-button amd-button-primary">Continue</a></div></div></div>
+        <div class="ds-spec"><span class="ds-source-badge">component-derived</span><div class="ds-demo-label">CTA block</div><div class="amd-pattern-cta"><h3 class="amd-h3">Start with a physician who sees the whole picture.</h3><p>Apply for membership or review the system live before you decide.</p><div class="amd-cluster"><a class="amd-button amd-button-cream">Apply for Membership</a><a class="amd-button amd-button-ghost-dark">See a demo</a></div></div></div>
       </div>
     </section>
 
