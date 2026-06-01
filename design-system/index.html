@@ -64,21 +64,10 @@
   .demo-panel { padding: 26px; border: 1px solid var(--amd-line); background: var(--amd-bg); border-radius: 0; }
   .demo-panel.dark { color: var(--amd-on-dark); background: var(--amd-fade-hero), var(--amd-ink-deep); border-color: var(--amd-line-dark); }
   .button-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .hero-spec { position: relative; min-height: 480px; overflow: hidden; color: var(--amd-on-dark); background: var(--amd-ink-deep); }
-  .hero-spec::before { content: ""; position: absolute; inset: 0; background: url('./assets/figma-hero-01-thumb.webp') center / cover no-repeat; opacity: .82; }
-  .hero-spec::after { content: ""; position: absolute; inset: 0; background: var(--amd-fade-hero); clip-path: polygon(0 0, 42% 0, 42% 28%, 24% 28%, 24% 100%, 0 100%); opacity: .95; }
-  .hero-spec .hero-copy { position: absolute; left: 0; bottom: 0; z-index: 2; width: min(560px, 68%); padding: 42px var(--amd-gutter); background: rgba(30,42,74,.84); }
-  .hero-spec .hero-top { position: absolute; z-index: 3; top: 34px; left: 34px; right: 34px; display: flex; align-items: center; justify-content: space-between; }
-  .square-blocks { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 52px; margin-top: 24px; border: 1px solid var(--amd-line); }
-  .sq { border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
-  .sq.rust { background: var(--amd-rust-figma); }
-  .sq.navy { background: var(--amd-navy-figma); }
-  .sq.blue { background: var(--amd-hero-blue); }
-  .sq.warm { background: rgba(243,206,151,.74); }
   .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; margin-top: 24px; }
   .rule { border: 1px solid rgba(185,86,42,.28); background: rgba(185,86,42,.045); padding: 18px; }
   .rule strong { display: block; margin-bottom: 6px; color: var(--amd-rust); }
-  @media (max-width: 860px) { .shell { grid-template-columns: 1fr; } .side { position: relative; height: auto; } .side nav { display: none; } .type-row { grid-template-columns: 1fr; } .hero-spec .hero-copy { width: 100%; } }
+  @media (max-width: 860px) { .shell { grid-template-columns: 1fr; } .side { position: relative; height: auto; } .side nav { display: none; } .type-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -96,7 +85,6 @@
       <a href="#sources">Source references</a>
       <a href="#color">Color</a>
       <a href="#type">Typography</a>
-      <a href="#geometry">Geometry</a>
       <a href="#components">Components</a>
       <a href="#icons">Icon language</a>
       <a href="#rules">Rules</a>
@@ -170,26 +158,6 @@
         <div class="type-row"><div class="mono">section h2</div><div class="amd-display amd-h2">The curve is not destiny.</div></div>
         <div class="type-row"><div class="mono">body</div><div class="lede">Physician judgment remains the accountable center. AI helps hold the complete picture, but the care relationship stays human.</div></div>
         <div class="type-row"><div class="mono">serif warmth</div><div style="font: italic 32px/1.35 var(--amd-font-serif);">More of life remains open.</div></div>
-      </div>
-    </section>
-
-    <section class="section dark" id="geometry">
-      <p class="kicker">Geometry</p>
-      <h2 class="amd-display amd-h2">Square planes are structural, not decorative.</h2>
-      <p class="lede">The Figma hero uses hard rectangular planes as masks, overlays, and proof of intentional composition. CTAs inherit this square-edge language. No rounded or frosted CTA family.</p>
-      <div class="hero-spec" aria-label="Hero system specimen">
-        <div class="hero-top">
-          <img class="wordmark-dark" src="./assets/wordmark-lowercase-figma.png" alt="Aleron MD wordmark">
-          <a class="amd-button amd-button-ghost-dark">Log In</a>
-        </div>
-        <div class="hero-copy">
-          <h3 class="amd-display amd-h2" style="margin-bottom:18px;">Your best days are still ahead.</h3>
-          <a class="amd-button amd-button-cream">Apply for Membership</a>
-        </div>
-      </div>
-      <div class="square-blocks" aria-label="Figma block palette">
-        <div class="sq rust"></div><div class="sq navy"></div><div class="sq blue"></div><div class="sq warm"></div><div class="sq navy"></div><div class="sq rust"></div>
-        <div class="sq navy"></div><div class="sq blue"></div><div class="sq warm"></div><div class="sq rust"></div><div class="sq blue"></div><div class="sq navy"></div>
       </div>
     </section>
 
