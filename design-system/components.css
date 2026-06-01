@@ -1,189 +1,27 @@
 @import url("./base.css");
 
-.amd-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px var(--amd-gutter);
-  border-bottom: 1px solid transparent;
-  transition: background var(--amd-duration-standard) var(--amd-ease), border-color var(--amd-duration-standard) var(--amd-ease);
-}
+.amd-wordmark { display: inline-flex; align-items: center; height: 32px; }
+.amd-wordmark img { width: 128px; height: auto; }
 
-.amd-nav[data-scrolled="true"] {
-  background: rgba(10, 10, 11, 0.7);
-  border-bottom-color: rgba(246, 244, 238, 0.08);
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-}
+.amd-button { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 30px; border: 1px solid currentColor; border-radius: 0; font-family: var(--amd-font-body); font-size: 14px; font-weight: 600; letter-spacing: .01em; text-decoration: none; transition: background var(--amd-fast) var(--amd-ease), color var(--amd-fast) var(--amd-ease), border-color var(--amd-fast) var(--amd-ease); }
+.amd-button-primary { color: var(--amd-on-dark); background: var(--amd-ink); border-color: var(--amd-ink); }
+.amd-button-primary:hover { background: var(--amd-rust); border-color: var(--amd-rust); }
+.amd-button-cream { color: var(--amd-ink); background: var(--amd-cream); border-color: var(--amd-cream); }
+.amd-button-ghost-dark { color: var(--amd-on-dark); background: transparent; border-color: rgba(255, 254, 251, .72); }
+.amd-button-ghost-dark:hover { background: rgba(255, 254, 251, .10); border-color: var(--amd-on-dark); }
+.amd-button-ghost-light { color: var(--amd-ink); background: transparent; border-color: rgba(36, 36, 38, .34); }
+.amd-button-ghost-light:hover { color: var(--amd-rust); border-color: var(--amd-rust); }
 
-.amd-nav-brand {
-  font-family: var(--amd-font-sans);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: #fff;
-  text-decoration: none;
-}
+.amd-panel { border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-white); }
+.amd-panel-cream { background: var(--amd-cream); }
+.amd-panel-dark { color: var(--amd-on-dark); background: var(--amd-ink); border-color: var(--amd-line-dark); }
 
-.amd-nav-link {
-  margin-right: 18px;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: rgba(255, 255, 255, 0.78);
-  text-decoration: none;
-  transition: color var(--amd-duration-fast) var(--amd-ease);
-}
+.amd-field { display: grid; gap: 8px; }
+.amd-field label { font-size: 13px; font-weight: 600; }
+.amd-input { width: 100%; min-height: 52px; padding: 0 14px; border: 1px solid var(--amd-line); border-radius: 0; background: var(--amd-bg); color: var(--amd-text); font: inherit; }
+.amd-input:focus { border-color: var(--amd-rust); box-shadow: var(--amd-focus-ring); }
 
-.amd-nav-link:hover {
-  color: #fff;
-}
+.amd-icon-tile { border-radius: 0; background: var(--amd-fade-icon); display: grid; place-items: center; overflow: hidden; }
+.amd-icon-tile img { width: 72%; height: 72%; object-fit: contain; }
 
-.amd-button {
-  display: inline-flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 14px 28px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  font-family: var(--amd-font-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1;
-  text-decoration: none;
-  transition: background var(--amd-duration-fast) var(--amd-ease), border-color var(--amd-duration-fast) var(--amd-ease), color var(--amd-duration-fast) var(--amd-ease);
-}
-
-.amd-button-primary {
-  color: var(--amd-ink);
-  background: var(--amd-paper);
-}
-
-.amd-button-primary:hover {
-  background: var(--amd-gold-light);
-}
-
-.amd-button-ghost-dark {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.amd-button-ghost-dark:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: #fff;
-}
-
-.amd-hero {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding-top: clamp(120px, 18vh, 200px);
-  overflow: hidden;
-  color: #fff;
-  background: var(--amd-ink);
-}
-
-.amd-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.amd-hero-media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to right,
-      rgba(10, 10, 11, 0.92) 0%,
-      rgba(10, 10, 11, 0.78) 25%,
-      rgba(10, 10, 11, 0.35) 48%,
-      rgba(10, 10, 11, 0.05) 65%,
-      rgba(10, 10, 11, 0) 80%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(10, 10, 11, 0.15) 0%,
-      rgba(10, 10, 11, 0) 30%,
-      rgba(10, 10, 11, 0) 70%,
-      rgba(10, 10, 11, 0.4) 100%
-    );
-}
-
-.amd-hero-media img,
-.amd-hero-media video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 75% center;
-}
-
-.amd-hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: var(--amd-max);
-  margin: 0 auto;
-  padding: clamp(96px, 12vh, 140px) var(--amd-gutter);
-}
-
-.amd-hero-lockup {
-  max-width: 580px;
-}
-
-.amd-hero-title {
-  max-width: 13ch;
-  margin: 0 0 28px;
-  font-family: var(--amd-font-display);
-  font-size: clamp(44px, 5.8vw, 84px);
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.026em;
-  text-shadow: var(--amd-hero-shadow);
-}
-
-.amd-hero-title em {
-  color: var(--amd-gold-light);
-  font-style: italic;
-  font-weight: 400;
-}
-
-.amd-hero-lede {
-  max-width: 44ch;
-  margin: 0 0 36px;
-  font-size: clamp(16px, 1.2vw, 18px);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
-}
-
-.amd-hero-ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-@media (max-width: 899px) {
-  .amd-hero-media::after {
-    background:
-      linear-gradient(
-        to bottom,
-        rgba(10, 10, 11, 0.5) 0%,
-        rgba(10, 10, 11, 0.2) 30%,
-        rgba(10, 10, 11, 0.55) 65%,
-        rgba(10, 10, 11, 0.95) 100%
-      );
-  }
-}
+.amd-grid-field { background-color: var(--amd-cream); background-image: linear-gradient(rgba(36,36,38,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(36,36,38,.06) 1px, transparent 1px), radial-gradient(circle at 22% 6%, rgba(243,206,151,.52), transparent 28rem); background-size: 56px 56px, 56px 56px, auto; }
