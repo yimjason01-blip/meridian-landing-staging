@@ -1,17 +1,18 @@
 :root {
   color-scheme: light;
 
-  /* Brand assets */
+  /* Source lane: identity-favicon */
   --amd-logo-icon-fade: linear-gradient(135deg, #B9562A 0%, #80443B 42%, #1E2A4A 100%);
+  /* Source lane: login */
   --amd-login-fade: linear-gradient(135deg, #232426 0%, #3B4662 100%);
 
-  /* Color roles */
+  /* Source lanes: live-hero, landing-surface, login, identity-favicon */
   --amd-color-surface-page: #FFFEFB;
   --amd-color-surface-paper: #F6F4EE;
   --amd-color-surface-cream: #EFEAE0;
   --amd-color-surface-bone: #ECE5D6;
   --amd-color-surface-dark: #242426;
-  --amd-color-surface-deep: #232426;
+  --amd-color-surface-deep: #232426; /* source: login */
   --amd-color-surface-card: #FFFFFF;
   --amd-color-text-primary: #242426;
   --amd-color-text-secondary: #606165;
@@ -21,11 +22,11 @@
   --amd-color-border-default: rgba(36, 36, 38, 0.14);
   --amd-color-border-subtle: rgba(36, 36, 38, 0.08);
   --amd-color-border-inverse: rgba(255, 254, 251, 0.22);
-  --amd-color-rust: #B9562A;
-  --amd-color-rust-figma: #A2653B;
-  --amd-color-navy: #1E2A4A;
-  --amd-color-navy-figma: #2C3240;
-  --amd-color-hero-blue: #414C6A;
+  --amd-color-rust: #B9562A; /* source: identity-favicon */
+  --amd-color-rust-figma: #A2653B; /* source: live-hero */
+  --amd-color-navy: #1E2A4A; /* source: identity-favicon */
+  --amd-color-navy-figma: #2C3240; /* source: live-hero */
+  --amd-color-hero-blue: #414C6A; /* source: live-hero */
   --amd-color-grid: #DED8CC;
   --amd-color-success: #3E7C54;
   --amd-color-warning: #B8792E;
