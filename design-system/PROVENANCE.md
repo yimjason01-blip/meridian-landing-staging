@@ -112,6 +112,31 @@ Do not import these into the current design system.
 - `--amd-color-hero-blue`: live-hero.
 - Status colors: component-derived pending stronger product source.
 
+## Verified lineage (2026-06-01)
+
+Reference tokens checked node-by-node against Figma page `Reference` (`785:6560`) using the Talk to Figma bridge, not from memory. Every value below is EXACT to its source node fill (hex match).
+
+Color Palette slide (`Slide 16:9 - 27`, `785:7645`):
+
+- `--amd-color-surface-page` `#FFFEFB` = Rectangle 128 `#fffefb`. EXACT.
+- `--amd-color-surface-cream` `#EFEAE0` = Rectangle 127 `#efeae0`. EXACT.
+- `--amd-color-surface-dark` `#242426` = Rectangle 123 `#242426`. EXACT.
+- `--amd-color-surface-burgundy` `#2C1F29` = Rectangle 129 `#2c1f29`. EXACT.
+- `--amd-color-reference-blue` `#3C4662` = Rectangle 124 `#3c4662`. EXACT.
+- `--amd-color-rust-reference` `#A35520` = Rectangle 126 `#a35520`. EXACT.
+- `--amd-color-gold-reference` `#CD9453` = Rectangle 125 `#cd9453`. EXACT.
+- `--amd-reference-main-fade` `#232426 -> #3B4662` = Rectangle 131 gradient `#232426 -> #3b4662`. EXACT stops.
+- `--amd-reference-warm-fade` `#A35520 / #532F4B 43% / #23315F 93%` = Rectangle 132 gradient `#a35520 / #532f4b 42.9% / #23315f 92.7%`. EXACT stops (rounded positions).
+
+Trajectory frame (`4`, `785:7169`):
+
+- `--amd-color-rust-figma` `#A2653B` = curve data marker Rectangle 165 `#a2653b`. EXACT.
+- `--amd-color-navy-figma` `#2C3240` = axis labels and indicator markers `#2c3240`. EXACT.
+
+Asset-sourced lanes (no palette pigment to match): `--amd-logo-icon-fade` and `--amd-color-rust`/`--amd-color-navy` derive from the favicon icon (rasterized asset); `--amd-login-fade` from `login.html`; `--amd-color-hero-blue` from the live hero. These are correct by lane assignment, not palette-swatch comparison.
+
+Result: 11/11 palette and trajectory tokens confirmed, zero drift. Re-run this check with the Talk to Figma bridge before any palette change ships.
+
 ## Build rule
 
 When adding anything new, label it with one of the source lanes above. If no lane fits, it is not ready for the design system.

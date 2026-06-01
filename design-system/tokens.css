@@ -41,6 +41,7 @@
   --amd-color-hero-blue: #414C6A; /* source: live-hero */
   --amd-color-grid: #DED8CC;
   --amd-color-success: #3E7C54;
+  --amd-color-success-text: #2F5F40; /* 7.42:1 on white, AAA success text */
   --amd-color-warning: #B8792E;
   --amd-color-danger: #922E20; /* 7.97:1 on white, AAA as error text and border */
   --amd-color-info: #3C5068;
