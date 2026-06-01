@@ -1,8 +1,8 @@
-@import url("./components.css?v=kit-20260601c");
+@import url("./components.css?v=kit-20260601j");
 
-.amd-pattern-proof { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr); gap: var(--amd-space-7); align-items: stretch; }
-.amd-pattern-proof-figure { min-height: 300px; border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-cream); position: relative; overflow: hidden; }
-.amd-pattern-proof-figure::before { content: ""; position: absolute; inset: 0; background: url("./assets/reference-page/trajectory-future.png") center / cover no-repeat; opacity: 1; }
+.amd-pattern-proof { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .8fr); gap: var(--amd-space-7); align-items: stretch; }
+.amd-pattern-proof-figure { min-height: 520px; border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-cream); position: relative; overflow: hidden; display: grid; padding: var(--amd-space-6); }
+.amd-pattern-proof-figure svg { width: 100%; height: 100%; min-height: 470px; display: block; }
 .amd-pattern-proof-copy { display: grid; gap: var(--amd-space-4); align-content: center; }
 
 .amd-pattern-form { display: grid; grid-template-columns: minmax(0, .85fr) minmax(320px, 1.15fr); gap: var(--amd-space-7); align-items: center; }
