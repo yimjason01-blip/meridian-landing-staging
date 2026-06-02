@@ -10,6 +10,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png?v=aleron-a-fade-20260601">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=aleron-a-fade-20260601">
 <link rel="shortcut icon" href="assets/favicon.ico?v=aleron-a-fade-20260601">
+<link rel="stylesheet" href="design-system/tokens.css?v=kit-20260601k">
 <style>
   /*
     Aleron MD Member - v2 (5-tab architecture)
@@ -19,39 +20,47 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap');
 
   :root {
-    --bg: #F6F4EE;
-    --bg-panel: #FBF8F1;
-    --bg-surface: #EFEAE0;
-    --bg-hover: #E7DDCA;
+    /* Surfaces -- bound to Aleron MD design system (design-system/tokens.css).
+       Local names retained so component CSS is unchanged; values are DS-canonical. */
+    --bg: var(--amd-color-surface-paper);          /* #F6F4EE warm app canvas */
+    --bg-panel: var(--amd-color-surface-card);      /* #FFFFFF elevated cards */
+    --bg-surface: var(--amd-color-surface-cream);   /* #EFEAE0 recessed wells/segments */
+    --bg-hover: var(--amd-color-surface-bone);      /* #ECE5D6 hover */
 
-    --border-subtle: rgba(10,10,11,0.10);
-    --border: rgba(10,10,11,0.16);
-    --border-strong: rgba(10,10,11,0.28);
+    --border-subtle: var(--amd-color-border-subtle);
+    --border: var(--amd-color-border-default);
+    --border-strong: var(--amd-action-secondary-border);
 
-    --text: #0A0A0B;
-    --text-secondary: #3F3A32;
-    --text-muted: #4A4A4D;
+    /* Text -- DS charcoal roles (AAA on light surfaces), not near-pure black */
+    --text: var(--amd-color-text-primary);          /* #242426 */
+    --text-secondary: var(--amd-color-text-secondary-on-paper); /* #4D4D50 AAA on paper canvas */
+    --text-muted: var(--amd-color-text-secondary-on-paper);  /* promoted from tertiary: AAA at small sizes on paper */
 
-    --accent: #6F4A20;
-    --accent-hover: #B8854D;
-    --accent-bright: #D4A574;
-    --accent-light: rgba(212,165,116,0.12);
-    --accent-tint: rgba(212,165,116,0.20);
+    --accent: var(--amd-color-text-accent);         /* #6E3D1C rust, AAA for text/labels on light */
+    --accent-hover: var(--amd-action-primary-hover-bg); /* #8E3F1E */
+    --accent-bright: var(--amd-color-gold-reference); /* #CD9453 */
+    --accent-light: rgba(205, 148, 83, 0.12);
+    --accent-tint: rgba(205, 148, 83, 0.20);
 
-    --status-ok: #2F7A45;
-    --status-ok-bright: #1F8A4C;
-    --status-warn: #B8854D;
-    --status-crit: #A44938;
+    --status-ok: var(--amd-color-success);          /* #3E7C54 fill/border */
+    --status-ok-bright: var(--amd-color-success);
+    --status-ok-text: var(--amd-color-success-text-tint); /* #2A553A AAA on tinted chips + paper */
+    --status-warn: var(--amd-color-warning);        /* #B8792E fill/border */
+    --status-warn-text: var(--amd-color-warning-text); /* #5F4015 AAA on tinted chips + paper */
+    --status-crit: var(--amd-color-danger);         /* #922E20 AAA fill/border */
+    --status-crit-text: var(--amd-color-danger-text); /* #882B1E AAA on tinted chips + paper */
 
-    /* Risk-domain colors - data-viz only, never UI chrome. Matches DS tokens.domain.* */
-    --dom-cardiac: #A44938;
-    --dom-cancer:  #9B4A58;
-    --dom-metab:   #557F7A;
-    --dom-neuro:   #75649A;
+    /* Risk-domain colors - data-viz only, never UI chrome. Bound to DS domain tokens. */
+    --dom-cardiac: var(--amd-domain-cardiac);
+    --dom-cancer:  var(--amd-domain-cancer);
+    --dom-metab:   var(--amd-domain-metabolic);
+    --dom-neuro:   var(--amd-domain-neuro);
     /* Legacy alias during migration: */
-    --dom-indep:   #B8854D;
-    --dom-mobility: #557F7A;
+    --dom-indep:   var(--amd-domain-independence);
+    --dom-mobility: var(--amd-domain-metabolic);
 
+    /* Shape -- documented soft-corner exception for the patient app
+       (consumer health context). The landing/DS reference stays sharp. */
     --radius: 10px;
     --radius-sm: 6px;
     --radius-xs: 4px;
@@ -87,7 +96,7 @@
   /* ============ Topbar ============ */
   .topbar {
     position: sticky; top: 0;
-    background: rgba(246,244,238,0.86);
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     z-index: 40;
@@ -110,6 +119,14 @@
     letter-spacing: -0.035em;
     color: var(--text);
     line-height: 1.08;
+  }
+  .wordmark-img {
+    display: block;
+    height: 22px;
+    width: auto;
+  }
+  .nav-brand .wordmark-img {
+    height: 26px;
   }
   .wordmark {
     font-size: 27px;
@@ -307,7 +324,7 @@
     border-radius: 50%;
     background: var(--accent-hover);
     border: none;
-    color: #0A0A0B;
+    color: var(--amd-color-text-inverse);
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
@@ -1078,7 +1095,7 @@
     font-weight: 500;
     margin-bottom: 6px;
   }
-  .fg-action.done .fg-eyebrow { color: var(--status-ok-bright); }
+  .fg-action.done .fg-eyebrow { color: var(--status-ok-text); }
   .fg-title {
     font-size: 16px;
     font-weight: 500;
@@ -1159,7 +1176,7 @@
   }
   .watch-card.done .watch-stage {
     background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4);
-    color: var(--status-ok-bright);
+    color: var(--status-ok-text);
   }
   .watch-body { flex: 1; min-width: 0; }
   .watch-title { font-size: 13px; color: var(--text); font-weight: 500; }
@@ -1603,7 +1620,7 @@
     top: 16px;
   }
   .meeting-live span {
-    background: #D4A574;
+    background: var(--accent-bright);
     border-radius: 50%;
     display: inline-block;
     height: 7px;
@@ -1848,16 +1865,16 @@
 
   /* ============ QUALITY OF LIFE TOOL ============ */
   .qol-tool {
-    --qol-ink: #0A0A0B;
-    --qol-paper: #F6F4EE;
-    --qol-paper-warm: #EFEAE0;
-    --qol-gold: #D4A574;
-    --qol-gold-deep: #6F4A20;
-    --qol-line: rgba(10,10,11,0.12);
-    --qol-line-soft: rgba(10,10,11,0.06);
-    --qol-muted: #4A4A4D;
-    --qol-chart-bg: #FBF8F1;
-    --qol-chart-tick: rgba(10,10,11,0.22);
+    --qol-ink: var(--amd-color-text-primary);
+    --qol-paper: var(--amd-color-surface-paper);
+    --qol-paper-warm: var(--amd-color-surface-cream);
+    --qol-gold: var(--amd-color-gold-reference);
+    --qol-gold-deep: var(--amd-color-text-accent);
+    --qol-line: var(--amd-color-border-default);
+    --qol-line-soft: var(--amd-color-border-subtle);
+    --qol-muted: var(--amd-color-text-secondary-on-paper);
+    --qol-chart-bg: var(--amd-color-surface-card);
+    --qol-chart-tick: rgba(36,36,38,0.22);
     color: var(--qol-ink);
     background: var(--qol-paper);
     border: 1px solid rgba(10,10,11,0.10);
@@ -2271,9 +2288,9 @@
     padding: 2px 6px; border-radius: 3px; font-weight: 500;
     white-space: nowrap;
   }
-  .flag.ok { background: rgba(39,166,68,0.15); color: var(--status-ok-bright); }
-  .flag.warn { background: rgba(224,155,45,0.18); color: var(--status-warn); }
-  .flag.high { background: rgba(232,96,76,0.18); color: var(--status-crit); }
+  .flag.ok { background: rgba(39,166,68,0.15); color: var(--status-ok-text); }
+  .flag.warn { background: rgba(224,155,45,0.18); color: var(--status-warn-text); }
+  .flag.high { background: rgba(232,96,76,0.18); color: var(--status-crit-text); }
 
   /* Sparkline */
   .spark {
@@ -2300,7 +2317,7 @@
     font-family: 'JetBrains Mono', monospace;
   }
   .gene-hero .chip {
-    background: rgba(232,96,76,0.18); color: var(--status-crit);
+    background: rgba(232,96,76,0.18); color: var(--status-crit-text);
     font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
     padding: 2px 8px; border-radius: 3px; font-weight: 500;
   }
@@ -2479,7 +2496,7 @@
   .rs-input input:focus { border-color: var(--accent); }
   .rs-input button {
     background: var(--accent-hover);
-    color: #0A0A0B;
+    color: var(--amd-color-text-inverse);
     border: none; border-radius: 50%;
     width: 36px; height: 36px;
     cursor: pointer;
@@ -2796,7 +2813,7 @@
   .chat-input input:focus { border-color: var(--accent-hover); }
   .chat-input button {
     background: var(--accent-hover);
-    color: #0A0A0B;
+    color: var(--amd-color-text-inverse);
     border: none;
     border-radius: 50%;
     width: 36px; height: 36px;
@@ -3216,7 +3233,7 @@
   <!-- ================= TOPBAR ================= -->
   <div class="topbar">
     <div class="brand">
-      <span><span class="wordmark">Aleron <span class="md-tag">MD</span></span> <span class="muted" id="topbarSub">· your plan</span></span>
+      <span><span class="wordmark"><img class="wordmark-img" src="assets/wordmark-lowercase-ink.png?v=ds-20260601" alt="Aleron MD"></span> <span class="muted" id="topbarSub">· your plan</span></span>
     </div>
     <div class="avatar" title="Jim Yason">JY</div>
   </div>
@@ -3556,7 +3573,7 @@
       <div class="dom-card">
         <div class="dom-hd">
           <div class="dom-name"><span class="swatch" style="background: var(--dom-cardiac)"></span>Cardiovascular</div>
-          <div class="dom-risk">10y risk <b>9.4%</b> → <b style="color: var(--status-ok-bright)">6.2%</b></div>
+          <div class="dom-risk">10y risk <b>9.4%</b> → <b style="color: var(--status-ok-text)">6.2%</b></div>
         </div>
         <div class="dom-bar">
           <div class="dom-bar-fill" style="width: 48%"></div>
@@ -3594,7 +3611,7 @@
       <div class="dom-card">
         <div class="dom-hd">
           <div class="dom-name"><span class="swatch" style="background: var(--dom-metab)"></span>Metabolic &amp; autonomic</div>
-          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-bright)">stable</b></div>
+          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-text)">stable</b></div>
         </div>
         <div class="dom-bar">
           <div class="dom-bar-fill" style="width: 18%; background: var(--status-ok-bright)"></div>
@@ -3611,7 +3628,7 @@
       <div class="dom-card">
         <div class="dom-hd">
           <div class="dom-name"><span class="swatch" style="background: var(--dom-neuro)"></span>Neuro &amp; cognitive</div>
-          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-bright)">stable</b></div>
+          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-text)">stable</b></div>
         </div>
         <div class="dom-bar">
           <div class="dom-bar-fill" style="width: 22%; background: var(--status-ok-bright)"></div>
@@ -3792,7 +3809,7 @@
 <!-- ================= APP NAV ================= -->
 <nav class="navbar">
   <div class="nav-brand-block">
-    <a class="nav-brand" href="index.html">Aleron <span class="md-tag">MD</span></a>
+    <a class="nav-brand" href="index.html"><img class="wordmark-img" src="assets/wordmark-lowercase-ink.png?v=ds-20260601" alt="Aleron MD"></a>
     <div class="nav-member">
       <div class="avatar" aria-hidden="true">JY</div>
       <div>

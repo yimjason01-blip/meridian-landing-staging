@@ -23,6 +23,7 @@
      only colors text may use. Raw reference pigments below are swatch-only. */
   --amd-color-text-primary: #242426;          /* >=15:1 on page/card/cream */
   --amd-color-text-secondary: #565659;        /* 7.25 page / 7.31 card / 6.10 cream (light surfaces only) */
+  --amd-color-text-secondary-on-paper: #4D4D50; /* paper-safe secondary: 7.66 paper / 7.03 cream / 8.42 card. Use on #F6F4EE app canvas. */
   --amd-color-text-tertiary: #6E6E72;          /* large text only (>=18px or >=14px bold): 5.03 page */
   --amd-color-text-accent: #6E3D1C;            /* rust for labels/badges/code on light: 7.46 cream, 8.87 page */
   --amd-color-text-accent-on-dark: #D9A765;    /* gold for labels/badges on charcoal: 7.13 on #242426 */
@@ -42,9 +43,20 @@
   --amd-color-grid: #DED8CC;
   --amd-color-success: #3E7C54;
   --amd-color-success-text: #2F5F40; /* 7.42:1 on white, AAA success text */
+  --amd-color-success-text-tint: #2A553A; /* AAA on tinted chips: 8.54 white / 7.30 green-tint / 7.76 paper / 7.12 cream */
   --amd-color-warning: #B8792E;
+  --amd-color-warning-text: #5F4015; /* AAA on tinted chips: 9.41 white / 7.50 amber-tint / 8.56 paper / 7.85 cream */
   --amd-color-danger: #922E20; /* 7.97:1 on white, AAA as error text and border */
+  --amd-color-danger-text: #882B1E; /* AAA on tinted chips: 8.71 white / 7.07 red-tint / 7.92 paper / 7.26 cream */
   --amd-color-info: #3C5068;
+
+  /* Risk-domain data-viz colors. Chart/marker/plot use ONLY -- never UI chrome,
+     borders, or body text. Consumed by patient app (member.html) risk visuals. */
+  --amd-domain-cardiac: #A44938;
+  --amd-domain-cancer: #9B4A58;
+  --amd-domain-metabolic: #557F7A;
+  --amd-domain-neuro: #75649A;
+  --amd-domain-independence: #B8854D;
 
   /* Interactive roles */
   --amd-action-primary-bg: var(--amd-color-surface-dark);
