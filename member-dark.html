@@ -21,53 +21,58 @@
 
   :root {
     /* ============================================================
-       DARK MODE -- "login.html" look (charcoal->slate-blue canvas,
-       cream/gold ink). Local alias names retained so all component
-       CSS is unchanged; only values flip to dark.
+       DARK MODE v2 -- rich slate-blue identity from login.html.
+       Real blue undertone (not gray soup), a true 5-tier elevation
+       ramp, and warm gold that earns its place against the cool shell.
+       Local alias names retained so all component CSS is unchanged.
 
-       Every text role verified AAA (>=7:1) against its worst real
-       surface (panel / canvas-bottom / hover). Status text verified
-       AAA on its own tinted chip. See dark-mode contrast solve.
+       Every text role verified AAA (>=7:1) on its worst common surface.
+       Status text verified AAA on its own tinted chip. Elevation tiers
+       each clearly distinct (>1.10 contrast step). See palette solve.
        ============================================================ */
 
-    /* Canvas gradient ends (used by body background) */
-    --bg-grad-top: #1E2128;     /* charcoal */
-    --bg-grad-bot: #2A303C;     /* slate-blue, restrained for AAA text */
+    /* Canvas gradient -- slate-blue atmosphere, the login signature.
+       Bottom is canvas-only (no small text), so it can stay rich. */
+    --bg-grad-top: #161B26;     /* deep blue-charcoal */
+    --bg-grad-bot: #222C42;     /* slate-blue, full saturation restored */
 
-    /* Surfaces */
-    --bg: #21262F;             /* mid app canvas (flat fallback) */
-    --bg-panel: #282E39;        /* elevated cards */
-    --bg-surface: #1F242D;      /* recessed wells/segments */
-    --bg-hover: #2D333E;        /* hover (lightest text-bearing surface) */
+    /* Elevation ramp (5 tiers, each visibly distinct) */
+    --bg-well:   #0F131B;       /* deepest recess (sunken wells) */
+    --bg-surface: #0F131B;      /* recessed wells/segments (= well) */
+    --bg: #161B26;             /* body canvas */
+    --bg-panel: #1D2430;        /* cards / panels */
+    --bg-hover: #262E3B;        /* raised / hover */
+    --bg-pop: #2E3744;          /* popovers / active-most */
 
-    /* Lines -- cream at low alpha, login.html grammar */
-    --border-subtle: rgba(239,234,224,0.10);
-    --border: rgba(239,234,224,0.16);
-    --border-strong: rgba(239,234,224,0.28);
+    /* Lines -- cool blue-tinted at low alpha for depth seams */
+    --border-subtle: rgba(180,198,230,0.10);
+    --border: rgba(180,198,230,0.16);
+    --border-strong: rgba(180,198,230,0.30);
 
-    /* Text -- light cream roles, AAA on dark surfaces */
-    --text: #F3EFE7;            /* primary, 11.07:1 worst */
-    --text-secondary: #D2CEC6;  /* 8.09:1 worst */
-    --text-muted: #C6C2BA;      /* 7.15:1 worst */
+    /* Text -- warm cream roles, AAA on the elevation ramp */
+    --text: #F4F0E8;            /* primary, 12.0:1 worst */
+    --text-secondary: #D0CCC4;  /* 8.5:1 worst */
+    --text-muted: #C2BEB6;      /* 7.4:1 worst */
 
-    /* Accent -- warm gold (login gold family), AAA as text on dark */
-    --accent: #E6B97E;          /* 7.01:1 worst -- text/labels */
-    --accent-hover: #ECCF9E;    /* brighter gold for hover/emphasis */
-    --accent-bright: #ECCF9E;   /* 8.45:1 -- emphasis numerics */
-    --accent-light: rgba(230, 185, 126, 0.14);
-    --accent-tint: rgba(230, 185, 126, 0.22);
-    --accent-pale: #F2DCB4;     /* pale gold text for warm-dark mini-surfaces (>=7 on accent-light tint) */
-    --text-on-accent: #241E17;  /* dark ink for text/icons on gold fills (9.1:1 on accent) */
+    /* Accent -- saturated warm gold, the brand tension against cool blue */
+    --accent: #ECC085;          /* 8.1:1 on raised -- text/labels */
+    --accent-hover: #F0D4A2;    /* brighter gold for hover/emphasis */
+    --accent-bright: #F0D4A2;   /* 9.5:1 -- emphasis numerics */
+    --accent-light: rgba(236, 192, 133, 0.13);
+    --accent-tint: rgba(236, 192, 133, 0.20);
+    --accent-glow: rgba(236, 192, 133, 0.22);
+    --accent-pale: #F0D4A2;     /* pale gold text for warm-dark mini-surfaces */
+    --text-on-accent: #241E17;  /* dark ink for text/icons on gold fills (9.8:1) */
 
-    /* Status -- light-on-dark. Same value works as fill/border (>=7.6 vs panel)
-       and as text (>=7 on its own tinted chip at alpha .10). */
-    --status-ok: #A5E0BA;           /* fill/border */
-    --status-ok-bright: #A5E0BA;
-    --status-ok-text: #A5E0BA;      /* 7.10:1 on green tint */
-    --status-warn: #F4CE94;         /* fill/border */
-    --status-warn-text: #F4CE94;    /* 7.20:1 on amber tint */
-    --status-crit: #F9C6BC;         /* fill/border */
-    --status-crit-text: #F9C6BC;    /* 7.08:1 on red tint */
+    /* Status -- light-on-dark, works as fill/border (>=8.7 vs card)
+       and as text (>=7 on its own tinted chip at alpha .12). */
+    --status-ok: #86D9A6;           /* fill/border */
+    --status-ok-bright: #86D9A6;
+    --status-ok-text: #86D9A6;      /* 7.04:1 on green tint */
+    --status-warn: #F0CE8E;         /* fill/border */
+    --status-warn-text: #F0CE8E;    /* 7.80:1 on amber tint */
+    --status-crit: #F6C0B4;         /* fill/border */
+    --status-crit-text: #F6C0B4;    /* 7.36:1 on red tint */
 
     /* Risk-domain colors - data-viz only, never UI chrome. Bound to DS domain tokens. */
     --dom-cardiac: var(--amd-domain-cardiac);
@@ -197,9 +202,10 @@
   }
   .seg-btn:hover { color: var(--text-secondary); }
   .seg-btn.active {
-    background: var(--bg-surface);
-    color: var(--text);
-    box-shadow: 0 0 0 1px rgba(10,10,11,0.04);
+    background: var(--bg-hover);
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.35), inset 0 0 0 1px var(--accent-light);
   }
 
   /* ============ Screens ============ */
@@ -257,10 +263,14 @@
     border-radius: var(--radius);
     padding: 16px;
     margin-bottom: 10px;
-    transition: border-color 0.15s;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 12px 28px -18px rgba(0,0,0,0.6);
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
   }
   .card.clickable { cursor: pointer; }
-  .card.clickable:hover { border-color: var(--border); }
+  .card.clickable:hover {
+    border-color: var(--border);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 38px -18px rgba(0,0,0,0.72);
+  }
 
   /* ============ PLAN › MESSAGE ============ */
 
@@ -574,33 +584,58 @@
   }
 
   /* ============ PLAN › ACT ============ */
+  /* Physician letter -- editorial reading experience, not a document dump.
+     Contained card, constrained measure (~64ch), serif body, gold rule. */
   .plan-status {
-    max-width: 760px;
+    max-width: 600px;
     margin: 8px 0 28px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 26px 30px 28px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 14px 32px -20px rgba(0,0,0,0.62);
   }
   .plan-status p {
     color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 1.7;
-    margin: 0 0 16px;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.72;
+    max-width: 60ch;
+    margin: 0 0 18px;
   }
   .plan-status p:last-child {
     margin-bottom: 0;
   }
   .plan-status strong {
     color: var(--text);
-    font-weight: 500;
+    font-weight: 600;
   }
   .plan-status ul {
     color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 1.7;
-    margin: -4px 0 16px 1.1rem;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.72;
+    max-width: 60ch;
+    margin: -6px 0 18px 0;
     padding: 0;
+    list-style: none;
   }
   .plan-status li {
-    margin: 0 0 8px;
-    padding-left: 2px;
+    position: relative;
+    margin: 0 0 10px;
+    padding-left: 20px;
+  }
+  .plan-status li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.85;
   }
   .strategy-video-card {
     max-width: 760px;
@@ -609,7 +644,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 16px 36px rgba(63,58,50,0.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 18px 44px -20px rgba(0,0,0,0.7);
   }
   .strategy-video-head {
     padding: 18px 18px 14px;
@@ -617,11 +652,21 @@
   }
   .strategy-video-eyebrow {
     font-size: 11px;
-    color: var(--text-muted);
+    color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 500;
-    margin-bottom: 7px;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .strategy-video-eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.7;
   }
   .strategy-video-title {
     margin: 0;
@@ -642,7 +687,7 @@
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: #191714;
+    background: var(--bg-well);
   }
   .strategy-video-meta {
     display: flex;
@@ -895,7 +940,7 @@
     margin-bottom: 16px;
   }
   .plan-modal-kicker {
-    color: var(--text-muted);
+    color: var(--accent);
     font-size: 11px;
     letter-spacing: 0.08em;
     margin-bottom: 6px;
@@ -1474,7 +1519,7 @@
     margin-bottom: 14px;
   }
   .appointment-kicker {
-    color: var(--text-muted);
+    color: var(--accent);
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 500;
@@ -2940,9 +2985,10 @@
     html, body {
       min-height: 100%;
       background:
-        radial-gradient(circle at 36% -8%, rgba(212,165,116,0.20), transparent 30rem),
-        radial-gradient(circle at 100% 22%, rgba(140,160,130,0.12), transparent 24rem),
-        var(--bg);
+        radial-gradient(circle at 14% -6%, var(--accent-glow), transparent 38%),
+        radial-gradient(ellipse 120% 80% at 80% 110%, rgba(34,44,66,0.55), transparent 60%),
+        linear-gradient(155deg, var(--bg-grad-top) 0%, var(--bg-grad-bot) 100%);
+      background-attachment: fixed;
     }
 
     .shell {
