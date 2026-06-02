@@ -1,4 +1,4 @@
-@import url("./components.css?v=kit-20260601j");
+@import url("./components.css?v=kit-20260601k");
 
 .amd-pattern-proof { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .8fr); gap: var(--amd-space-7); align-items: stretch; }
 .amd-pattern-proof-figure { min-height: 520px; border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-cream); position: relative; overflow: hidden; display: grid; padding: var(--amd-space-6); }

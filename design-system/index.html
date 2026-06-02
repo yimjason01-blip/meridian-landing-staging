@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./patterns.css?v=kit-20260601j">
+<link rel="stylesheet" href="./patterns.css?v=kit-20260601k">
 <style>
   .ds-shell { min-height: 100vh; display: grid; grid-template-columns: 286px minmax(0, 1fr); }
   .ds-side { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 30px 26px; color: var(--amd-color-text-inverse); background: var(--amd-login-fade), var(--amd-color-surface-deep); }
@@ -67,17 +67,7 @@
   .ds-type-spec { font: 12px/1.5 var(--amd-font-mono); color: var(--amd-color-text-secondary); text-align: right; }
   .ds-type-spec b { display: block; color: var(--amd-color-text-primary); font-weight: 600; }
   @media (max-width: 720px) { .ds-type-row { grid-template-columns: 1fr; } .ds-type-spec { text-align: left; } }
-  .ds-source-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
-  .ds-source-card img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; }
-  .ds-source-card figcaption { padding: var(--amd-space-4); }
-  .ds-reference-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--amd-space-5); margin-top: var(--amd-space-6); }
-  .ds-reference-gallery .ds-source-card img { aspect-ratio: 16 / 10; object-fit: cover; }
-  .ds-reference-gallery .ds-source-card.is-mobile img { aspect-ratio: 9 / 16; object-fit: cover; object-position: top center; background: var(--amd-color-surface-cream); }
-  .ds-lane-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-6); }
-  .ds-lane-card { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-5); display: grid; gap: var(--amd-space-3); }
-  .ds-lane-card ul { margin: 0; padding-left: 18px; color: var(--amd-color-text-secondary); line-height: 1.5; }
-  .ds-do-dont { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--amd-space-4); margin-top: var(--amd-space-5); }
-  .ds-do-dont div { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); padding: var(--amd-space-4); }
+  .ds-hero-reference { border: 1px solid var(--amd-color-border-default); background: var(--amd-color-surface-card); overflow: hidden; }
   .ds-file-map { display: grid; gap: 0; }
   .ds-file-map-row { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 1.15fr); gap: var(--amd-space-4); padding: 12px 0; border-bottom: 1px solid var(--amd-color-border-subtle); align-items: start; }
   .ds-file-map-row:last-child { border-bottom: 0; }
@@ -153,7 +143,6 @@
     <nav class="ds-nav" aria-label="Design system sections">
       <a href="#overview">Overview</a>
       <a href="#identity">Identity</a>
-      <a href="#source-map">Source map</a>
       <a href="#foundations">Foundations</a>
       <a href="#type">Typography</a>
       <a href="#components">Components</a>
@@ -169,9 +158,8 @@
       <h1 class="amd-h1">Design system</h1>
       <p class="ds-lede">A production kit for building Aleron surfaces quickly: semantic tokens, shared components, page patterns, source assets, and copyable snippets.</p>
       <div class="ds-grid">
-        <div class="ds-spec"><strong>1. Source map</strong><p class="ds-note">Separate visual-language sources, live implementation evidence, identity assets, and excluded artifacts before deriving tokens.</p></div>
-        <div class="ds-spec"><strong>2. Foundations</strong><p class="ds-note">Translate approved sources into semantic color, type, spacing, layout, shape, and motion tokens.</p></div>
-        <div class="ds-spec"><strong>3. Patterns</strong><p class="ds-note">Compose pages from one hero implementation pattern, one trajectory proof pattern, forms, login, and CTA blocks.</p></div>
+        <div class="ds-spec"><strong>1. Foundations</strong><p class="ds-note">Translate approved sources into semantic color, type, spacing, layout, shape, and motion tokens.</p></div>
+        <div class="ds-spec"><strong>2. Patterns</strong><p class="ds-note">Compose pages from one hero implementation pattern, one trajectory proof pattern, forms, login, and CTA blocks.</p></div>
       </div>
     </section>
 
@@ -186,25 +174,6 @@
         <div class="ds-spec ds-asset"><span class="ds-source-badge">wordmark</span><img class="ds-wordmark-light" src="./assets/wordmark-lowercase-ink.png" alt="Aleron MD ink wordmark"><div><strong>Wordmark on light</strong><div class="ds-mono">same alpha, ink fill</div></div></div>
       </div>
     </section>
-
-    <section class="ds-section" id="source-map">
-      <p class="ds-kicker">Source map</p>
-      <h2 class="amd-h2">What belongs where</h2>
-      <p class="ds-lede">The Reference page defines visual language. The live hero defines implementation mechanics. Identity assets define marks. Excluded artifacts stay out of the system.</p>
-      <div class="ds-lane-grid">
-        <div class="ds-lane-card"><span class="ds-source-badge">figma-reference</span><strong>Visual language source</strong><ul><li>Figma page `Reference` / `785:6560`.</li><li>Hero visual lane, trajectory lane, illustration lanes, texture moments, palette.</li><li>Raw screenshot CTA and header details are not production rules.</li></ul></div>
-        <div class="ds-lane-card"><span class="ds-source-badge">live-hero</span><strong>Implementation source</strong><ul><li>`figma-hero-shot.html` and `figma-layer-manifest.md`.</li><li>Layer stack, carousel mechanics, parallax mechanics.</li><li>Production header and CTA behavior.</li></ul></div>
-        <div class="ds-lane-card"><span class="ds-source-badge">identity</span><strong>Mark source</strong><ul><li>Lowercase icon, favicon set, wordmark assets.</li><li>Use marks as marks, not as layout references.</li></ul></div>
-        <div class="ds-lane-card"><span class="ds-source-badge">excluded</span><strong>Do not import</strong><ul><li>Old curve thumbnail and dark gold `curve.jpg`.</li><li>Raw `Demo` CTAs and rust Login tiles.</li><li>Rounded, frosted, or pitch-deck styling.</li></ul></div>
-      </div>
-      <div class="ds-reference-gallery">
-        <figure class="ds-source-card"><img src="./assets/reference-page/hero-1.png" alt="Reference hero visual lane"><figcaption><span class="ds-source-badge">hero-visual</span><strong>Hero visual lane</strong><p class="ds-note">Use photography, gradient field, rectangular mosaic blocks, and white wordmark. CTA/header behavior is sourced from the live hero only.</p></figcaption></figure>
-        <figure class="ds-source-card"><img src="./assets/reference-page/trajectory-future.png" alt="Reference trajectory lane"><figcaption><span class="ds-source-badge">trajectory</span><strong>Trajectory lane</strong><p class="ds-note">Cream grid, semantic gradient curve, square markers, dashed counterfactuals, and compact annotation cards.</p></figcaption></figure>
-        <figure class="ds-source-card is-mobile"><img src="./assets/reference-page/moment-outline-lab.png" alt="Reference outlined moment lane"><figcaption><span class="ds-source-badge">moment</span><strong>Moment lane</strong><p class="ds-note">Sparse mobile status screens with one centered illustration or icon and one bottom-anchored CTA.</p></figcaption></figure>
-        <figure class="ds-source-card"><img src="./assets/reference-page/palette.png" alt="Reference palette lane"><figcaption><span class="ds-source-badge">palette</span><strong>Palette lane</strong><p class="ds-note">Swatches and gradients become tokens only after source-lane assignment.</p></figcaption></figure>
-      </div>
-    </section>
-
     <section class="ds-section amd-grid-field" id="foundations">
       <p class="ds-kicker">Foundations</p>
       <h2 class="amd-h2">Tokens</h2>
