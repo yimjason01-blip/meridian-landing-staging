@@ -55,6 +55,7 @@
     --dom-cancer:  var(--amd-domain-cancer);
     --dom-metab:   var(--amd-domain-metabolic);
     --dom-neuro:   var(--amd-domain-neuro);
+    --dom-ckd:     var(--amd-color-info);
     /* Legacy alias during migration: */
     --dom-indep:   var(--amd-domain-independence);
     --dom-mobility: var(--amd-domain-metabolic);
@@ -2248,11 +2249,25 @@
     overflow: hidden;
     transition: max-height 0.3s ease-out;
   }
-  .data-group.open .data-body { max-height: 720px; }
+  .data-group.open .data-body { max-height: 1800px; }
   .data-body-inner {
     padding: 4px 16px 16px;
     border-top: 1px solid var(--border-subtle);
     padding-top: 14px;
+  }
+  .data-note {
+    margin: 0 0 10px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .data-subhead {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    margin: 14px 0 4px;
+    text-transform: uppercase;
   }
 
   /* Flowsheet-style row */
@@ -2352,6 +2367,20 @@
     font-variant-numeric: tabular-nums;
   }
   .dom-risk b { color: var(--text); font-weight: 500; }
+  .risk-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .risk-chip.low { background: rgba(39,166,68,0.15); color: var(--status-ok-text); }
+  .risk-chip.watch { background: rgba(224,155,45,0.18); color: var(--status-warn-text); }
+  .risk-chip.elevated { background: rgba(232,96,76,0.18); color: var(--status-crit-text); }
   .dom-bar {
     height: 6px; border-radius: 3px;
     background: var(--bg-surface);
@@ -3255,8 +3284,8 @@
           <h2 class="strategy-video-title">Dr. Thompson’s risk-reduction readout</h2>
           <p class="strategy-video-sub">A short physician review of why these few decisions matter first, what can wait, and how the plan should feel.</p>
         </div>
-        <video class="strategy-video" controls playsinline preload="metadata" poster="assets/video/doctor-initial-assessment-poster.jpg">
-          <source src="assets/video/doctor-initial-assessment.mp4" type="video/mp4">
+        <video class="strategy-video" controls playsinline preload="metadata" poster="assets/video/doctor-initial-assessment-poster.jpg?v=member-consult-ref-20260602">
+          <source src="assets/video/doctor-initial-assessment.mp4?v=member-consult-ref-20260602" type="video/mp4">
           Your browser does not support video playback.
         </video>
         <div class="strategy-video-meta">
@@ -3406,26 +3435,82 @@
         <div class="data-hd" onclick="toggleData(this.parentElement)">
           <div>
             <h4>Wearable · 30-day</h4>
-            <div class="sub">Apple Watch · last synced 3h ago</div>
+            <div class="sub">Apple Watch + workout files · last synced 3h ago</div>
           </div>
           <span class="chev">›</span>
         </div>
         <div class="data-body"><div class="data-body-inner">
+          <p class="data-note">The model ingests trend and recovery, not just step count. Values shown here are the member-facing slice of the wearable feed.</p>
+          <div class="data-subhead">Fitness and training</div>
           <div class="metric">
-            <div class="name">HRV <small>4-week average, SDNN</small></div>
-            <div class="val">52 ms</div>
-            <div class="flag ok">normal</div>
+            <div class="name">VO2 max <small>latest validated estimate</small></div>
+            <div class="val">54 mL/kg/min</div>
+            <div class="flag ok">strong</div>
           </div>
+          <div class="metric">
+            <div class="name">Cardio fitness <small>age-adjusted percentile</small></div>
+            <div class="val">&gt;90th</div>
+            <div class="flag ok">high</div>
+          </div>
+          <div class="metric">
+            <div class="name">Training minutes <small>7-day average</small></div>
+            <div class="val">420 min/wk</div>
+            <div class="flag ok">active</div>
+          </div>
+          <div class="metric">
+            <div class="name">Zone 2 time <small>last 30 days</small></div>
+            <div class="val">7h 40m</div>
+            <div class="flag ok">steady</div>
+          </div>
+          <div class="metric">
+            <div class="name">Workouts <small>last 30 days</small></div>
+            <div class="val">18 <small>14 cycling · 4 walking</small></div>
+            <div class="flag ok">consistent</div>
+          </div>
+          <div class="metric">
+            <div class="name">1-min HR recovery <small>post-workout median</small></div>
+            <div class="val">34 bpm</div>
+            <div class="flag ok">strong</div>
+          </div>
+
+          <div class="data-subhead">Autonomic and sleep</div>
           <div class="metric">
             <div class="name">Resting HR <small>7-day average</small></div>
             <div class="val">52 bpm</div>
             <div class="flag ok">athletic</div>
           </div>
           <div class="metric">
-            <div class="name">Sleep <small>30-day average</small></div>
-            <div class="val">7h 10m <small>deep 1h 20m</small></div>
+            <div class="name">HRV <small>4-week average, SDNN</small></div>
+            <div class="val">52 ms</div>
+            <div class="flag ok">normal</div>
+          </div>
+          <div class="metric">
+            <div class="name">Sleep duration <small>30-day average</small></div>
+            <div class="val">7h 10m</div>
             <div class="flag ok">ok</div>
           </div>
+          <div class="metric">
+            <div class="name">Deep sleep <small>30-day average</small></div>
+            <div class="val">1h 20m</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Sleep regularity <small>bed/wake consistency</small></div>
+            <div class="val">84%</div>
+            <div class="flag ok">steady</div>
+          </div>
+          <div class="metric">
+            <div class="name">Respiratory rate <small>sleep median</small></div>
+            <div class="val">14.8/min</div>
+            <div class="flag ok">stable</div>
+          </div>
+          <div class="metric">
+            <div class="name">SpO2 <small>sleep median</small></div>
+            <div class="val">97%</div>
+            <div class="flag ok">ok</div>
+          </div>
+
+          <div class="data-subhead">Daily movement</div>
           <div class="metric">
             <div class="name">Steps <small>daily average</small></div>
             <div class="val">8,400</div>
@@ -3436,62 +3521,56 @@
             <div class="val">620 kcal</div>
             <div class="flag ok">active</div>
           </div>
-          <div class="metric">
-            <div class="name">Workouts <small>last 30 days</small></div>
-            <div class="val">11 <small>9 cycling · 2 walking</small></div>
-            <div class="flag ok">consistent</div>
-          </div>
         </div></div>
       </div>
 
       <!-- Labs -->
-      <div class="data-group">
+      <div class="data-group open">
         <div class="data-hd" onclick="toggleData(this.parentElement)">
           <div>
-            <h4>Labs · most recent panel</h4>
-            <div class="sub">Drawn April 10, 2026 · Quest Diagnostics</div>
+            <h4>Labs · Elite prevention panel</h4>
+            <div class="sub">Drawn April 10, 2026 · Quest Diagnostics · 42 markers</div>
           </div>
           <span class="chev">›</span>
         </div>
         <div class="data-body"><div class="data-body-inner">
+          <p class="data-note">Shown as model inputs. The full collection includes lipids, glycemic control, inflammation, kidney, liver, thyroid, nutrients, hormones, and CBC.</p>
+          <div class="data-subhead">Cardiovascular lipids</div>
           <div class="metric">
             <div class="name">ApoB</div>
-            <div class="val">98 mg/dL <small>goal &lt;80</small></div>
-            <div class="flag high">high</div>
+            <div class="val">88 mg/dL <small>target &lt;80</small></div>
+            <div class="flag warn">watch</div>
           </div>
           <div class="metric">
             <div class="name">Lp(a)</div>
-            <div class="val">62 mg/dL <small>goal &lt;30</small></div>
-            <div class="flag high">high</div>
+            <div class="val">72 nmol/L <small>optimal &lt;75</small></div>
+            <div class="flag ok">optimal</div>
           </div>
           <div class="metric">
             <div class="name">LDL-C</div>
-            <div class="val">128 mg/dL <small>goal &lt;100</small></div>
-            <div class="flag high">high</div>
+            <div class="val">112 mg/dL <small>target &lt;100</small></div>
+            <div class="flag warn">watch</div>
           </div>
           <div class="metric">
             <div class="name">HDL-C</div>
-            <div class="val">58 mg/dL</div>
+            <div class="val">61 mg/dL</div>
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
             <div class="name">Triglycerides</div>
-            <div class="val">85 mg/dL</div>
+            <div class="val">78 mg/dL</div>
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
             <div class="name">Total cholesterol</div>
-            <div class="val">203 mg/dL <small>ref &lt;200</small></div>
-            <div class="flag warn">borderline</div>
+            <div class="val">190 mg/dL <small>ref &lt;200</small></div>
+            <div class="flag ok">ok</div>
           </div>
-          <div class="metric">
-            <div class="name">hs-CRP</div>
-            <div class="val">1.1 mg/L <small>goal &lt;1.0</small></div>
-            <div class="flag warn">borderline</div>
-          </div>
+
+          <div class="data-subhead">Glucose and inflammation</div>
           <div class="metric">
             <div class="name">A1c</div>
-            <div class="val">5.4% <small>normal</small></div>
+            <div class="val">5.4%</div>
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
@@ -3500,13 +3579,50 @@
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
+            <div class="name">Fasting insulin</div>
+            <div class="val">4.7 µIU/mL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">HOMA-IR</div>
+            <div class="val">1.0</div>
+            <div class="flag ok">low</div>
+          </div>
+          <div class="metric">
+            <div class="name">hs-CRP</div>
+            <div class="val">0.7 mg/L <small>goal &lt;1.0</small></div>
+            <div class="flag ok">low</div>
+          </div>
+          <div class="metric">
+            <div class="name">Homocysteine</div>
+            <div class="val">8.6 µmol/L</div>
+            <div class="flag ok">ok</div>
+          </div>
+
+          <div class="data-subhead">Kidney, liver, thyroid</div>
+          <div class="metric">
             <div class="name">Creatinine / eGFR</div>
-            <div class="val">0.98 / &gt;90</div>
+            <div class="val">0.98 mg/dL / &gt;90 mL/min/1.73m²</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Cystatin C eGFR</div>
+            <div class="val">94 mL/min/1.73m²</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Urine albumin/creatinine</div>
+            <div class="val">6 mg/g</div>
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
             <div class="name">ALT / AST</div>
-            <div class="val">24 / 22</div>
+            <div class="val">24 U/L / 22 U/L</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">GGT</div>
+            <div class="val">18 U/L</div>
             <div class="flag ok">ok</div>
           </div>
           <div class="metric">
@@ -3514,9 +3630,31 @@
             <div class="val">1.8 mIU/L</div>
             <div class="flag ok">ok</div>
           </div>
+
+          <div class="data-subhead">Nutrients, hormones, CBC</div>
+          <div class="metric">
+            <div class="name">Ferritin</div>
+            <div class="val">82 ng/mL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Vitamin D 25-OH</div>
+            <div class="val">42 ng/mL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Vitamin B12</div>
+            <div class="val">612 pg/mL</div>
+            <div class="flag ok">ok</div>
+          </div>
+          <div class="metric">
+            <div class="name">Total testosterone</div>
+            <div class="val">610 ng/dL</div>
+            <div class="flag ok">ok</div>
+          </div>
           <div class="metric">
             <div class="name">CBC</div>
-            <div class="val">WNL</div>
+            <div class="val">within range</div>
             <div class="flag ok">ok</div>
           </div>
         </div></div>
@@ -3537,7 +3675,7 @@
               <div class="title">ATM c.8147T&gt;C</div>
               <div class="chip">Pathogenic</div>
             </div>
-            <div class="detail">Associated with increased risk for pancreatic, breast, and prostate cancer. Drives the annual pancreatic MRI decision in your plan.</div>
+            <div class="detail">Associated with increased cancer risk and tracked as the active hereditary signal. Pancreatic screening intensity depends on confirming family-history details.</div>
           </div>
           <div class="metric">
             <div class="name">Genes tested</div>
@@ -3566,78 +3704,97 @@
   <section class="screen" id="screen-risk">
     <!-- ---- RISK ---- -->
     <div id="risk-models">
-      <div class="screen-eyebrow">Your risk, broken down</div>
-      <h1 class="screen-title">Four risk models.</h1>
-      <p class="screen-subtitle">Each model fed by your data. Use "Ask about this" on any card to dig in.</p>
+      <div class="screen-eyebrow">Five model outputs</div>
+      <h1 class="screen-title">Risk, in the same language.</h1>
+      <p class="screen-subtitle">Each domain shows the patient-facing output first, then the data driving it and what would change the plan.</p>
 
       <div class="dom-card">
         <div class="dom-hd">
           <div class="dom-name"><span class="swatch" style="background: var(--dom-cardiac)"></span>Cardiovascular</div>
-          <div class="dom-risk">10y risk <b>9.4%</b> → <b style="color: var(--status-ok-text)">6.2%</b></div>
+          <div class="dom-risk"><span class="risk-chip low">Low</span></div>
         </div>
         <div class="dom-bar">
-          <div class="dom-bar-fill" style="width: 48%"></div>
-          <div class="dom-bar-fill after" style="width: 32%"></div>
+          <div class="dom-bar-fill after" style="width: 18%"></div>
         </div>
         <div class="dom-inputs">
-          Driven by: <b>ApoB 98</b> · <b>Lp(a) 62</b> · age 47 · paternal GI cancer
+          10y ASCVD estimate: <b>~2%</b> · Lp(a) <b>72 nmol/L</b> optimal · VO2 max <b>54 mL/kg/min</b> strong · ApoB <b>88 mg/dL</b> watch
         </div>
         <div class="dom-conn">
-          Highest-sensitivity input → ApoB <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 01 (statin)</em>
+          Output to patient <span class="arrow">→</span> Low near-term event risk. The plan stays measured unless CAC, BP, or ApoB trend changes the picture.
         </div>
         <div class="dom-conn">
-          Baseline data gap → CAC <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 02 (CAC + stress echo)</em>
+          What could move it <span class="arrow">→</span> CAC result, sustained ApoB above target, BP drift, or a major training drop.
         </div>
         <button class="dom-ask" onclick="openRiskSheet('cardiovascular')">Ask about this <span class="arrow">→</span></button>
       </div>
 
       <div class="dom-card">
         <div class="dom-hd">
-          <div class="dom-name"><span class="swatch" style="background: var(--dom-cancer)"></span>Cancer</div>
-          <div class="dom-risk">Pancreatic risk <b>elevated</b> <small>(ATM+)</small></div>
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-metab)"></span>Metabolic</div>
+          <div class="dom-risk"><span class="risk-chip low">Low</span></div>
         </div>
         <div class="dom-bar">
-          <div class="dom-bar-fill" style="width: 42%"></div>
+          <div class="dom-bar-fill after" style="width: 16%"></div>
         </div>
         <div class="dom-inputs">
-          Driven by: <b>ATM c.8147T&gt;C pathogenic</b> · paternal GI cancer (early 80s)
+          A1c <b>5.4%</b> · fasting glucose <b>88 mg/dL</b> · fasting insulin <b>4.7 µIU/mL</b> · HOMA-IR <b>1.0</b> · waist and training pattern favorable
         </div>
         <div class="dom-conn">
-          Surveillance trigger → NCCN ATM+ <span class="arrow">→</span> <em style="color: var(--accent-hover); font-style: normal">Decision 03 (annual pancreatic MRI)</em>
-        </div>
-        <button class="dom-ask" onclick="openRiskSheet('cancer')">Ask about this <span class="arrow">→</span></button>
-      </div>
-
-      <div class="dom-card">
-        <div class="dom-hd">
-          <div class="dom-name"><span class="swatch" style="background: var(--dom-metab)"></span>Metabolic &amp; autonomic</div>
-          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-text)">stable</b></div>
-        </div>
-        <div class="dom-bar">
-          <div class="dom-bar-fill" style="width: 18%; background: var(--status-ok-bright)"></div>
-        </div>
-        <div class="dom-inputs">
-          Driven by: <b>A1c 5.4</b> · <b>fasting glucose 88</b> · <b>HRV 52 ms</b> · <b>RHR 52 bpm</b> · <b>sleep 7h 10m</b>
-        </div>
-        <div class="dom-conn">
-          No action needed · wearable and metabolic markers are in range
+          Output to patient <span class="arrow">→</span> No active metabolic risk signal. Keep monitoring trend, not chasing normal values.
         </div>
         <button class="dom-ask" onclick="openRiskSheet('metabolic')">Ask about this <span class="arrow">→</span></button>
       </div>
 
       <div class="dom-card">
         <div class="dom-hd">
-          <div class="dom-name"><span class="swatch" style="background: var(--dom-neuro)"></span>Neuro &amp; cognitive</div>
-          <div class="dom-risk">Trajectory <b style="color: var(--status-ok-text)">stable</b></div>
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-cancer)"></span>Cancer</div>
+          <div class="dom-risk"><span class="risk-chip elevated">Elevated signal</span></div>
         </div>
         <div class="dom-bar">
-          <div class="dom-bar-fill" style="width: 22%; background: var(--status-ok-bright)"></div>
+          <div class="dom-bar-fill" style="width: 46%"></div>
         </div>
         <div class="dom-inputs">
-          Driven by: <b>sleep 7h 10m</b> · <b>deep sleep 1h 20m</b> · active lifestyle · in-laws dementia (not genetic)
+          ATM <b>pathogenic heterozygous</b> · paternal grandfather GI cancer <b>primary site unconfirmed</b> · colonoscopy/PSA baseline status tracked
         </div>
         <div class="dom-conn">
-          No action needed today · annual re-run is the longest-horizon lever
+          Output to patient <span class="arrow">→</span> Hereditary cancer signal is the active risk domain. Pancreatic screening intensity depends on confirming family-history details.
+        </div>
+        <div class="dom-conn">
+          What could move it <span class="arrow">→</span> Confirmed pancreatic cancer in the family, colonoscopy result, PSA baseline, or new genetic counseling interpretation.
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('cancer')">Ask about this <span class="arrow">→</span></button>
+      </div>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-ckd)"></span>Kidney</div>
+          <div class="dom-risk"><span class="risk-chip low">Very low</span></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill after" style="width: 12%"></div>
+        </div>
+        <div class="dom-inputs">
+          Creatinine eGFR <b>&gt;90 mL/min/1.73m²</b> · cystatin C eGFR <b>94 mL/min/1.73m²</b> · UACR <b>6 mg/g</b> · BP pattern favorable
+        </div>
+        <div class="dom-conn">
+          Output to patient <span class="arrow">→</span> Kidney risk is not driving any action today. Annual eGFR, cystatin C, and urine albumin keep it honest.
+        </div>
+        <button class="dom-ask" onclick="openRiskSheet('ckd')">Ask about this <span class="arrow">→</span></button>
+      </div>
+
+      <div class="dom-card">
+        <div class="dom-hd">
+          <div class="dom-name"><span class="swatch" style="background: var(--dom-neuro)"></span>Neuro &amp; cognitive</div>
+          <div class="dom-risk"><span class="risk-chip low">Low</span></div>
+        </div>
+        <div class="dom-bar">
+          <div class="dom-bar-fill after" style="width: 20%"></div>
+        </div>
+        <div class="dom-inputs">
+          Sleep <b>7h 10m</b> · deep sleep <b>1h 20m</b> · HRV <b>52 ms</b> · CVD output low · no personal neurologic signal collected
+        </div>
+        <div class="dom-conn">
+          Output to patient <span class="arrow">→</span> No active neuro signal. The model watches sleep, vascular risk, cognition screen, and genetics over time.
         </div>
         <button class="dom-ask" onclick="openRiskSheet('neuro')">Ask about this <span class="arrow">→</span></button>
       </div>
@@ -3689,9 +3846,9 @@
           <!-- Preloaded questions, shown until the user sends the first message -->
           <div class="suggest ai-suggest" id="suggest">
             <div class="suggest-label">Good places to start</div>
-            <button onclick="askPreset('Why the statin and not just lifestyle changes?')">Why a statin first?</button>
-            <button onclick="askPreset('What side effects should I actually watch for?')">Side effects I should actually watch for</button>
-            <button onclick="askPreset('How fast will my numbers change?')">How fast will my numbers change?</button>
+            <button onclick="askPreset('Why is my cardiovascular risk low?')">Why is CVD risk low?</button>
+            <button onclick="askPreset('What does Lp(a) 72 nmol/L mean?')">What does Lp(a) 72 nmol/L mean?</button>
+            <button onclick="askPreset('What would change my risk category?')">What would change my risk category?</button>
             <button onclick="askPreset('Explain ATM in plain language.')">What does ATM mean for me, plainly?</button>
             <button onclick="askPreset('Walk me through Dr. Thompson\'s reasoning.')">Walk me through Dr. Thompson's reasoning</button>
             <button onclick="askPreset('What would make my plan change at the 12-week recheck?')">What would change the plan at 12 weeks?</button>
@@ -3783,7 +3940,7 @@
         <div class="meeting-checklist">
           <div>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
-            Review statin start and side-effect watchouts
+            Review why the CVD model is low but still monitored
           </div>
           <div>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M20 6L9 17l-5-5"/></svg>
@@ -3993,7 +4150,7 @@
       summary: 'Shared frame: the CAC scan helps decide whether the cardiovascular plan should stay measured or become more aggressive.',
       why: 'The model has a modifiable lever here. If calcium is present, prevention intensity changes. If calcium is absent, the plan can stay focused without adding unnecessary burden.',
       do: 'Choose one of the scan times from the office and complete the CAC scan. No special preparation is expected beyond the scheduling instructions.',
-      next: 'The result anchors the next cardiovascular decision, including whether the current statin plan is enough.',
+      next: 'The result anchors whether the cardiovascular plan stays measured or needs escalation beyond ApoB optimization.',
       threadTitle: 'CAC Scan',
       threadIntro: 'Focused thread with Dr. Thompson about the CAC scan priority.',
       starter: 'I have a question about the CAC Scan: '
@@ -4789,61 +4946,50 @@
 
   /* ===== AI Chat ===== */
   const CANNED = {
-    'why the statin': {
-      text: `Two reasons, specific to you.
+    'cardiovascular risk low': {
+      text: `Your cardiovascular model is low because the updated inputs changed the picture.
 
-<em>First</em>, your ApoB is 98 and Lp(a) is 62 - both above goal. Lifestyle changes alone typically drop ApoB 15-20%. That would land you in the low 80s, still at goal's edge. The statin reliably gets you into the 70s.
+<em>First</em>, Lp(a) is <b>72 nmol/L</b>. In nmol/L, that is optimal, not high. The elevated threshold is around <b>125 nmol/L</b>, and the optimal band is below <b>75 nmol/L</b>.
 
-<em>Second</em>, Lp(a) is genetic. It doesn't move with diet or exercise at all. A statin doesn't lower Lp(a) either - but it drops every other atherogenic particle, which matters more when Lp(a) is high, not less.
+<em>Second</em>, VO2 max is <b>54 mL/kg/min</b>, which is a protective signal. It does not erase lipid risk, but it lowers the near-term event picture and supports a measured plan.
 
-Dr. Thompson flagged ApoB as the single highest-sensitivity input in your cardiovascular risk model. That's why it's Decision 01.`,
-      src: '<b>Source:</b> Decision 01 · CVD risk model · Dr. Thompson\'s note'
+<em>Third</em>, ApoB is a watch item, not an emergency. The plan monitors ApoB, BP, CAC, and wearable trend rather than treating you like a high-risk cardiac patient today.`,
+      src: '<b>Source:</b> CVD Risk model · labs + wearable inputs'
     },
-    'side effects': {
-      text: `Honest version, based on the rosuvastatin literature:
+    'lp(a) 72 nmol/l': {
+      text: `Lp(a) <b>72 nmol/L</b> is best read in nmol/L, not mg/dL. With current cutpoints, below <b>75 nmol/L</b> is optimal and <b>125 nmol/L</b> or higher is elevated.
 
-Real risks (~1-3% of patients):
-• Muscle soreness or weakness - most common. Tell us if it persists beyond a few days.
-• Transient liver enzyme rise - why we'll recheck labs at 12 weeks.
-
-Uncommon (&lt;0.5%):
-• New-onset diabetes - small signal, mostly in people already prediabetic. Your A1c is 5.4, so this is low-concern.
-• Cognitive fuzziness - rare, reversible if it happens.
-
-<em>What to do:</em> If you notice anything that feels off, message here. We'd rather hear about it early.`,
-      src: '<b>Source:</b> Rosuvastatin prescribing information · CTT meta-analyses'
+So the corrected interpretation is: <em>not a high Lp(a) phenotype</em>. The CVD model now treats Lp(a) <b>72 nmol/L</b> as protective/neutral, while ApoB and CAC remain the variables worth watching.`,
+      src: '<b>Source:</b> Lab interpretation · Lp(a) value carried with unit'
     },
-    'how fast': {
-      text: `Different signals move on different clocks.
+    'change my risk category': {
+      text: `The model would change category if a new input changed the state, not because a normal value moved slightly.
 
-<em>Week 2</em> - nothing dramatic. The statin is doing silent work on LDL.
-<em>Week 4-6</em> - your cardiac workup window. CAC + stress echo results come in.
-<em>Week 12</em> - labs. ApoB under 80 is the headline. LDL should drop ~40% from baseline.
-<em>November</em> - first annual pancreatic MRI.
+The big movers are:
+• CAC above zero or plaque on imaging
+• ApoB staying above target after the next lab cycle
+• BP trend rising over repeated readings
+• VO2 max or training consistency falling for a quarter
+• New diabetes, kidney, inflammatory, or symptom signal
 
-That matches the "What we're watching" section in your Plan tab.`,
-      src: '<b>Source:</b> Your plan checkpoints · published statin pharmacokinetics'
-    },
-    'message dr. thompson': {
-      text: `Happy to draft one. What's the context?
-
-I can route it to his inbasket as a direct message - he'll see it when he's back. Or if it's urgent, I can flag it to his on-call partner instead.`,
-      src: '<b>Source:</b> Care team routing rules'
+Right now the cardiovascular output is <em>low</em>, with ApoB as a watch item and CAC as the main calibration gap.`,
+      src: '<b>Source:</b> CVD model sensitivity map'
     },
     'walk me through how my risk models combined': {
-      text: `Three domain models ran on your data: cardiovascular, cancer, and metabolic/autonomic.
+      text: `Five domain models ran on your data: cardiovascular, metabolic, cancer, kidney, and neuro/cognitive.
 
-<em>Each produced a risk estimate and flagged its most-sensitive input.</em>
+<em>Each model produces a patient-facing output category first.</em>
 
-• CVD flagged ApoB (highest-sensitivity variable) and the CAC data gap
-• Cancer flagged the ATM+ variant - NCCN surveillance trigger
-• Metabolic/autonomic flagged nothing - A1c, glucose, HRV, RHR, sleep all in range
+• Cardiovascular: <b>low</b>. Lp(a) <b>72 nmol/L</b> is optimal, VO2 max <b>54 mL/kg/min</b> is protective, ApoB is a watch item.
+• Metabolic: <b>low</b>. A1c, fasting glucose, fasting insulin, HOMA-IR, and triglycerides are favorable.
+• Cancer: <b>elevated signal</b>. ATM is the active hereditary finding, while pancreatic screening intensity depends on confirming family-history details.
+• Kidney: <b>very low</b>. eGFR, cystatin C, and UACR are favorable.
+• Neuro/cognitive: <b>low</b>. No active neurologic signal; sleep and vascular risk remain the monitoring path.
 
-Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-driven PSA took rank 01 because you're seven years overdue for surveillance and the survival delta on early vs. late prostate cancer is enormous. The statin took rank 02 because lowering ApoB is the single biggest dial we can turn given your Lp(a). The CAC scan took rank 03 because it reclassifies cardiovascular risk for about half of patients in your zone - it tells us whether to push harder or hold steady on the lipid plan. Pancreatic surveillance is documented but doesn't start until age 50 per CAPS criteria.`,
-      src: '<b>Source:</b> Aleron Risk Framework v.2.4 · your domain model outputs'
+The action list should therefore feel measured: close the high-value screening gaps, calibrate CVD with CAC if useful, and avoid turning normal physiology into busywork.`,
+      src: '<b>Source:</b> Aleron domain model outputs · member-facing summary'
     }
   };
-
   const TEAM_THREADS = {
     general: {
       id: 'general',
@@ -5145,53 +5291,64 @@ Actions were then ranked by <em>sensitivity-weighted leverage</em>. Your ATM-dri
     cardiovascular: {
       name: 'Cardiovascular',
       swatch: 'var(--dom-cardiac)',
-      seed: `Your 10-year cardiovascular risk is <b>9.4%</b> at baseline - with the planned statin, it drops toward <b>6.2%</b>. The drivers: ApoB <b>98</b> mg/dL (goal &lt;80), Lp(a) <b>62</b> mg/dL (goal &lt;30), age 47, and paternal-side GI cancer family history. <b>ApoB is the most sensitive lever</b>, which is why Decision 01 is the statin. Lp(a) is genetic and won't move - but lowering every other atherogenic particle matters more when Lp(a) is high, not less.`,
-      src: `Based on: your lab panel (Apr 10), intake, genetic report · model: PREVENT (AHA 2023)`,
+      seed: `Output: <b>Low</b>. Your 10-year ASCVD estimate is roughly <b>2%</b>, not 9%+. The corrected drivers are Lp(a) <b>72 nmol/L</b> (<b>optimal</b>, not high), VO2 max <b>54 mL/kg/min</b> (protective), ApoB <b>88 mg/dL</b> (watch), BP trend, and CAC status. The next decision is calibration, not panic: if CAC is zero, the plan can stay measured; if CAC is present, ApoB intensity moves up.`,
+      src: `Based on: lab panel (Apr 10), wearable fitness data (30d), intake · model: PREVENT plus Meridian sensitivity map`,
       presets: [
-        'Walk me through why ApoB matters more than LDL',
-        "What does my Lp(a) of 62 actually mean?",
-        'How much does the statin really lower my risk?',
+        'Why is my cardiovascular risk low?',
+        'What does Lp(a) 72 nmol/L mean?',
+        'What would change my risk category?',
         'What would I expect to see on the CAC scan?',
+      ],
+    },
+    metabolic: {
+      name: 'Metabolic',
+      swatch: 'var(--dom-metab)',
+      seed: `Output: <b>Low</b>. A1c <b>5.4%</b>, fasting glucose <b>88 mg/dL</b>, fasting insulin <b>4.7 µIU/mL</b>, HOMA-IR <b>1.0</b>, triglycerides <b>78 mg/dL</b>, and training pattern are all favorable. This domain stays in monitoring unless glucose, insulin, waist trend, triglycerides, or recovery data drift for a sustained period.`,
+      src: `Based on: Elite prevention panel, Apple Watch wearable feed, workout history`,
+      presets: [
+        "What's the earliest sign something's drifting metabolically?",
+        'Would continuous glucose monitoring add anything?',
+        'How does VO2 max affect metabolic risk?',
+        'What if I stopped training for 6 weeks?',
       ],
     },
     cancer: {
       name: 'Cancer',
       swatch: 'var(--dom-cancer)',
-      seed: `Your overall cancer risk is driven by a single finding: <b>ATM c.8147T&gt;C (pathogenic)</b>, heterozygous. ATM raises your lifetime risk of pancreatic, breast, and (to a lesser degree) prostate cancer. The clinically actionable one at 47 is <b>pancreatic</b> - which is why Decision 03 is annual pancreatic MRI starting November. Your paternal grandfather's GI cancer (early 80s) reinforces the surveillance stance but doesn't change it.`,
-      src: `Based on: Invitae 163-gene panel (Feb 3, 2026) · guideline: NCCN ATM+ surveillance`,
+      seed: `Output: <b>Elevated hereditary signal</b>. The active finding is ATM c.8147T&gt;C, pathogenic heterozygous. That does not mean every cancer pathway is high today. The patient-facing category is elevated signal because surveillance decisions change, especially PSA, colonoscopy, and genetic counseling. Pancreatic screening intensity depends on confirming whether the family GI cancer was pancreatic cancer.`,
+      src: `Based on: Invitae 163-gene panel (Feb 3, 2026), family history intake, screening history`,
       presets: [
-        "What are the odds I'll actually get pancreatic cancer?",
-        "Why MRI instead of CT or ultrasound?",
-        "Should my daughter Senna get tested?",
-        "Does ATM affect any other cancer risks I should track?",
+        "What does ATM actually change for me?",
+        'What family-history detail matters for pancreatic screening?',
+        'Why are PSA and colonoscopy prioritized?',
+        'Does ATM affect any other cancer risks I should track?',
       ],
     },
-    metabolic: {
-      name: 'Metabolic & autonomic',
-      swatch: 'var(--dom-metab)',
-      seed: `Everything in this domain is <b>in range</b>. A1c <b>5.4%</b>, fasting glucose <b>88</b>, HRV <b>52 ms</b>, RHR <b>52 bpm</b>, sleep <b>7h 10m</b>. No trajectory drift in the last 30 days of wearable data. This is why there's no metabolic action on your plan - <b>if it ain't broke, we don't fix it</b>. We'll re-run this model annually; if A1c creeps up or HRV trends down for a quarter, it moves onto the decision list.`,
-      src: `Based on: lab panel (Apr 10), Apple Watch wearable (30d)`,
+    ckd: {
+      name: 'Kidney',
+      swatch: 'var(--dom-ckd)',
+      seed: `Output: <b>Very low</b>. Creatinine eGFR is <b>&gt;90 mL/min/1.73m²</b>, cystatin C eGFR is <b>94 mL/min/1.73m²</b>, and urine albumin/creatinine is <b>6 mg/g</b>. The model does not see a kidney risk signal today. It remains in the annual loop because kidney risk can be silent and because kidney state modifies cardiovascular and metabolic interpretation.`,
+      src: `Based on: creatinine, cystatin C, UACR, BP trend, metabolic panel`,
       presets: [
-        "What's the earliest sign something's drifting metabolically?",
-        "My RHR is low - is that really nothing to worry about?",
-        "Would continuous glucose monitoring add anything?",
-        'What if I stopped training for 6 weeks - would this move?',
+        'Why run a kidney model if my kidney labs are normal?',
+        'What would make kidney risk move?',
+        'Why collect cystatin C and urine albumin?',
+        'How does kidney risk affect CVD risk?',
       ],
     },
     neuro: {
       name: 'Neuro & cognitive',
       swatch: 'var(--dom-neuro)',
-      seed: `Stable. The key drivers of long-horizon cognitive risk are sleep, cardiovascular health, and genetics. Your sleep is <b>7h 10m</b> average with <b>1h 20m deep</b> - in the favorable range. Your cardiovascular plan (statin + CAC) is also the single biggest lever for brain health, since the same arteries feed both. Your in-laws' dementia isn't genetically yours - different bloodline. Nothing to do today. <b>Annual re-run</b> is the longest-horizon lever we have.`,
-      src: `Based on: wearable sleep data (30d), cardiovascular model output, family history intake`,
+      seed: `Output: <b>Low</b>. Sleep duration <b>7h 10m</b>, deep sleep <b>1h 20m</b>, HRV <b>52 ms</b>, and low cardiovascular output are favorable. The model does not show an active neuro signal today. It watches vascular risk, sleep quality, cognition screen, symptoms, and genetics over time.`,
+      src: `Based on: wearable sleep data (30d), CVD output, intake, future cognition screen`,
       presets: [
-        "How does cardiovascular health affect dementia risk?",
-        "Would I benefit from an APOE test?",
+        'How does cardiovascular health affect dementia risk?',
+        'Would I benefit from an APOE test?',
         "What's the first early sign I should watch for?",
-        "Does my in-laws' dementia raise Senna's risk?",
+        'What would move this out of low?',
       ],
     },
   };
-
   function openRiskSheet(key) {
     const cfg = RISK_SHEETS[key];
     if (!cfg) return;
